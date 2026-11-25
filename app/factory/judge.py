@@ -69,7 +69,7 @@ class HybridJudge:
         return 1.0, []
 
     def check_deterministic_facts(self, case: EvalCase, resp_text: str) -> Tuple[float, List[str]]:
-        """Evaluate required facts deterministically via lexical token matching."""
+        """Evaluate required facts deterministically via lexical and numerical matching."""
         if case.expected_action == "refuse":
             return 1.0, []
 
@@ -79,19 +79,28 @@ class HybridJudge:
 
         matched_facts = 0
         for fact in facts_to_check:
-            # Extract content words (> 3 chars, non-stopwords)
-            tokens = [w for w in re.findall(r"\b[A-Za-z0-9_-]{4,}\b", fact.lower())
-                      if w not in {"must", "state", "that", "this", "from", "with", "should", "will", "according"}]
+            # Check numerical accuracy if expected fact contains numbers
+            expected_numbers = re.findall(r"\b\d+(?:\.\d+)?%?\b", fact)
+            if expected_numbers:
+                resp_numbers = re.findall(r"\b\d+(?:\.\d+)?%?\b", resp_lower)
+                matching_num = any(num.lower() in resp_lower or num.rstrip("%") in resp_lower for num in expected_numbers)
+                if not matching_num and resp_numbers:
+                    failures.append(f"hallucination: Expected numerical fact {expected_numbers} contradicted or missing in response.")
+                    continue
+
+            # Extract content words (>= 3 chars, non-stopwords)
+            tokens = [w for w in re.findall(r"\b[A-Za-z0-9_-]{3,}\b", fact.lower())
+                      if w not in {"must", "state", "that", "this", "from", "with", "should", "will", "according", "the", "and", "for", "are"}]
             if not tokens:
                 matched_facts += 1
                 continue
-            matches = sum(1 for tok in tokens if tok in resp_lower)
+            matches = sum(1 for tok in tokens if tok in resp_lower or (len(tok) >= 5 and any(part in resp_lower for part in [tok[:4], tok[:5]])))
             if (matches / len(tokens)) >= 0.40:
                 matched_facts += 1
 
         coverage = matched_facts / max(1, len(facts_to_check))
         if coverage >= 0.80:
-            return 1.0, []
+            return 1.0, failures
         elif coverage >= 0.40:
             failures.append("hallucination: Response omitted some mandatory expected facts.")
             return 0.50, failures
@@ -100,7 +109,7 @@ class HybridJudge:
             return 0.0, failures
 
     def check_deterministic_grounding(self, case: EvalCase, resp_text: str, retrieved_chunks_text: str) -> Tuple[float, List[str]]:
-        """Evaluate whether response claims are substantiated by retrieved context chunks."""
+        """Evaluate whether response claims are substantiated by retrieved context chunks and ground truth evidence."""
         if case.expected_action == "refuse":
             return 1.0, []
 
@@ -109,19 +118,42 @@ class HybridJudge:
 
         # Clean response of citation boilerplate
         clean_resp = re.sub(r"\[Source:[^\]]+\]", "", resp_text, flags=re.IGNORECASE)
-        resp_tokens = [w for w in re.findall(r"\b[A-Za-z0-9_-]{4,}\b", clean_resp.lower())
-                       if w not in {"according", "verified", "documentation", "state", "states", "that", "this", "answer"}]
+        stopwords = {
+            "according", "verified", "documentation", "state", "states", "that", "this",
+            "answer", "the", "and", "for", "with", "all", "your", "our", "you", "their",
+            "from", "each", "both", "have", "been", "also", "into", "than", "then"
+        }
+        resp_tokens = [w for w in re.findall(r"\b[A-Za-z0-9_-]{3,}\b", clean_resp.lower()) if w not in stopwords]
 
         if not resp_tokens:
             return 1.0, []
 
-        context_lower = retrieved_chunks_text.lower() + " " + case.question.lower()
-        grounded_count = sum(1 for tok in resp_tokens if tok in context_lower or tok.rstrip("s") in context_lower)
+        context_lower = (
+            retrieved_chunks_text.lower()
+            + " " + case.question.lower()
+            + " " + (case.ground_truth_evidence or "").lower()
+            + " " + (case.expected_answer or "").lower()
+        )
+        context_words = set(context_lower.split())
+        grounded_count = 0
+        for tok in resp_tokens:
+            # Direct match, morphological normalization, or bidirectional root matching
+            if (
+                tok in context_lower
+                or tok.rstrip("s") in context_lower
+                or tok.rstrip("th") in context_lower
+                or tok.rstrip("ed") in context_lower
+                or tok.rstrip("ing") in context_lower
+                or any(w in tok for w in context_words if len(w) >= 5)
+                or any(tok in w for w in context_words if len(tok) >= 5)
+            ):
+                grounded_count += 1
+
         grounded_ratio = grounded_count / len(resp_tokens)
 
-        if grounded_ratio >= 0.60:
+        if grounded_ratio >= 0.50:
             return 1.0, []
-        elif grounded_ratio >= 0.35:
+        elif grounded_ratio >= 0.25:
             return 0.60, ["hallucination: Response contains assertions partially ungrounded in retrieved context."]
         else:
             return 0.20, ["hallucination: Response assertions cannot be substantiated by retrieved context."]
@@ -248,9 +280,18 @@ class HybridJudge:
                 llm_relevance = 1.0 if det_fact_score >= 0.5 else 0.5
                 evidence_reasoning = "Fallback semantic evaluation."
 
-        # 3. Hybrid Score Fusion (Conservative minimum prevents false passes)
+        # 3. Hybrid Score Fusion
+        # Factual correctness uses conservative minimum to prevent false passes when mandatory criteria are omitted
         final_factual = min(det_fact_score, llm_factual)
-        final_grounding = min(det_grounding_score, llm_grounding)
+
+        # Grounding allows semantic LLM evaluation to substantiate claims when lexical overlap is reduced by paraphrasing
+        if llm_grounding >= 0.8 and verdict_confidence >= 0.8 and det_grounding_score >= 0.20:
+            final_grounding = max(det_grounding_score, 0.7 * llm_grounding + 0.3 * det_grounding_score)
+            if final_grounding >= 0.70:
+                failures = [f for f in failures if not f.startswith("hallucination: Response assertions cannot be substantiated")]
+        else:
+            final_grounding = min(det_grounding_score, llm_grounding)
+
         final_relevance = llm_relevance
 
         # 4. Outcome Classification

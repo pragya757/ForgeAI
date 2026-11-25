@@ -12,6 +12,11 @@ class Settings(BaseModel):
     openai_api_base: Optional[str] = Field(default_factory=lambda: os.getenv("OPENAI_API_BASE"))
     openai_api_key: Optional[str] = Field(default_factory=lambda: os.getenv("OPENAI_API_KEY"))
     openai_model: str = Field(default_factory=lambda: os.getenv("OPENAI_MODEL", "gpt-4o-mini"))
+
+    # Resilience & Networking Settings
+    llm_request_timeout: int = Field(default_factory=lambda: int(os.getenv("LLM_REQUEST_TIMEOUT", "60")))
+    llm_max_retries: int = Field(default_factory=lambda: int(os.getenv("LLM_MAX_RETRIES", "3")))
+    llm_retry_delay: float = Field(default_factory=lambda: float(os.getenv("LLM_RETRY_DELAY", "1.0")))
     
     # Retrieval defaults
     embedding_model: str = Field(default_factory=lambda: os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2"))

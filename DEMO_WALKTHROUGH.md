@@ -166,3 +166,21 @@ python run_factory.py \
 | **Adaptive Chunking**| Size: 500, Overlap: 100 | Size: 400, Overlap: 80 | Size: 500, Overlap: 100 | Size: 500, Overlap: 100 | Adapts chunking parameters to data density. |
 | **Test Case Count** | 21 cases | 20 cases | 20 cases | 20 cases | Synthesizes $\ge 20$ cases across 8 categories for any domain. |
 | **Pass Rate** | **100.0%** | **100.0%** | **60.0%** | **50.0%** | Evaluates rigorously; reports actual outcomes honestly. |
+
+---
+
+## 7. Real LLM Provider & Judge Verification Commands
+
+ForgeAI includes dedicated test harnesses for live/mock provider switching and evaluator reliability:
+
+```bash
+# 1. Run Real LLM Provider Integration Tests (Retries, Timeouts, JSON extraction, Masking)
+pytest tests/test_real_llm_providers.py -v
+
+# 2. Run 9-Scenario Judge Reliability Stress Matrix (Numerical facts, refusals, paraphrasing)
+pytest tests/test_judge_reliability_matrix.py -v
+
+# 3. Run complete automated test suite (106 tests)
+pytest -q
+```
+

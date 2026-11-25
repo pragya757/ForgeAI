@@ -2,7 +2,7 @@
 **Audit Date:** November 26, 2026 (Updated Post-Technical Validation)  
 **Auditor:** Senior GenAI Architect & Technical Documentation Lead  
 **Evaluation:** OceanAI Junior GenAI Engineer Technical Evaluation  
-**Automated Pytest Results:** 89 Passed, 0 Failed (100% Pass Rate)
+**Automated Pytest Results:** 106 Passed, 0 Failed (100% Pass Rate across 11 test modules)
 
 ---
 
@@ -90,10 +90,11 @@ Features are rigorously classified into three distinct engineering statuses:
   - `check_deterministic_grounding()`: Computes lexical grounding ratio of response content tokens against retrieved context chunks.
   - `check_deterministic_contract()`: Verifies output length, markdown formatting, and absence of raw JSON code dumps.
   - Semantic LLM Judge: Queries `app/prompts/judge.txt` at temperature 0.0 for completeness, relevance, and semantic correctness.
-  - Conservative score fusion: Takes minimum between deterministic and LLM scores (`min(det, llm)`).
+  - Conservative score fusion: Takes minimum between deterministic and LLM scores (`min(det, llm)`) on facts, and confidence-aware fusion on grounding to support paraphrased synonyms.
   - Categorizes responses into 6 discrete outcome classifications (`correct_with_evidence`, `correct_without_evidence`, `partially_correct`, `incorrect`, `correct_refusal`, `incorrect_refusal`).
   - Bias mitigations: Position bias, verbosity bias, self-preference, and uncertainty scoring.
-- **Test Coverage:** `tests/test_judge_advanced.py` (10 passing tests).
+  - Dedicated 9-Scenario Stress Matrix: Verified across correct citations, missing citations, conflicting numerical values, partial answers, hallucinations, correct refusals, wrong refusals, semantic paraphrases, and plausible filler in `tests/test_judge_reliability_matrix.py`.
+- **Test Coverage:** `tests/test_judge_advanced.py` (10 passing tests), `tests/test_judge_reliability_matrix.py` (9 passing tests).
 
 ---
 

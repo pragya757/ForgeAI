@@ -11,12 +11,14 @@ def get_llm_client(provider: str | None = None) -> BaseLLMClient:
     if selected_provider == "ollama":
         client = OllamaClient(
             base_url=settings.ollama_base_url,
-            model=settings.ollama_model
+            model=settings.ollama_model,
+            timeout=settings.llm_request_timeout,
+            max_retries=settings.llm_max_retries,
+            retry_delay=settings.llm_retry_delay,
         )
         # Check availability
         available, msg = client.is_available()
         if not available:
-            # If Ollama is configured but offline, check if fallback is allowed or raise descriptive error
             allow_fallback = os.getenv("LLM_ALLOW_FALLBACK", "true").lower() in ("true", "1")
             if allow_fallback:
                 return MockLLMClient(model_name="mock-fallback-v1")
@@ -29,7 +31,10 @@ def get_llm_client(provider: str | None = None) -> BaseLLMClient:
         client = OpenAICompatibleClient(
             api_base=settings.openai_api_base,
             api_key=settings.openai_api_key,
-            model=settings.openai_model
+            model=settings.openai_model,
+            timeout=settings.llm_request_timeout,
+            max_retries=settings.llm_max_retries,
+            retry_delay=settings.llm_retry_delay,
         )
         available, msg = client.is_available()
         if not available:

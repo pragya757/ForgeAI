@@ -44,7 +44,7 @@ class MockLLMClient(BaseLLMClient):
             return self._mock_optimizer(combined)
 
         # 2. Judge request
-        if "AUTOMATED JUDGE" in combined or "impartial, objective Judge" in combined or "Evaluate the following agent response" in combined:
+        if any(w in combined for w in ["AUTOMATED JUDGE", "Evaluator and Judge", "impartial", "Scoring Rubric:", "Defenses Against Evaluator Biases:"]):
             return self._mock_judge(combined)
 
         # 3. Evaluation Generator request
@@ -1106,10 +1106,14 @@ class MockLLMClient(BaseLLMClient):
             agent_part = text.lower()
 
         # Extract test case section
-        if "Test Case:" in text:
+        if "Test Case Specification:" in text:
+            tc_part = text.split("Test Case Specification:")[1].split("Agent Response:")[0].lower()
+            expected_refuse = '"expected_action": "refuse"' in tc_part or '"expected_action":\n"refuse"' in tc_part
+        elif "Test Case:" in text:
             tc_part = text.split("Test Case:")[1].split("Agent Response:")[0].lower()
             expected_refuse = '"expected_action": "refuse"' in tc_part or '"expected_action":\n"refuse"' in tc_part
         else:
+            tc_part = text.lower()
             expected_refuse = '"expected_action": "refuse"' in text.lower()
 
         is_refusal = (
@@ -1153,11 +1157,21 @@ class MockLLMClient(BaseLLMClient):
                     citation_score = 1.0
                     passed = True
 
+                # Check if expected numerical facts are contradicted
+                tc_nums = re.findall(r"\b\d+(?:\.\d+)?%?\b", tc_part)
+                agent_nums = re.findall(r"\b\d+(?:\.\d+)?%?\b", agent_part)
+                if tc_nums and agent_nums:
+                    if not any(num in agent_part for num in tc_nums):
+                        factual_score = 0.0
+                        grounding_score = 0.5
+                        passed = False
+                        failures.append("hallucination: Response numerical values contradict expected ground-truth numbers.")
+
         result = {
-            "passed": passed,
+            "passed": passed and citation_score >= 0.8 and factual_score >= 0.8 and refusal_score >= 0.8,
             "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
-            "grounding_score": grounding_score if passed else 0.5,
-            "factual_correctness": factual_score if passed else 0.5,
+            "grounding_score": grounding_score,
+            "factual_correctness": factual_score,
             "citation_correctness": citation_score,
             "refusal_correctness": refusal_score,
             "relevance_score": relevance_score,
