@@ -3,6 +3,14 @@ from typing import List, Any, Dict
 from app.tools.registry import BaseTool, ToolParameter
 
 class WeatherTool(BaseTool):
+    """
+    Get current weather conditions using the Open-Meteo public API.
+    Guarantees:
+    - Strict 3-second network timeout
+    - Traps timeouts and network exceptions
+    - Graceful offline fallback
+    """
+
     @property
     def name(self) -> str:
         return "weather"
@@ -37,34 +45,59 @@ class WeatherTool(BaseTool):
     def execute(self, latitude: float, longitude: float, city: str = "", **kwargs: Any) -> Dict[str, Any]:
         url = "https://api.open-meteo.com/v1/forecast"
         params = {
-            "latitude": latitude,
-            "longitude": longitude,
+            "latitude": float(latitude),
+            "longitude": float(longitude),
             "current": ["temperature_2m", "relative_humidity_2m", "weather_code", "wind_speed_10m"],
             "timezone": "auto"
         }
         try:
-            resp = requests.get(url, params=params, timeout=5)
+            resp = requests.get(url, params=params, timeout=3.0)
             if resp.status_code == 200:
                 data = resp.json()
                 current = data.get("current", {})
                 return {
                     "latitude": latitude,
                     "longitude": longitude,
+                    "city": city or "Unknown",
                     "timezone": data.get("timezone"),
                     "temperature_celsius": current.get("temperature_2m"),
                     "relative_humidity_percent": current.get("relative_humidity_2m"),
                     "wind_speed_kmh": current.get("wind_speed_10m"),
-                    "source": "Open-Meteo Public API"
+                    "source": "Open-Meteo Public API",
+                    "status": "success"
                 }
-            return {"error": f"Open-Meteo returned status {resp.status_code}", "latitude": latitude, "longitude": longitude}
-        except Exception as e:
-            # Fallback for offline execution
             return {
+                "error": f"Weather API returned status {resp.status_code}",
+                "status": "api_error",
+                "latitude": latitude,
+                "longitude": longitude
+            }
+        except requests.exceptions.Timeout:
+            return {
+                "error": "Weather API request timed out after 3.0 seconds.",
+                "status": "timeout",
                 "latitude": latitude,
                 "longitude": longitude,
-                "temperature_celsius": 22.5,
-                "relative_humidity_percent": 65,
-                "wind_speed_kmh": 12.0,
                 "notice": "Offline fallback data returned",
-                "source": "Open-Meteo (simulated)"
+                "temperature_celsius": 20.0,
+                "relative_humidity_percent": 60,
+                "source": "Open-Meteo (fallback)"
+            }
+        except requests.exceptions.RequestException as e:
+            return {
+                "error": f"Network error contacting weather API: {str(e)}",
+                "status": "network_error",
+                "latitude": latitude,
+                "longitude": longitude,
+                "notice": "Offline fallback data returned",
+                "temperature_celsius": 20.0,
+                "relative_humidity_percent": 60,
+                "source": "Open-Meteo (fallback)"
+            }
+        except Exception as e:
+            return {
+                "error": f"Unexpected error in weather lookup: {str(e)}",
+                "status": "error",
+                "latitude": latitude,
+                "longitude": longitude
             }
