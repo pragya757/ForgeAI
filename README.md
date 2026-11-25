@@ -6,7 +6,7 @@
 [![FAISS](https://img.shields.io/badge/FAISS-CPU-blueviolet.svg)](https://github.com/facebookresearch/faiss)
 [![Pydantic v2](https://img.shields.io/badge/Pydantic-v2.10%2B-e92063.svg)](https://docs.pydantic.dev/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.42%2B-FF4B4B.svg)](https://streamlit.io/)
-[![Pytest](https://img.shields.io/badge/pytest-Passing%20(89%2F89)-brightgreen.svg)](https://docs.pytest.org/)
+[![Pytest](https://img.shields.io/badge/pytest-Passing%20(106%2F106)-brightgreen.svg)](https://docs.pytest.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -275,6 +275,19 @@ streamlit run streamlit_app.py
 ```
 Open your browser at `http://localhost:8501`.
 
+The dashboard features the complete ForgeAI brand identity:
+- **Brand Palette:** Deep Black (`#050505`), Electric Cyan (`#00D9F5`), and Dark Charcoal (`#0B0F19`).
+- **Official Branding:** High-resolution vector logo (`assets/forgeai_logo.png`) and standalone glowing icon (`assets/forgeai_icon.png`).
+- **Eight-Stage Workflow Navigation:**
+  1. `🛠️ 1. Agent Creation`: Brief submission, document upload/path, clarification questions, and factory trigger.
+  2. `📋 2. Requirements Analysis`: Extracted requirements, document inventory, and scope boundaries.
+  3. `🛡️ 3. Groundability Check`: Evidence verification, supported topics, and strict refusal policies.
+  4. `⚙️ 4. Agent Generation`: Declarative agent definition, chunking/retrieval parameters, and tool security.
+  5. `🧪 5. Evaluation`: 20+ test cases across 8 categories with expected facts and source citations.
+  6. `🔄 6. Optimization`: Progression history across rounds, metric breakdown deltas, and critic targeted repairs.
+  7. `📊 7. Final Report`: Quality scorecard, transparent failure deep-dive, and 1-click artifact downloads.
+  8. `💬 8. Agent Playground`: Interactive live chat runner with real-time citations and tool execution tags.
+
 ### 4. Run the FastAPI REST Backend
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
@@ -285,7 +298,7 @@ Interactive Swagger API documentation is available at `http://localhost:8000/doc
 ```bash
 pytest -v
 ```
-All **89 tests** will execute and validate all 9 modules, edge cases, safeguards, and security bounds.
+All **106 tests** will execute and validate all 9 modules, real LLM provider resilience, judge reliability matrix, edge cases, safeguards, and security bounds.
 
 ---
 
