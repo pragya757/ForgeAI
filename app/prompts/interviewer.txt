@@ -6,30 +6,59 @@ User Brief:
 Document Inventory & Summary:
 {document_summary}
 
+Detected Information Gaps (Contradictions, Missing, Duplicated, Incomplete):
+{information_gaps_summary}
+
 Clarification Answers (if any):
 {clarification_context}
 
 Your goals:
-1. Understand the intended purpose, target audience, scope, and expected behavior.
-2. Inspect the uploaded document inventory.
-3. Identify clear requirements and detect unsupported or ambiguous requirements.
-4. Formulate up to 5 clarifying questions if ambiguity remains, or documented conservative defaults in unattended mode.
-5. Select ONLY strictly necessary tools from available tools: {available_tools}. Do NOT attach tools that are not needed.
-6. Produce a valid, structured JSON output matching the Requirements schema.
+1. Extract structured requirements:
+   - Identify user intent, target audience, domain, scope, tone, and operational constraints.
+2. Inspect the document inventory and detected information gaps.
+3. Formulate conservative documented assumptions for unattended execution when ambiguities or contradictions exist.
+4. Distinguish clearly between must-answer topics and must-refuse topics.
+5. Identify unsupported requirements (topics requested in the brief that are missing, nonexistent, or impossible).
+6. Select ONLY strictly necessary tools from available tools: {available_tools}. Do NOT attach tools that are not needed.
+7. Produce a valid, structured JSON output matching the Requirements schema.
 
 JSON format:
 {{
   "agent_name": "...",
   "purpose": "...",
+  "user_intent": "...",
   "target_audience": "...",
+  "domain": "...",
   "scope": "...",
   "tone": "...",
+  "constraints": ["..."],
   "must_answer_topics": ["..."],
   "must_refuse_topics": ["..."],
   "required_tools": ["..."],
   "document_inventory": [
-    {{"filename": "...", "format": "...", "description": "..."}}
+    {{
+      "filename": "...",
+      "format": "...",
+      "description": "...",
+      "page_count": 1,
+      "record_count": null,
+      "content_summary": "...",
+      "detected_topics": ["..."]
+    }}
   ],
+  "information_gaps": {{
+    "missing_information": ["..."],
+    "contradictory_information": [
+      {{
+        "topic": "...",
+        "conflicting_statements": ["..."],
+        "conflicting_sources": ["..."],
+        "resolution_strategy": "..."
+      }}
+    ],
+    "duplicated_information": ["..."],
+    "incomplete_information": ["..."]
+  }},
   "assumptions": ["..."],
   "ambiguities": ["..."],
   "unsupported_requirements": ["..."],

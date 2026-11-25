@@ -10,28 +10,57 @@ Available Document Excerpts & Structure:
 {document_excerpts}
 
 Instructions:
-1. Identify which requested topics are fully supported by verifiable textual evidence.
-2. Identify partially supported topics and specify what is missing.
-3. Identify completely unsupported topics and explain why.
+1. Identify which requested topics are fully supported by verifiable textual evidence. Include confidence score (0.0 - 1.0) and evidence references (source_document, page_or_record, excerpt, relevance_score).
+2. Identify partially supported topics and specify what is missing. Include confidence score and evidence references.
+3. Identify completely unsupported topics. Distinguish the nature of absence:
+   - "missing_from_corpus": reasonable topic but omitted from uploaded files.
+   - "inherently_nonexistent": physically or conceptually impossible or fictional.
+   - "unsupported_capability": requesting actions/transactions outside tool capability.
 4. Never fabricate document coverage.
-5. Provide explicit refusal recommendations for unsupported topics.
-6. Calculate an overall groundability score between 0.0 and 1.0.
+5. Populate sanitized_answerable_topics: MUST contain ONLY supported and valid partially supported topics. EXCLUDE all unsupported topics.
+6. Provide explicit refusal recommendations for unsupported topics.
+7. Calculate an overall groundability score between 0.0 and 1.0.
 
 Produce valid JSON with structure:
 {{
   "supported_topics": [
-    {{"topic": "...", "evidence_sources": ["..."], "coverage_summary": "..."}}
+    {{
+      "topic": "...",
+      "evidence_sources": ["..."],
+      "coverage_summary": "...",
+      "confidence_score": 0.95,
+      "evidence_references": [
+        {{
+          "source_document": "...",
+          "page_or_record": "Page 1",
+          "excerpt": "...",
+          "relevance_score": 0.95
+        }}
+      ]
+    }}
   ],
   "partially_supported_topics": [
-    {{"topic": "...", "evidence_sources": ["..."], "missing_aspects": "..."}}
+    {{
+      "topic": "...",
+      "evidence_sources": ["..."],
+      "missing_aspects": "...",
+      "confidence_score": 0.60,
+      "evidence_references": []
+    }}
   ],
   "unsupported_topics": [
-    {{"topic": "...", "reason": "..."}}
+    {{
+      "topic": "...",
+      "reason": "...",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    }}
   ],
   "document_coverage_map": {{
     "<filename>": ["<topic1>", "<topic2>"]
   }},
   "refusal_recommendations": ["..."],
+  "sanitized_answerable_topics": ["<supported_topic1>", "<supported_topic2>"],
   "overall_groundability_score": 0.85
 }}
 Output ONLY valid JSON.

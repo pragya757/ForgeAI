@@ -50,6 +50,9 @@ class AgentGenerator:
         except Exception:
             # Deterministic fallback definition
             doc_refs = [d.filename for d in requirements.document_inventory]
+            unsupported_topics = [t.topic for t in groundability.unsupported_topics]
+            sanitized_supported = groundability.sanitized_answerable_topics or [t.topic for t in groundability.supported_topics]
+            
             data = {
                 "agent_name": requirements.agent_name,
                 "description": requirements.purpose,
@@ -59,9 +62,9 @@ class AgentGenerator:
                     "If the answer cannot be found or concerns unsupported topics, you MUST refuse to answer."
                 ),
                 "target_audience": requirements.target_audience,
-                "supported_topics": [t.topic for t in groundability.supported_topics],
-                "unsupported_topics": [t.topic for t in groundability.unsupported_topics],
-                "must_refuse_topics": requirements.must_refuse_topics,
+                "supported_topics": sanitized_supported,
+                "unsupported_topics": unsupported_topics,
+                "must_refuse_topics": list(set(requirements.must_refuse_topics + unsupported_topics)),
                 "document_references": doc_refs,
                 "chunk_size": 500,
                 "chunk_overlap": 100,
@@ -91,6 +94,18 @@ class AgentGenerator:
         # Strict tool validation
         if "tool_selection" in data:
             data["tool_selection"] = registry.validate_selection(data["tool_selection"])
+
+        # Prevent unsupported requirements from entering answerable scope
+        unsupported_set = set(t.topic for t in groundability.unsupported_topics)
+        data["supported_topics"] = [st for st in data.get("supported_topics", []) if st not in unsupported_set]
+        if not data["supported_topics"]:
+            data["supported_topics"] = groundability.sanitized_answerable_topics
+
+        # Ensure must_refuse_topics includes all unsupported topics
+        existing_refusals = set(data.get("must_refuse_topics", []))
+        existing_refusals.update(unsupported_set)
+        data["must_refuse_topics"] = sorted(list(existing_refusals))
+        data["unsupported_topics"] = sorted(list(unsupported_set))
 
         # Validate with Pydantic
         agent_def = AgentDefinition(**data)

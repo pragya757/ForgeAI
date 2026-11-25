@@ -74,18 +74,27 @@ class MockLLMClient(BaseLLMClient):
             data = {
                 "agent_name": "Ship-Spares Procurement Assistant",
                 "purpose": "Assist procurement officers in searching marine spare parts, comparing supplier pricing, checking availability, and following maritime procurement guidelines.",
+                "user_intent": "Lookup parts, check stock, compare vendor quotes, and verify purchase approval limits.",
                 "target_audience": "Vessel procurement staff and technical superintendents",
+                "domain": "Maritime Procurement & Supply Chain",
                 "scope": "Spare parts catalog lookup, supplier price comparison, purchase approval thresholds, and delivery lead times.",
                 "tone": "Operational, accurate, and concise",
+                "constraints": ["Strict adherence to PO authorization tiers", "No direct financial write capabilities"],
                 "must_answer_topics": ["Part number lookup", "Supplier price comparison", "Stock availability", "Purchase order authorization limits", "Lead times"],
                 "must_refuse_topics": ["Payment gateway transactions", "Crew payroll", "Vessel charter contracts", "Customs clearance bribery requests"],
                 "required_tools": ["csv_lookup", "calculator", "current_date"],
                 "document_inventory": [
-                    {"filename": "spare_parts_catalog.csv", "format": "CSV", "description": "Inventory of ship spares, part numbers, stock, unit prices"},
-                    {"filename": "supplier_information.pdf", "format": "PDF", "description": "Approved vendors, ratings, lead times and payment terms"},
-                    {"filename": "procurement_guidelines.pdf", "format": "PDF", "description": "PO approval tiers, procurement compliance, emergency order protocols"}
+                    {"filename": "spare_parts_catalog.csv", "format": "CSV", "description": "Inventory of ship spares, part numbers, stock, unit prices", "page_count": None, "record_count": 50, "content_summary": "Catalog of valves, pumps, bearings, filters", "detected_topics": ["Valves", "Pumps", "Bearings", "Filters"]},
+                    {"filename": "supplier_information.pdf", "format": "PDF", "description": "Approved vendors, ratings, lead times and payment terms", "page_count": 2, "record_count": None, "content_summary": "Vendor lists and freight schedules", "detected_topics": ["Approved Vendors", "Delivery Times", "Credit Terms"]},
+                    {"filename": "procurement_guidelines.pdf", "format": "PDF", "description": "PO approval tiers, procurement compliance, emergency order protocols", "page_count": 3, "record_count": None, "content_summary": "Authorization policies", "detected_topics": ["PO Approval Limits", "Emergency Orders", "Compliance"]}
                 ],
-                "assumptions": ["Prices listed in CSV are in USD and exclude freight unless specified."],
+                "information_gaps": {
+                    "missing_information": ["Emergency air freight customs surcharge tables are not provided in uploaded files."],
+                    "contradictory_information": [],
+                    "duplicated_information": [],
+                    "incomplete_information": []
+                },
+                "assumptions": ["Prices listed in CSV are in USD and exclude freight unless specified.", "Unattended defaults apply conservative threshold rules."],
                 "ambiguities": ["Whether expedited freight quotes require superintendent sign-off."],
                 "unsupported_requirements": ["Direct credit card processing", "Automated wire transfer"],
                 "clarifications": [
@@ -96,18 +105,27 @@ class MockLLMClient(BaseLLMClient):
             data = {
                 "agent_name": "HR Policy Assistant",
                 "purpose": "Assist employees with inquiries regarding leave policies, attendance rules, holidays, and workplace guidelines based strictly on verified documents.",
+                "user_intent": "Provide verified employee handbook answers on leave, attendance, and conduct while refusing salary and insurance claims.",
                 "target_audience": "Company employees and managers",
+                "domain": "Corporate Human Resources",
                 "scope": "Company leave rules, attendance standards, working hours, and conduct guidelines.",
                 "tone": "Professional, supportive, and precise",
+                "constraints": ["Strict grounding in verified policies", "Zero salary or personal compensation data disclosure"],
                 "must_answer_topics": ["Annual leave", "Sick leave", "Attendance tracking", "Office working hours", "Code of conduct", "Probation period leave"],
                 "must_refuse_topics": ["Personal salary records", "Stock option plans", "Health insurance claim processing", "Individual performance reviews"],
                 "required_tools": ["current_date"],
                 "document_inventory": [
-                    {"filename": "leave_policy.pdf", "format": "PDF", "description": "Details annual, sick, and parental leave entitlements"},
-                    {"filename": "attendance_policy.pdf", "format": "PDF", "description": "Office hours, late arrivals, remote work rules"},
-                    {"filename": "employee_handbook.pdf", "format": "PDF", "description": "Code of conduct and general workplace guidelines"}
+                    {"filename": "leave_policy.pdf", "format": "PDF", "description": "Details annual, sick, and parental leave entitlements", "page_count": 2, "record_count": None, "content_summary": "Leave policies", "detected_topics": ["Annual Leave", "Sick Leave", "Maternity Leave"]},
+                    {"filename": "attendance_policy.pdf", "format": "PDF", "description": "Office hours, late arrivals, remote work rules", "page_count": 2, "record_count": None, "content_summary": "Attendance guidelines", "detected_topics": ["Working Hours", "Late Arrivals", "Remote Work"]},
+                    {"filename": "employee_handbook.pdf", "format": "PDF", "description": "Code of conduct and general workplace guidelines", "page_count": 3, "record_count": None, "content_summary": "Code of conduct", "detected_topics": ["Code of Conduct", "Probation Guidelines", "Disciplinary Rules"]}
                 ],
-                "assumptions": ["Documents provided represent current company policy for the ongoing fiscal year."],
+                "information_gaps": {
+                    "missing_information": ["Health insurance and dental claim forms are not uploaded."],
+                    "contradictory_information": [],
+                    "duplicated_information": [],
+                    "incomplete_information": []
+                },
+                "assumptions": ["Documents provided represent current company policy for the ongoing fiscal year.", "In unattended mode, unsupported inquiries will be strictly refused."],
                 "ambiguities": ["Overtime eligibility criteria for contractors vs permanent employees."],
                 "unsupported_requirements": ["Health insurance claim submission", "Salary slips"],
                 "clarifications": [
@@ -115,22 +133,49 @@ class MockLLMClient(BaseLLMClient):
                 ]
             }
         else:
-            # Generic fallback
+            # Generic dynamic fallback for unseen domains
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            doc_names = list(dict.fromkeys(doc_matches)) if doc_matches else ["specifications.txt"]
+
+            # Check if there is an explicit user brief in text
+            brief_match = re.search(r"User Brief:\s*(.*?)(?=\n[A-Z]|\Z)", text, re.DOTALL)
+            extracted_brief = brief_match.group(1).strip() if brief_match else "Autonomous domain query answering."
+
+            # Check for contradiction cues in text
+            contradictions = []
+            if "contradiction" in text.lower() or "conflicting" in text.lower():
+                contradictions.append({
+                    "topic": "Operational Parameter Limit",
+                    "conflicting_statements": ["Document A specifies standard ceiling", "Document B specifies elevated ceiling"],
+                    "conflicting_sources": doc_names[:2] if len(doc_names) >= 2 else ["doc_a.txt", "doc_b.txt"],
+                    "resolution_strategy": "Decline to answer contradictory statements without human confirmation."
+                })
+
             data = {
-                "agent_name": "Enterprise Knowledge Assistant",
-                "purpose": "Answer domain inquiries using uploaded documentation while refusing unsupported requests.",
-                "target_audience": "Internal domain stakeholders",
-                "scope": "Documented procedures and data within the provided corpus.",
-                "tone": "Professional and objective",
-                "must_answer_topics": ["Documented policies", "Standard operating procedures", "Factual queries"],
-                "must_refuse_topics": ["Undocumented speculations", "Confidential compensation", "External private data"],
+                "agent_name": "Autonomous Operations Assistant",
+                "purpose": extracted_brief,
+                "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
+                "target_audience": "Technical operators, mission engineers, and authorized domain staff",
+                "domain": "Specialized Technical Operations",
+                "scope": "Verifiable documentation queries within the provided corpus.",
+                "tone": "Authoritative, precise, and objective",
+                "constraints": ["Strict grounding required", "No unauthorized modifications"],
+                "must_answer_topics": ["Documented specifications", "Standard operating procedures", "Safety thresholds"],
+                "must_refuse_topics": ["Undocumented speculations", "External live execution", "Confidential telemetry"],
                 "required_tools": ["current_date"],
                 "document_inventory": [
-                    {"filename": "sample_doc.txt", "format": "TXT", "description": "Primary guidance document"}
+                    {"filename": d, "format": d.split(".")[-1].upper(), "description": f"Documentation source {d}", "page_count": 1, "record_count": None, "content_summary": "Technical specs", "detected_topics": ["Specifications", "Procedures"]}
+                    for d in doc_names
                 ],
-                "assumptions": ["Provided documents are authoritative."],
-                "ambiguities": ["Boundary between standard and emergency handling."],
-                "unsupported_requirements": ["External live financial transactions"],
+                "information_gaps": {
+                    "missing_information": ["Unverified external telemetry is absent from corpus."],
+                    "contradictory_information": contradictions,
+                    "duplicated_information": [],
+                    "incomplete_information": ["Sections with pending specifications flagged for review."]
+                },
+                "assumptions": ["Provided documents are authoritative.", "In unattended mode, conservative limits apply."],
+                "ambiguities": ["Precedence rules between conflicting documents require explicit confirmation."],
+                "unsupported_requirements": ["External live financial transactions", "Direct hardware control execution"],
                 "clarifications": []
             }
         return json.dumps(data, indent=2)
@@ -142,16 +187,48 @@ class MockLLMClient(BaseLLMClient):
         if is_procurement:
             data = {
                 "supported_topics": [
-                    {"topic": "Spare parts catalog lookup", "evidence_sources": ["spare_parts_catalog.csv"], "coverage_summary": "Full part numbers, descriptions, unit costs, and warehouse stock."},
-                    {"topic": "Supplier price comparison", "evidence_sources": ["supplier_information.pdf", "spare_parts_catalog.csv"], "coverage_summary": "Vendor lists, quality ratings, and discount tiers."},
-                    {"topic": "PO approval tiers", "evidence_sources": ["procurement_guidelines.pdf"], "coverage_summary": "Chief Engineer sign-off up to $2,500, Superintendent up to $25,000."}
+                    {
+                        "topic": "Spare parts catalog lookup",
+                        "evidence_sources": ["spare_parts_catalog.csv"],
+                        "coverage_summary": "Full part numbers, descriptions, unit costs, and warehouse stock.",
+                        "confidence_score": 0.98,
+                        "evidence_references": [
+                            {"source_document": "spare_parts_catalog.csv", "page_or_record": "Row 1", "excerpt": "Part Number, Description, Stock, Unit Price", "relevance_score": 0.98}
+                        ]
+                    },
+                    {
+                        "topic": "Supplier price comparison",
+                        "evidence_sources": ["supplier_information.pdf", "spare_parts_catalog.csv"],
+                        "coverage_summary": "Vendor lists, quality ratings, and discount tiers.",
+                        "confidence_score": 0.95,
+                        "evidence_references": [
+                            {"source_document": "supplier_information.pdf", "page_or_record": "Page 1", "excerpt": "Approved marine vendors and lead time matrices.", "relevance_score": 0.95}
+                        ]
+                    },
+                    {
+                        "topic": "PO approval tiers",
+                        "evidence_sources": ["procurement_guidelines.pdf"],
+                        "coverage_summary": "Chief Engineer sign-off up to $2,500, Superintendent up to $25,000.",
+                        "confidence_score": 0.96,
+                        "evidence_references": [
+                            {"source_document": "procurement_guidelines.pdf", "page_or_record": "Page 2", "excerpt": "Chief Engineer sign-off up to $2,500; Superintendent up to $25,000.", "relevance_score": 0.96}
+                        ]
+                    }
                 ],
                 "partially_supported_topics": [
-                    {"topic": "Lead times", "evidence_sources": ["supplier_information.pdf"], "missing_aspects": "Air freight express turnaround dates are only estimated."}
+                    {
+                        "topic": "Lead times",
+                        "evidence_sources": ["supplier_information.pdf"],
+                        "missing_aspects": "Air freight express turnaround dates are only estimated.",
+                        "confidence_score": 0.65,
+                        "evidence_references": [
+                            {"source_document": "supplier_information.pdf", "page_or_record": "Page 2", "excerpt": "Standard sea freight 14-21 days; air freight estimates variable.", "relevance_score": 0.70}
+                        ]
+                    }
                 ],
                 "unsupported_topics": [
-                    {"topic": "Direct automated wire transfers", "reason": "No financial transaction processing supported."},
-                    {"topic": "Crew payroll", "reason": "Vessel payroll documentation is not included."}
+                    {"topic": "Direct automated wire transfers", "reason": "No financial transaction processing supported.", "absence_nature": "unsupported_capability", "confidence_score": 0.99},
+                    {"topic": "Crew payroll", "reason": "Vessel payroll documentation is not included.", "absence_nature": "missing_from_corpus", "confidence_score": 0.95}
                 ],
                 "document_coverage_map": {
                     "spare_parts_catalog.csv": ["Part numbers", "Stock levels", "Base prices"],
@@ -162,22 +239,63 @@ class MockLLMClient(BaseLLMClient):
                     "Refuse payment execution requests.",
                     "Refuse legal liability waivers outside standard supplier contracts."
                 ],
+                "sanitized_answerable_topics": ["Spare parts catalog lookup", "Supplier price comparison", "PO approval tiers", "Lead times"],
                 "overall_groundability_score": 0.88
             }
         elif is_hr:
             data = {
                 "supported_topics": [
-                    {"topic": "Annual leave entitlement", "evidence_sources": ["leave_policy.pdf"], "coverage_summary": "Document specifies 20 days annual leave with carryover limit."},
-                    {"topic": "Sick leave policy", "evidence_sources": ["leave_policy.pdf"], "coverage_summary": "10 days paid sick leave with medical certificate requirement."},
-                    {"topic": "Working hours and attendance", "evidence_sources": ["attendance_policy.pdf"], "coverage_summary": "Standard hours 8:30 AM to 5:30 PM with 15-minute grace period."},
-                    {"topic": "Workplace conduct", "evidence_sources": ["employee_handbook.pdf"], "coverage_summary": "Harassment-free workplace and disciplinary stages detailed."}
+                    {
+                        "topic": "Annual leave entitlement",
+                        "evidence_sources": ["leave_policy.pdf"],
+                        "coverage_summary": "Document specifies 20 days annual leave with carryover limit.",
+                        "confidence_score": 0.98,
+                        "evidence_references": [
+                            {"source_document": "leave_policy.pdf", "page_or_record": "Page 1", "excerpt": "Full-time employees receive 20 days annual leave per year.", "relevance_score": 0.98}
+                        ]
+                    },
+                    {
+                        "topic": "Sick leave policy",
+                        "evidence_sources": ["leave_policy.pdf"],
+                        "coverage_summary": "10 days paid sick leave with medical certificate requirement.",
+                        "confidence_score": 0.97,
+                        "evidence_references": [
+                            {"source_document": "leave_policy.pdf", "page_or_record": "Page 2", "excerpt": "Employees receive 10 days paid sick leave annually.", "relevance_score": 0.97}
+                        ]
+                    },
+                    {
+                        "topic": "Working hours and attendance",
+                        "evidence_sources": ["attendance_policy.pdf"],
+                        "coverage_summary": "Standard hours 8:30 AM to 5:30 PM with 15-minute grace period.",
+                        "confidence_score": 0.95,
+                        "evidence_references": [
+                            {"source_document": "attendance_policy.pdf", "page_or_record": "Page 1", "excerpt": "Standard office hours are 8:30 AM to 5:30 PM.", "relevance_score": 0.95}
+                        ]
+                    },
+                    {
+                        "topic": "Workplace conduct",
+                        "evidence_sources": ["employee_handbook.pdf"],
+                        "coverage_summary": "Harassment-free workplace and disciplinary stages detailed.",
+                        "confidence_score": 0.94,
+                        "evidence_references": [
+                            {"source_document": "employee_handbook.pdf", "page_or_record": "Page 1", "excerpt": "The company maintains a zero-tolerance policy for harassment.", "relevance_score": 0.94}
+                        ]
+                    }
                 ],
                 "partially_supported_topics": [
-                    {"topic": "Remote work / Work from home", "evidence_sources": ["attendance_policy.pdf"], "missing_aspects": "Equipment reimbursement for home office is not covered."}
+                    {
+                        "topic": "Remote work / Work from home",
+                        "evidence_sources": ["attendance_policy.pdf"],
+                        "missing_aspects": "Equipment reimbursement for home office is not covered.",
+                        "confidence_score": 0.60,
+                        "evidence_references": [
+                            {"source_document": "attendance_policy.pdf", "page_or_record": "Page 2", "excerpt": "Employees may work remotely up to 2 days per week upon manager approval.", "relevance_score": 0.70}
+                        ]
+                    }
                 ],
                 "unsupported_topics": [
-                    {"topic": "Health insurance claims", "reason": "No insurance policy or benefits document provided."},
-                    {"topic": "Salary and bonus calculation", "reason": "Compensation schedules are absent from the document corpus."}
+                    {"topic": "Health insurance claims", "reason": "No insurance policy or benefits document provided.", "absence_nature": "missing_from_corpus", "confidence_score": 0.95},
+                    {"topic": "Salary and bonus calculation", "reason": "Compensation schedules are absent from the document corpus.", "absence_nature": "missing_from_corpus", "confidence_score": 0.98}
                 ],
                 "document_coverage_map": {
                     "leave_policy.pdf": ["Annual leave", "Sick leave", "Parental leave"],
@@ -188,22 +306,47 @@ class MockLLMClient(BaseLLMClient):
                     "Strictly refuse health insurance claims and direct employees to benefits@company.com",
                     "Refuse salary adjustment queries."
                 ],
+                "sanitized_answerable_topics": ["Annual leave entitlement", "Sick leave policy", "Working hours and attendance", "Workplace conduct", "Remote work / Work from home"],
                 "overall_groundability_score": 0.85
             }
         else:
             doc_names = re.findall(r'"filename":\s*"([^"]+)"', text)
             if not doc_names:
-                doc_names = ["document.txt"]
+                doc_names = ["specifications.txt"]
+
+            # Parse requested topics from requirements_json if present in text
+            topics_match = re.search(r'"must_answer_topics":\s*\[(.*?)\]', text, re.DOTALL)
+            requested_topics = [t.strip().strip('"') for t in topics_match.group(1).split(",") if t.strip()] if topics_match else ["Documented specifications"]
+
+            unsupported_match = re.search(r'"unsupported_requirements":\s*\[(.*?)\]', text, re.DOTALL)
+            unsupported_reqs = [u.strip().strip('"') for u in unsupported_match.group(1).split(",") if u.strip()] if unsupported_match else ["External transactions"]
+
             data = {
                 "supported_topics": [
-                    {"topic": "Documented policies and procedures", "evidence_sources": doc_names[:1], "coverage_summary": "Direct textual coverage available in corpus."}
+                    {
+                        "topic": t,
+                        "evidence_sources": doc_names[:1],
+                        "coverage_summary": f"Direct textual coverage verified in {doc_names[:1]}.",
+                        "confidence_score": 0.94,
+                        "evidence_references": [
+                            {"source_document": doc_names[0], "page_or_record": "Page 1", "excerpt": f"Verified specifications for {t}.", "relevance_score": 0.92}
+                        ]
+                    }
+                    for t in requested_topics[:3]
                 ],
                 "partially_supported_topics": [],
                 "unsupported_topics": [
-                    {"topic": "External financial and personal transactions", "reason": "Not found in document corpus."}
+                    {
+                        "topic": u,
+                        "reason": "Not found in document corpus or requires unsupported capability.",
+                        "absence_nature": "unsupported_capability" if any(w in u.lower() for w in ["transaction", "wire", "control", "hardware"]) else "missing_from_corpus",
+                        "confidence_score": 0.95
+                    }
+                    for u in unsupported_reqs
                 ],
-                "document_coverage_map": {d: ["Documented policies and procedures"] for d in doc_names},
-                "refusal_recommendations": ["Refuse questions not answered in context."],
+                "document_coverage_map": {d: requested_topics[:2] for d in doc_names},
+                "refusal_recommendations": [f"Refuse requests regarding {u}." for u in unsupported_reqs],
+                "sanitized_answerable_topics": requested_topics[:3],
                 "overall_groundability_score": 0.85
             }
         return json.dumps(data, indent=2)

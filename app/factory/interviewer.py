@@ -1,10 +1,17 @@
 import os
+import re
 import json
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple, Set
 from app.llm import get_llm_client, BaseLLMClient
-from app.schemas.requirements import Requirements, DocumentItem, Clarification
+from app.schemas.requirements import (
+    Requirements,
+    DocumentItem,
+    Clarification,
+    InformationGapAnalysis,
+    InformationContradiction
+)
 from app.tools.registry import registry
-from app.retrieval.document_loader import DocumentLoader
+from app.retrieval.document_loader import DocumentLoader, RawDocument
 
 class IntakeInterviewer:
     """Module 1: Intake Interviewer - Conducts requirements intake and document inspection."""
@@ -13,7 +20,7 @@ class IntakeInterviewer:
         self.llm = llm_client or get_llm_client()
 
     def inspect_documents(self, doc_folder: str) -> List[DocumentItem]:
-        """Scan directory and produce structured document inventory."""
+        """Scan directory and produce structured document inventory with topics and metadata."""
         if not os.path.exists(doc_folder):
             return []
 
@@ -28,35 +35,197 @@ class IntakeInterviewer:
                     "format": d.file_type.upper(),
                     "pages": set(),
                     "total_chars": 0,
-                    "sample": d.content[:200]
+                    "sample": d.content[:300],
+                    "total_rows": d.metadata.get("total_rows"),
+                    "text_blocks": []
                 }
             if d.page:
                 summary_map[fname]["pages"].add(d.page)
             summary_map[fname]["total_chars"] += len(d.content)
+            summary_map[fname]["text_blocks"].append(d.content)
 
         items: List[DocumentItem] = []
         for fname, info in summary_map.items():
             page_count = len(info["pages"]) if info["pages"] else 1
-            desc = f"Contains approx {info['total_chars']} characters. Sample: {info['sample'].replace(chr(10), ' ')[:100]}..."
+            record_count = info.get("total_rows")
+
+            # Extract detected topics from headers/key terms
+            all_text = " ".join(info["text_blocks"])
+            detected_topics = self._extract_key_topics(all_text)
+
+            sample_snippet = info["sample"].replace("\n", " ").strip()
+            if len(sample_snippet) > 120:
+                sample_snippet = sample_snippet[:120] + "..."
+
+            desc = f"Format {info['format']}. Approx {info['total_chars']} chars. Preview: {sample_snippet}"
+
             items.append(DocumentItem(
                 filename=fname,
                 format=info["format"],
                 description=desc,
-                page_count=page_count
+                page_count=page_count if info["format"] != "CSV" else None,
+                record_count=record_count,
+                content_summary=f"Covers topics: {', '.join(detected_topics[:4]) if detected_topics else 'General data'}",
+                detected_topics=detected_topics[:8]
             ))
 
         return items
 
+    def _extract_key_topics(self, text: str) -> List[str]:
+        """Extract meaningful topics/headers from document text generically."""
+        topics = []
+        # Look for markdown or uppercase headers: e.g. # Topic, SECTION X: Topic, or lines with Title Case
+        header_patterns = [
+            r"^#+\s+(.+)$",
+            r"(?:Section|Chapter|Policy|Directive|Protocol|Specification|Standard)\s*[\d.:\-]*\s*([A-Za-z0-9\s\-]+)",
+            r"^[A-Z][A-Za-z0-9\s]{3,30}:"
+        ]
+        for line in text.split("\n"):
+            line = line.strip()
+            if not line:
+                continue
+            for pat in header_patterns:
+                m = re.search(pat, line, re.MULTILINE)
+                if m:
+                    extracted = m.group(1).strip() if m.groups() else line.replace(":", "").strip()
+                    if len(extracted) > 3 and len(extracted) < 50 and extracted not in topics:
+                        topics.append(extracted)
+                        break
+
+        # If too few headers, extract frequent capitalized phrases
+        if len(topics) < 2:
+            phrases = re.findall(r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b", text)
+            for p in phrases:
+                if p not in topics and len(p) < 40:
+                    topics.append(p)
+                if len(topics) >= 5:
+                    break
+
+        return topics[:8]
+
+    def detect_information_gaps(
+        self,
+        inventory: List[DocumentItem],
+        doc_folder: str,
+        brief: str
+    ) -> InformationGapAnalysis:
+        """Inspect document texts to identify missing, contradictory, duplicated, and incomplete information."""
+        if not os.path.exists(doc_folder):
+            return InformationGapAnalysis(
+                missing_information=["All requested documentation is missing from disk."]
+            )
+
+        raw_docs = DocumentLoader.load_directory(doc_folder)
+        gaps = InformationGapAnalysis()
+
+        # 1. Detect Duplicated Information across documents
+        # Check for matching passages (lines, paragraphs, or sentences >= 50 chars) between distinct files
+        seen_snippets: Dict[str, str] = {}  # normalized text -> filename
+        duplicates: Set[str] = set()
+
+        for d in raw_docs:
+            snippets = [s.strip() for s in re.split(r"[\r\n]+|\.\s+", d.content) if len(s.strip()) >= 40]
+            for s in snippets:
+                # Strip punctuation and whitespace to compare semantic passage content
+                norm_s = re.sub(r"[^\w\s]", "", s).strip().lower()
+                norm_s = re.sub(r"\s+", " ", norm_s)[:150]
+                if len(norm_s) < 35:
+                    continue
+                if norm_s in seen_snippets and seen_snippets[norm_s] != d.source:
+                    duplicates.add(
+                        f"Identical or near-duplicate passage found in '{seen_snippets[norm_s]}' and '{d.source}': \"{s[:80]}...\""
+                    )
+                else:
+                    seen_snippets[norm_s] = d.source
+        gaps.duplicated_information = list(duplicates)[:5]
+
+        # 2. Detect Incomplete Information
+        incomplete_markers = ["[tbd]", "[todo]", "[pending]", "to be determined", "to be announced", "[missing]", "under review", "placeholder"]
+        incomplete_found: Set[str] = set()
+        for d in raw_docs:
+            lower_content = d.content.lower()
+            for marker in incomplete_markers:
+                if marker in lower_content:
+                    incomplete_found.add(
+                        f"Incomplete marker '{marker}' found in '{d.source}' indicating unfinished documentation."
+                    )
+            # Check for abrupt truncation or empty sections
+            if re.search(r":\s*(\[|\.\.\.|\?)\s*$", d.content, re.MULTILINE):
+                incomplete_found.add(f"Unresolved specification field found in '{d.source}'.")
+        gaps.incomplete_information = list(incomplete_found)[:5]
+
+        # 3. Detect Contradictions between documents
+        contradictions: List[InformationContradiction] = []
+        # Generic heuristic: Find key numerical specifications or limits stated differently across files
+        # E.g. "max depth 3000m" vs "max depth 4500m", "ceiling: 400ft" vs "ceiling: 500ft"
+        spec_regex = re.compile(
+            r"\b(maximum|max|minimum|min|limit|ceiling|threshold|depth|temperature|speed|capacity|leave|approval|tier)\s*[:=]?\s*([0-9]+(?:\.[0-9]+)?\s*[a-zA-Z%$€£]*)",
+            re.IGNORECASE
+        )
+        spec_map: Dict[str, List[Tuple[str, str, str]]] = {} # norm_key -> [(source, raw_statement, value)]
+        for d in raw_docs:
+            for line in d.content.split("\n"):
+                match = spec_regex.search(line)
+                if match:
+                    key = match.group(1).lower()
+                    val = match.group(2).strip()
+                    if key not in spec_map:
+                        spec_map[key] = []
+                    spec_map[key].append((d.source, line.strip(), val))
+
+        for key, matches in spec_map.items():
+            sources = set(m[0] for m in matches)
+            values = set(m[2] for m in matches)
+            if len(sources) > 1 and len(values) > 1:
+                # Contradiction detected
+                statements = [f"[{src}] \"{stmt}\"" for src, stmt, _ in matches[:3]]
+                contradictions.append(InformationContradiction(
+                    topic=f"Conflicting {key.title()} Specification",
+                    conflicting_statements=statements,
+                    conflicting_sources=list(sources),
+                    resolution_strategy=f"Decline automated execution and defer to conservative lower bound until verified by human operator."
+                ))
+        gaps.contradictory_information = contradictions[:5]
+
+        # 4. Detect Missing Information (topics mentioned in user brief that have no document coverage)
+        # Extract candidate nouns / topic words from brief
+        brief_words = [w for w in re.findall(r"\b[A-Za-z]{4,}\b", brief) if w.lower() not in {
+            "this", "that", "with", "have", "from", "user", "agent", "system", "please", "should", "could", "would", "must", "build"
+        }]
+        all_corpus_text = " ".join([d.content for d in raw_docs]).lower()
+        missing_topics: List[str] = []
+        for word in set(brief_words):
+            if word.lower() not in all_corpus_text:
+                missing_topics.append(word)
+
+        if missing_topics:
+            gaps.missing_information.append(
+                f"Brief keywords not found anywhere in uploaded documents: {', '.join(sorted(missing_topics)[:6])}"
+            )
+
+        return gaps
+
     def generate_clarifying_questions(self, brief: str, doc_folder: str) -> List[str]:
-        """Formulate no more than five relevant clarifying questions regarding requirements and scope."""
+        """Formulate no more than five high-value clarifying questions regarding gaps and ambiguities."""
         inventory = self.inspect_documents(doc_folder)
         doc_names = [item.filename for item in inventory]
+        gaps = self.detect_information_gaps(inventory, doc_folder, brief)
+
+        gap_summary = []
+        if gaps.contradictory_information:
+            for c in gaps.contradictory_information:
+                gap_summary.append(f"Contradiction: {c.topic} between {', '.join(c.conflicting_sources)}")
+        if gaps.incomplete_information:
+            gap_summary.extend(gaps.incomplete_information[:2])
+        if gaps.missing_information:
+            gap_summary.extend(gaps.missing_information[:2])
 
         prompt = (
-            f"Review this user brief and document inventory:\n"
+            f"Review this user brief, document inventory, and detected information gaps:\n"
             f"User Brief: {brief}\n"
-            f"Available Documents: {doc_names}\n\n"
-            "Formulate up to 5 concise, critical clarifying questions to resolve ambiguities in scope, audience, tools, or policies.\n"
+            f"Available Documents: {doc_names}\n"
+            f"Detected Information Gaps:\n" + ("\n".join(gap_summary) if gap_summary else "None detected.") + "\n\n"
+            "Formulate up to 5 critical, high-value clarifying questions to resolve contradictions, missing scope, audience, or operational limits.\n"
             "Return a JSON list of questions: [\"Question 1\", \"Question 2\", ...]. Never output more than 5 questions."
         )
 
@@ -77,14 +246,26 @@ class IntakeInterviewer:
         except Exception:
             questions = []
 
+        # If LLM didn't return questions, formulate high-value questions deterministically from detected gaps
         if not questions:
-            questions = [
-                "Who is the primary target audience (e.g., internal staff, department managers, external clients)?",
-                "Are there specific topics or requests that the assistant must strictly refuse to answer?",
-                "What tone should the assistant maintain (e.g., formal and authoritative, supportive and friendly)?",
-                "Are there specific external tools or data sources required beyond the provided files?",
-                "Should responses follow a specific output structure (e.g., bulleted highlights, strict tabular format)?"
-            ]
+            deterministic_qs = []
+            for c in gaps.contradictory_information[:2]:
+                deterministic_qs.append(
+                    f"Regarding '{c.topic}': conflicting values were found in {', '.join(c.conflicting_sources)}. Which document takes precedence?"
+                )
+            for m in gaps.missing_information[:2]:
+                deterministic_qs.append(
+                    f"The brief references terms not covered in the documents ({m}). Should the agent strictly refuse these out-of-scope requests?"
+                )
+            if not deterministic_qs:
+                deterministic_qs = [
+                    "Who is the primary target audience (e.g., technical operators, department managers, external clients)?",
+                    "Are there specific topics or requests that the assistant must strictly refuse to answer?",
+                    "What tone should the assistant maintain (e.g., formal and authoritative, concise and operational)?",
+                    "Are there external tools or databases required beyond the provided files?",
+                    "What is the required response format or citation structure for outputs?"
+                ]
+            questions = deterministic_qs
 
         # Enforce maximum 5 questions ceiling
         return questions[:5]
@@ -96,11 +277,12 @@ class IntakeInterviewer:
         clarification_answers: Optional[Dict[str, str]] = None,
         unattended: bool = True,
     ) -> Requirements:
-        """Process brief, inspect folder, ask clarifications, and produce Requirements schema."""
+        """Process brief, inspect folder, identify gaps, ask clarifications, and produce structured Requirements schema."""
         inventory = self.inspect_documents(doc_folder)
+        gaps = self.detect_information_gaps(inventory, doc_folder, brief)
 
         doc_summary_text = "\n".join([
-            f"- {item.filename} ({item.format}, pages: {item.page_count}): {item.description}"
+            f"- {item.filename} ({item.format}, pages: {item.page_count or 'N/A'}, records: {item.record_count or 'N/A'}): {item.description} Topics: {', '.join(item.detected_topics)}"
             for item in inventory
         ]) if inventory else "No documents found."
 
@@ -110,13 +292,26 @@ class IntakeInterviewer:
         if clarification_answers:
             clarifications_text = "\n".join([f"Q: {q}\nA: {a}" for q, a in clarification_answers.items()])
 
+        # Build documented conservative assumptions if in unattended mode
+        conservative_assumptions = [
+            "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
+            "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
+        ]
+        if gaps.contradictory_information:
+            for c in gaps.contradictory_information:
+                conservative_assumptions.append(
+                    f"Contradiction in '{c.topic}': Deferring to conservative lower bound and refusing automated override without human verification."
+                )
+
         prompt_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "prompts", "interviewer.txt")
         with open(prompt_path, "r", encoding="utf-8") as f:
             template = f.read()
 
+        gap_summary_json = gaps.model_dump_json(indent=2)
         prompt = template.format(
             user_brief=brief,
             document_summary=doc_summary_text,
+            information_gaps_summary=gap_summary_json,
             clarification_context=clarifications_text,
             available_tools=", ".join(available_tools)
         )
@@ -129,7 +324,6 @@ class IntakeInterviewer:
 
         # Parse JSON
         try:
-            # Handle potential markdown code fencing
             clean_json = response_text.strip()
             if clean_json.startswith("```json"):
                 clean_json = clean_json[7:]
@@ -139,26 +333,43 @@ class IntakeInterviewer:
                 clean_json = clean_json[:-3]
             data = json.loads(clean_json.strip())
         except Exception:
-            # Fallback if raw text returned
+            # Generic fallback based on brief and inventory
+            doc_topics = []
+            for item in inventory:
+                doc_topics.extend(item.detected_topics)
+
             data = {
                 "agent_name": "Autonomous Domain Assistant",
                 "purpose": brief,
-                "target_audience": "Domain users",
-                "scope": "Verifiable documentation queries",
-                "tone": "Professional and helpful",
-                "must_answer_topics": ["General policy", "Documented specifications"],
-                "must_refuse_topics": ["Undocumented claims", "Confidential records"],
+                "user_intent": "Informational query answering from verified corpus",
+                "target_audience": "Domain operators and authorized personnel",
+                "domain": "Generic Enterprise",
+                "scope": f"Verifiable documentation queries covering {', '.join(doc_topics[:3]) if doc_topics else 'provided corpus'}",
+                "tone": "Professional, authoritative, and concise",
+                "constraints": ["Strict grounding required", "No external transactions"],
+                "must_answer_topics": doc_topics[:4] if doc_topics else ["Documented specifications", "Verified procedures"],
+                "must_refuse_topics": ["Undocumented speculations", "External transactions", "Personal private records"],
                 "required_tools": ["current_date"],
                 "document_inventory": [d.model_dump() for d in inventory],
-                "assumptions": ["Documents provided are accurate and current."],
-                "ambiguities": ["Edge case handling requires confirmation."],
-                "unsupported_requirements": ["External transactions"],
+                "information_gaps": gaps.model_dump(),
+                "assumptions": conservative_assumptions,
+                "ambiguities": ["Precedence rules between conflicting documents require explicit confirmation."],
+                "unsupported_requirements": ["Direct financial transactions", "External API interactions"],
                 "clarifications": []
             }
 
-        # Ensure document inventory from actual disk inspection is merged
+        # Merge actual disk inventory and detected information gaps
         if inventory:
             data["document_inventory"] = [item.model_dump() for item in inventory]
+
+        if "information_gaps" not in data or not data["information_gaps"]:
+            data["information_gaps"] = gaps.model_dump()
+
+        # In unattended mode, append conservative assumptions
+        if unattended and "assumptions" in data:
+            for ca in conservative_assumptions:
+                if ca not in data["assumptions"]:
+                    data["assumptions"].append(ca)
 
         # Enforce tool allowlist validation
         requested_tools = data.get("required_tools", [])
