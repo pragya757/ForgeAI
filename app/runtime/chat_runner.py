@@ -111,7 +111,11 @@ class GenericChatRunner:
         allowed_tools = self.definition.tool_selection or []
 
         # 1. Date/Time tool
-        if "current_date" in allowed_tools and any(w in user_query.lower() for w in ["today", "date", "year", "current time", "now", "calendar"]):
+        temporal_pattern = r"\b(today|what\s+is\s+the\s+date|current\s+date|current\s+time|what\s+time|current\s+year|fiscal\s+year|calendar\s+year)\b"
+        if "current_date" in allowed_tools and (
+            re.search(temporal_pattern, user_query.lower())
+            or ("date" in user_query.lower() and not any(w in user_query.lower() for w in ["candidate", "mandate", "update", "foundation"]))
+        ):
             res = registry.execute("current_date", allowlist=allowed_tools)
             tool_calls.append({"tool": "current_date", "input": {}, "output": res})
 
@@ -247,8 +251,9 @@ class GenericChatRunner:
         # 3. Execute authorized tools
         tool_results = self.run_tools_if_needed(user_query)
 
-        # 4. If no relevant chunks and no tool results, refuse safely
-        if not hits and not tool_results:
+        # 4. If no relevant chunks and no domain tools produced results, refuse safely
+        domain_tool_results = [t for t in tool_results if t["tool"] in {"csv_lookup", "calculator"} and t.get("output")]
+        if not hits and not domain_tool_results:
             refusal_msg = (
                 f"{self.definition.output_contract.refusal_phrase or 'I cannot answer this question as it is outside my verified documentation scope.'} "
                 f"[Source: Policy Limitations]"
@@ -258,8 +263,8 @@ class GenericChatRunner:
             return ChatResponse(
                 answer=refusal_msg,
                 sources=[],
-                citations=[],
-                tool_calls=[],
+                citations=[refusal_msg],
+                tool_calls=tool_results,
                 refused=True,
                 contract_valid=True,
                 contract_violations=[],

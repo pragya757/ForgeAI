@@ -1,5 +1,5 @@
 # ForgeAI: Implementation Status & Engineering Verification Matrix
-**Audit Date:** November 26, 2026  
+**Audit Date:** November 26, 2026 (Updated Post-Technical Validation)  
 **Auditor:** Senior GenAI Architect & Technical Documentation Lead  
 **Evaluation:** OceanAI Junior GenAI Engineer Technical Evaluation  
 **Automated Pytest Results:** 89 Passed, 0 Failed (100% Pass Rate)
@@ -11,7 +11,7 @@
 Every mandatory requirement from the OceanAI technical specification has been audited directly against the actual codebase in `/Users/pragya/Downloads/OceanAI`. 
 
 Features are rigorously classified into three distinct engineering statuses:
-1. **Fully Implemented:** Code exists, handles edge cases, enforces validation, and is verified by automated pytest test cases.
+1. **Fully Implemented:** Code exists, handles edge cases, enforces validation, and is verified by automated pytest test cases and empirical execution.
 2. **Partially Implemented:** Functional code exists and executes correctly, but advanced secondary features (e.g., cross-encoder reranking or graph multi-hop) are handled via standard fallbacks.
 3. **Pending / Future Enhancements:** Architecture accommodates the capability, but implementation is deferred to future production versions.
 
@@ -55,7 +55,7 @@ Features are rigorously classified into three distinct engineering statuses:
 - **Status:** **FULLY IMPLEMENTED**
 - **Verified Capabilities:**
   - `analyze_document_characteristics()`: Adapts `chunk_size` (300-600) and `chunk_overlap` (60-120) based on corpus density and tabular structure.
-  - Dynamically configures retrieval `top_k` (3-5) and `similarity_threshold` (0.32-0.38).
+  - Dynamically configures retrieval `top_k` (3-5) and `similarity_threshold` (0.30-0.38).
   - Configures embedding model (`FORGEAI_EMBEDDING_MODEL` or default `all-MiniLM-L6-v2`).
   - `determine_tool_selection_and_justifications()`: Selects tools from registry with explicit necessity justifications; rejects irrelevant tools.
   - `generate_system_prompt()`: Dynamically compiles identity, mission, verified answerable topics, strict refusal instructions, output contracts, and citation directives.
@@ -69,7 +69,7 @@ Features are rigorously classified into three distinct engineering statuses:
 - **Primary Class:** `AutomaticEvalGenerator`
 - **Status:** **FULLY IMPLEMENTED**
 - **Verified Capabilities:**
-  - Synthesizes at least 20 test cases directly from corpus documents (21 in HR, 20 in Procurement, 20 in Academic).
+  - Synthesizes at least 20 test cases directly from corpus documents (21 in HR, 20 in Procurement, 20 in Academic, 20 in Medical).
   - Enforces coverage across all 8 mandatory categories: `direct_factual`, `multi_hop`, `cross_document`, `ambiguous`, `missing_information`, `out_of_scope`, `contradictory_document`, `misleading_assumption`.
   - `is_duplicate_question()`: Filters near-identical questions using token Jaccard similarity ($J \ge 0.65$).
   - `validate_test_case()`: Validates that answerable cases have ground-truth evidence in corpus text and that expected facts have lexical token support.
@@ -138,11 +138,12 @@ Features are rigorously classified into three distinct engineering statuses:
   - Dynamic configuration loading from file path, dict, or Pydantic instance.
   - Dynamic index loading and FAISS vector retrieval using agent-specific parameters.
   - Pre-query refusal check against `must_refuse_topics`.
+  - Hardened refusal check: Unanswered queries with zero document hits and zero domain tool results are strictly refused.
   - Allowlisted tool dispatch with argument validation.
   - AST math evaluation (safe arithmetic with zero arbitrary code execution).
   - Path-guarded CSV catalog search restricted to authorized directory.
   - Weather API execution with 3-second timeout and offline error handling.
-  - Read-only current date and timestamp provider.
+  - Read-only current date and timestamp provider with strict word boundary pattern matching.
   - Context construction with source and page attribution.
   - Multi-turn conversation history management and reset capability.
   - Sensitive configuration and credential sanitization (`sanitize_sensitive_data()`).
@@ -151,12 +152,13 @@ Features are rigorously classified into three distinct engineering statuses:
 ---
 
 ### Module 9: Verified Demonstrations & Generalization
-- **Primary Directories:** `demos/hr_assistant/`, `demos/procurement_assistant/`, `unseen_test/`
+- **Primary Directories:** `demos/hr_assistant/`, `demos/procurement_assistant/`, `unseen_test/`, `generalization_test/`
 - **Status:** **FULLY IMPLEMENTED**
 - **Verified Capabilities:**
   - **Demo 1 (HR Policy Assistant):** 3 PDF documents; tool isolation (`["current_date"]`); 21 evaluation cases; 100% final pass rate; full artifacts preserved.
   - **Demo 2 (Procurement Assistant):** 1 CSV, 2 PDFs; justified tools (`["csv_lookup", "calculator", "current_date"]`); 20 evaluation cases; 100% final pass rate; full artifacts preserved.
-  - **Demo 3 (Unseen Academic Domain):** 3 PDFs; unattended execution; 20 evaluation cases; 40.0% initial pass rate $\rightarrow$ 45.0% final pass rate; stagnation halt; documented honestly in `UNSEEN_DOMAIN_REPORT.md`.
+  - **Demo 3 (Unseen Academic Domain):** 3 PDFs; unattended execution; 20 evaluation cases; initial 45.0% pass rate $\rightarrow$ improved to 60.0% on frozen benchmark; stagnation halt; audited in `UNSEEN_DOMAIN_REPORT.md` and `FINAL_VALIDATION_REPORT.md`.
+  - **Demo 4 (Medical Clinic Operations):** 3 PDFs; unattended execution; 20 evaluation cases; 50.0% pass rate; full artifacts preserved.
 - **Test Coverage:** `tests/test_demo_audit_advanced.py`, `tests/test_unseen_generalization.py`.
 
 ---
@@ -172,7 +174,7 @@ Features are rigorously classified into three distinct engineering statuses:
 | **CalculatorTool** | Zero arbitrary code execution | **FULLY IMPLEMENTED** | Evaluates math via `ast.PyCF_ONLY_AST`. Rejects all imports, calls, built-ins. |
 | **CSVLookupTool** | Path traversal prevention | **FULLY IMPLEMENTED** | Validates `os.path.realpath` against authorized document directory. |
 | **WeatherTool** | Network timeout protection | **FULLY IMPLEMENTED** | Enforces 3-second timeout; traps network exceptions gracefully. |
-| **CurrentDateTool** | Temporal query support | **FULLY IMPLEMENTED** | Read-only ISO timestamp and calendar date provider. |
+| **CurrentDateTool** | Temporal query support | **FULLY IMPLEMENTED** | Read-only ISO timestamp and calendar date provider with strict word boundary triggers. |
 
 ---
 
@@ -180,7 +182,7 @@ Features are rigorously classified into three distinct engineering statuses:
 
 1. **Cross-Encoder Reranking Execution:**
    - *Status:* **Partially Implemented (Schema Supported)**
-   - *Detail:* The `RerankingConfig` schema is fully generated and saved in `agent_definition.json` (`method="cross_encoder"`, `model_name="cross-encoder/ms-marco-MiniLM-L-6-v2"`). However, in the CPU-first local runtime (`chat_runner.py`), retrieval defaults to FAISS cosine similarity to ensure zero external network dependencies and prevent high inference latency on CPU environments.
+   - *Detail:* The `RerankingConfig` schema is fully generated and saved in `agent_definition.json` (`method="cross_encoder"`, `model_name="cross-encoder/ms-marco-MiniLM-L-6-v2"`). However, in the CPU-first local runtime (`chat_runner.py`), retrieval defaults to metadata-boosted FAISS cosine similarity to ensure zero external network dependencies and prevent high inference latency on CPU environments.
 2. **Graph-Based Multi-Hop Entity Retrieval:**
    - *Status:* **Partially Implemented (Context Chunking Fallback)**
    - *Detail:* Multi-hop queries are currently answered by retrieving the top-$k$ most semantically relevant chunks across the corpus and assembling them into the LLM context window. Graph entity extraction can be integrated in future enterprise versions.
@@ -212,5 +214,5 @@ tests/test_schemas.py ....                                               [ 89%]
 tests/test_tools.py .....                                                [ 96%]
 tests/test_unseen_generalization.py ...                                  [100%]
 
-======================== 89 passed in 6.04s ========================
+======================== 89 passed in 4.58s ========================
 ```

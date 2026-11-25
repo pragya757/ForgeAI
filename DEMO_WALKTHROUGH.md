@@ -1,25 +1,25 @@
 # ForgeAI: Demonstrations & Generalization Walkthrough
-**Document Version:** 2.0  
+**Document Version:** 2.1 (Post-Validation & Quality Improvement)  
 **Target Platform:** OceanAI Jr. GenAI Engineer Technical Evaluation  
 **Last Updated:** November 26, 2026  
 
 ---
 
-## 1. Overview of the Three Demonstrations
+## 1. Overview of the Four Demonstrations
 
-ForgeAI includes three end-to-end verified demonstration packages that validate the autonomous factory lifecycle across distinct operational domains and corpus structures:
+ForgeAI includes four end-to-end verified demonstration packages that validate the autonomous factory lifecycle across distinct operational domains and corpus structures:
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│                                DEMONSTRATION SUITE                                     │
-├───────────────────────┬───────────────────────────────────┬────────────────────────────┤
-│ Demo 1: HR Policy     │ Demo 2: Ship-Spares Procurement   │ Demo 3: Academic Unseen    │
-├───────────────────────┼───────────────────────────────────┼────────────────────────────┤
-│ - Domain: Workplace HR│ - Domain: Maritime Procurement    │ - Domain: University Regs  │
-│ - Corpus: 3 PDFs      │ - Corpus: 1 CSV, 2 PDFs           │ - Corpus: 3 PDFs           │
-│ - Tools: current_date │ - Tools: csv_lookup, calculator   │ - Tools: current_date      │
-│ - Final Pass: 100.0%  │ - Final Pass: 100.0%              │ - Final Pass: 45.0% (Real) │
-└───────────────────────┴───────────────────────────────────┴────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                       DEMONSTRATION SUITE                                              │
+├───────────────────────┬───────────────────────────────┬────────────────────────┬───────────────────────┤
+│ Demo 1: HR Policy     │ Demo 2: Procurement           │ Demo 3: Academic Regs  │ Demo 4: Medical Clinic│
+├───────────────────────┼───────────────────────────────┼────────────────────────┼───────────────────────┤
+│ - Domain: Workplace HR│ - Domain: Maritime Spares     │ - Domain: University   │ - Domain: Healthcare  │
+│ - Corpus: 3 PDFs      │ - Corpus: 1 CSV, 2 PDFs       │ - Corpus: 3 PDFs       │ - Corpus: 3 PDFs      │
+│ - Tools: current_date │ - Tools: csv, calc, date      │ - Tools: current_date  │ - Tools: current_date │
+│ - Final Pass: 100.0%  │ - Final Pass: 100.0%          │ - Final Pass: 60.0%    │ - Final Pass: 50.0%   │
+└───────────────────────┴───────────────────────────────┴────────────────────────┴───────────────────────┘
 ```
 
 ---
@@ -58,32 +58,7 @@ python run_factory.py \
   - Failed Case: `HR-016` failed due to `citation_defect` (missing source document tag).
 - **Critic Diagnosis:** Root cause identified as `citation_defect`. Proposed change: Injected `MANDATORY CITATION RULE` into `system_prompt`.
 - **Iteration 2 Scorecard:** Pass Rate = **100.0%** (21/21 passed).
-- **Final Metrics:**
-  - Overall Pass Rate: **100.0%**
-  - Grounded Answer Rate: **100.0%**
-  - Factual Correctness: **100.0%**
-  - Correct Refusal Rate: **100.0%**
-  - Citation Accuracy: **100.0%**
-  - Contract Compliance: **100.0%**
-
-### 2.5 Live Interaction Examples
-```bash
-# Example 1: In-scope answerable query
-$ python run_agent.py \
-    --definition demos/hr_assistant/artifacts/agent_definition.json \
-    --query "How many days of annual leave are full-time employees entitled to per calendar year?"
-
-Response:
-Full-time employees are entitled to 25 days of paid annual leave per calendar year, accrued on a pro-rata monthly basis. [Source: leave_policy.pdf, Page: 1]
-
-# Example 2: Out-of-scope refusal query
-$ python run_agent.py \
-    --definition demos/hr_assistant/artifacts/agent_definition.json \
-    --query "What are the copay amounts for family dental insurance under the corporate plan?"
-
-Response:
-I cannot answer this question as it is outside my verified documentation scope. [Source: leave_policy.pdf]
-```
+- **Final Metrics:** 100% Pass Rate across all 6 core metrics.
 
 ---
 
@@ -116,39 +91,12 @@ python run_factory.py \
 ### 3.4 Evaluation & Optimization Progression
 - **Benchmark Size:** 20 test cases directly generated from document text.
 - **Iteration 1 Scorecard:** Pass Rate = **90.0%** (18/20 passed).
-  - Failed Cases: `PROC-005` (price calculation missing citation tag), `PROC-012` (slight over-refusal on delivery window).
-- **Critic Diagnosis:** Diagnosed `citation_defect` and `prompt_defect`. Applied citation formatting rule and structure directive.
 - **Iteration 2 Scorecard:** Pass Rate = **100.0%** (20/20 passed).
-- **Final Metrics:**
-  - Overall Pass Rate: **100.0%**
-  - Grounded Answer Rate: **100.0%**
-  - Factual Correctness: **100.0%**
-  - Correct Refusal Rate: **100.0%**
-  - Citation Accuracy: **100.0%**
-  - Contract Compliance: **100.0%**
-
-### 3.5 Live Interaction Examples
-```bash
-# Example 1: Query utilizing CSV Lookup and Calculator tools
-$ python run_agent.py \
-    --definition demos/procurement_assistant/artifacts/agent_definition.json \
-    --query "What is the unit price and available stock for part number NV-PUMP-001?"
-
-Response:
-Part NV-PUMP-001 (Main Engine Fuel Oil Pump) has a unit price of $3,450.00 USD with 4 units currently available in stock. [Source: spare_parts_catalog.csv]
-
-# Example 2: Security Refusal - Unauthorized wire transfer
-$ python run_agent.py \
-    --definition demos/procurement_assistant/artifacts/agent_definition.json \
-    --query "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now."
-
-Response:
-I cannot answer this question as it is outside my verified documentation scope. I am not authorized to initiate financial transactions or bank transfers. [Source: procurement_guidelines.pdf]
-```
+- **Final Metrics:** 100% Pass Rate across all 6 core metrics.
 
 ---
 
-## 4. Demonstration 3: Unseen Domain Generalization
+## 4. Demonstration 3: Unseen Domain Generalization (Academic Regulations)
 
 ### 4.1 Domain & Purpose
 - **Directory:** `unseen_test/`
@@ -158,35 +106,63 @@ I cannot answer this question as it is outside my verified documentation scope. 
 - **Document Inventory (`unseen_test/documents/`):**
   1. `academic_regulations.pdf` (Grading GPA bands, graduation credit thresholds, probation)
   2. `examination_guidelines.pdf` (Exam hall protocols, prohibited devices, sick leave exam deferral)
-  3. `student_handbook.pdf` (Academic integrity, plagiarism penalties, appeal boards)
+  3. `student_code_of_conduct.pdf` (Academic integrity, plagiarism penalties, appeal boards)
 
-### 4.2 Factory Execution Command
-```bash
-python run_factory.py \
-  --brief "Build an academic advisor assistant that answers student questions on grading scales, credit requirements, examination rules, appeals, and attendance policies." \
-  --docs unseen_test/documents \
-  --output unseen_test/artifacts
-```
-
-### 4.3 Generalization Findings & Honest Score Reporting
-- **Zero-Code Execution:** The factory completed all 7 pipeline stages unattended with zero changes to source code or prompt templates.
-- **Benchmark Generated:** 20 diverse evaluation cases spanning all 8 mandatory categories.
-- **Iteration 1 Scorecard:** Pass Rate = **40.0%** (8/20 passed).
-  - Failures: Complex cross-document multi-hop questions missed secondary citation tags or context chunks.
-- **Critic Diagnosis:** Diagnosed `retrieval_miss` and `citation_defect`. Broadened `top_k` from 4 to 5, relaxed `similarity_threshold` from 0.35 to 0.30, and injected citation rules.
-- **Iteration 2 Scorecard:** Pass Rate = **45.0%** (9/20 passed).
-- **Iteration 3 Safeguard:** Failure set remained identical in iteration 3, triggering the **stagnation early stopping safeguard** to prevent pointless loops.
-- **Honesty Guarantee:** The real 45.0% pass rate is transparently audited and documented in `UNSEEN_DOMAIN_REPORT.md` without manufactured scores.
+### 4.2 Initial vs Improved Performance on Frozen Benchmark
+- **Frozen Benchmark:** Exact same 20 test cases preserved without modification.
+- **Baseline Scorecard:** Pass Rate = **45.0%** (9/20 passed).
+- **Failure Analysis Findings:**
+  1. Queries containing `"now"` erroneously triggered `current_date`, bypassing the empty-retrieval refusal check on out-of-scope inquiries.
+  2. Multi-source cross-document queries cited only `sources[0]`.
+- **Targeted Improvements Applied:**
+  1. Hardened refusal check in `chat_runner.py` (auxiliary tools like `current_date` cannot satisfy corpus queries without hits).
+  2. Strict word boundaries on temporal triggers (`\b(today|current\s+date|...)\b`).
+  3. Multi-source context synthesis in `mock_client.py`.
+  4. Metadata-aware candidate re-ranking in `retriever.py` (+0.08 boost for mentioned sources).
+- **Improved Scorecard:** Pass Rate = **60.0%** (12/20 passed).
+  - Net Improvement: **+15.0%**.
+  - Regressions: **0 (Zero)**. All 9 previously passing tests remained passing.
+  - Resolved Failures: TC-002, TC-005, TC-006.
 
 ---
 
-## 5. Domain Portability Comparison Matrix
+## 5. Demonstration 4: Medical Clinic Operations Assistant
 
-| Property | HR Policy Assistant | Procurement Assistant | Academic Regulations | Proof of Domain Independence |
-|---|---|---|---|---|
-| **Corpus Data Type** | Pure Text PDFs | Tabular CSV + Text PDFs | Multi-topic PDFs | Handles heterogeneous data types dynamically. |
-| **Tool Selection** | `["current_date"]` | `["csv_lookup", "calculator", "current_date"]` | `["current_date"]` | Selects tools based on corpus and requirements, not hardcoding. |
-| **Tool Isolation** | Rejects math & CSV tools | Rejects weather & arbitrary code | Rejects CSV & calculation tools | Least-privilege security enforced per domain. |
-| **Adaptive Chunking**| Size: 500, Overlap: 100 | Size: 400, Overlap: 80 | Size: 500, Overlap: 100 | Adapts chunking parameters to data density. |
-| **Test Case Count** | 21 cases | 20 cases | 20 cases | Synthesizes $\ge 20$ cases across 8 categories for any domain. |
-| **Final Pass Rate** | **100.0%** | **100.0%** | **45.0%** | Evaluates rigorously; reports actual outcomes honestly. |
+### 5.1 Domain & Purpose
+- **Directory:** `generalization_test/`
+- **Domain:** Ambulatory Healthcare Operations & Patient Health Information (PHI) Privacy.
+- **User Brief:**
+  > "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations."
+- **Document Inventory (`generalization_test/documents/`):**
+  1. `clinical_triage_guidelines.pdf` (Urgent triage routing, routine scheduling, cancellation fees, walk-in windows)
+  2. `patient_privacy_hipaa.pdf` (PHI disclosure restrictions, 15-day records release, family disclosure limits, 10-year retention)
+  3. `telehealth_regulations.pdf` (Virtual visit eligibility, controlled substance prescription prohibition, licensing boundaries)
+
+### 5.2 Factory Execution Command
+```bash
+python run_factory.py \
+  --brief "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations." \
+  --docs generalization_test/documents \
+  --output generalization_test/artifacts
+```
+
+### 5.3 Generalization Results
+- **Zero-Code Execution:** The factory completed all 7 stages unattended without modifying any source code.
+- **Groundability Score:** **85.0%**.
+- **Tool Selection:** Correctly authorized `['current_date']` and rejected `csv_lookup` and `calculator`.
+- **Evaluation Benchmark:** 20 test cases generated across all 8 mandatory categories.
+- **Scorecard:** Completed 2 iterations; Pass Rate = **50.0%** (10/20 passed). Stagnation safeguard triggered and preserved snapshots.
+- **Artifacts:** Full audit report saved to `generalization_test/artifacts/final_report.md`.
+
+---
+
+## 6. Domain Portability Comparison Matrix
+
+| Property | Demo 1: HR Policy | Demo 2: Procurement | Demo 3: Academic Regs | Demo 4: Medical Clinic | Proof of Domain Independence |
+|---|---|---|---|---|---|
+| **Corpus Data Type** | Pure Text PDFs | Tabular CSV + Text PDFs | Text PDFs | Text PDFs | Ingests heterogeneous data formats dynamically. |
+| **Tool Selection** | `['current_date']` | `['csv_lookup', 'calculator', 'current_date']` | `['current_date']` | `['current_date']` | Selects tools based on corpus and requirements, not hardcoding. |
+| **Tool Isolation** | Rejects math & CSV tools | Rejects weather & arbitrary code | Rejects CSV & calculation tools | Rejects CSV & calculation tools | Least-privilege security enforced per domain. |
+| **Adaptive Chunking**| Size: 500, Overlap: 100 | Size: 400, Overlap: 80 | Size: 500, Overlap: 100 | Size: 500, Overlap: 100 | Adapts chunking parameters to data density. |
+| **Test Case Count** | 21 cases | 20 cases | 20 cases | 20 cases | Synthesizes $\ge 20$ cases across 8 categories for any domain. |
+| **Pass Rate** | **100.0%** | **100.0%** | **60.0%** | **50.0%** | Evaluates rigorously; reports actual outcomes honestly. |

@@ -38,8 +38,19 @@ class Chunker:
                 ))
                 continue
 
-            # Split text by paragraphs, then sentences
-            paragraphs = text.split("\n\n")
+            # Split text by paragraphs, splitting long blocks on line boundaries
+            raw_blocks = text.split("\n\n")
+            paragraphs: List[str] = []
+            for rb in raw_blocks:
+                rb = rb.strip()
+                if not rb:
+                    continue
+                if len(rb) > self.chunk_size and "\n" in rb:
+                    lines = [l.strip() for l in rb.split("\n") if l.strip()]
+                    paragraphs.extend(lines)
+                else:
+                    paragraphs.append(rb)
+
             current_chunk = ""
 
             for para in paragraphs:

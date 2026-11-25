@@ -77,25 +77,47 @@ class FAISSRetriever:
         query_emb = self.embedder.encode([query])
         faiss.normalize_L2(query_emb)
 
-        scores, indices = self.index.search(query_emb, k)
+        # Search a wider pool to allow metadata/source-aware ranking
+        search_k = min(len(self.chunks), max(k * 3, 12))
+        scores, indices = self.index.search(query_emb, search_k)
 
-        results: List[SearchResult] = []
+        candidates: List[tuple[float, Chunk]] = []
+        q_lower = query.lower()
+
         for score, idx in zip(scores[0], indices[0]):
             if idx < 0 or idx >= len(self.chunks):
                 continue
-            # Cosine similarity score range [-1, 1]
             float_score = float(score)
-            if float_score >= thresh:
-                c = self.chunks[idx]
-                results.append(SearchResult(
-                    chunk_id=c.chunk_id,
-                    content=c.content,
-                    source=c.source,
-                    page=c.page,
-                    file_type=c.file_type,
-                    score=round(float_score, 4),
-                    metadata=c.metadata
-                ))
+            c = self.chunks[idx]
+
+            # Source-awareness: If the query explicitly references a document name,
+            # give a relevance boost to chunks from that source
+            adjusted_score = float_score
+            c_source_base = os.path.basename(c.source).lower()
+            if c_source_base in q_lower or (len(c_source_base.split(".")[0]) > 4 and c_source_base.split(".")[0] in q_lower):
+                adjusted_score += 0.08
+
+            if adjusted_score >= thresh or float_score >= thresh:
+                candidates.append((adjusted_score, c))
+
+        # Sort by adjusted score descending
+        candidates.sort(key=lambda x: x[0], reverse=True)
+
+        results: List[SearchResult] = []
+        seen_ids = set()
+        for adj_score, c in candidates[:k]:
+            if c.chunk_id in seen_ids:
+                continue
+            seen_ids.add(c.chunk_id)
+            results.append(SearchResult(
+                chunk_id=c.chunk_id,
+                content=c.content,
+                source=c.source,
+                page=c.page,
+                file_type=c.file_type,
+                score=round(adj_score, 4),
+                metadata=c.metadata
+            ))
 
         return results
 

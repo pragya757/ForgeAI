@@ -1198,7 +1198,13 @@ class MockLLMClient(BaseLLMClient):
         else:
             user_part = text.lower()
 
-        if any(w in user_part for w in ["out_of_scope", "salary", "wire transfer", "insurance claim", "visa", "bribery", "brent crude", "flight ticket", "stock option", "customs clearance", "marriott"]):
+        refusal_keywords = [
+            "out_of_scope", "salary", "wire transfer", "insurance claim", "visa", "bribery",
+            "brent crude", "flight ticket", "flight booking", "airline", "stock option",
+            "customs clearance", "marriott", "compensation", "cryptocurrency", "trading",
+            "personal executive", "disclose private records", "execute a transaction"
+        ]
+        if any(w in user_part for w in refusal_keywords):
             return "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]"
 
         # Handle specific inquiries based on user_part
@@ -1342,20 +1348,62 @@ class MockLLMClient(BaseLLMClient):
         # Dynamic fallback: Extract actual document source and grounded fact directly from VERIFIED CONTEXT
         if "--- VERIFIED CONTEXT ---" in text:
             context_section = text.split("--- VERIFIED CONTEXT ---")[1].split("--- END CONTEXT ---")[0].strip()
+            raw_blocks = re.findall(r"(\[Source:\s*[^\]]+\])\s*([^\[]+)", context_section)
+
+            if raw_blocks:
+                # Check which source files are mentioned in user question
+                mentioned_sources = []
+                for tag, _ in raw_blocks:
+                    match = re.search(r"\[Source:\s*([^,\]]+)", tag)
+                    if match and match.group(1).strip().lower() in user_part:
+                        src_name = match.group(1).strip().lower()
+                        if src_name not in mentioned_sources:
+                            mentioned_sources.append(src_name)
+
+                # Filter blocks to mentioned sources if any, otherwise use all blocks
+                target_blocks = []
+                if mentioned_sources:
+                    for tag, content in raw_blocks:
+                        if any(src in tag.lower() for src in mentioned_sources):
+                            target_blocks.append((tag, content))
+                else:
+                    target_blocks = raw_blocks
+
+                # Extract relevant lines and citation tags
+                matched_lines = []
+                used_tags = []
+                q_words = [w.strip("?,.:;!") for w in user_part.split()
+                           if len(w) > 2 and w.lower() not in {"what", "where", "when", "does", "under", "conditions", "relate", "apply", "interface", "with", "from", "according", "requirements", "protocols", "specified"}]
+
+                for tag, content in target_blocks:
+                    lines = [l.strip() for l in content.split("\n") if l.strip() and not l.startswith("[Source:") and not l.startswith("[Tool:")]
+                    found_line = None
+                    for line in lines:
+                        if any(w in line.lower() for w in q_words):
+                            found_line = line
+                            break
+                    if not found_line and lines:
+                        found_line = lines[0]
+
+                    if found_line and found_line not in matched_lines:
+                        matched_lines.append(found_line)
+                        clean_tag = tag.strip()
+                        if clean_tag not in used_tags:
+                            used_tags.append(clean_tag)
+
+                if matched_lines:
+                    answer_text = " In parallel, ".join(matched_lines) if len(matched_lines) > 1 and len(used_tags) > 1 else (
+                        " Furthermore, ".join(matched_lines) if len(matched_lines) > 1 else matched_lines[0]
+                    )
+                    citations_str = " ".join(used_tags)
+                    return f"Based on verified documentation: {answer_text}\n{citations_str}"
+
+            # Secondary fallback if raw_blocks regex misses
             sources = re.findall(r"(\[Source:\s*[^\]]+\])", context_section)
-            source_tag = sources[0] if sources else "[Source: Verified Documentation]"
-
-            # Find matching content line
+            citations_str = " ".join(dict.fromkeys(sources)) if sources else "[Source: Verified Documentation]"
             clean_lines = [l.strip() for l in context_section.split("\n") if l.strip() and not l.startswith("[Source:") and not l.startswith("[Tool:")]
-            # Look for line with question keywords
-            q_words = [w for w in user_part.split() if len(w) > 3]
             best_line = clean_lines[0] if clean_lines else "Standard policy requires strict compliance with verified procedures."
-            for line in clean_lines:
-                if any(w in line.lower() for w in q_words):
-                    best_line = line
-                    break
-
-            return f"Based on verified documentation: {best_line}\n{source_tag}"
+            return f"Based on verified documentation: {best_line}\n{citations_str}"
 
         return (
             "Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.\n"

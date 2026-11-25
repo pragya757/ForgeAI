@@ -1,5 +1,5 @@
 # ForgeAI: Evaluation & Scoring Methodology
-**Document Version:** 2.0  
+**Document Version:** 2.1 (Post-Validation & Quality Improvement)  
 **Target Platform:** OceanAI Jr. GenAI Engineer Technical Evaluation  
 **Last Updated:** November 26, 2026  
 
@@ -83,6 +83,7 @@ Every response is evaluated on six distinct dimensions scored between `0.0` and 
   - If `expected_action == "answer"`:
     - Standard refusal detected $\implies R = 0.0$ (`wrong_refusal`).
     - Answer provided $\implies R = 1.0$.
+- **Hardened Empty-Retrieval Safeguard:** In `GenericChatRunner`, if document retrieval returns zero hits and no domain tools (`csv_lookup`, `calculator`) produced data, the runtime strictly issues a refusal. Auxiliary tools (`current_date`, `weather`) are not permitted to satisfy ungrounded corpus inquiries.
 
 ### 5. Relevance Score ($S$)
 - **Purpose:** Measures directness and focus on the user's inquiry, penalizing off-topic tangents or non-responsive answers.
@@ -149,30 +150,3 @@ For an evaluation set of $N$ test cases:
    $$\text{Citation Accuracy} = \frac{\sum_{i \in \text{Answerable}} C_i}{|\text{Answerable}|}$$
 6. **Output-Contract Compliance Rate:**
    $$\text{Contract Compliance} = \frac{\sum_{i=1}^N O_i}{N}$$
-
----
-
-## 6. Concrete Calculation Example (From Real Demonstration)
-
-Consider test case `HR-001` from `demos/hr_assistant/artifacts/eval_set.json`:
-- **Question:** "How many days of annual leave are full-time employees entitled to per calendar year?"
-- **Expected Action:** `answer`
-- **Expected Facts:** `["25 days of paid annual leave per calendar year", "Accrued on a pro-rata basis"]`
-- **Expected Sources:** `["leave_policy.pdf"]`
-
-**Agent Response:**
-> Full-time employees are entitled to 25 days of paid annual leave per calendar year, accrued on a pro-rata monthly basis. [Source: leave_policy.pdf, Page: 1]
-
-**Step-by-Step Score Calculation:**
-1. **Refusal Check:** Expected action is `answer`. Response did not trigger refusal keywords. $\implies R = 1.0$.
-2. **Citation Check:** Found tag `[Source: leave_policy.pdf, Page: 1]`. Matches `leave_policy.pdf`. $\implies C = 1.0$.
-3. **Fact Coverage Check:**
-   - Fact 1: `25 days of paid annual leave per calendar year` $\rightarrow$ Tokens: `[days, paid, annual, leave, calendar, year]`. All 6 tokens present in response ($100\%$).
-   - Fact 2: `Accrued on a pro-rata basis` $\rightarrow$ Tokens: `[accrued, pro-rata, basis]`. All 3 tokens present in response ($100\%$).
-   - Total Fact Coverage: $2/2 = 1.0 \implies F_{\text{det}} = 1.0$.
-4. **Grounding Check:**
-   - Retrieved chunk contains: `"Full-time employees receive 25 days of paid annual leave per calendar year accrued pro-rata monthly."`
-   - Response tokens match context tokens at $94\% \ge 60\% \implies G_{\text{det}} = 1.0$.
-5. **Contract Check:** Response length is 142 characters, clean Markdown, no raw code dumps $\implies O = 1.0$.
-6. **Outcome Classification:** $F=1.0, G=1.0, C=1.0 \implies \mathbf{correct\_with\_evidence}$.
-7. **Verdict:** **PASSED**.
