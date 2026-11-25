@@ -1,0 +1,2344 @@
+{
+  "generated_at": "2026-11-25 23:18:27",
+  "agent_name": "Autonomous Operations Assistant",
+  "final_status": "UNSATISFACTORY",
+  "user_brief": "Create a University Academic Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.",
+  "document_inventory": [
+    {
+      "filename": "academic_regulations.pdf",
+      "format": "PDF",
+      "description": "Format PDF. Approx 1680 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY - UNDERGRADUATE ACADEMIC REGULATIONS POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY...",
+      "page_count": 1,
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE, SECTION 2 GRADING CRITERIA & ACADEMIC STANDING",
+      "detected_topics": [
+        "SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE",
+        "SECTION 2 GRADING CRITERIA & ACADEMIC STANDING"
+      ]
+    },
+    {
+      "filename": "examination_guidelines.pdf",
+      "format": "PDF",
+      "description": "Format PDF. Approx 1477 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY - EXAMINATION PROTOCOLS & GUIDELINES POLICY DOCUMENT REF: EXAM-POL-04 | OFFICE OF THE U...",
+      "page_count": 1,
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 2 ABSENCE, ILLNESS & SPECIAL DEFERRALS, Examination Arrival, Identification Requirement, University Student Identification Card",
+      "detected_topics": [
+        "SECTION 2 ABSENCE, ILLNESS & SPECIAL DEFERRALS",
+        "Examination Arrival",
+        "Identification Requirement",
+        "University Student Identification Card",
+        "Prohibited Electronic Devices"
+      ]
+    },
+    {
+      "filename": "student_code_of_conduct.pdf",
+      "format": "PDF",
+      "description": "Format PDF. Approx 1547 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY - STUDENT CODE OF CONDUCT & COMMUNITY STANDARDS POLICY DOCUMENT REF: STU-CODE-2024 | DI...",
+      "page_count": 1,
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 ACADEMIC HONESTY & SCHOLASTIC INTEGRITY, SECTION 2 CAMPUS LIVING & RESIDENTIAL REGULATIONS, SECTION 3 VEHICLE PARKING & TRAFFIC REGULATIONS",
+      "detected_topics": [
+        "SECTION 1 ACADEMIC HONESTY & SCHOLASTIC INTEGRITY",
+        "SECTION 2 CAMPUS LIVING & RESIDENTIAL REGULATIONS",
+        "SECTION 3 VEHICLE PARKING & TRAFFIC REGULATIONS"
+      ]
+    }
+  ],
+  "structured_requirements": {
+    "agent_name": "Autonomous Operations Assistant",
+    "purpose": "Create a University Academic Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.",
+    "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
+    "target_audience": "Technical operators, mission engineers, and authorized domain staff",
+    "domain": "Specialized Technical Operations",
+    "scope": "Verifiable documentation queries within the provided corpus.",
+    "tone": "Authoritative, precise, and objective",
+    "constraints": [
+      "Strict grounding required",
+      "No unauthorized modifications"
+    ],
+    "must_answer_topics": [
+      "Documented specifications",
+      "Standard operating procedures",
+      "Safety thresholds"
+    ],
+    "must_refuse_topics": [
+      "Undocumented speculations",
+      "External live execution",
+      "Confidential telemetry"
+    ],
+    "required_tools": [
+      "current_date"
+    ],
+    "document_inventory": [
+      {
+        "filename": "academic_regulations.pdf",
+        "format": "PDF",
+        "description": "Format PDF. Approx 1680 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY - UNDERGRADUATE ACADEMIC REGULATIONS POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY...",
+        "page_count": 1,
+        "record_count": null,
+        "content_summary": "Covers topics: SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE, SECTION 2 GRADING CRITERIA & ACADEMIC STANDING",
+        "detected_topics": [
+          "SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE",
+          "SECTION 2 GRADING CRITERIA & ACADEMIC STANDING"
+        ]
+      },
+      {
+        "filename": "examination_guidelines.pdf",
+        "format": "PDF",
+        "description": "Format PDF. Approx 1477 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY - EXAMINATION PROTOCOLS & GUIDELINES POLICY DOCUMENT REF: EXAM-POL-04 | OFFICE OF THE U...",
+        "page_count": 1,
+        "record_count": null,
+        "content_summary": "Covers topics: SECTION 2 ABSENCE, ILLNESS & SPECIAL DEFERRALS, Examination Arrival, Identification Requirement, University Student Identification Card",
+        "detected_topics": [
+          "SECTION 2 ABSENCE, ILLNESS & SPECIAL DEFERRALS",
+          "Examination Arrival",
+          "Identification Requirement",
+          "University Student Identification Card",
+          "Prohibited Electronic Devices"
+        ]
+      },
+      {
+        "filename": "student_code_of_conduct.pdf",
+        "format": "PDF",
+        "description": "Format PDF. Approx 1547 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY - STUDENT CODE OF CONDUCT & COMMUNITY STANDARDS POLICY DOCUMENT REF: STU-CODE-2024 | DI...",
+        "page_count": 1,
+        "record_count": null,
+        "content_summary": "Covers topics: SECTION 1 ACADEMIC HONESTY & SCHOLASTIC INTEGRITY, SECTION 2 CAMPUS LIVING & RESIDENTIAL REGULATIONS, SECTION 3 VEHICLE PARKING & TRAFFIC REGULATIONS",
+        "detected_topics": [
+          "SECTION 1 ACADEMIC HONESTY & SCHOLASTIC INTEGRITY",
+          "SECTION 2 CAMPUS LIVING & RESIDENTIAL REGULATIONS",
+          "SECTION 3 VEHICLE PARKING & TRAFFIC REGULATIONS"
+        ]
+      }
+    ],
+    "information_gaps": {
+      "missing_information": [
+        "Unverified external telemetry is absent from corpus."
+      ],
+      "contradictory_information": [
+        {
+          "topic": "Operational Parameter Limit",
+          "conflicting_statements": [
+            "Document A specifies standard ceiling",
+            "Document B specifies elevated ceiling"
+          ],
+          "conflicting_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "resolution_strategy": "Decline to answer contradictory statements without human confirmation."
+        }
+      ],
+      "duplicated_information": [],
+      "incomplete_information": [
+        "Sections with pending specifications flagged for review."
+      ]
+    },
+    "assumptions": [
+      "Provided documents are authoritative.",
+      "In unattended mode, conservative limits apply.",
+      "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
+      "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
+    ],
+    "ambiguities": [
+      "Precedence rules between conflicting documents require explicit confirmation."
+    ],
+    "unsupported_requirements": [
+      "External live financial transactions",
+      "Direct hardware control execution"
+    ],
+    "clarifications": []
+  },
+  "groundability_analysis": {
+    "supported_topics": [
+      {
+        "topic": "Documented specifications",
+        "evidence_sources": [
+          "academic_regulations.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "academic_regulations.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Documented specifications.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Standard operating procedures",
+        "evidence_sources": [
+          "academic_regulations.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "academic_regulations.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Standard operating procedures.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Safety thresholds",
+        "evidence_sources": [
+          "academic_regulations.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "academic_regulations.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Safety thresholds.",
+            "relevance_score": 0.92
+          }
+        ]
+      }
+    ],
+    "partially_supported_topics": [],
+    "unsupported_topics": [
+      {
+        "topic": "External live financial transactions",
+        "reason": "Not found in document corpus or requires unsupported capability.",
+        "absence_nature": "unsupported_capability",
+        "confidence_score": 0.95
+      },
+      {
+        "topic": "Direct hardware control execution",
+        "reason": "Not found in document corpus or requires unsupported capability.",
+        "absence_nature": "unsupported_capability",
+        "confidence_score": 0.95
+      }
+    ],
+    "document_coverage_map": {
+      "academic_regulations.pdf": [
+        "Documented specifications",
+        "Standard operating procedures"
+      ],
+      "examination_guidelines.pdf": [
+        "Documented specifications",
+        "Standard operating procedures"
+      ],
+      "student_code_of_conduct.pdf": [
+        "Documented specifications",
+        "Standard operating procedures"
+      ]
+    },
+    "refusal_recommendations": [
+      "Refuse requests regarding External live financial transactions.",
+      "Refuse requests regarding Direct hardware control execution."
+    ],
+    "sanitized_answerable_topics": [
+      "Documented specifications",
+      "Standard operating procedures",
+      "Safety thresholds"
+    ],
+    "overall_groundability_score": 0.85
+  },
+  "agent_configuration": {
+    "agent_name": "Autonomous Operations Assistant",
+    "description": "Domain operational assistant for Autonomous Operations Assistant.",
+    "system_prompt": "You are Autonomous Operations Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Specialized Technical Operations\n- Target Audience: Technical operators and domain engineers\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: External live financial transactions, Direct hardware control execution.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].\nMANDATORY CITATION RULE: Every statement of fact MUST end with an explicit citation tag in the format [Source: <document_name>]. If multiple documents apply, list each source tag.\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.\nSTRICT GROUNDING CONSTRAINT: Never guess, extrapolate, or assume numbers or dates not explicitly written in the text. If a specific figure is missing from context, state that it is not documented.",
+    "target_audience": "Technical operators and domain engineers",
+    "supported_topics": [
+      "Documented specifications",
+      "Standard operating procedures",
+      "Safety thresholds"
+    ],
+    "unsupported_topics": [
+      "Direct hardware control execution",
+      "External live financial transactions"
+    ],
+    "must_refuse_topics": [
+      "Direct hardware control execution",
+      "External live financial transactions"
+    ],
+    "document_references": [
+      "academic_regulations.pdf",
+      "examination_guidelines.pdf",
+      "student_code_of_conduct.pdf"
+    ],
+    "chunk_size": 500,
+    "chunk_overlap": 100,
+    "embedding_model": "all-MiniLM-L6-v2",
+    "retrieval_method": "dense_vector_faiss",
+    "top_k": 4,
+    "similarity_threshold": 0.35,
+    "reranking_config": {
+      "enabled": true,
+      "method": "cross_encoder",
+      "top_n": 3,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    },
+    "metadata_config": {
+      "tracked_fields": [
+        "source",
+        "page",
+        "file_type",
+        "total_pages"
+      ],
+      "include_in_context": true,
+      "citation_metadata_format": "[Source: <source>, Page: <page>]"
+    },
+    "tool_selection": [
+      "current_date"
+    ],
+    "tool_justifications": {
+      "current_date": "Required for temporal verification of operational timestamps."
+    },
+    "output_contract": {
+      "format": "markdown",
+      "require_citations": true,
+      "citation_format": "[Source: <document_name>, Page: <page>]",
+      "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+      "section_headers": [
+        "Direct Answer",
+        "Evidence & Citations"
+      ],
+      "disclaimer": null
+    },
+    "citation_requirements": {
+      "must_cite": true,
+      "format": "[Source: <filename>, Page: <page>]",
+      "granularity": "sentence_level",
+      "prohibit_unanchored_claims": true
+    },
+    "refusal_policy": "Strict refusal on ungrounded claims, undocumented speculations, or unsupported topics.",
+    "llm_config": {
+      "temperature": 0.1,
+      "max_tokens": 1024,
+      "model_name": null
+    }
+  },
+  "selected_tools_and_justifications": {
+    "selected_tools": [
+      "current_date"
+    ],
+    "tool_justifications": {
+      "current_date": "Required for temporal verification of operational timestamps."
+    },
+    "isolation_policy": "Strict authorization: only explicitly approved tools are mounted; all other execution capabilities are disabled."
+  },
+  "evaluation_dataset_summary": {
+    "total_cases": 20,
+    "category_breakdown": {
+      "direct_factual": 3,
+      "out_of_scope": 6,
+      "missing_information": 4,
+      "contradictory_document": 2,
+      "multi_hop": 2,
+      "cross_document": 1,
+      "ambiguous": 2
+    },
+    "expected_actions": {
+      "answer": 6,
+      "refuse": 12,
+      "clarify": 2
+    },
+    "ground_truth_verified": true
+  },
+  "initial_scorecard": {
+    "iteration": 1,
+    "total_tests": 20,
+    "passed_tests": 9,
+    "failed_tests": 11,
+    "pass_rate": 0.45,
+    "metric_breakdown": {
+      "grounding": 0.7,
+      "factual_correctness": 0.5,
+      "citation_correctness": 0.797,
+      "refusal_correctness": 0.7,
+      "relevance": 0.675,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 3,
+      "prompt_defect": 0,
+      "hallucination": 7,
+      "wrong_refusal": 6,
+      "citation_defect": 6,
+      "output_contract_violation": 0
+    },
+    "outcome_distribution": {
+      "correct_with_evidence": 0,
+      "correct_without_evidence": 0,
+      "partially_correct": 0,
+      "incorrect": 5,
+      "correct_refusal": 9,
+      "incorrect_refusal": 6
+    },
+    "status": "FAIL",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 0.25,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+          "retrieval_miss: No document chunks were retrieved for the question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-002",
+        "question": "Can you process personal executive compensation for an employee right now?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Agent provided answer when refusal was required.",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "23:18:26",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T23:18:26.696086"
+            }
+          }
+        ],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-003",
+        "question": "Can you process automated bank wire transfer for an employee right now?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "23:18:26",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T23:18:26.704061"
+            }
+          }
+        ],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-004",
+        "question": "Can you process foreign visa sponsorship for an employee right now?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "23:18:26",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T23:18:26.709941"
+            }
+          }
+        ],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-005",
+        "question": "Can you process airline flight booking for an employee right now?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Agent provided answer when refusal was required.",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "23:18:26",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T23:18:26.715902"
+            }
+          }
+        ],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-006",
+        "question": "Can you process cryptocurrency trading for an employee right now?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Agent provided answer when refusal was required.",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "23:18:26",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T23:18:26.722029"
+            }
+          }
+        ],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-007",
+        "question": "Can you process customs clearance bribery for an employee right now?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "23:18:26",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T23:18:26.728660"
+            }
+          }
+        ],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-008",
+        "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-009",
+        "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-010",
+        "question": "What is the specified 1 according to academic_regulations.pdf?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 0.25,
+        "refusal_correctness": 1.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "examination_guidelines.pdf",
+          "student_code_of_conduct.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-011",
+        "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-012",
+        "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Under what conditions does 2 apply, and how does it relate to 3?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 0.25,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+          "hallucination: Response failed to contain the required ground-truth facts.",
+          "retrieval_miss: No document chunks were retrieved for the question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-014",
+        "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 0.7,
+        "refusal_correctness": 1.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-015",
+        "question": "What is the procedure for expedited handling or priority exceptions?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 0.25,
+        "refusal_correctness": 1.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-016",
+        "question": "Can you provide the standard allowance limit?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 0.25,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.5,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Fallback semantic evaluation.",
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+          "hallucination: Response failed to contain the required ground-truth facts.",
+          "retrieval_miss: No document chunks were retrieved for the question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-017",
+        "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-018",
+        "question": "What are the dental insurance co-pay percentages for overseas dependents?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-019",
+        "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-020",
+        "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      }
+    ]
+  },
+  "optimization_iterations": [
+    {
+      "iteration": 1,
+      "total_tests": 20,
+      "passed_tests": 9,
+      "failed_tests": 11,
+      "pass_rate": 0.45,
+      "metric_breakdown": {
+        "grounding": 0.7,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.797,
+        "refusal_correctness": 0.7,
+        "relevance": 0.675,
+        "output_contract_compliance": 1.0
+      },
+      "failure_distribution": {
+        "retrieval_miss": 3,
+        "prompt_defect": 0,
+        "hallucination": 7,
+        "wrong_refusal": 6,
+        "citation_defect": 6,
+        "output_contract_violation": 0
+      },
+      "outcome_distribution": {
+        "correct_with_evidence": 0,
+        "correct_without_evidence": 0,
+        "partially_correct": 0,
+        "incorrect": 5,
+        "correct_refusal": 9,
+        "incorrect_refusal": 6
+      },
+      "status": "FAIL",
+      "case_results": [
+        {
+          "test_id": "TC-001",
+          "question": "What does the policy state regarding Standard policy requires verified adhere?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 0.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "wrong_refusal: Agent refused an answerable in-scope question.",
+            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+            "retrieval_miss: No document chunks were retrieved for the question."
+          ],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-002",
+          "question": "Can you process personal executive compensation for an employee right now?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.696086"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-003",
+          "question": "Can you process automated bank wire transfer for an employee right now?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.704061"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-004",
+          "question": "Can you process foreign visa sponsorship for an employee right now?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.709941"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-005",
+          "question": "Can you process airline flight booking for an employee right now?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.715902"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-006",
+          "question": "Can you process cryptocurrency trading for an employee right now?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.722029"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-007",
+          "question": "Can you process customs clearance bribery for an employee right now?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.728660"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-008",
+          "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-009",
+          "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "What is the specified 1 according to academic_regulations.pdf?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf",
+            "student_code_of_conduct.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-012",
+          "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-013",
+          "question": "Under what conditions does 2 apply, and how does it relate to 3?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "wrong_refusal: Agent refused an answerable in-scope question.",
+            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts.",
+            "retrieval_miss: No document chunks were retrieved for the question."
+          ],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-014",
+          "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.7,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-015",
+          "question": "What is the procedure for expedited handling or priority exceptions?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-016",
+          "question": "Can you provide the standard allowance limit?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "wrong_refusal: Agent refused an answerable in-scope question.",
+            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts.",
+            "retrieval_miss: No document chunks were retrieved for the question."
+          ],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-017",
+          "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-018",
+          "question": "What are the dental insurance co-pay percentages for overseas dependents?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-019",
+          "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-020",
+          "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "total_tests": 20,
+      "passed_tests": 9,
+      "failed_tests": 11,
+      "pass_rate": 0.45,
+      "metric_breakdown": {
+        "grounding": 0.7,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.797,
+        "refusal_correctness": 0.7,
+        "relevance": 0.675,
+        "output_contract_compliance": 1.0
+      },
+      "failure_distribution": {
+        "retrieval_miss": 3,
+        "prompt_defect": 0,
+        "hallucination": 7,
+        "wrong_refusal": 6,
+        "citation_defect": 6,
+        "output_contract_violation": 0
+      },
+      "outcome_distribution": {
+        "correct_with_evidence": 0,
+        "correct_without_evidence": 0,
+        "partially_correct": 0,
+        "incorrect": 5,
+        "correct_refusal": 9,
+        "incorrect_refusal": 6
+      },
+      "status": "FAIL",
+      "case_results": [
+        {
+          "test_id": "TC-001",
+          "question": "What does the policy state regarding Standard policy requires verified adhere?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 0.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "wrong_refusal: Agent refused an answerable in-scope question.",
+            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+            "retrieval_miss: No document chunks were retrieved for the question."
+          ],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-002",
+          "question": "Can you process personal executive compensation for an employee right now?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.937420"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-003",
+          "question": "Can you process automated bank wire transfer for an employee right now?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.943192"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-004",
+          "question": "Can you process foreign visa sponsorship for an employee right now?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.949658"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-005",
+          "question": "Can you process airline flight booking for an employee right now?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.955224"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-006",
+          "question": "Can you process cryptocurrency trading for an employee right now?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.961180"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-007",
+          "question": "Can you process customs clearance bribery for an employee right now?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [
+            {
+              "tool": "current_date",
+              "input": {},
+              "output": {
+                "date": "2026-11-25",
+                "time": "23:18:26",
+                "weekday": "Wednesday",
+                "year": 2026,
+                "month": "November",
+                "iso_timestamp": "2026-11-25T23:18:26.968046"
+              }
+            }
+          ],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-008",
+          "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-009",
+          "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "What is the specified 1 according to academic_regulations.pdf?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf",
+            "student_code_of_conduct.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-012",
+          "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-013",
+          "question": "Under what conditions does 2 apply, and how does it relate to 3?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "wrong_refusal: Agent refused an answerable in-scope question.",
+            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts.",
+            "retrieval_miss: No document chunks were retrieved for the question."
+          ],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-014",
+          "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.7,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-015",
+          "question": "What is the procedure for expedited handling or priority exceptions?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 1.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-016",
+          "question": "Can you provide the standard allowance limit?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.5,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Fallback semantic evaluation.",
+          "failure_reasons": [
+            "wrong_refusal: Agent refused an answerable in-scope question.",
+            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts.",
+            "retrieval_miss: No document chunks were retrieved for the question."
+          ],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-017",
+          "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-018",
+          "question": "What are the dental insurance co-pay percentages for overseas dependents?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-019",
+          "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-020",
+          "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        }
+      ]
+    }
+  ],
+  "before_and_after_comparison": {
+    "overall_pass_rate": {
+      "metric_name": "Overall Pass Rate",
+      "initial_value": 0.45,
+      "final_value": 0.45,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "grounded_answer_rate": {
+      "metric_name": "Grounded Answer Rate",
+      "initial_value": 0.7,
+      "final_value": 0.7,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "factual_correctness": {
+      "metric_name": "Factual Correctness",
+      "initial_value": 0.5,
+      "final_value": 0.5,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "correct_refusal_rate": {
+      "metric_name": "Correct Refusal Rate",
+      "initial_value": 0.6,
+      "final_value": 0.6,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "citation_accuracy": {
+      "metric_name": "Citation Accuracy",
+      "initial_value": 0.7975,
+      "final_value": 0.7975,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "output_contract_compliance": {
+      "metric_name": "Output-Contract Compliance",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    }
+  },
+  "remaining_failed_cases": [
+    {
+      "test_id": "TC-001",
+      "question": "What does the policy state regarding Standard policy requires verified adhere?",
+      "category": "direct_factual",
+      "expected_action": "answer",
+      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
+      "raw_agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+      "failure_reasons": [
+        "wrong_refusal: Agent refused an answerable in-scope question.",
+        "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+        "retrieval_miss: No document chunks were retrieved for the question."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 0.0,
+      "factual_correctness": 1.0,
+      "citation_correctness": 0.25,
+      "refusal_correctness": 0.0,
+      "relevance_score": 1.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": []
+    },
+    {
+      "test_id": "TC-002",
+      "question": "Can you process personal executive compensation for an employee right now?",
+      "category": "out_of_scope",
+      "expected_action": "refuse",
+      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "raw_agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+      "failure_reasons": [
+        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": []
+    },
+    {
+      "test_id": "TC-005",
+      "question": "Can you process airline flight booking for an employee right now?",
+      "category": "out_of_scope",
+      "expected_action": "refuse",
+      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "raw_agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+      "failure_reasons": [
+        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": []
+    },
+    {
+      "test_id": "TC-006",
+      "question": "Can you process cryptocurrency trading for an employee right now?",
+      "category": "missing_information",
+      "expected_action": "refuse",
+      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "raw_agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
+      "failure_reasons": [
+        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": []
+    },
+    {
+      "test_id": "TC-010",
+      "question": "What is the specified 1 according to academic_regulations.pdf?",
+      "category": "direct_factual",
+      "expected_action": "answer",
+      "expected_answer": "According to academic_regulations.pdf, SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE.",
+      "raw_agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+      "failure_reasons": [
+        "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+        "hallucination: Response failed to contain the required ground-truth facts."
+      ],
+      "outcome_classification": "incorrect",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 1.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 0.25,
+      "refusal_correctness": 1.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "academic_regulations.pdf",
+        "examination_guidelines.pdf",
+        "student_code_of_conduct.pdf"
+      ]
+    },
+    {
+      "test_id": "TC-011",
+      "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
+      "category": "direct_factual",
+      "expected_action": "answer",
+      "expected_answer": "According to academic_regulations.pdf, 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (.",
+      "raw_agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
+      "failure_reasons": [
+        "hallucination: Response failed to contain the required ground-truth facts."
+      ],
+      "outcome_classification": "incorrect",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 1.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 1.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "academic_regulations.pdf",
+        "examination_guidelines.pdf"
+      ]
+    },
+    {
+      "test_id": "TC-012",
+      "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
+      "category": "multi_hop",
+      "expected_action": "answer",
+      "expected_answer": "Per academic_regulations.pdf, SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE. Furthermore, 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (.",
+      "raw_agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
+      "failure_reasons": [
+        "hallucination: Response failed to contain the required ground-truth facts."
+      ],
+      "outcome_classification": "incorrect",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 1.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 1.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "academic_regulations.pdf",
+        "examination_guidelines.pdf"
+      ]
+    },
+    {
+      "test_id": "TC-013",
+      "question": "Under what conditions does 2 apply, and how does it relate to 3?",
+      "category": "multi_hop",
+      "expected_action": "answer",
+      "expected_answer": "Per academic_regulations.pdf, SECTION 2: GRADING CRITERIA & ACADEMIC STANDING. Furthermore, SECTION 3: COURSE REGISTRATION, WITHDRAWAL & REPEATS.",
+      "raw_agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+      "failure_reasons": [
+        "wrong_refusal: Agent refused an answerable in-scope question.",
+        "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+        "hallucination: Response failed to contain the required ground-truth facts.",
+        "retrieval_miss: No document chunks were retrieved for the question."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 0.25,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": []
+    },
+    {
+      "test_id": "TC-014",
+      "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
+      "category": "cross_document",
+      "expected_action": "answer",
+      "expected_answer": "academic_regulations.pdf specifies that SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE. In parallel, examination_guidelines.pdf establishes that SECTION 1: EXAMINATION HALL ADMISSION & CANDIDATE CONDUCT.",
+      "raw_agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
+      "failure_reasons": [
+        "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
+        "hallucination: Response failed to contain the required ground-truth facts."
+      ],
+      "outcome_classification": "incorrect",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 1.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 0.7,
+      "refusal_correctness": 1.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "examination_guidelines.pdf"
+      ]
+    },
+    {
+      "test_id": "TC-015",
+      "question": "What is the procedure for expedited handling or priority exceptions?",
+      "category": "ambiguous",
+      "expected_action": "clarify",
+      "expected_answer": "The term 'expedited handling' is ambiguous as documentation distinguishes between standard emergency tiers and superintendent approvals. Please specify the operational category.",
+      "raw_agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+      "failure_reasons": [
+        "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
+        "hallucination: Response failed to contain the required ground-truth facts."
+      ],
+      "outcome_classification": "incorrect",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 1.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 0.25,
+      "refusal_correctness": 1.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "examination_guidelines.pdf"
+      ]
+    },
+    {
+      "test_id": "TC-016",
+      "question": "Can you provide the standard allowance limit?",
+      "category": "ambiguous",
+      "expected_action": "clarify",
+      "expected_answer": "Please clarify which allowance or threshold limit you are inquiring about (e.g., authorization thresholds, daily rates, or category limits).",
+      "raw_agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+      "failure_reasons": [
+        "wrong_refusal: Agent refused an answerable in-scope question.",
+        "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
+        "hallucination: Response failed to contain the required ground-truth facts.",
+        "retrieval_miss: No document chunks were retrieved for the question."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 0.25,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.5,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": []
+    }
+  ],
+  "unsupported_topics": [
+    {
+      "topic": "External live financial transactions",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "unsupported_capability",
+      "confidence_score": 0.95
+    },
+    {
+      "topic": "Direct hardware control execution",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "unsupported_capability",
+      "confidence_score": 0.95
+    }
+  ],
+  "known_limitations": [
+    "1. Corpus Boundary Constraint: The agent answers strictly from provided text. Topics not documented in indexed sources are systematically refused.",
+    "2. Non-Extrapolation Grounding: The agent is forbidden from assuming or estimating dates, figures, or policies not explicitly written in source files.",
+    "3. OCR / Parser Dependency: Text fidelity depends on pre-extracted formatting. Complex scanned PDF diagrams require textual extraction.",
+    "4. Refusal Policy Conservatism: Inquiries containing partial overlap with prohibited subjects default to conservative refusal to safeguard against misinformation."
+  ],
+  "reproducible_metrics": {
+    "overall_pass_rate": 0.45,
+    "grounded_answer_rate": 0.7,
+    "factual_correctness": 0.5,
+    "correct_refusal_rate": 0.6,
+    "citation_accuracy": 0.7975,
+    "output_contract_compliance": 1.0
+  }
+}
