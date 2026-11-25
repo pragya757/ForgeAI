@@ -1,0 +1,8 @@
+part_number,description,equipment_system,primary_supplier,unit_price_usd,warehouse_location,stock_on_hand,min_safety_stock,lead_time_days
+NV-PUMP-001,Main Engine Fuel Oil Delivery Pump,Main Propulsion Fuel System,Nordik Marine Spares,4250.0,Rotterdam,4,2,12
+TB-BRG-882,Turbocharger High-Speed Bearing Assembly,Exhaust Gas Turbocharger,Nordik Marine Spares,3100.0,Singapore,2,1,5
+CYL-LINER-72,2-Stroke Diesel Cylinder Liner 720mm,Main Propulsion Engine Block,Oceanic Engineering Ltd,1800.0,Busan,8,4,18
+VALVE-CTRL-04,Pneumatic Solenoid Control Valve,Bridge Automation & Control,Aegis Maritime Supplies,950.0,Rotterdam,15,5,4
+SEAL-PROP-09,Stern Tube Propulsion Shaft Mechanical Seal,Propulsion & Shafting,Nordik Marine Spares,1400.0,Dubai,6,6,8
+FILT-LUBE-50,High-Capacity Lubricating Oil Filter Cartridge,Auxiliary Lubrication,Aegis Maritime Supplies,320.0,Singapore,25,10,3
+GEN-INJ-12,Auxiliary Generator Fuel Injection Nozzle,Diesel Generator Powerplant,Oceanic Engineering Ltd,680.0,Rotterdam,12,6,14

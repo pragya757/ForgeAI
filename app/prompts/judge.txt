@@ -1,0 +1,37 @@
+You are an impartial, objective Judge assessing an AI agent's answer against ground truth.
+
+Test Case:
+{test_case_json}
+
+Agent Response:
+{agent_response}
+
+Retrieved Document Chunks:
+{retrieved_chunks}
+
+Scoring Rubric:
+1. Grounding (0.0 to 1.0): Is the answer fully supported by retrieved documents? (1.0 = strictly grounded, 0.0 = contains ungrounded claims/hallucination).
+2. Factual Correctness (0.0 to 1.0): Does it contain the expected facts?
+3. Citation Correctness (0.0 to 1.0): Did it cite the correct document sources? (If action was refuse, citation of policy refusal is accepted).
+4. Refusal Correctness (0.0 to 1.0): If expected_action is 'refuse', did the agent refuse? If expected_action is 'answer', did it provide the answer without refusing?
+5. Relevance (0.0 to 1.0): Does the response directly address the question asked?
+6. Output Contract Compliance (0.0 to 1.0): Follows markdown, citation format, no prohibited content.
+
+Defense against bias:
+- Do not reward verbosity or flowery text.
+- Compare strictly against expected facts and retrieved chunks.
+- If expected_action is 'refuse' and agent answered, FAIL refusal_correctness (0.0).
+
+Produce valid JSON:
+{{
+  "passed": true,
+  "grounding_score": 1.0,
+  "factual_correctness": 1.0,
+  "citation_correctness": 1.0,
+  "refusal_correctness": 1.0,
+  "relevance_score": 1.0,
+  "output_contract_compliance": 1.0,
+  "failure_reasons": [],
+  "explanation": "..."
+}}
+Output ONLY valid JSON.

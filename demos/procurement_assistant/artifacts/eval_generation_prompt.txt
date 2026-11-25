@@ -1,0 +1,107 @@
+You are the Automatic Evaluation Generator in ForgeAI.
+
+Analyze the uploaded document collection and generate at least 20 evaluation test cases.
+
+Agent Definition:
+{
+  "agent_name": "Ship-Spares Procurement Assistant",
+  "description": "An autonomous AI assistant for maritime spare parts lookup, supplier comparison, and procurement compliance.",
+  "system_prompt": "You are the Ship-Spares Procurement Assistant. Help vessel staff search parts, compare vendor prices, and follow procurement rules.\nUse the csv_lookup tool for exact part codes, stock, and pricing. Use the calculator tool for totals and price comparisons.\nAlways cite the source document or catalog record for your answers.\nRefuse requests for financial wire transactions, crew payroll, or undocumented procedures.",
+  "target_audience": "Ship superintendents, vessel engineers, and procurement officers",
+  "supported_topics": [
+    "Spare parts search",
+    "Supplier comparison",
+    "PO approval thresholds",
+    "Lead times",
+    "Emergency orders"
+  ],
+  "unsupported_topics": [
+    "Wire transfers",
+    "Crew payroll",
+    "Direct credit card payments"
+  ],
+  "must_refuse_topics": [
+    "Wire transfers",
+    "Crew payroll",
+    "Customs bribery"
+  ],
+  "document_references": [
+    "spare_parts_catalog.csv",
+    "supplier_information.pdf",
+    "procurement_guidelines.pdf"
+  ],
+  "chunk_size": 600,
+  "chunk_overlap": 120,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "retrieval_method": "dense_vector_faiss",
+  "top_k": 5,
+  "similarity_threshold": 0.3,
+  "reranking_config": null,
+  "tool_selection": [
+    "csv_lookup",
+    "calculator",
+    "current_date"
+  ],
+  "output_contract": {
+    "format": "markdown",
+    "require_citations": true,
+    "citation_format": "[Source: <document_name>]",
+    "refusal_phrase": "I am not authorized to process this request as it falls outside verified procurement documentation."
+  },
+  "citation_requirements": {
+    "must_cite": true,
+    "format": "[Source: <filename>]"
+  },
+  "refusal_policy": "Strict refusal on payment execution and undocumented financial procedures.",
+  "llm_config": {
+    "temperature": 0.1,
+    "max_tokens": 1024,
+    "model_name": null
+  }
+}
+
+Document Excerpts & Evidence:
+[procurement_guidelines.pdf, Page 1] PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES DOCUMENT REF: POL-PROC-2024 | FLEET COMPLIANCE & AUTHORIZATION MATRIX SECTION 1: GENERAL PROCUREMENT OBJECTIVES This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C SECTION 2: THREE-QUOTE RULE & SOLE-SOURCE EXCEPTIONS 2.1 Three-Quote Standard: All purchase orders over $5,000 USD require three (3) independent competitive quotations from 2.2 OEM Sole-Source Exception: So
+
+[spare_parts_catalog.csv, Page 1] [Row 1] part_number: NV-PUMP-001, description: Main Engine Fuel Oil Delivery Pump, equipment_system: Main Propulsion Fuel System, primary_supplier: Nordik Marine Spares, unit_price_usd: 4250.0, warehouse_location: Rotterdam, stock_on_hand: 4, min_safety_stock: 2, lead_time_days: 12 [Row 2] part_number: TB-BRG-882, description: Turbocharger High-Speed Bearing Assembly, equipment_system: Exhaust Gas Turbocharger, primary_supplier: Nordik Marine Spares, unit_price_usd: 3100.0, warehouse_location: S
+
+[spare_parts_catalog.csv, Page 2] [Row 6] part_number: FILT-LUBE-50, description: High-Capacity Lubricating Oil Filter Cartridge, equipment_system: Auxiliary Lubrication, primary_supplier: Aegis Maritime Supplies, unit_price_usd: 320.0, warehouse_location: Singapore, stock_on_hand: 25, min_safety_stock: 10, lead_time_days: 3 [Row 7] part_number: GEN-INJ-12, description: Auxiliary Generator Fuel Injection Nozzle, equipment_system: Diesel Generator Powerplant, primary_supplier: Oceanic Engineering Ltd, unit_price_usd: 680.0, wareh
+
+[supplier_information.pdf, Page 1] PACIFIC HORIZON MARITIME - APPROVED SUPPLIER DIRECTORY DOCUMENT REF: DIR-SUPP-2024 | FLEET TECHNICAL SPECIFICATIONS SECTION 1: APPROVED VENDOR OVERVIEW All marine spare parts and technical ship supplies must be procured exclusively from accredited vendors evaluated under IS SECTION 2: VENDOR PROFILES & PERFORMANCE RATINGS 2.1 Nordik Marine Spares (Oslo / Rotterdam Hub) - Quality Rating: A+ (98% compliance score) - Specialties: Main engine heavy components, pumps, mechanical seals, turbochargers.
+
+Requirements for the test set:
+1. At least 20 total evaluation cases.
+2. Group into three mandatory categories:
+   A. Answerable questions (at least 10 cases):
+      - Directly supported by single facts.
+      - Involving multiple facts.
+      - Requiring information from different documents.
+   B. Out-of-scope questions (at least 5 cases):
+      - Topics the documents cannot answer.
+      - Topics unrelated to the agent's supported scope.
+      - Topics requiring unsupported information.
+      - Must have expected_action = "refuse".
+   C. Edge cases (at least 5 cases):
+      - Ambiguous questions.
+      - Questions with similar terminology.
+      - Two-document retrieval questions.
+      - Questions with misleading assumptions to correct.
+3. Every answerable question must have ground_truth_evidence traceable to the document excerpts. Never fabricate expected answers.
+
+Produce valid JSON with structure:
+{
+  "cases": [
+    {
+      "test_id": "TC-001",
+      "question": "...",
+      "test_category": "answerable",
+      "expected_answer": "...",
+      "expected_sources": ["..."],
+      "expected_action": "answer",
+      "ground_truth_evidence": "...",
+      "evaluation_criteria": "..."
+    },
+    ...
+  ]
+}
+Output ONLY valid JSON.

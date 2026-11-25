@@ -1,0 +1,72 @@
+{
+  "supported_topics": [
+    {
+      "topic": "Annual leave entitlement",
+      "evidence_sources": [
+        "leave_policy.pdf"
+      ],
+      "coverage_summary": "Document specifies 20 days annual leave with carryover limit."
+    },
+    {
+      "topic": "Sick leave policy",
+      "evidence_sources": [
+        "leave_policy.pdf"
+      ],
+      "coverage_summary": "10 days paid sick leave with medical certificate requirement."
+    },
+    {
+      "topic": "Working hours and attendance",
+      "evidence_sources": [
+        "attendance_policy.pdf"
+      ],
+      "coverage_summary": "Standard hours 8:30 AM to 5:30 PM with 15-minute grace period."
+    },
+    {
+      "topic": "Workplace conduct",
+      "evidence_sources": [
+        "employee_handbook.pdf"
+      ],
+      "coverage_summary": "Harassment-free workplace and disciplinary stages detailed."
+    }
+  ],
+  "partially_supported_topics": [
+    {
+      "topic": "Remote work / Work from home",
+      "evidence_sources": [
+        "attendance_policy.pdf"
+      ],
+      "missing_aspects": "Equipment reimbursement for home office is not covered."
+    }
+  ],
+  "unsupported_topics": [
+    {
+      "topic": "Health insurance claims",
+      "reason": "No insurance policy or benefits document provided."
+    },
+    {
+      "topic": "Salary and bonus calculation",
+      "reason": "Compensation schedules are absent from the document corpus."
+    }
+  ],
+  "document_coverage_map": {
+    "leave_policy.pdf": [
+      "Annual leave",
+      "Sick leave",
+      "Parental leave"
+    ],
+    "attendance_policy.pdf": [
+      "Working hours",
+      "Core hours",
+      "Late arrival rules"
+    ],
+    "employee_handbook.pdf": [
+      "Code of conduct",
+      "Probation rules"
+    ]
+  },
+  "refusal_recommendations": [
+    "Strictly refuse health insurance claims and direct employees to benefits@company.com",
+    "Refuse salary adjustment queries."
+  ],
+  "overall_groundability_score": 0.85
+}

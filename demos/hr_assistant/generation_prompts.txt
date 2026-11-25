@@ -1,0 +1,5 @@
+PROMPT FOR HR POLICY ASSISTANT SYNTHETIC DOCUMENTS:
+"Generate realistic, consistent enterprise HR documentation for a modern technology enterprise (Apex Global Technologies):
+1. leave_policy.pdf: Annual leave (20 days per calendar year, max 5 days carryover to March 31), sick leave (10 days, medical cert required after 2 consecutive days), parental leave (12 weeks maternity, 5 days paternity with birth certificate), bereavement/compassionate leave (5 consecutive days for immediate family), probation leave restrictions.
+2. attendance_policy.pdf: Office hours 08:30 to 17:30 Monday through Friday, core collaboration hours 10:00 to 16:00, 15-minute grace period (up to twice per calendar month), unnotified absence of 3 consecutive working days considered voluntary job abandonment, holiday work compensatory day-in-lieu for exempt salaried employees.
+3. employee_handbook.pdf: Standard probation duration 3 months (extendable up to 3 months), progressive disciplinary policy (1. Verbal counseling, 2. Written warning, 3. Final warning with PIP, 4. Termination), code of conduct, confidential compensation policy, resignation notice period rule."

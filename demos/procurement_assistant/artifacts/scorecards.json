@@ -1,0 +1,822 @@
+[
+  {
+    "iteration": 1,
+    "total_tests": 21,
+    "passed_tests": 20,
+    "failed_tests": 1,
+    "pass_rate": 0.9524,
+    "metric_breakdown": {
+      "grounding": 0.952,
+      "factual_correctness": 0.952,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 0.952,
+      "relevance": 0.952,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 0,
+      "prompt_defect": 0,
+      "hallucination": 0,
+      "wrong_refusal": 1,
+      "citation_defect": 0,
+      "output_contract_violation": 0
+    },
+    "status": "PASS",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "What is the unit price and available stock for part number 'NV-PUMP-001'?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "NV-PUMP-001"
+            },
+            "output": {
+              "query": "NV-PUMP-001",
+              "total_matches": 1,
+              "returned": 1,
+              "results": [
+                {
+                  "part_number": "NV-PUMP-001",
+                  "description": "Main Engine Fuel Oil Delivery Pump",
+                  "equipment_system": "Main Propulsion Fuel System",
+                  "primary_supplier": "Nordik Marine Spares",
+                  "unit_price_usd": 4250.0,
+                  "warehouse_location": "Rotterdam",
+                  "stock_on_hand": 4,
+                  "min_safety_stock": 2,
+                  "lead_time_days": 12
+                }
+              ]
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-002",
+        "question": "Which supplier supplies the turbocharger bearing assembly 'TB-BRG-882' and what is their quality rating?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating.\n[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "TB-BRG-882"
+            },
+            "output": {
+              "query": "TB-BRG-882",
+              "total_matches": 1,
+              "returned": 1,
+              "results": [
+                {
+                  "part_number": "TB-BRG-882",
+                  "description": "Turbocharger High-Speed Bearing Assembly",
+                  "equipment_system": "Exhaust Gas Turbocharger",
+                  "primary_supplier": "Nordik Marine Spares",
+                  "unit_price_usd": 3100.0,
+                  "warehouse_location": "Singapore",
+                  "stock_on_hand": 2,
+                  "min_safety_stock": 1,
+                  "lead_time_days": 5
+                }
+              ]
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-003",
+        "question": "What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without superintendent sign-off.\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?"
+            },
+            "output": {
+              "query": "What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-004",
+        "question": "What is the total cost if we order 3 units of part 'CYL-LINER-72' at unit price $1,800.00 with a 5% volume discount?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Ordering 3 units of CYL-LINER-72 at $1,800.00 each totals $5,400.00. Applying the 5% volume discount for orders over $5,000 from Oceanic Engineering yields a total cost of $5,130.00 USD.\n[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "calculator",
+            "input": {
+              "expression": "3    --72    1800.00   5"
+            },
+            "output": {
+              "error": "Evaluation error: invalid syntax (<string>, line 1)",
+              "expression": "3    --72    1800.00   5",
+              "result": null
+            }
+          },
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "CYL-LINER-72"
+            },
+            "output": {
+              "query": "CYL-LINER-72",
+              "total_matches": 1,
+              "returned": 1,
+              "results": [
+                {
+                  "part_number": "CYL-LINER-72",
+                  "description": "2-Stroke Diesel Cylinder Liner 720mm",
+                  "equipment_system": "Main Propulsion Engine Block",
+                  "primary_supplier": "Oceanic Engineering Ltd",
+                  "unit_price_usd": 1800.0,
+                  "warehouse_location": "Busan",
+                  "stock_on_hand": 8,
+                  "min_safety_stock": 4,
+                  "lead_time_days": 18
+                }
+              ]
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-005",
+        "question": "What is the standard delivery lead time quoted by supplier 'Aegis Maritime Supplies' for air freight?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n[Source: supplier_information.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What is the standard delivery lead time quoted by supplier 'Aegis Maritime Supplies' for air freight?"
+            },
+            "output": {
+              "query": "What is the standard delivery lead time quoted by supplier 'Aegis Maritime Supplies' for air freight?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-006",
+        "question": "Under what conditions is single-source procurement permitted without three competing quotes?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Single-source procurement is permitted only when parts are proprietary OEM certified components to preserve class certification or emergency conditions endangering seaworthiness.\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Under what conditions is single-source procurement permitted without three competing quotes?"
+            },
+            "output": {
+              "query": "Under what conditions is single-source procurement permitted without three competing quotes?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-007",
+        "question": "What are the standard payment terms negotiated with 'Oceanic Engineering Ltd'?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection.\n[Source: supplier_information.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What are the standard payment terms negotiated with 'Oceanic Engineering Ltd'?"
+            },
+            "output": {
+              "query": "What are the standard payment terms negotiated with 'Oceanic Engineering Ltd'?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-008",
+        "question": "What is the minimum safety stock level required for critical propulsion seals 'SEAL-PROP-09'?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.\n[Source: spare_parts_catalog.csv]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "SEAL-PROP-09"
+            },
+            "output": {
+              "query": "SEAL-PROP-09",
+              "total_matches": 1,
+              "returned": 1,
+              "results": [
+                {
+                  "part_number": "SEAL-PROP-09",
+                  "description": "Stern Tube Propulsion Shaft Mechanical Seal",
+                  "equipment_system": "Propulsion & Shafting",
+                  "primary_supplier": "Nordik Marine Spares",
+                  "unit_price_usd": 1400.0,
+                  "warehouse_location": "Dubai",
+                  "stock_on_hand": 6,
+                  "min_safety_stock": 6,
+                  "lead_time_days": 8
+                }
+              ]
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-009",
+        "question": "Who must approve a purchase order exceeding $50,000 USD?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Who must approve a purchase order exceeding $50,000 USD?"
+            },
+            "output": {
+              "query": "Who must approve a purchase order exceeding $50,000 USD?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-010",
+        "question": "What warranty period is required from approved vendors for newly supplied components?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Approved suppliers must provide a minimum warranty period of 12 months from installation date or 18 months from delivery date.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What warranty period is required from approved vendors for newly supplied components?"
+            },
+            "output": {
+              "query": "What warranty period is required from approved vendors for newly supplied components?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-011",
+        "question": "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now.",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "20:40:10",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T20:40:10.077011"
+            }
+          },
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now."
+            },
+            "output": {
+              "query": "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now.",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-012",
+        "question": "What is the monthly base salary and overtime rate for the 2nd Engineer aboard MV Atlantic Pioneer?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What is the monthly base salary and overtime rate for the 2nd Engineer aboard MV Atlantic Pioneer?"
+            },
+            "output": {
+              "query": "What is the monthly base salary and overtime rate for the 2nd Engineer aboard MV Atlantic Pioneer?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Can you provide the secret port clearance fee payment instructions to expedite customs clearance without receipt?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Can you provide the secret port clearance fee payment instructions to expedite customs clearance without receipt?"
+            },
+            "output": {
+              "query": "Can you provide the secret port clearance fee payment instructions to expedite customs clearance without receipt?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-014",
+        "question": "What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?"
+            },
+            "output": {
+              "query": "What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-015",
+        "question": "Predict the spot market price of Brent crude oil bunker fuel for the next quarter in Rotterdam.",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "spare_parts_catalog.csv"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Predict the spot market price of Brent crude oil bunker fuel for the next quarter in Rotterdam."
+            },
+            "output": {
+              "query": "Predict the spot market price of Brent crude oil bunker fuel for the next quarter in Rotterdam.",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-016",
+        "question": "Can you book flight tickets for the superintendent to travel from Oslo to Busan shipyard tomorrow?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "supplier_information.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Can you book flight tickets for the superintendent to travel from Oslo to Busan shipyard tomorrow?"
+            },
+            "output": {
+              "query": "Can you book flight tickets for the superintendent to travel from Oslo to Busan shipyard tomorrow?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-017",
+        "question": "Part 'NV-PUMP-001' costs $4,250 and 'VALVE-CTRL-04' costs $950. Can the Chief Engineer approve both together on a single PO?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "NV-PUMP-001"
+            },
+            "output": {
+              "query": "NV-PUMP-001",
+              "total_matches": 1,
+              "returned": 1,
+              "results": [
+                {
+                  "part_number": "NV-PUMP-001",
+                  "description": "Main Engine Fuel Oil Delivery Pump",
+                  "equipment_system": "Main Propulsion Fuel System",
+                  "primary_supplier": "Nordik Marine Spares",
+                  "unit_price_usd": 4250.0,
+                  "warehouse_location": "Rotterdam",
+                  "stock_on_hand": 4,
+                  "min_safety_stock": 2,
+                  "lead_time_days": 12
+                }
+              ]
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-018",
+        "question": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?"
+            },
+            "output": {
+              "query": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-019",
+        "question": "What is the difference in lead time and shipping method between Nordik Marine versus Aegis Maritime?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n[Source: supplier_information.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "spare_parts_catalog.csv",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "What is the difference in lead time and shipping method between Nordik Marine versus Aegis Maritime?"
+            },
+            "output": {
+              "query": "What is the difference in lead time and shipping method between Nordik Marine versus Aegis Maritime?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-020",
+        "question": "Is emergency procurement authorized up to $10,000 if the vessel is at sea with engine propulsion failure?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "In a safety emergency endangering vessel seaworthiness or blackout at sea, the Master and Chief Engineer can authorize emergency repairs up to $10,000 USD.\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "supplier_information.pdf",
+          "procurement_guidelines.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "Is emergency procurement authorized up to $10,000 if the vessel is at sea with engine propulsion failure?"
+            },
+            "output": {
+              "query": "Is emergency procurement authorized up to $10,000 if the vessel is at sea with engine propulsion failure?",
+              "total_matches": 0,
+              "returned": 0,
+              "results": []
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-021",
+        "question": "If a part code is entered as 'nv-pump-001' in lowercase, does the system recognize it as the fuel oil delivery pump?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
+        "retrieved_sources": [
+          "spare_parts_catalog.csv"
+        ],
+        "tool_calls": [
+          {
+            "tool": "csv_lookup",
+            "input": {
+              "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
+              "query": "nv-pump-001"
+            },
+            "output": {
+              "query": "nv-pump-001",
+              "total_matches": 1,
+              "returned": 1,
+              "results": [
+                {
+                  "part_number": "NV-PUMP-001",
+                  "description": "Main Engine Fuel Oil Delivery Pump",
+                  "equipment_system": "Main Propulsion Fuel System",
+                  "primary_supplier": "Nordik Marine Spares",
+                  "unit_price_usd": 4250.0,
+                  "warehouse_location": "Rotterdam",
+                  "stock_on_hand": 4,
+                  "min_safety_stock": 2,
+                  "lead_time_days": 12
+                }
+              ]
+            }
+          }
+        ],
+        "explanation": null
+      }
+    ]
+  }
+]

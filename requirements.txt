@@ -1,0 +1,14 @@
+# Core Dependencies
+pydantic>=2.10.0
+fastapi>=0.115.0
+uvicorn>=0.34.0
+requests>=2.32.0
+httpx>=0.28.0
+pyyaml>=6.0.2
+pandas>=2.2.0
+pymupdf>=1.25.0
+faiss-cpu>=1.9.0
+sentence-transformers>=3.4.0
+streamlit>=1.42.0
+pytest>=8.3.0
+python-multipart>=0.0.20

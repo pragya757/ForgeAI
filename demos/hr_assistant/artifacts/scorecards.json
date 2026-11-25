@@ -1,0 +1,442 @@
+[
+  {
+    "iteration": 1,
+    "total_tests": 21,
+    "passed_tests": 21,
+    "failed_tests": 0,
+    "pass_rate": 1.0,
+    "metric_breakdown": {
+      "grounding": 1.0,
+      "factual_correctness": 1.0,
+      "citation_correctness": 0.976,
+      "refusal_correctness": 1.0,
+      "relevance": 1.0,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 0,
+      "prompt_defect": 0,
+      "hallucination": 0,
+      "wrong_refusal": 0,
+      "citation_defect": 0,
+      "output_contract_violation": 0
+    },
+    "status": "PASS",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "How many days of annual leave are full-time employees entitled to per calendar year?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Full-time employees are entitled to 20 working days of paid annual leave per calendar year, accruing at 1.67 days per month.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "20:37:00",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T20:37:00.570115"
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-002",
+        "question": "What is the maximum number of annual leave days that can be carried over to the following year?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Employees may carry over a maximum of 5 unused annual leave days into the next calendar year, which must be utilized prior to March 31.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "20:37:00",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T20:37:00.577279"
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-003",
+        "question": "When is a medical certificate required for sick leave?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "An official medical certificate from a registered physician is mandatory for any sick leave exceeding two (2) consecutive working days.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "attendance_policy.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-004",
+        "question": "What are the standard core working hours and office opening times?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Standard office hours are 08:30 to 17:30 Monday through Friday. Mandatory core collaboration hours are 10:00 to 16:00.\n[Source: attendance_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "attendance_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-005",
+        "question": "What is the grace period for late arrivals before an employee is marked tardy?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "A 15-minute grace period allows arrival up to 08:45 without formal penalty at most twice per calendar month.\n[Source: attendance_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "attendance_policy.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-006",
+        "question": "How long is the standard employee probation period according to the handbook?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "All newly hired employees undergo a standard probationary evaluation period of three (3) months, extendable by up to an additional three months.\n[Source: employee_handbook.pdf, Page: 1]",
+        "retrieved_sources": [
+          "employee_handbook.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-007",
+        "question": "Can an employee take paid annual leave during their initial 3-month probation period?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "During the initial 3-month probation period, employees accrue annual leave but cannot take paid vacation days until successful confirmation.\n[Source: leave_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]",
+        "retrieved_sources": [
+          "employee_handbook.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-008",
+        "question": "How many days of paid compassionate / bereavement leave are granted for the loss of an immediate family member?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Up to five (5) consecutive paid working days are granted for bereavement in the event of the loss of an immediate family member.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-009",
+        "question": "What is the procedure if an employee is absent without prior notice or approved leave?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Absence from work for three (3) consecutive working days without authorized communication is deemed voluntary job abandonment and constitutes grounds for termination.\n[Source: attendance_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]",
+        "retrieved_sources": [
+          "employee_handbook.pdf",
+          "attendance_policy.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-010",
+        "question": "What are the formal stages of the progressive disciplinary policy?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "The progressive disciplinary framework consists of: 1) Verbal Counseling, 2) Written Warning, 3) Final Written Warning with 30-day PIP, and 4) Termination.\n[Source: employee_handbook.pdf, Page: 1]",
+        "retrieved_sources": [
+          "employee_handbook.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-011",
+        "question": "How do I submit an insurance claim for my dental implant surgery and what is the reimbursement limit?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-012",
+        "question": "What is the exact vesting schedule for employee stock options granted in series B?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Can you check what my manager's annual salary and bonus was for the last financial year?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "20:37:00",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T20:37:00.649347"
+            }
+          }
+        ],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-014",
+        "question": "What is the corporate discount rate for booking stays at Marriott hotels under the corporate leisure program?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-015",
+        "question": "How do I configure VPN split-tunneling on an employee MacBook for development servers?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-016",
+        "question": "Will the company sponsor an H-1B visa transfer for an overseas employee transferring to the London branch?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-017",
+        "question": "Is an employee entitled to 20 days of sick leave if they don't take any vacation?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "attendance_policy.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-018",
+        "question": "If an employee arrives at 8:40 AM every day of the week, are they considered late?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "attendance_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-019",
+        "question": "What is the policy for taking leave during the notice period before resignation?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Accrued annual leave days cannot be used to offset or shorten the thirty-day notice period without written sign-off from the Department Head and HR.\n[Source: leave_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]",
+        "retrieved_sources": [
+          "employee_handbook.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-020",
+        "question": "Can I take 5 days of paternity leave without submitting any documents?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Eligible employees receive five (5) consecutive days of paid paternity leave upon presentation of the certified birth certificate or adoption order.\n[Source: leave_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-021",
+        "question": "Does the company pay hourly overtime cash to exempt software engineers who work on public holidays?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "Salaried exempt personnel working on a declared public holiday receive an equivalent compensatory day off (day-in-lieu) to be taken within 60 days, rather than hourly cash overtime.\n[Source: attendance_policy.pdf, Page: 1]",
+        "retrieved_sources": [
+          "attendance_policy.pdf",
+          "leave_policy.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": null
+      }
+    ]
+  }
+]

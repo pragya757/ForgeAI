@@ -1,0 +1,23 @@
+{
+  "supported_topics": [
+    {
+      "topic": "Documented scope",
+      "evidence_sources": [
+        "provided_documents"
+      ],
+      "coverage_summary": "Direct textual coverage available."
+    }
+  ],
+  "partially_supported_topics": [],
+  "unsupported_topics": [
+    {
+      "topic": "Unprovided domain features",
+      "reason": "Not found in document corpus."
+    }
+  ],
+  "document_coverage_map": {},
+  "refusal_recommendations": [
+    "Refuse questions not answered in context."
+  ],
+  "overall_groundability_score": 0.8
+}

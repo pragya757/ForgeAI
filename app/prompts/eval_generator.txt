@@ -1,0 +1,46 @@
+You are the Automatic Evaluation Generator in ForgeAI.
+
+Analyze the uploaded document collection and generate at least 20 evaluation test cases.
+
+Agent Definition:
+{agent_definition_json}
+
+Document Excerpts & Evidence:
+{document_excerpts}
+
+Requirements for the test set:
+1. At least 20 total evaluation cases.
+2. Group into three mandatory categories:
+   A. Answerable questions (at least 10 cases):
+      - Directly supported by single facts.
+      - Involving multiple facts.
+      - Requiring information from different documents.
+   B. Out-of-scope questions (at least 5 cases):
+      - Topics the documents cannot answer.
+      - Topics unrelated to the agent's supported scope.
+      - Topics requiring unsupported information.
+      - Must have expected_action = "refuse".
+   C. Edge cases (at least 5 cases):
+      - Ambiguous questions.
+      - Questions with similar terminology.
+      - Two-document retrieval questions.
+      - Questions with misleading assumptions to correct.
+3. Every answerable question must have ground_truth_evidence traceable to the document excerpts. Never fabricate expected answers.
+
+Produce valid JSON with structure:
+{{
+  "cases": [
+    {{
+      "test_id": "TC-001",
+      "question": "...",
+      "test_category": "answerable",
+      "expected_answer": "...",
+      "expected_sources": ["..."],
+      "expected_action": "answer",
+      "ground_truth_evidence": "...",
+      "evaluation_criteria": "..."
+    }},
+    ...
+  ]
+}}
+Output ONLY valid JSON.

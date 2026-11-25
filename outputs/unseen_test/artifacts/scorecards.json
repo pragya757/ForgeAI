@@ -1,0 +1,816 @@
+[
+  {
+    "iteration": 1,
+    "total_tests": 21,
+    "passed_tests": 6,
+    "failed_tests": 15,
+    "pass_rate": 0.2857,
+    "metric_breakdown": {
+      "grounding": 0.643,
+      "factual_correctness": 0.643,
+      "citation_correctness": 0.643,
+      "refusal_correctness": 0.286,
+      "relevance": 1.0,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 0,
+      "prompt_defect": 0,
+      "hallucination": 0,
+      "wrong_refusal": 30,
+      "citation_defect": 0,
+      "output_contract_violation": 0
+    },
+    "status": "FAIL",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "Question 1 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-002",
+        "question": "Question 2 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-003",
+        "question": "Question 3 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-004",
+        "question": "Question 4 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-005",
+        "question": "Question 5 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-006",
+        "question": "Question 6 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-007",
+        "question": "Question 7 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-008",
+        "question": "Question 8 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-009",
+        "question": "Question 9 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-010",
+        "question": "Question 10 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-011",
+        "question": "Question 11 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-012",
+        "question": "Question 12 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Question 13 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-014",
+        "question": "Question 14 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-015",
+        "question": "Question 15 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-016",
+        "question": "Question 16 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-017",
+        "question": "Question 17 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-018",
+        "question": "Question 18 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-019",
+        "question": "Question 19 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-020",
+        "question": "Question 20 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-021",
+        "question": "Question 21 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      }
+    ]
+  },
+  {
+    "iteration": 2,
+    "total_tests": 21,
+    "passed_tests": 6,
+    "failed_tests": 15,
+    "pass_rate": 0.2857,
+    "metric_breakdown": {
+      "grounding": 0.643,
+      "factual_correctness": 0.643,
+      "citation_correctness": 0.643,
+      "refusal_correctness": 0.286,
+      "relevance": 1.0,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 0,
+      "prompt_defect": 0,
+      "hallucination": 0,
+      "wrong_refusal": 30,
+      "citation_defect": 0,
+      "output_contract_violation": 0
+    },
+    "status": "FAIL",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "Question 1 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-002",
+        "question": "Question 2 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-003",
+        "question": "Question 3 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-004",
+        "question": "Question 4 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-005",
+        "question": "Question 5 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-006",
+        "question": "Question 6 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-007",
+        "question": "Question 7 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-008",
+        "question": "Question 8 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-009",
+        "question": "Question 9 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-010",
+        "question": "Question 10 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-011",
+        "question": "Question 11 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-012",
+        "question": "Question 12 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Question 13 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-014",
+        "question": "Question 14 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-015",
+        "question": "Question 15 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-016",
+        "question": "Question 16 regarding domain document details?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-017",
+        "question": "Question 17 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-018",
+        "question": "Question 18 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-019",
+        "question": "Question 19 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-020",
+        "question": "Question 20 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      },
+      {
+        "test_id": "TC-021",
+        "question": "Question 21 regarding domain document details?",
+        "passed": false,
+        "grounding_score": 0.5,
+        "factual_correctness": 0.5,
+        "citation_correctness": 0.5,
+        "refusal_correctness": 0.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "failure_reasons": [
+          "wrong_refusal: Agent refused an answerable in-scope question.",
+          "wrong_refusal: Refused an answerable question."
+        ],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": null
+      }
+    ]
+  }
+]

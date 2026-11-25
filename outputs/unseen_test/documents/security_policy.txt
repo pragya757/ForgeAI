@@ -1,0 +1,5 @@
+GLOBAL SECURITY OPERATIONS - ASSET ENCRYPTION AND INCIDENT RESPONSE POLICY
+1. Laptop Hard Drive Encryption: All company-issued laptops must enforce BitLocker (Windows) or FileVault (macOS) with AES-256 bit encryption.
+2. Incident Escalation SLA: Suspected malware or ransomware activity must be reported to the Security Operations Center (soc@enterprise.com) within fifteen (15) minutes.
+3. USB Storage Media Prohibition: Removable USB flash drives and unauthorized external hard disks are blocked at the kernel level across all company workstations.
+4. Remote Access VPN: Access to internal networks requires WireGuard enterprise VPN with hardware FIDO2 security key authentication.

@@ -1,0 +1,44 @@
+[
+  {
+    "iteration_number": 1,
+    "previous_score": 0.2857,
+    "failed_test_ids": [
+      "TC-001",
+      "TC-002",
+      "TC-003",
+      "TC-004",
+      "TC-005",
+      "TC-006",
+      "TC-007",
+      "TC-008",
+      "TC-009",
+      "TC-010",
+      "TC-017",
+      "TC-018",
+      "TC-019",
+      "TC-020",
+      "TC-021"
+    ],
+    "failure_categories": [
+      "wrong_refusal"
+    ],
+    "identified_root_causes": "Refusal boundary ambiguity caused misclassified inquiries.",
+    "changes_applied": [
+      {
+        "target": "system_prompt (refusal boundary clause)",
+        "previous_value": "standard refusal policy",
+        "new_value": "clarified refusal criteria and required evidence synthesis",
+        "reason": "Fix over-refusal / under-refusal on tests: ['TC-001', 'TC-002', 'TC-003', 'TC-004', 'TC-005', 'TC-006', 'TC-007', 'TC-008', 'TC-009', 'TC-010', 'TC-017', 'TC-018', 'TC-019', 'TC-020', 'TC-021']"
+      }
+    ],
+    "reason_for_each_change": "Targeted adjustments to resolve identified failure modes without full regeneration.",
+    "updated_configuration": {
+      "top_k": 4,
+      "similarity_threshold": 0.35,
+      "chunk_size": 500,
+      "chunk_overlap": 100
+    },
+    "new_score": 0.2857,
+    "improvement_or_regression": "UNCHANGED"
+  }
+]

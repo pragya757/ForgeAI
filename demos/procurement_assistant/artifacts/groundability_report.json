@@ -1,0 +1,66 @@
+{
+  "supported_topics": [
+    {
+      "topic": "Spare parts catalog lookup",
+      "evidence_sources": [
+        "spare_parts_catalog.csv"
+      ],
+      "coverage_summary": "Full part numbers, descriptions, unit costs, and warehouse stock."
+    },
+    {
+      "topic": "Supplier price comparison",
+      "evidence_sources": [
+        "supplier_information.pdf",
+        "spare_parts_catalog.csv"
+      ],
+      "coverage_summary": "Vendor lists, quality ratings, and discount tiers."
+    },
+    {
+      "topic": "PO approval tiers",
+      "evidence_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "coverage_summary": "Chief Engineer sign-off up to $2,500, Superintendent up to $25,000."
+    }
+  ],
+  "partially_supported_topics": [
+    {
+      "topic": "Lead times",
+      "evidence_sources": [
+        "supplier_information.pdf"
+      ],
+      "missing_aspects": "Air freight express turnaround dates are only estimated."
+    }
+  ],
+  "unsupported_topics": [
+    {
+      "topic": "Direct automated wire transfers",
+      "reason": "No financial transaction processing supported."
+    },
+    {
+      "topic": "Crew payroll",
+      "reason": "Vessel payroll documentation is not included."
+    }
+  ],
+  "document_coverage_map": {
+    "spare_parts_catalog.csv": [
+      "Part numbers",
+      "Stock levels",
+      "Base prices"
+    ],
+    "supplier_information.pdf": [
+      "Vendor ratings",
+      "Terms",
+      "Lead times"
+    ],
+    "procurement_guidelines.pdf": [
+      "Approval limits",
+      "Emergency purchase protocols"
+    ]
+  },
+  "refusal_recommendations": [
+    "Refuse payment execution requests.",
+    "Refuse legal liability waivers outside standard supplier contracts."
+  ],
+  "overall_groundability_score": 0.88
+}
