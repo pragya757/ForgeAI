@@ -370,23 +370,41 @@ class MockLLMClient(BaseLLMClient):
                 "unsupported_topics": ["Wire transfers", "Crew payroll", "Direct credit card payments"],
                 "must_refuse_topics": ["Wire transfers", "Crew payroll", "Customs bribery"],
                 "document_references": ["spare_parts_catalog.csv", "supplier_information.pdf", "procurement_guidelines.pdf"],
-                "chunk_size": 600,
-                "chunk_overlap": 120,
+                "chunk_size": 400,
+                "chunk_overlap": 80,
                 "embedding_model": "all-MiniLM-L6-v2",
                 "retrieval_method": "dense_vector_faiss",
                 "top_k": 5,
                 "similarity_threshold": 0.30,
-                "reranking_config": None,
+                "reranking_config": {
+                    "enabled": True,
+                    "method": "cross_encoder",
+                    "top_n": 3,
+                    "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+                },
+                "metadata_config": {
+                    "tracked_fields": ["source", "page", "file_type", "total_pages"],
+                    "include_in_context": True,
+                    "citation_metadata_format": "[Source: <source>, Page: <page>]"
+                },
                 "tool_selection": ["csv_lookup", "calculator", "current_date"],
+                "tool_justifications": {
+                    "csv_lookup": "Structured CSV tabular spare parts catalog requires row-level querying.",
+                    "calculator": "Enables unit price comparisons, threshold arithmetic, and currency totals.",
+                    "current_date": "Required for verifying lead time deadlines and delivery dates."
+                },
                 "output_contract": {
                     "format": "markdown",
                     "require_citations": True,
-                    "citation_format": "[Source: <document_name>]",
-                    "refusal_phrase": "I am not authorized to process this request as it falls outside verified procurement documentation."
+                    "citation_format": "[Source: <document_name>, Page: <page>]",
+                    "refusal_phrase": "I am not authorized to process this request as it falls outside verified procurement documentation.",
+                    "section_headers": ["Direct Answer", "Evidence & Citations"]
                 },
                 "citation_requirements": {
                     "must_cite": True,
-                    "format": "[Source: <filename>]"
+                    "format": "[Source: <filename>, Page: <page>]",
+                    "granularity": "sentence_level",
+                    "prohibit_unanchored_claims": True
                 },
                 "refusal_policy": "Strict refusal on payment execution and undocumented financial procedures.",
                 "model_config": {
@@ -415,17 +433,33 @@ class MockLLMClient(BaseLLMClient):
                 "retrieval_method": "dense_vector_faiss",
                 "top_k": 4,
                 "similarity_threshold": 0.35,
-                "reranking_config": None,
+                "reranking_config": {
+                    "enabled": True,
+                    "method": "cross_encoder",
+                    "top_n": 3,
+                    "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+                },
+                "metadata_config": {
+                    "tracked_fields": ["source", "page", "file_type", "total_pages"],
+                    "include_in_context": True,
+                    "citation_metadata_format": "[Source: <source>, Page: <page>]"
+                },
                 "tool_selection": ["current_date"],
+                "tool_justifications": {
+                    "current_date": "Required for checking ongoing policy year validity and leave balance periods."
+                },
                 "output_contract": {
                     "format": "markdown",
                     "require_citations": True,
                     "citation_format": "[Source: <document_name>, Page: <page>]",
-                    "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope."
+                    "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+                    "section_headers": ["Direct Answer", "Evidence & Citations"]
                 },
                 "citation_requirements": {
                     "must_cite": True,
-                    "format": "[Source: <filename>]"
+                    "format": "[Source: <filename>, Page: <page>]",
+                    "granularity": "sentence_level",
+                    "prohibit_unanchored_claims": True
                 },
                 "refusal_policy": "Strict refusal on any question concerning salary, medical claims, or ungrounded topics.",
                 "model_config": {
@@ -436,27 +470,91 @@ class MockLLMClient(BaseLLMClient):
         else:
             doc_refs = re.findall(r'"filename":\s*"([^"]+)"', text)
             if not doc_refs:
-                doc_refs = ["document.txt"]
+                doc_refs = ["specifications.txt"]
+
+            # Parse agent name from text if available
+            agent_name_match = re.search(r'"agent_name":\s*"([^"]+)"', text)
+            agent_name = agent_name_match.group(1) if agent_name_match else "Autonomous Operations Assistant"
+
+            domain_match = re.search(r'"domain":\s*"([^"]+)"', text)
+            domain = domain_match.group(1) if domain_match else "Specialized Technical Operations"
+
+            # Parse supported topics from text
+            supported_match = re.search(r'"sanitized_answerable_topics":\s*\[(.*?)\]', text, re.DOTALL)
+            supported_topics = [s.strip().strip('"') for s in supported_match.group(1).split(",") if s.strip()] if supported_match else ["Operational specifications", "Safety procedures"]
+
+            # Parse unsupported topics cleanly from groundability JSON
+            unsupported_topics = []
+            unsupported_match = re.search(r'"unsupported_topics":\s*\[(.*?)\]\s*,\s*"document_coverage_map"', text, re.DOTALL)
+            if unsupported_match:
+                unsupported_topics = re.findall(r'"topic":\s*"([^"]+)"', unsupported_match.group(1))
+            if not unsupported_topics:
+                unsupported_topics = ["External execution", "Undocumented speculations"]
+
+            has_csv = any(d.endswith(".csv") for d in doc_refs)
+            chunk_size = 400 if has_csv else 500
+            chunk_overlap = 80 if has_csv else 100
+
+            tools = ["current_date"]
+            justifications = {"current_date": "Required for temporal verification of operational timestamps."}
+            if has_csv:
+                tools.append("csv_lookup")
+                justifications["csv_lookup"] = "Tabular data detected; provides structured row querying."
+
+            sys_prompt = (
+                f"You are {agent_name}, an autonomous AI domain specialist.\n\n"
+                f"### MISSION & IDENTITY\n"
+                f"- Domain: {domain}\n"
+                f"- Target Audience: Technical operators and domain engineers\n\n"
+                f"### STRICT REFUSAL POLICY\n"
+                f"- You MUST refuse to answer queries concerning unsupported topics: {', '.join(unsupported_topics)}.\n"
+                f"- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n"
+                f"### CITATION & OUTPUT CONTRACT\n"
+                f"- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>]."
+            )
+
             data = {
-                "agent_name": "Enterprise Knowledge Assistant",
-                "description": "Generic knowledge assistant for uploaded documents.",
-                "system_prompt": "Answer queries based solely on retrieved evidence. Always cite source documents. Refuse ungrounded queries.",
-                "target_audience": "General users",
-                "supported_topics": ["General policy", "Documented facts"],
-                "unsupported_topics": ["External speculations"],
-                "must_refuse_topics": ["External speculations"],
+                "agent_name": agent_name,
+                "description": f"Domain operational assistant for {agent_name}.",
+                "system_prompt": sys_prompt,
+                "target_audience": "Technical operators and domain engineers",
+                "supported_topics": supported_topics,
+                "unsupported_topics": unsupported_topics,
+                "must_refuse_topics": unsupported_topics,
                 "document_references": doc_refs,
-                "chunk_size": 500,
-                "chunk_overlap": 100,
+                "chunk_size": chunk_size,
+                "chunk_overlap": chunk_overlap,
                 "embedding_model": "all-MiniLM-L6-v2",
                 "retrieval_method": "dense_vector_faiss",
                 "top_k": 4,
                 "similarity_threshold": 0.35,
-                "reranking_config": None,
-                "tool_selection": ["current_date"],
-                "output_contract": {"format": "markdown", "require_citations": True},
-                "citation_requirements": {"must_cite": True, "format": "[Source: <filename>]"},
-                "refusal_policy": "Refuse all ungrounded questions.",
+                "reranking_config": {
+                    "enabled": len(doc_refs) >= 3,
+                    "method": "cross_encoder",
+                    "top_n": 3,
+                    "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+                },
+                "metadata_config": {
+                    "tracked_fields": ["source", "page", "file_type", "total_pages"],
+                    "include_in_context": True,
+                    "citation_metadata_format": "[Source: <source>, Page: <page>]"
+                },
+                "tool_selection": tools,
+                "tool_justifications": justifications,
+                "output_contract": {
+                    "format": "markdown",
+                    "require_citations": True,
+                    "citation_format": "[Source: <document_name>, Page: <page>]",
+                    "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+                    "section_headers": ["Direct Answer", "Evidence & Citations"]
+                },
+                "citation_requirements": {
+                    "must_cite": True,
+                    "format": "[Source: <filename>, Page: <page>]",
+                    "granularity": "sentence_level",
+                    "prohibit_unanchored_claims": True
+                },
+                "refusal_policy": "Strict refusal on ungrounded claims, undocumented speculations, or unsupported topics.",
                 "model_config": {"temperature": 0.1, "max_tokens": 1024}
             }
         return json.dumps(data, indent=2)
