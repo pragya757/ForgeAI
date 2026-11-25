@@ -1,9 +1,15 @@
 {
   "agent_name": "Ship-Spares Procurement Assistant",
   "purpose": "Assist procurement officers in searching marine spare parts, comparing supplier pricing, checking availability, and following maritime procurement guidelines.",
+  "user_intent": "Lookup parts, check stock, compare vendor quotes, and verify purchase approval limits.",
   "target_audience": "Vessel procurement staff and technical superintendents",
+  "domain": "Maritime Procurement & Supply Chain",
   "scope": "Spare parts catalog lookup, supplier price comparison, purchase approval thresholds, and delivery lead times.",
   "tone": "Operational, accurate, and concise",
+  "constraints": [
+    "Strict adherence to PO authorization tiers",
+    "No direct financial write capabilities"
+  ],
   "must_answer_topics": [
     "Part number lookup",
     "Supplier price comparison",
@@ -26,27 +32,62 @@
     {
       "filename": "procurement_guidelines.pdf",
       "format": "PDF",
-      "description": "Contains approx 1479 characters. Sample: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES DOCUMENT REF: POL-PROC-2024 | FLEET COMPLIA...",
+      "description": "Format PDF. Approx 1479 chars. Preview: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES DOCUMENT REF: POL-PROC-2024 | FLEET COMPLIANCE & AUTHORIZATION ...",
       "page_count": 1,
-      "record_count": null
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 GENERAL PROCUREMENT OBJECTIVES, All purchase orders over, SECTION 3 FINANCIAL DELEGATION OF AUTHORITY (DOA), SECTION 4 EMERGENCY PROCUREMENT PROTOCOL",
+      "detected_topics": [
+        "SECTION 1 GENERAL PROCUREMENT OBJECTIVES",
+        "All purchase orders over",
+        "SECTION 3 FINANCIAL DELEGATION OF AUTHORITY (DOA)",
+        "SECTION 4 EMERGENCY PROCUREMENT PROTOCOL",
+        "SECTION 5 STRICT PROHIBITIONS & COMPLIANCE"
+      ]
     },
     {
       "filename": "spare_parts_catalog.csv",
       "format": "CSV",
-      "description": "Contains approx 2003 characters. Sample: [Row 1] part_number: NV-PUMP-001, description: Main Engine Fuel Oil Delivery Pump, equipment_system:...",
-      "page_count": 2,
-      "record_count": null
+      "description": "Format CSV. Approx 2003 chars. Preview: [Row 1] part_number: NV-PUMP-001, description: Main Engine Fuel Oil Delivery Pump, equipment_system: Main Propulsion Fue...",
+      "page_count": null,
+      "record_count": 7,
+      "content_summary": "Covers topics: Main Engine Fuel Oil Delivery Pump, Main Propulsion Fuel System, Nordik Marine Spares, Turbocharger High",
+      "detected_topics": [
+        "Main Engine Fuel Oil Delivery Pump",
+        "Main Propulsion Fuel System",
+        "Nordik Marine Spares",
+        "Turbocharger High",
+        "Speed Bearing Assembly"
+      ]
     },
     {
       "filename": "supplier_information.pdf",
       "format": "PDF",
-      "description": "Contains approx 1494 characters. Sample: PACIFIC HORIZON MARITIME - APPROVED SUPPLIER DIRECTORY DOCUMENT REF: DIR-SUPP-2024 | FLEET TECHNICAL...",
+      "description": "Format PDF. Approx 1494 chars. Preview: PACIFIC HORIZON MARITIME - APPROVED SUPPLIER DIRECTORY DOCUMENT REF: DIR-SUPP-2024 | FLEET TECHNICAL SPECIFICATIONS SECT...",
       "page_count": 1,
-      "record_count": null
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 APPROVED VENDOR OVERVIEW, SECTION 2 VENDOR PROFILES & PERFORMANCE RATINGS, Payment Terms, sea freight",
+      "detected_topics": [
+        "SECTION 1 APPROVED VENDOR OVERVIEW",
+        "SECTION 2 VENDOR PROFILES & PERFORMANCE RATINGS",
+        "Payment Terms",
+        "sea freight",
+        "SECTION 3 MANDATORY WARRANTY REQUIREMENTS"
+      ]
     }
   ],
+  "information_gaps": {
+    "missing_information": [
+      "Emergency air freight customs surcharge tables are not provided in uploaded files."
+    ],
+    "contradictory_information": [],
+    "duplicated_information": [],
+    "incomplete_information": []
+  },
   "assumptions": [
-    "Prices listed in CSV are in USD and exclude freight unless specified."
+    "Prices listed in CSV are in USD and exclude freight unless specified.",
+    "Unattended defaults apply conservative threshold rules.",
+    "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
+    "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
   ],
   "ambiguities": [
     "Whether expedited freight quotes require superintendent sign-off."

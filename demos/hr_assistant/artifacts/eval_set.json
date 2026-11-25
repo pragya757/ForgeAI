@@ -4,11 +4,18 @@
       "test_id": "TC-001",
       "question": "How many days of annual leave are full-time employees entitled to per calendar year?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Full-time employees are entitled to 20 days of paid annual leave per calendar year.",
+      "expected_facts": [
+        "Full-time employees are entitled to 20 days of paid annual leave per calendar year."
+      ],
       "expected_sources": [
         "leave_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 2.1: Full-time employees accrue 20 working days of paid annual leave per calendar year.",
       "evaluation_criteria": "Must state 20 days paid annual leave and cite leave_policy.pdf."
     },
@@ -16,11 +23,18 @@
       "test_id": "TC-002",
       "question": "What is the maximum number of annual leave days that can be carried over to the following year?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Employees may carry over a maximum of 5 unused annual leave days, which must be used by March 31.",
+      "expected_facts": [
+        "Employees may carry over a maximum of 5 unused annual leave days, which must be used by March 31."
+      ],
       "expected_sources": [
         "leave_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 2.4: A maximum of 5 unused leave days can be carried over to the next year and must be taken before March 31.",
       "evaluation_criteria": "Must mention 5 days limit and March 31 expiration."
     },
@@ -28,11 +42,18 @@
       "test_id": "TC-003",
       "question": "When is a medical certificate required for sick leave?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "A medical certificate from a licensed physician is required for sick leave exceeding two consecutive working days.",
+      "expected_facts": [
+        "A medical certificate from a licensed physician is required for sick leave exceeding two consecutive working days."
+      ],
       "expected_sources": [
         "leave_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 3.2: For any sick leave exceeding two (2) consecutive working days, an official medical certificate is mandatory.",
       "evaluation_criteria": "Must identify threshold of more than 2 consecutive days."
     },
@@ -40,11 +61,18 @@
       "test_id": "TC-004",
       "question": "What are the standard core working hours and office opening times?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "The office operates from 8:30 AM to 5:30 PM, with mandatory core working hours from 10:00 AM to 4:00 PM.",
+      "expected_facts": [
+        "The office operates from 8:30 AM to 5:30 PM, with mandatory core working hours from 10:00 AM to 4:00 PM."
+      ],
       "expected_sources": [
         "attendance_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 1.1: Standard office hours are 08:30 to 17:30 Monday through Friday. Core collaboration hours are 10:00 to 16:00.",
       "evaluation_criteria": "Must state 8:30-17:30 office hours and 10:00-16:00 core hours."
     },
@@ -52,11 +80,18 @@
       "test_id": "TC-005",
       "question": "What is the grace period for late arrivals before an employee is marked tardy?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "A grace period of 15 minutes is permitted, allowing arrival up to 8:45 AM up to twice per month without penalty.",
+      "expected_facts": [
+        "A grace period of 15 minutes is permitted, allowing arrival up to 8:45 AM up to twice per month without penalty."
+      ],
       "expected_sources": [
         "attendance_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 2.1: A 15-minute grace window applies. Arrivals up to 08:45 are tolerated without formal penalty at most twice per calendar month.",
       "evaluation_criteria": "Must mention 15-minute grace window."
     },
@@ -64,11 +99,18 @@
       "test_id": "TC-006",
       "question": "How long is the standard employee probation period according to the handbook?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "The standard probationary period is three (3) months, extendable by up to another three months upon written review.",
+      "expected_facts": [
+        "The standard probationary period is three (3) months, extendable by up to another three months upon written review."
+      ],
       "expected_sources": [
         "employee_handbook.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 2.1: All newly hired employees undergo a probationary evaluation period of three (3) months.",
       "evaluation_criteria": "Must specify 3 months probationary duration."
     },
@@ -76,12 +118,20 @@
       "test_id": "TC-007",
       "question": "Can an employee take paid annual leave during their initial 3-month probation period?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Annual leave does not accrue for immediate use during the first 3 months of probation; employees cannot take paid vacation days until successful confirmation.",
+      "expected_facts": [
+        "Annual leave does not accrue for immediate use during the first 3 months of probation; employees cannot take paid vacation days until successful confirmation."
+      ],
       "expected_sources": [
         "leave_policy.pdf",
         "employee_handbook.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1",
+        "Page 1"
+      ],
       "ground_truth_evidence": "Leave Policy 2.3 & Handbook 2.4: Probationary employees cannot take paid annual leave until probation confirmation.",
       "evaluation_criteria": "Multi-document fact: must note restriction on taking annual leave during probation."
     },
@@ -89,11 +139,18 @@
       "test_id": "TC-008",
       "question": "How many days of paid compassionate / bereavement leave are granted for the loss of an immediate family member?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Employees are granted up to five (5) consecutive paid working days for bereavement of an immediate family member.",
+      "expected_facts": [
+        "Employees are granted up to five (5) consecutive paid working days for bereavement of an immediate family member."
+      ],
       "expected_sources": [
         "leave_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 4.1: Up to 5 consecutive paid working days are granted in the event of the death of an immediate family member.",
       "evaluation_criteria": "Must state 5 consecutive paid working days."
     },
@@ -101,12 +158,20 @@
       "test_id": "TC-009",
       "question": "What is the procedure if an employee is absent without prior notice or approved leave?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Absence for three consecutive working days without authorized communication is deemed voluntary job abandonment and grounds for immediate termination.",
+      "expected_facts": [
+        "Absence for three consecutive working days without authorized communication is deemed voluntary job abandonment and grounds for immediate termination."
+      ],
       "expected_sources": [
         "attendance_policy.pdf",
         "employee_handbook.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1",
+        "Page 1"
+      ],
       "ground_truth_evidence": "Attendance Policy 4.2: Absence for three (3) consecutive working days without communication constitutes job abandonment.",
       "evaluation_criteria": "Must identify 3 consecutive days without notice as job abandonment."
     },
@@ -114,11 +179,18 @@
       "test_id": "TC-010",
       "question": "What are the formal stages of the progressive disciplinary policy?",
       "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "The stages are: 1) Verbal Counseling, 2) Written Warning, 3) Final Written Warning with 30-day PIP, and 4) Termination.",
+      "expected_facts": [
+        "The stages are: 1) Verbal Counseling, 2) Written Warning, 3) Final Written Warning with 30-day PIP, and 4) Termination."
+      ],
       "expected_sources": [
         "employee_handbook.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Section 8.1: Progressive discipline consists of Verbal Counseling, Written Warning, Final Warning with PIP, and Termination.",
       "evaluation_criteria": "Must list progressive disciplinary stages accurately."
     },
@@ -126,9 +198,14 @@
       "test_id": "TC-011",
       "question": "How do I submit an insurance claim for my dental implant surgery and what is the reimbursement limit?",
       "test_category": "out_of_scope",
-      "expected_answer": "Refuse: Health and dental insurance claims are outside the scope of the provided policy documents.",
-      "expected_sources": [],
+      "subcategory": null,
       "expected_action": "refuse",
+      "expected_answer": "Refuse: Health and dental insurance claims are outside the scope of the provided policy documents.",
+      "expected_facts": [
+        "Refuse: Health and dental insurance claims are outside the scope of the provided policy documents."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
       "ground_truth_evidence": "No health or dental insurance policy exists in the document corpus.",
       "evaluation_criteria": "Must refuse to answer and cite lack of insurance policy documentation."
     },
@@ -136,9 +213,14 @@
       "test_id": "TC-012",
       "question": "What is the exact vesting schedule for employee stock options granted in series B?",
       "test_category": "out_of_scope",
-      "expected_answer": "Refuse: Stock option grants and equity vesting schedules are not covered in the workplace policies.",
-      "expected_sources": [],
+      "subcategory": null,
       "expected_action": "refuse",
+      "expected_answer": "Refuse: Stock option grants and equity vesting schedules are not covered in the workplace policies.",
+      "expected_facts": [
+        "Refuse: Stock option grants and equity vesting schedules are not covered in the workplace policies."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
       "ground_truth_evidence": "No stock option or equity documentation is present.",
       "evaluation_criteria": "Must refuse to answer equity/stock queries."
     },
@@ -146,9 +228,14 @@
       "test_id": "TC-013",
       "question": "Can you check what my manager's annual salary and bonus was for the last financial year?",
       "test_category": "out_of_scope",
-      "expected_answer": "Refuse: Personal salary, compensation figures, and executive bonuses are strictly confidential and outside scope.",
-      "expected_sources": [],
+      "subcategory": null,
       "expected_action": "refuse",
+      "expected_answer": "Refuse: Personal salary, compensation figures, and executive bonuses are strictly confidential and outside scope.",
+      "expected_facts": [
+        "Refuse: Personal salary, compensation figures, and executive bonuses are strictly confidential and outside scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
       "ground_truth_evidence": "Personal compensation records are unsupported and explicitly forbidden.",
       "evaluation_criteria": "Must firmly refuse to disclose salary/compensation details."
     },
@@ -156,9 +243,14 @@
       "test_id": "TC-014",
       "question": "What is the corporate discount rate for booking stays at Marriott hotels under the corporate leisure program?",
       "test_category": "out_of_scope",
-      "expected_answer": "Refuse: External corporate travel leisure discounts are not detailed in the handbook or leave documents.",
-      "expected_sources": [],
+      "subcategory": null,
       "expected_action": "refuse",
+      "expected_answer": "Refuse: External corporate travel leisure discounts are not detailed in the handbook or leave documents.",
+      "expected_facts": [
+        "Refuse: External corporate travel leisure discounts are not detailed in the handbook or leave documents."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
       "ground_truth_evidence": "No hotel discount or external leisure program exists in the corpus.",
       "evaluation_criteria": "Must refuse out-of-scope corporate hotel discount queries."
     },
@@ -166,9 +258,14 @@
       "test_id": "TC-015",
       "question": "How do I configure VPN split-tunneling on an employee MacBook for development servers?",
       "test_category": "out_of_scope",
-      "expected_answer": "Refuse: IT network configuration and VPN engineering instructions are outside the HR policy scope.",
-      "expected_sources": [],
+      "subcategory": null,
       "expected_action": "refuse",
+      "expected_answer": "Refuse: IT network configuration and VPN engineering instructions are outside the HR policy scope.",
+      "expected_facts": [
+        "Refuse: IT network configuration and VPN engineering instructions are outside the HR policy scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
       "ground_truth_evidence": "IT technical network configuration is unsupported.",
       "evaluation_criteria": "Must refuse IT network configuration requests."
     },
@@ -176,9 +273,14 @@
       "test_id": "TC-016",
       "question": "Will the company sponsor an H-1B visa transfer for an overseas employee transferring to the London branch?",
       "test_category": "out_of_scope",
-      "expected_answer": "Refuse: International immigration and visa sponsorship criteria are not covered in the provided policies.",
-      "expected_sources": [],
+      "subcategory": null,
       "expected_action": "refuse",
+      "expected_answer": "Refuse: International immigration and visa sponsorship criteria are not covered in the provided policies.",
+      "expected_facts": [
+        "Refuse: International immigration and visa sponsorship criteria are not covered in the provided policies."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
       "ground_truth_evidence": "No immigration or visa sponsorship documentation is provided.",
       "evaluation_criteria": "Must refuse immigration and visa sponsorship queries."
     },
@@ -186,11 +288,18 @@
       "test_id": "TC-017",
       "question": "Is an employee entitled to 20 days of sick leave if they don't take any vacation?",
       "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "No. Annual leave (20 days) and sick leave (10 days) are separate allotments and cannot be converted or swapped into each other.",
+      "expected_facts": [
+        "No. Annual leave (20 days) and sick leave (10 days) are separate allotments and cannot be converted or swapped into each other."
+      ],
       "expected_sources": [
         "leave_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Leave Policy 3.1 & 2.1: Sick leave is an independent allotment of 10 days per year and cannot be converted into annual leave.",
       "evaluation_criteria": "Must address misleading assumption: clarifying sick leave is 10 days, not 20, and distinct from annual leave."
     },
@@ -198,11 +307,18 @@
       "test_id": "TC-018",
       "question": "If an employee arrives at 8:40 AM every day of the week, are they considered late?",
       "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Yes. While 8:40 AM is within the 15-minute grace period, the policy allows grace arrivals at most twice per calendar month. Recurring arrivals after 8:30 AM violate the attendance policy.",
+      "expected_facts": [
+        "Yes. While 8:40 AM is within the 15-minute grace period, the policy allows grace arrivals at most twice per calendar month. Recurring arrivals after 8:30 AM violate the attendance policy."
+      ],
       "expected_sources": [
         "attendance_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Attendance Policy 2.1: Grace period applies up to twice per calendar month. Daily arrivals after 08:30 trigger formal review.",
       "evaluation_criteria": "Must identify monthly frequency limit (max twice) on grace window."
     },
@@ -210,12 +326,20 @@
       "test_id": "TC-019",
       "question": "What is the policy for taking leave during the notice period before resignation?",
       "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "During the resignation notice period, annual leave cannot be taken to shorten the required notice period unless explicitly approved in writing by HR and management.",
+      "expected_facts": [
+        "During the resignation notice period, annual leave cannot be taken to shorten the required notice period unless explicitly approved in writing by HR and management."
+      ],
       "expected_sources": [
         "leave_policy.pdf",
         "employee_handbook.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1",
+        "Page 1"
+      ],
       "ground_truth_evidence": "Leave Policy 2.6 & Handbook 9.2: Notice period cannot be offset by accrued annual leave without written approval.",
       "evaluation_criteria": "Multi-document synthesis: requires written approval and cannot automatically offset notice period."
     },
@@ -223,11 +347,18 @@
       "test_id": "TC-020",
       "question": "Can I take 5 days of paternity leave without submitting any documents?",
       "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "No. Paternity leave (up to 5 paid days) requires presentation of the certified birth certificate or adoption order.",
+      "expected_facts": [
+        "No. Paternity leave (up to 5 paid days) requires presentation of the certified birth certificate or adoption order."
+      ],
       "expected_sources": [
         "leave_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Leave Policy 5.2: Paternity leave requires presentation of the certified birth certificate or adoption order.",
       "evaluation_criteria": "Must correct assumption: requires supporting birth/adoption certificate."
     },
@@ -235,11 +366,18 @@
       "test_id": "TC-021",
       "question": "Does the company pay hourly overtime cash to exempt software engineers who work on public holidays?",
       "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
       "expected_answer": "Salaried exempt employees do not receive hourly overtime pay; instead, working on an approved public holiday grants an equivalent compensatory day off (day-in-lieu) within 60 days.",
+      "expected_facts": [
+        "Salaried exempt employees do not receive hourly overtime pay; instead, working on an approved public holiday grants an equivalent compensatory day off (day-in-lieu) within 60 days."
+      ],
       "expected_sources": [
         "attendance_policy.pdf"
       ],
-      "expected_action": "answer",
+      "source_locations": [
+        "Page 1"
+      ],
       "ground_truth_evidence": "Attendance Policy 3.2 & 3.3: Salaried exempt personnel receive compensatory time off (day-in-lieu) rather than monetary overtime pay.",
       "evaluation_criteria": "Must clarify day-in-lieu rather than hourly overtime cash payout."
     }

@@ -1,9 +1,15 @@
 {
   "agent_name": "HR Policy Assistant",
   "purpose": "Assist employees with inquiries regarding leave policies, attendance rules, holidays, and workplace guidelines based strictly on verified documents.",
+  "user_intent": "Provide verified employee handbook answers on leave, attendance, and conduct while refusing salary and insurance claims.",
   "target_audience": "Company employees and managers",
+  "domain": "Corporate Human Resources",
   "scope": "Company leave rules, attendance standards, working hours, and conduct guidelines.",
   "tone": "Professional, supportive, and precise",
+  "constraints": [
+    "Strict grounding in verified policies",
+    "Zero salary or personal compensation data disclosure"
+  ],
   "must_answer_topics": [
     "Annual leave",
     "Sick leave",
@@ -25,27 +31,62 @@
     {
       "filename": "attendance_policy.pdf",
       "format": "PDF",
-      "description": "Contains approx 1483 characters. Sample: APEX GLOBAL TECHNOLOGIES - WORKPLACE ATTENDANCE & HOURS POLICY DOCUMENT REF: POL-HR-002 | REVISED OP...",
+      "description": "Format PDF. Approx 1483 chars. Preview: APEX GLOBAL TECHNOLOGIES - WORKPLACE ATTENDANCE & HOURS POLICY DOCUMENT REF: POL-HR-002 | REVISED OPERATIONAL STANDARDS ...",
       "page_count": 1,
-      "record_count": null
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 WORKING HOURS & COLLABORATION CORE, Business Hours, SECTION 2 PUNCTUALITY & TARDINESS, SECTION 3 PUBLIC HOLIDAYS & OVERTIME RULES",
+      "detected_topics": [
+        "SECTION 1 WORKING HOURS & COLLABORATION CORE",
+        "Business Hours",
+        "SECTION 2 PUNCTUALITY & TARDINESS",
+        "SECTION 3 PUBLIC HOLIDAYS & OVERTIME RULES",
+        "SECTION 4 UNEXCUSED ABSENCES & JOB ABANDONMENT"
+      ]
     },
     {
       "filename": "employee_handbook.pdf",
       "format": "PDF",
-      "description": "Contains approx 1963 characters. Sample: APEX GLOBAL TECHNOLOGIES - GENERAL EMPLOYEE HANDBOOK DOCUMENT REF: HB-CORP-2024 | GENERAL CODE OF CO...",
+      "description": "Format PDF. Approx 1963 chars. Preview: APEX GLOBAL TECHNOLOGIES - GENERAL EMPLOYEE HANDBOOK DOCUMENT REF: HB-CORP-2024 | GENERAL CODE OF CONDUCT & OPERATIONS S...",
       "page_count": 1,
-      "record_count": null
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 INTRODUCTION & ETHICAL CODE, SECTION 2 PROBATIONARY EMPLOYMENT, SECTION 4 PROGRESSIVE DISCIPLINARY PROCEDURE, SECTION 5 RESIGNATION & NOTICE PERIOD",
+      "detected_topics": [
+        "SECTION 1 INTRODUCTION & ETHICAL CODE",
+        "SECTION 2 PROBATIONARY EMPLOYMENT",
+        "SECTION 4 PROGRESSIVE DISCIPLINARY PROCEDURE",
+        "SECTION 5 RESIGNATION & NOTICE PERIOD",
+        "confirmed employees must provide thirty"
+      ]
     },
     {
       "filename": "leave_policy.pdf",
       "format": "PDF",
-      "description": "Contains approx 1951 characters. Sample: APEX GLOBAL TECHNOLOGIES - HR POLICY MANUAL DOCUMENT REF: POL-HR-001 | VERSION 3.2 | ANNUAL REVISION...",
+      "description": "Format PDF. Approx 1951 chars. Preview: APEX GLOBAL TECHNOLOGIES - HR POLICY MANUAL DOCUMENT REF: POL-HR-001 | VERSION 3.2 | ANNUAL REVISION SECTION 1: PURPOSE ...",
       "page_count": 1,
-      "record_count": null
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 PURPOSE AND APPLICABILITY, SECTION 2 ANNUAL LEAVE (VACATION), SECTION 3 SICK LEAVE & MEDICAL EMERGENCIES, SECTION 4 COMPASSIONATE & BEREAVEMENT LEAVE",
+      "detected_topics": [
+        "SECTION 1 PURPOSE AND APPLICABILITY",
+        "SECTION 2 ANNUAL LEAVE (VACATION)",
+        "SECTION 3 SICK LEAVE & MEDICAL EMERGENCIES",
+        "SECTION 4 COMPASSIONATE & BEREAVEMENT LEAVE",
+        "SECTION 5 PARENTAL & PATERNITY LEAVE"
+      ]
     }
   ],
+  "information_gaps": {
+    "missing_information": [
+      "Health insurance and dental claim forms are not uploaded."
+    ],
+    "contradictory_information": [],
+    "duplicated_information": [],
+    "incomplete_information": []
+  },
   "assumptions": [
-    "Documents provided represent current company policy for the ongoing fiscal year."
+    "Documents provided represent current company policy for the ongoing fiscal year.",
+    "In unattended mode, unsupported inquiries will be strictly refused.",
+    "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
+    "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
   ],
   "ambiguities": [
     "Overtime eligibility criteria for contractors vs permanent employees."

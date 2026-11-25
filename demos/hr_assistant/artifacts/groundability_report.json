@@ -5,28 +5,64 @@
       "evidence_sources": [
         "leave_policy.pdf"
       ],
-      "coverage_summary": "Document specifies 20 days annual leave with carryover limit."
+      "coverage_summary": "Document specifies 20 days annual leave with carryover limit.",
+      "confidence_score": 0.98,
+      "evidence_references": [
+        {
+          "source_document": "leave_policy.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Full-time employees receive 20 days annual leave per year.",
+          "relevance_score": 0.98
+        }
+      ]
     },
     {
       "topic": "Sick leave policy",
       "evidence_sources": [
         "leave_policy.pdf"
       ],
-      "coverage_summary": "10 days paid sick leave with medical certificate requirement."
+      "coverage_summary": "10 days paid sick leave with medical certificate requirement.",
+      "confidence_score": 0.97,
+      "evidence_references": [
+        {
+          "source_document": "leave_policy.pdf",
+          "page_or_record": "Page 2",
+          "excerpt": "Employees receive 10 days paid sick leave annually.",
+          "relevance_score": 0.97
+        }
+      ]
     },
     {
       "topic": "Working hours and attendance",
       "evidence_sources": [
         "attendance_policy.pdf"
       ],
-      "coverage_summary": "Standard hours 8:30 AM to 5:30 PM with 15-minute grace period."
+      "coverage_summary": "Standard hours 8:30 AM to 5:30 PM with 15-minute grace period.",
+      "confidence_score": 0.95,
+      "evidence_references": [
+        {
+          "source_document": "attendance_policy.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Standard office hours are 8:30 AM to 5:30 PM.",
+          "relevance_score": 0.95
+        }
+      ]
     },
     {
       "topic": "Workplace conduct",
       "evidence_sources": [
         "employee_handbook.pdf"
       ],
-      "coverage_summary": "Harassment-free workplace and disciplinary stages detailed."
+      "coverage_summary": "Harassment-free workplace and disciplinary stages detailed.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "employee_handbook.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "The company maintains a zero-tolerance policy for harassment.",
+          "relevance_score": 0.94
+        }
+      ]
     }
   ],
   "partially_supported_topics": [
@@ -35,17 +71,30 @@
       "evidence_sources": [
         "attendance_policy.pdf"
       ],
-      "missing_aspects": "Equipment reimbursement for home office is not covered."
+      "missing_aspects": "Equipment reimbursement for home office is not covered.",
+      "confidence_score": 0.6,
+      "evidence_references": [
+        {
+          "source_document": "attendance_policy.pdf",
+          "page_or_record": "Page 2",
+          "excerpt": "Employees may work remotely up to 2 days per week upon manager approval.",
+          "relevance_score": 0.7
+        }
+      ]
     }
   ],
   "unsupported_topics": [
     {
       "topic": "Health insurance claims",
-      "reason": "No insurance policy or benefits document provided."
+      "reason": "No insurance policy or benefits document provided.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
     },
     {
       "topic": "Salary and bonus calculation",
-      "reason": "Compensation schedules are absent from the document corpus."
+      "reason": "Compensation schedules are absent from the document corpus.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.98
     }
   ],
   "document_coverage_map": {
@@ -67,6 +116,13 @@
   "refusal_recommendations": [
     "Strictly refuse health insurance claims and direct employees to benefits@company.com",
     "Refuse salary adjustment queries."
+  ],
+  "sanitized_answerable_topics": [
+    "Annual leave entitlement",
+    "Sick leave policy",
+    "Working hours and attendance",
+    "Workplace conduct",
+    "Remote work / Work from home"
   ],
   "overall_groundability_score": 0.85
 }

@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "iteration_number": 1,
+    "previous_score": 0.8571,
+    "failed_test_ids": [
+      "TC-005",
+      "TC-017",
+      "TC-018"
+    ],
+    "failure_categories": [
+      "hallucination"
+    ],
+    "identified_root_causes": "Model extrapolated unsupported details when context was partial on tests ['TC-005', 'TC-017', 'TC-018']",
+    "changes_applied": [
+      {
+        "target": "system_prompt (grounding constraint)",
+        "field": "system_prompt",
+        "content": "\nSTRICT GROUNDING CONSTRAINT: Never guess, extrapolate, or assume numbers or dates not explicitly written in the text. If a specific figure is missing from context, state that it is not documented.",
+        "previous_value": "standard grounding",
+        "new_value": "added explicit prohibition against extrapolating figures",
+        "reason": "Prevent unsupported factual claims in tests: ['TC-005', 'TC-017', 'TC-018']",
+        "affected_tests": [
+          "TC-005",
+          "TC-017",
+          "TC-018"
+        ]
+      }
+    ],
+    "reason_for_each_change": "Targeted adjustments addressing specific diagnosed failure modes without full regeneration.",
+    "updated_configuration": {
+      "top_k": 4,
+      "similarity_threshold": 0.35,
+      "chunk_size": 500,
+      "chunk_overlap": 100,
+      "system_prompt_length": 2014
+    },
+    "new_score": 0.8571,
+    "improvement_or_regression": "UNCHANGED",
+    "score_difference": 0.0,
+    "resolved_test_ids": [],
+    "regressed_test_ids": [],
+    "regression_detected": false,
+    "change_accepted": true,
+    "snapshot_path": "demos/hr_assistant/artifacts/agent_definition_iter_1.json"
+  }
+]
