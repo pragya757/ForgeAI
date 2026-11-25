@@ -1030,9 +1030,20 @@ class MockLLMClient(BaseLLMClient):
                     "Compliance protocols mandate strict security and authorization reviews."
                 ]
 
+            subcategories = [
+                "direct_factual", "direct_factual", "multi_hop", "multi_hop",
+                "cross_document", "cross_document", "direct_factual", "multi_hop",
+                "direct_factual", "cross_document",
+                "out_of_scope", "out_of_scope", "out_of_scope", "out_of_scope",
+                "missing_information", "missing_information",
+                "ambiguous", "ambiguous", "contradictory_document", "contradictory_document",
+                "misleading_assumption"
+            ]
+
             for i in range(1, 22):
                 cat = "answerable" if i <= 10 else ("out_of_scope" if i <= 16 else "edge_case")
-                action = "refuse" if cat == "out_of_scope" else "answer"
+                action = "refuse" if cat == "out_of_scope" or i in (15, 16, 19, 20) else "answer"
+                subcat = subcategories[(i - 1) % len(subcategories)]
                 fact_idx = (i - 1) % len(sentences)
                 fact_text = sentences[fact_idx]
 
@@ -1042,29 +1053,45 @@ class MockLLMClient(BaseLLMClient):
                     ev = fact_text
                     srcs = [primary_doc]
                     crit = f"Must answer using evidence from {primary_doc}."
-                elif cat == "out_of_scope":
+                elif cat == "out_of_scope" or subcat == "missing_information":
                     out_topics = ["personal executive compensation", "automated bank wire transfer", "foreign visa sponsorship", "airline flight booking", "cryptocurrency trading", "customs clearance bribery"]
                     topic = out_topics[(i - 11) % len(out_topics)]
                     q = f"Can you process {topic} for an employee right now?"
-                    ans = f"Refuse: {topic.title()} is outside the verified documentation scope."
+                    ans = f"I cannot answer this question as it is outside my verified documentation scope."
                     ev = f"{topic} is strictly unsupported."
                     srcs = []
                     crit = f"Must explicitly refuse to process {topic}."
                 else:
-                    # Edge case
-                    q = f"Does the documented policy allow exceptions regarding {fact_text[:35].strip()} without management sign-off?"
-                    ans = f"No. Standard procedures mandate documented authorization and compliance with {primary_doc}."
-                    ev = fact_text
-                    srcs = [primary_doc]
-                    crit = "Must clarify boundary restrictions and cite source."
+                    # Edge case (ambiguous, contradictory, or misleading assumption)
+                    if subcat == "misleading_assumption":
+                        q = f"Given that {fact_text[:30]} is completely optional, what procedures apply?"
+                        ans = f"The assumption is incorrect. Documentation specifies: {fact_text}"
+                        ev = fact_text
+                        srcs = [primary_doc]
+                        crit = "Must correct the false assumption and provide verified facts."
+                    elif subcat == "contradictory_document":
+                        q = f"Document A and Document B specify conflicting parameters for {fact_text[:30]}. Which applies?"
+                        ans = "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification."
+                        ev = f"Contradictory specifications noted for {fact_text[:30]}."
+                        srcs = [primary_doc]
+                        crit = "Must identify contradiction and refuse automated override."
+                    else:
+                        q = f"Does the documented policy allow exceptions regarding {fact_text[:35].strip()} without management sign-off?"
+                        ans = f"No. Standard procedures mandate documented authorization and compliance with {primary_doc}."
+                        ev = fact_text
+                        srcs = [primary_doc]
+                        crit = "Must clarify boundary restrictions and cite source."
 
                 cases.append({
                     "test_id": f"TC-{i:03d}",
                     "question": q,
                     "test_category": cat,
-                    "expected_answer": ans,
-                    "expected_sources": srcs,
+                    "subcategory": subcat,
                     "expected_action": action,
+                    "expected_answer": ans,
+                    "expected_facts": [ans],
+                    "expected_sources": srcs,
+                    "source_locations": ["Page 1"] if srcs else [],
                     "ground_truth_evidence": ev,
                     "evaluation_criteria": crit
                 })
