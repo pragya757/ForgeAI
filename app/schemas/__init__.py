@@ -9,7 +9,14 @@ from app.schemas.agent_definition import (
     MetadataConfig
 )
 from app.schemas.evaluation import EvalSet, EvalCase
-from app.schemas.scorecard import CaseEvaluationResult, IterationScorecard, IterationLog
+from app.schemas.scorecard import (
+    CaseEvaluationResult,
+    IterationScorecard,
+    IterationLog,
+    MetricComparison,
+    FailedCaseAudit,
+    QualityReportData
+)
 
 __all__ = [
     "Requirements",
@@ -29,5 +36,8 @@ __all__ = [
     "EvalCase",
     "CaseEvaluationResult",
     "IterationScorecard",
-    "IterationLog"
+    "IterationLog",
+    "MetricComparison",
+    "FailedCaseAudit",
+    "QualityReportData"
 ]

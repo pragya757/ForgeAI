@@ -50,3 +50,47 @@ class IterationLog(BaseModel):
     regression_detected: bool = False
     change_accepted: bool = True
     snapshot_path: Optional[str] = None
+
+class MetricComparison(BaseModel):
+    metric_name: str
+    initial_value: float = Field(ge=0.0, le=1.0)
+    final_value: float = Field(ge=0.0, le=1.0)
+    delta: float
+    improvement_status: str  # "IMPROVED", "REGRESSED", "UNCHANGED"
+
+class FailedCaseAudit(BaseModel):
+    test_id: str
+    question: str
+    category: str = "direct_factual"
+    expected_action: str = "answer"
+    expected_answer: Optional[str] = None
+    raw_agent_response: str
+    failure_reasons: List[str] = Field(default_factory=list)
+    outcome_classification: str = "incorrect"
+    judge_evidence_reasoning: Optional[str] = None
+    grounding_score: float
+    factual_correctness: float
+    citation_correctness: float
+    refusal_correctness: float
+    relevance_score: float = 1.0
+    output_contract_compliance: float
+    retrieved_sources: List[str] = Field(default_factory=list)
+
+class QualityReportData(BaseModel):
+    generated_at: str
+    agent_name: str
+    final_status: str
+    user_brief: str
+    document_inventory: List[Dict[str, Any]] = Field(default_factory=list)
+    structured_requirements: Dict[str, Any] = Field(default_factory=dict)
+    groundability_analysis: Dict[str, Any] = Field(default_factory=dict)
+    agent_configuration: Dict[str, Any] = Field(default_factory=dict)
+    selected_tools_and_justifications: Dict[str, Any] = Field(default_factory=dict)
+    evaluation_dataset_summary: Dict[str, Any] = Field(default_factory=dict)
+    initial_scorecard: Dict[str, Any] = Field(default_factory=dict)
+    optimization_iterations: List[Dict[str, Any]] = Field(default_factory=list)
+    before_and_after_comparison: Dict[str, MetricComparison] = Field(default_factory=dict)
+    remaining_failed_cases: List[FailedCaseAudit] = Field(default_factory=list)
+    unsupported_topics: List[Dict[str, Any]] = Field(default_factory=list)
+    known_limitations: List[str] = Field(default_factory=list)
+    reproducible_metrics: Dict[str, float] = Field(default_factory=dict)

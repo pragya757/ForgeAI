@@ -109,12 +109,19 @@ class ForgeAIFactory:
             final_agent=final_agent,
             scorecards=scorecards,
             iteration_logs=iteration_logs,
-            output_dir=output_dir
+            output_dir=output_dir,
+            eval_set=eval_set
         )
-        print(f"  -> Generated final_report.md, scorecards.json, iteration_logs.json")
+        print(f"  -> Generated final_report.md, quality_report.json, scorecards.json, iteration_logs.json")
         print("\n=======================================================")
         print(f"[+] ForgeAI Factory Execution Complete! Status: {scorecards[-1].status if scorecards else 'UNKNOWN'}")
         print("=======================================================\n")
+
+        quality_json_path = os.path.join(output_dir, "quality_report.json")
+        report_json = {}
+        if os.path.exists(quality_json_path):
+            with open(quality_json_path, "r", encoding="utf-8") as f:
+                report_json = json.load(f)
 
         return {
             "requirements": requirements,
@@ -123,5 +130,6 @@ class ForgeAIFactory:
             "eval_set": eval_set,
             "scorecards": scorecards,
             "iteration_logs": iteration_logs,
-            "report_md": report_md
+            "report_md": report_md,
+            "report_json": report_json
         }
