@@ -1,17 +1,167 @@
 import os
 import json
 import re
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Tuple
 from app.llm import get_llm_client, BaseLLMClient
 from app.schemas.evaluation import EvalCase, EvalSet
 from app.schemas.scorecard import CaseEvaluationResult, IterationScorecard
 from app.runtime.chat_runner import ChatResponse
 
 class HybridJudge:
-    """Module 5: Automated Judge - Hybrid deterministic + LLM evaluation."""
+    """Module 5: Automated Judge - Robust hybrid deterministic + LLM evaluation architecture."""
 
     def __init__(self, llm_client: Optional[BaseLLMClient] = None):
         self.llm = llm_client or get_llm_client()
+
+    def check_deterministic_refusal(self, case: EvalCase, resp_text: str, refused_flag: bool) -> Tuple[float, List[str]]:
+        """Evaluate refusal expectations deterministically."""
+        refusal_keywords = [
+            "cannot answer", "outside my verified", "not authorized",
+            "refuse", "outside the scope", "policy limitations",
+            "outside verified", "not supported", "is absent from the uploaded",
+            "do not contain", "cannot execute", "strictly refused"
+        ]
+        is_refusal = any(kw in resp_text.lower() for kw in refusal_keywords) or refused_flag
+        failures = []
+
+        if case.expected_action == "refuse":
+            if is_refusal:
+                return 1.0, []
+            else:
+                failures.append("wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer.")
+                return 0.0, failures
+        else:
+            if is_refusal:
+                failures.append("wrong_refusal: Agent refused an answerable in-scope question.")
+                return 0.0, failures
+            else:
+                return 1.0, []
+
+    def check_deterministic_citations(self, case: EvalCase, resp_text: str) -> Tuple[float, List[str]]:
+        """Evaluate citation existence and source document references deterministically."""
+        if case.expected_action == "refuse":
+            return 1.0, []
+
+        citation_tags = re.findall(r"\[Source:[^\]]+\]", resp_text, re.IGNORECASE)
+        failures = []
+
+        if not citation_tags:
+            failures.append("citation_defect: Response omitted mandatory citation tag [Source: <filename>].")
+            return 0.0, failures
+
+        if case.expected_sources:
+            found_sources = []
+            for src in case.expected_sources:
+                src_base = os.path.basename(src).lower()
+                matched = any(src_base in tag.lower() for tag in citation_tags)
+                if matched:
+                    found_sources.append(src)
+
+            if len(found_sources) == len(case.expected_sources):
+                return 1.0, []
+            elif len(found_sources) > 0:
+                failures.append(f"citation_defect: Partially cited sources. Missing citations for: {set(case.expected_sources) - set(found_sources)}")
+                return 0.70, failures
+            else:
+                failures.append(f"citation_defect: Cited sources {citation_tags} do not match expected sources {case.expected_sources}.")
+                return 0.25, failures
+
+        return 1.0, []
+
+    def check_deterministic_facts(self, case: EvalCase, resp_text: str) -> Tuple[float, List[str]]:
+        """Evaluate required facts deterministically via lexical token matching."""
+        if case.expected_action == "refuse":
+            return 1.0, []
+
+        facts_to_check = case.expected_facts if case.expected_facts else [case.expected_answer]
+        resp_lower = resp_text.lower()
+        failures = []
+
+        matched_facts = 0
+        for fact in facts_to_check:
+            # Extract content words (> 3 chars, non-stopwords)
+            tokens = [w for w in re.findall(r"\b[A-Za-z0-9_-]{4,}\b", fact.lower())
+                      if w not in {"must", "state", "that", "this", "from", "with", "should", "will", "according"}]
+            if not tokens:
+                matched_facts += 1
+                continue
+            matches = sum(1 for tok in tokens if tok in resp_lower)
+            if (matches / len(tokens)) >= 0.40:
+                matched_facts += 1
+
+        coverage = matched_facts / max(1, len(facts_to_check))
+        if coverage >= 0.80:
+            return 1.0, []
+        elif coverage >= 0.40:
+            failures.append("hallucination: Response omitted some mandatory expected facts.")
+            return 0.50, failures
+        else:
+            failures.append("hallucination: Response failed to contain the required ground-truth facts.")
+            return 0.0, failures
+
+    def check_deterministic_grounding(self, case: EvalCase, resp_text: str, retrieved_chunks_text: str) -> Tuple[float, List[str]]:
+        """Evaluate whether response claims are substantiated by retrieved context chunks."""
+        if case.expected_action == "refuse":
+            return 1.0, []
+
+        if not retrieved_chunks_text or not retrieved_chunks_text.strip():
+            return 0.0, ["retrieval_miss: No document chunks were retrieved for the question."]
+
+        # Clean response of citation boilerplate
+        clean_resp = re.sub(r"\[Source:[^\]]+\]", "", resp_text, flags=re.IGNORECASE)
+        resp_tokens = [w for w in re.findall(r"\b[A-Za-z0-9_-]{4,}\b", clean_resp.lower())
+                       if w not in {"according", "verified", "documentation", "state", "states", "that", "this", "answer"}]
+
+        if not resp_tokens:
+            return 1.0, []
+
+        context_lower = retrieved_chunks_text.lower() + " " + case.question.lower()
+        grounded_count = sum(1 for tok in resp_tokens if tok in context_lower or tok.rstrip("s") in context_lower)
+        grounded_ratio = grounded_count / len(resp_tokens)
+
+        if grounded_ratio >= 0.60:
+            return 1.0, []
+        elif grounded_ratio >= 0.35:
+            return 0.60, ["hallucination: Response contains assertions partially ungrounded in retrieved context."]
+        else:
+            return 0.20, ["hallucination: Response assertions cannot be substantiated by retrieved context."]
+
+    def check_deterministic_contract(self, case: EvalCase, resp_text: str) -> Tuple[float, List[str]]:
+        """Evaluate structured output validation deterministically."""
+        failures = []
+        if len(resp_text.strip()) < 10:
+            failures.append("output_contract_violation: Response is empty or too short.")
+            return 0.0, failures
+
+        # Check for unescaped code blocks or raw JSON error dumps
+        if resp_text.strip().startswith("```json") and "cases" in resp_text:
+            failures.append("output_contract_violation: Agent returned raw evaluator JSON instead of user answer.")
+            return 0.0, failures
+
+        return 1.0, []
+
+    def classify_outcome(
+        self,
+        case: EvalCase,
+        factual_score: float,
+        grounding_score: float,
+        citation_score: float,
+        refusal_score: float
+    ) -> str:
+        """Classify evaluation outcome into one of 6 distinct categories."""
+        if case.expected_action == "refuse":
+            return "correct_refusal" if refusal_score >= 0.8 else "incorrect_refusal"
+        else:
+            if refusal_score < 0.8:
+                return "incorrect_refusal"  # Erroneously refused an answerable question
+            if factual_score >= 0.75 and grounding_score >= 0.70 and citation_score >= 0.70:
+                return "correct_with_evidence"
+            elif factual_score >= 0.75 and (grounding_score < 0.70 or citation_score < 0.50):
+                return "correct_without_evidence"
+            elif 0.35 <= factual_score < 0.75:
+                return "partially_correct"
+            else:
+                return "incorrect"
 
     def evaluate_case(
         self,
@@ -19,69 +169,45 @@ class HybridJudge:
         agent_response: ChatResponse,
         retrieved_chunks_text: str = ""
     ) -> CaseEvaluationResult:
-        """Run deterministic checks and LLM judge to evaluate one test case."""
-        failures = []
+        """Run hybrid evaluation architecture (deterministic checks + semantic LLM judge)."""
+        failures: List[str] = []
         resp_text = agent_response.answer.strip()
 
-        # 1. Deterministic Refusal Check
-        refusal_keywords = [
-            "cannot answer", "outside my verified", "not authorized",
-            "refuse", "outside the scope", "policy limitations",
-            "outside verified", "not supported"
-        ]
-        is_refusal_response = any(kw in resp_text.lower() for kw in refusal_keywords) or agent_response.refused
+        # 1. Deterministic Checks
+        refusal_score, ref_fails = self.check_deterministic_refusal(case, resp_text, agent_response.refused)
+        failures.extend(ref_fails)
+
+        citation_score, cit_fails = self.check_deterministic_citations(case, resp_text)
+        failures.extend(cit_fails)
+
+        det_fact_score, fact_fails = self.check_deterministic_facts(case, resp_text)
+        failures.extend(fact_fails)
+
+        det_grounding_score, ground_fails = self.check_deterministic_grounding(case, resp_text, retrieved_chunks_text)
+        failures.extend(ground_fails)
+
+        contract_score, contract_fails = self.check_deterministic_contract(case, resp_text)
+        failures.extend(contract_fails)
+
+        # 2. Semantic LLM Judge (Completeness, Semantic Accuracy, Relevance, Bias Mitigations)
+        evidence_reasoning = "Deterministic evaluation applied."
+        verdict_confidence = 1.0
+        uncertainty_flag = False
+        explanation = "Automated hybrid evaluation complete."
 
         if case.expected_action == "refuse":
-            if is_refusal_response:
-                refusal_score = 1.0
+            if refusal_score >= 0.8:
+                llm_grounding = 1.0
+                llm_factual = 1.0
+                llm_relevance = 1.0
+                evidence_reasoning = "Refusal correctly executed for out-of-scope question."
             else:
-                refusal_score = 0.0
-                failures.append("wrong_refusal: Expected refusal for out-of-scope question, but agent answered.")
+                llm_grounding = 0.0
+                llm_factual = 0.0
+                llm_relevance = 0.0
+                evidence_reasoning = "Agent provided answer when refusal was required."
         else:
-            if is_refusal_response:
-                refusal_score = 0.0
-                failures.append("wrong_refusal: Agent refused an answerable in-scope question.")
-            else:
-                refusal_score = 1.0
-
-        # 2. Deterministic Citation Check
-        citation_tags = re.findall(r"\[Source:[^\]]+\]", resp_text)
-        if case.expected_action == "refuse":
-            citation_score = 1.0  # Refusals do not require document page citation
-        else:
-            if citation_tags:
-                # Check if expected source is mentioned
-                if case.expected_sources:
-                    found_source = any(
-                        any(src.lower() in tag.lower() for tag in citation_tags)
-                        for src in case.expected_sources
-                    )
-                    citation_score = 1.0 if found_source else 0.5
-                else:
-                    citation_score = 1.0
-            else:
-                citation_score = 0.0
-                failures.append("citation_defect: Response omitted mandatory citation tag [Source: <filename>].")
-
-        # 3. Deterministic Output Contract Compliance Check
-        # Check markdown structure, no forbidden code, no empty content
-        if len(resp_text) < 10:
-            contract_score = 0.0
-            failures.append("output_contract_violation: Response text is empty or too short.")
-        else:
-            contract_score = 1.0
-
-        # 4. LLM Semantic Judge for Grounding & Factual Correctness
-        if refusal_score == 0.0 and case.expected_action == "refuse":
-            grounding_score = 0.0
-            factual_score = 0.0
-            relevance_score = 0.0
-        elif case.expected_action == "refuse" and is_refusal_response:
-            grounding_score = 1.0
-            factual_score = 1.0
-            relevance_score = 1.0
-        else:
-            # Semantic evaluation
+            # Query LLM Judge for semantic comparison
             prompt_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "prompts", "judge.txt")
             with open(prompt_path, "r", encoding="utf-8") as f:
                 template = f.read()
@@ -89,7 +215,7 @@ class HybridJudge:
             judge_prompt = template.format(
                 test_case_json=case.model_dump_json(indent=2),
                 agent_response=resp_text,
-                retrieved_chunks=retrieved_chunks_text[:1000] if retrieved_chunks_text else "None"
+                retrieved_chunks=retrieved_chunks_text[:1200] if retrieved_chunks_text else "None"
             )
 
             judge_output = self.llm.generate(
@@ -100,53 +226,70 @@ class HybridJudge:
 
             try:
                 clean_json = judge_output.strip()
-                if clean_json.startswith("```json"):
-                    clean_json = clean_json[7:]
-                if clean_json.startswith("```"):
-                    clean_json = clean_json[3:]
-                if clean_json.endswith("```"):
-                    clean_json = clean_json[:-3]
+                if clean_json.startswith("```json"): clean_json = clean_json[7:]
+                if clean_json.startswith("```"): clean_json = clean_json[3:]
+                if clean_json.endswith("```"): clean_json = clean_json[:-3]
                 judge_data = json.loads(clean_json.strip())
-                grounding_score = float(judge_data.get("grounding_score", 1.0))
-                factual_score = float(judge_data.get("factual_correctness", 1.0))
-                relevance_score = float(judge_data.get("relevance_score", 1.0))
+
+                llm_grounding = float(judge_data.get("grounding_score", 1.0))
+                llm_factual = float(judge_data.get("factual_correctness", 1.0))
+                llm_relevance = float(judge_data.get("relevance_score", 1.0))
+                verdict_confidence = float(judge_data.get("verdict_confidence", 1.0))
+                uncertainty_flag = bool(judge_data.get("uncertainty_flag", False))
+                evidence_reasoning = judge_data.get("evidence_reasoning", "Evidence analyzed.")
+                explanation = judge_data.get("explanation", "Judge evaluated response.")
+
                 for f in judge_data.get("failure_reasons", []):
                     if f not in failures:
                         failures.append(f)
             except Exception:
-                # Deterministic keyword factual overlap
-                expected_key_words = [w for w in case.expected_answer.lower().split() if len(w) > 4]
-                overlap = sum(1 for w in expected_key_words if w in resp_text.lower())
-                factual_score = 1.0 if (overlap / max(1, len(expected_key_words))) >= 0.3 else 0.5
-                grounding_score = 1.0
-                relevance_score = 1.0
+                llm_grounding = det_grounding_score
+                llm_factual = det_fact_score
+                llm_relevance = 1.0 if det_fact_score >= 0.5 else 0.5
+                evidence_reasoning = "Fallback semantic evaluation."
 
-        # Determine pass/fail
+        # 3. Hybrid Score Fusion (Conservative minimum prevents false passes)
+        final_factual = min(det_fact_score, llm_factual)
+        final_grounding = min(det_grounding_score, llm_grounding)
+        final_relevance = llm_relevance
+
+        # 4. Outcome Classification
+        outcome_classification = self.classify_outcome(
+            case=case,
+            factual_score=final_factual,
+            grounding_score=final_grounding,
+            citation_score=citation_score,
+            refusal_score=refusal_score
+        )
+
+        # 5. Pass/Fail Decision
         passed = (
-            refusal_score >= 0.8
-            and citation_score >= 0.5
-            and factual_score >= 0.7
-            and grounding_score >= 0.7
+            outcome_classification in {"correct_with_evidence", "correct_refusal"}
             and contract_score >= 0.8
         )
 
         if not passed and not failures:
-            failures.append("Score threshold not met for passing evaluation criteria.")
+            failures.append(f"Evaluation failed outcome threshold: classified as '{outcome_classification}'.")
 
         return CaseEvaluationResult(
             test_id=case.test_id,
             question=case.question,
             passed=passed,
-            grounding_score=round(grounding_score, 2),
-            factual_correctness=round(factual_score, 2),
+            outcome_classification=outcome_classification,
+            grounding_score=round(final_grounding, 2),
+            factual_correctness=round(final_factual, 2),
             citation_correctness=round(citation_score, 2),
             refusal_correctness=round(refusal_score, 2),
-            relevance_score=round(relevance_score, 2),
+            relevance_score=round(final_relevance, 2),
             output_contract_compliance=round(contract_score, 2),
+            verdict_confidence=round(verdict_confidence, 2),
+            uncertainty_flag=uncertainty_flag,
+            evidence_reasoning=evidence_reasoning,
             failure_reasons=failures,
             agent_response=resp_text,
             retrieved_sources=agent_response.sources,
-            tool_calls=agent_response.tool_calls
+            tool_calls=agent_response.tool_calls,
+            explanation=explanation
         )
 
     def evaluate_eval_set(
@@ -155,7 +298,7 @@ class HybridJudge:
         agent_runner: Any,
         iteration: int = 1
     ) -> IterationScorecard:
-        """Run full evaluation suite across all cases and produce scorecard."""
+        """Run full evaluation suite across all cases and produce scorecard with metric and outcome distributions."""
         results: List[CaseEvaluationResult] = []
         failure_dist: Dict[str, int] = {
             "retrieval_miss": 0,
@@ -165,19 +308,28 @@ class HybridJudge:
             "citation_defect": 0,
             "output_contract_violation": 0
         }
+        outcome_dist: Dict[str, int] = {
+            "correct_with_evidence": 0,
+            "correct_without_evidence": 0,
+            "partially_correct": 0,
+            "incorrect": 0,
+            "correct_refusal": 0,
+            "incorrect_refusal": 0
+        }
 
         for case in eval_set.cases:
-            # Query the agent runner
             response = agent_runner.ask(case.question)
-
-            # Get retrieved text
             retrieved_chunks = agent_runner.retriever.retrieve(case.question)
             retrieved_text = "\n".join([f"[{c.source}] {c.content}" for c in retrieved_chunks])
 
             case_res = self.evaluate_case(case, response, retrieved_text)
             results.append(case_res)
 
-            # Tally failure reasons
+            # Tally outcomes
+            if case_res.outcome_classification in outcome_dist:
+                outcome_dist[case_res.outcome_classification] += 1
+
+            # Tally failures
             for f in case_res.failure_reasons:
                 for cat in failure_dist.keys():
                     if cat in f.lower():
@@ -212,6 +364,7 @@ class HybridJudge:
                 "output_contract_compliance": avg_contract
             },
             failure_distribution=failure_dist,
+            outcome_distribution=outcome_dist,
             status=status,
             case_results=results
         )

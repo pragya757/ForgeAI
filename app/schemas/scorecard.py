@@ -5,12 +5,16 @@ class CaseEvaluationResult(BaseModel):
     test_id: str
     question: str
     passed: bool
+    outcome_classification: str = "correct_with_evidence"  # "correct_with_evidence", "correct_without_evidence", "partially_correct", "incorrect", "correct_refusal", "incorrect_refusal"
     grounding_score: float = Field(ge=0.0, le=1.0)
     factual_correctness: float = Field(ge=0.0, le=1.0)
     citation_correctness: float = Field(ge=0.0, le=1.0)
     refusal_correctness: float = Field(ge=0.0, le=1.0)
     relevance_score: float = Field(ge=0.0, le=1.0)
     output_contract_compliance: float = Field(ge=0.0, le=1.0)
+    verdict_confidence: float = Field(default=1.0, ge=0.0, le=1.0)
+    uncertainty_flag: bool = False
+    evidence_reasoning: Optional[str] = None
     failure_reasons: List[str] = Field(default_factory=list)
     agent_response: str
     retrieved_sources: List[str] = Field(default_factory=list)
@@ -25,6 +29,7 @@ class IterationScorecard(BaseModel):
     pass_rate: float = Field(ge=0.0, le=1.0)
     metric_breakdown: Dict[str, float] = Field(default_factory=dict)
     failure_distribution: Dict[str, int] = Field(default_factory=dict)
+    outcome_distribution: Dict[str, int] = Field(default_factory=dict)
     status: str  # "PASS", "FAIL", "NEEDS_OPTIMIZATION"
     case_results: List[CaseEvaluationResult] = Field(default_factory=list)
 

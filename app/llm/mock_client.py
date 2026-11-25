@@ -1155,12 +1155,15 @@ class MockLLMClient(BaseLLMClient):
 
         result = {
             "passed": passed,
+            "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
             "grounding_score": grounding_score if passed else 0.5,
             "factual_correctness": factual_score if passed else 0.5,
             "citation_correctness": citation_score,
             "refusal_correctness": refusal_score,
             "relevance_score": relevance_score,
             "output_contract_compliance": contract_score,
+            "verdict_confidence": 1.0,
+            "uncertainty_flag": False,
             "failure_reasons": failures,
             "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         }
