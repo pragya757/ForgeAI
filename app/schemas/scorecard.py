@@ -44,3 +44,9 @@ class IterationLog(BaseModel):
     updated_configuration: Dict[str, Any]
     new_score: float
     improvement_or_regression: str
+    score_difference: float = 0.0
+    resolved_test_ids: List[str] = Field(default_factory=list)
+    regressed_test_ids: List[str] = Field(default_factory=list)
+    regression_detected: bool = False
+    change_accepted: bool = True
+    snapshot_path: Optional[str] = None
