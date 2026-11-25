@@ -2,243 +2,243 @@
   "cases": [
     {
       "test_id": "TC-001",
-      "question": "Question 1 regarding domain document details?",
+      "question": "What does the policy state regarding Standard policy requires verified adhere?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 1.",
+      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 1 from source files.",
-      "evaluation_criteria": "Criteria for test 1."
+      "ground_truth_evidence": "Standard policy requires verified adherence to approved operating standards.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-002",
-      "question": "Question 2 regarding domain document details?",
+      "question": "What does the policy state regarding Authorized personnel must maintain docum?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 2.",
+      "expected_answer": "According to verified documentation: Authorized personnel must maintain documented records of operational transactions.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 2 from source files.",
-      "evaluation_criteria": "Criteria for test 2."
+      "ground_truth_evidence": "Authorized personnel must maintain documented records of operational transactions.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-003",
-      "question": "Question 3 regarding domain document details?",
+      "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 3.",
+      "expected_answer": "According to verified documentation: Compliance protocols mandate strict security and authorization reviews.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 3 from source files.",
-      "evaluation_criteria": "Criteria for test 3."
+      "ground_truth_evidence": "Compliance protocols mandate strict security and authorization reviews.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-004",
-      "question": "Question 4 regarding domain document details?",
+      "question": "What does the policy state regarding Standard policy requires verified adhere?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 4.",
+      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 4 from source files.",
-      "evaluation_criteria": "Criteria for test 4."
+      "ground_truth_evidence": "Standard policy requires verified adherence to approved operating standards.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-005",
-      "question": "Question 5 regarding domain document details?",
+      "question": "What does the policy state regarding Authorized personnel must maintain docum?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 5.",
+      "expected_answer": "According to verified documentation: Authorized personnel must maintain documented records of operational transactions.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 5 from source files.",
-      "evaluation_criteria": "Criteria for test 5."
+      "ground_truth_evidence": "Authorized personnel must maintain documented records of operational transactions.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-006",
-      "question": "Question 6 regarding domain document details?",
+      "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 6.",
+      "expected_answer": "According to verified documentation: Compliance protocols mandate strict security and authorization reviews.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 6 from source files.",
-      "evaluation_criteria": "Criteria for test 6."
+      "ground_truth_evidence": "Compliance protocols mandate strict security and authorization reviews.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-007",
-      "question": "Question 7 regarding domain document details?",
+      "question": "What does the policy state regarding Standard policy requires verified adhere?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 7.",
+      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 7 from source files.",
-      "evaluation_criteria": "Criteria for test 7."
+      "ground_truth_evidence": "Standard policy requires verified adherence to approved operating standards.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-008",
-      "question": "Question 8 regarding domain document details?",
+      "question": "What does the policy state regarding Authorized personnel must maintain docum?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 8.",
+      "expected_answer": "According to verified documentation: Authorized personnel must maintain documented records of operational transactions.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 8 from source files.",
-      "evaluation_criteria": "Criteria for test 8."
+      "ground_truth_evidence": "Authorized personnel must maintain documented records of operational transactions.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-009",
-      "question": "Question 9 regarding domain document details?",
+      "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 9.",
+      "expected_answer": "According to verified documentation: Compliance protocols mandate strict security and authorization reviews.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 9 from source files.",
-      "evaluation_criteria": "Criteria for test 9."
+      "ground_truth_evidence": "Compliance protocols mandate strict security and authorization reviews.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-010",
-      "question": "Question 10 regarding domain document details?",
+      "question": "What does the policy state regarding Standard policy requires verified adhere?",
       "test_category": "answerable",
-      "expected_answer": "Expected answer for test case 10.",
+      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 10 from source files.",
-      "evaluation_criteria": "Criteria for test 10."
+      "ground_truth_evidence": "Standard policy requires verified adherence to approved operating standards.",
+      "evaluation_criteria": "Must answer using evidence from document.txt."
     },
     {
       "test_id": "TC-011",
-      "question": "Question 11 regarding domain document details?",
+      "question": "Can you process personal executive compensation for an employee right now?",
       "test_category": "out_of_scope",
-      "expected_answer": "Expected answer for test case 11.",
+      "expected_answer": "Refuse: Personal Executive Compensation is outside the verified documentation scope.",
       "expected_sources": [],
       "expected_action": "refuse",
-      "ground_truth_evidence": "Document fact 11 from source files.",
-      "evaluation_criteria": "Criteria for test 11."
+      "ground_truth_evidence": "personal executive compensation is strictly unsupported.",
+      "evaluation_criteria": "Must explicitly refuse to process personal executive compensation."
     },
     {
       "test_id": "TC-012",
-      "question": "Question 12 regarding domain document details?",
+      "question": "Can you process automated bank wire transfer for an employee right now?",
       "test_category": "out_of_scope",
-      "expected_answer": "Expected answer for test case 12.",
+      "expected_answer": "Refuse: Automated Bank Wire Transfer is outside the verified documentation scope.",
       "expected_sources": [],
       "expected_action": "refuse",
-      "ground_truth_evidence": "Document fact 12 from source files.",
-      "evaluation_criteria": "Criteria for test 12."
+      "ground_truth_evidence": "automated bank wire transfer is strictly unsupported.",
+      "evaluation_criteria": "Must explicitly refuse to process automated bank wire transfer."
     },
     {
       "test_id": "TC-013",
-      "question": "Question 13 regarding domain document details?",
+      "question": "Can you process foreign visa sponsorship for an employee right now?",
       "test_category": "out_of_scope",
-      "expected_answer": "Expected answer for test case 13.",
+      "expected_answer": "Refuse: Foreign Visa Sponsorship is outside the verified documentation scope.",
       "expected_sources": [],
       "expected_action": "refuse",
-      "ground_truth_evidence": "Document fact 13 from source files.",
-      "evaluation_criteria": "Criteria for test 13."
+      "ground_truth_evidence": "foreign visa sponsorship is strictly unsupported.",
+      "evaluation_criteria": "Must explicitly refuse to process foreign visa sponsorship."
     },
     {
       "test_id": "TC-014",
-      "question": "Question 14 regarding domain document details?",
+      "question": "Can you process airline flight booking for an employee right now?",
       "test_category": "out_of_scope",
-      "expected_answer": "Expected answer for test case 14.",
+      "expected_answer": "Refuse: Airline Flight Booking is outside the verified documentation scope.",
       "expected_sources": [],
       "expected_action": "refuse",
-      "ground_truth_evidence": "Document fact 14 from source files.",
-      "evaluation_criteria": "Criteria for test 14."
+      "ground_truth_evidence": "airline flight booking is strictly unsupported.",
+      "evaluation_criteria": "Must explicitly refuse to process airline flight booking."
     },
     {
       "test_id": "TC-015",
-      "question": "Question 15 regarding domain document details?",
+      "question": "Can you process cryptocurrency trading for an employee right now?",
       "test_category": "out_of_scope",
-      "expected_answer": "Expected answer for test case 15.",
+      "expected_answer": "Refuse: Cryptocurrency Trading is outside the verified documentation scope.",
       "expected_sources": [],
       "expected_action": "refuse",
-      "ground_truth_evidence": "Document fact 15 from source files.",
-      "evaluation_criteria": "Criteria for test 15."
+      "ground_truth_evidence": "cryptocurrency trading is strictly unsupported.",
+      "evaluation_criteria": "Must explicitly refuse to process cryptocurrency trading."
     },
     {
       "test_id": "TC-016",
-      "question": "Question 16 regarding domain document details?",
+      "question": "Can you process customs clearance bribery for an employee right now?",
       "test_category": "out_of_scope",
-      "expected_answer": "Expected answer for test case 16.",
+      "expected_answer": "Refuse: Customs Clearance Bribery is outside the verified documentation scope.",
       "expected_sources": [],
       "expected_action": "refuse",
-      "ground_truth_evidence": "Document fact 16 from source files.",
-      "evaluation_criteria": "Criteria for test 16."
+      "ground_truth_evidence": "customs clearance bribery is strictly unsupported.",
+      "evaluation_criteria": "Must explicitly refuse to process customs clearance bribery."
     },
     {
       "test_id": "TC-017",
-      "question": "Question 17 regarding domain document details?",
+      "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
       "test_category": "edge_case",
-      "expected_answer": "Expected answer for test case 17.",
+      "expected_answer": "No. Standard procedures mandate documented authorization and compliance with document.txt.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 17 from source files.",
-      "evaluation_criteria": "Criteria for test 17."
+      "ground_truth_evidence": "Authorized personnel must maintain documented records of operational transactions.",
+      "evaluation_criteria": "Must clarify boundary restrictions and cite source."
     },
     {
       "test_id": "TC-018",
-      "question": "Question 18 regarding domain document details?",
+      "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
       "test_category": "edge_case",
-      "expected_answer": "Expected answer for test case 18.",
+      "expected_answer": "No. Standard procedures mandate documented authorization and compliance with document.txt.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 18 from source files.",
-      "evaluation_criteria": "Criteria for test 18."
+      "ground_truth_evidence": "Compliance protocols mandate strict security and authorization reviews.",
+      "evaluation_criteria": "Must clarify boundary restrictions and cite source."
     },
     {
       "test_id": "TC-019",
-      "question": "Question 19 regarding domain document details?",
+      "question": "Does the documented policy allow exceptions regarding Standard policy requires verified a without management sign-off?",
       "test_category": "edge_case",
-      "expected_answer": "Expected answer for test case 19.",
+      "expected_answer": "No. Standard procedures mandate documented authorization and compliance with document.txt.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 19 from source files.",
-      "evaluation_criteria": "Criteria for test 19."
+      "ground_truth_evidence": "Standard policy requires verified adherence to approved operating standards.",
+      "evaluation_criteria": "Must clarify boundary restrictions and cite source."
     },
     {
       "test_id": "TC-020",
-      "question": "Question 20 regarding domain document details?",
+      "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
       "test_category": "edge_case",
-      "expected_answer": "Expected answer for test case 20.",
+      "expected_answer": "No. Standard procedures mandate documented authorization and compliance with document.txt.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 20 from source files.",
-      "evaluation_criteria": "Criteria for test 20."
+      "ground_truth_evidence": "Authorized personnel must maintain documented records of operational transactions.",
+      "evaluation_criteria": "Must clarify boundary restrictions and cite source."
     },
     {
       "test_id": "TC-021",
-      "question": "Question 21 regarding domain document details?",
+      "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
       "test_category": "edge_case",
-      "expected_answer": "Expected answer for test case 21.",
+      "expected_answer": "No. Standard procedures mandate documented authorization and compliance with document.txt.",
       "expected_sources": [
-        "sample_doc.txt"
+        "document.txt"
       ],
       "expected_action": "answer",
-      "ground_truth_evidence": "Document fact 21 from source files.",
-      "evaluation_criteria": "Criteria for test 21."
+      "ground_truth_evidence": "Compliance protocols mandate strict security and authorization reviews.",
+      "evaluation_criteria": "Must clarify boundary restrictions and cite source."
     }
   ]
 }

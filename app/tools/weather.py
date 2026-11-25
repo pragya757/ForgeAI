@@ -25,10 +25,16 @@ class WeatherTool(BaseTool):
                 type="number",
                 description="Longitude coordinate (e.g., -0.1278 for London, 103.8198 for Singapore).",
                 required=True
+            ),
+            ToolParameter(
+                name="city",
+                type="string",
+                description="Optional city name for location tracking.",
+                required=False
             )
         ]
 
-    def execute(self, latitude: float, longitude: float, **kwargs: Any) -> Dict[str, Any]:
+    def execute(self, latitude: float, longitude: float, city: str = "", **kwargs: Any) -> Dict[str, Any]:
         url = "https://api.open-meteo.com/v1/forecast"
         params = {
             "latitude": latitude,

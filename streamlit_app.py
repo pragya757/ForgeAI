@@ -37,6 +37,23 @@ with tabs[0]:
         )
         iterations_slider = st.slider("Max Optimization Iterations", min_value=1, max_value=3, value=3)
 
+        # Clarification Dialogue Expander (Max 5 questions)
+        clarification_answers = {}
+        with st.expander("💬 Intake Clarification Dialogue (Optional - Max 5 Questions)"):
+            st.caption("ForgeAI inspects brief ambiguities and generates up to 5 questions. Leave empty to use unattended conservative defaults.")
+            if st.button("Generate Clarifying Questions"):
+                if os.path.exists(doc_folder_input):
+                    tmp_factory = ForgeAIFactory()
+                    st.session_state["clarification_questions"] = tmp_factory.interviewer.generate_clarifying_questions(brief_input, doc_folder_input)
+                else:
+                    st.error(f"Cannot inspect missing document folder: {doc_folder_input}")
+
+            if "clarification_questions" in st.session_state:
+                for idx, q_text in enumerate(st.session_state["clarification_questions"], 1):
+                    ans = st.text_input(f"Q{idx}: {q_text}", key=f"clarify_q_{idx}")
+                    if ans.strip():
+                        clarification_answers[q_text] = ans.strip()
+
     with col2:
         st.subheader("Factory Guardrails")
         st.info("🛡 **Groundability Guard:** Prevents unsupported requirements from entering agent scope.")
@@ -58,7 +75,8 @@ with tabs[0]:
                         brief=brief_input,
                         doc_folder=doc_folder_input,
                         output_dir=output_dir_input,
-                        unattended=True
+                        clarification_answers=clarification_answers if clarification_answers else None,
+                        unattended=not bool(clarification_answers)
                     )
                     st.session_state["last_run"] = results
                     st.session_state["artifacts_dir"] = output_dir_input

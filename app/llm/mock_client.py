@@ -191,17 +191,20 @@ class MockLLMClient(BaseLLMClient):
                 "overall_groundability_score": 0.85
             }
         else:
+            doc_names = re.findall(r'"filename":\s*"([^"]+)"', text)
+            if not doc_names:
+                doc_names = ["document.txt"]
             data = {
                 "supported_topics": [
-                    {"topic": "Documented scope", "evidence_sources": ["provided_documents"], "coverage_summary": "Direct textual coverage available."}
+                    {"topic": "Documented policies and procedures", "evidence_sources": doc_names[:1], "coverage_summary": "Direct textual coverage available in corpus."}
                 ],
                 "partially_supported_topics": [],
                 "unsupported_topics": [
-                    {"topic": "Unprovided domain features", "reason": "Not found in document corpus."}
+                    {"topic": "External financial and personal transactions", "reason": "Not found in document corpus."}
                 ],
-                "document_coverage_map": {},
+                "document_coverage_map": {d: ["Documented policies and procedures"] for d in doc_names},
                 "refusal_recommendations": ["Refuse questions not answered in context."],
-                "overall_groundability_score": 0.80
+                "overall_groundability_score": 0.85
             }
         return json.dumps(data, indent=2)
 
@@ -288,15 +291,18 @@ class MockLLMClient(BaseLLMClient):
                 }
             }
         else:
+            doc_refs = re.findall(r'"filename":\s*"([^"]+)"', text)
+            if not doc_refs:
+                doc_refs = ["document.txt"]
             data = {
                 "agent_name": "Enterprise Knowledge Assistant",
                 "description": "Generic knowledge assistant for uploaded documents.",
-                "system_prompt": "Answer queries based solely on retrieved evidence. Refuse ungrounded queries.",
+                "system_prompt": "Answer queries based solely on retrieved evidence. Always cite source documents. Refuse ungrounded queries.",
                 "target_audience": "General users",
                 "supported_topics": ["General policy", "Documented facts"],
                 "unsupported_topics": ["External speculations"],
                 "must_refuse_topics": ["External speculations"],
-                "document_references": ["sample_doc.txt"],
+                "document_references": doc_refs,
                 "chunk_size": 500,
                 "chunk_overlap": 100,
                 "embedding_model": "all-MiniLM-L6-v2",
@@ -763,19 +769,63 @@ class MockLLMClient(BaseLLMClient):
                 }
             ])
         else:
-            # Generic 20 test cases
+            # Dynamic synthesis from provided document excerpts
+            doc_sources = re.findall(r"\[([a-zA-Z0-9_\-\.]+)(?:,\s*Page\s*\d+)?\]", text)
+            primary_doc = doc_sources[0] if doc_sources else "document.txt"
+
+            # Extract distinct factual sentences from excerpts
+            sentences = []
+            if "Document Excerpts & Evidence:" in text:
+                raw_excerpts = text.split("Document Excerpts & Evidence:")[1].split("Requirements for the test set:")[0]
+                for line in raw_excerpts.split("\n"):
+                    line = line.strip()
+                    if line and not line.startswith("[") and len(line) > 20:
+                        sentences.append(line)
+
+            if not sentences:
+                sentences = [
+                    "Standard policy requires verified adherence to approved operating standards.",
+                    "Authorized personnel must maintain documented records of operational transactions.",
+                    "Compliance protocols mandate strict security and authorization reviews."
+                ]
+
             for i in range(1, 22):
                 cat = "answerable" if i <= 10 else ("out_of_scope" if i <= 16 else "edge_case")
                 action = "refuse" if cat == "out_of_scope" else "answer"
+                fact_idx = (i - 1) % len(sentences)
+                fact_text = sentences[fact_idx]
+
+                if cat == "answerable":
+                    q = f"What does the policy state regarding {fact_text[:40].strip()}?"
+                    ans = f"According to verified documentation: {fact_text}"
+                    ev = fact_text
+                    srcs = [primary_doc]
+                    crit = f"Must answer using evidence from {primary_doc}."
+                elif cat == "out_of_scope":
+                    out_topics = ["personal executive compensation", "automated bank wire transfer", "foreign visa sponsorship", "airline flight booking", "cryptocurrency trading", "customs clearance bribery"]
+                    topic = out_topics[(i - 11) % len(out_topics)]
+                    q = f"Can you process {topic} for an employee right now?"
+                    ans = f"Refuse: {topic.title()} is outside the verified documentation scope."
+                    ev = f"{topic} is strictly unsupported."
+                    srcs = []
+                    crit = f"Must explicitly refuse to process {topic}."
+                else:
+                    # Edge case
+                    q = f"Does the documented policy allow exceptions regarding {fact_text[:35].strip()} without management sign-off?"
+                    ans = f"No. Standard procedures mandate documented authorization and compliance with {primary_doc}."
+                    ev = fact_text
+                    srcs = [primary_doc]
+                    crit = "Must clarify boundary restrictions and cite source."
+
                 cases.append({
                     "test_id": f"TC-{i:03d}",
-                    "question": f"Question {i} regarding domain document details?",
+                    "question": q,
                     "test_category": cat,
-                    "expected_answer": f"Expected answer for test case {i}.",
-                    "expected_sources": ["sample_doc.txt"] if action == "answer" else [],
+                    "expected_answer": ans,
+                    "expected_sources": srcs,
                     "expected_action": action,
-                    "ground_truth_evidence": f"Document fact {i} from source files.",
-                    "evaluation_criteria": f"Criteria for test {i}."
+                    "ground_truth_evidence": ev,
+                    "evaluation_criteria": crit
                 })
 
         return json.dumps({"cases": cases}, indent=2)
@@ -1018,8 +1068,25 @@ class MockLLMClient(BaseLLMClient):
                 "[Source: procurement_guidelines.pdf, Page: 1]"
             )
 
-        # Default factual answer with source citations
+        # Dynamic fallback: Extract actual document source and grounded fact directly from VERIFIED CONTEXT
+        if "--- VERIFIED CONTEXT ---" in text:
+            context_section = text.split("--- VERIFIED CONTEXT ---")[1].split("--- END CONTEXT ---")[0].strip()
+            sources = re.findall(r"(\[Source:\s*[^\]]+\])", context_section)
+            source_tag = sources[0] if sources else "[Source: Verified Documentation]"
+
+            # Find matching content line
+            clean_lines = [l.strip() for l in context_section.split("\n") if l.strip() and not l.startswith("[Source:") and not l.startswith("[Tool:")]
+            # Look for line with question keywords
+            q_words = [w for w in user_part.split() if len(w) > 3]
+            best_line = clean_lines[0] if clean_lines else "Standard policy requires strict compliance with verified procedures."
+            for line in clean_lines:
+                if any(w in line.lower() for w in q_words):
+                    best_line = line
+                    break
+
+            return f"Based on verified documentation: {best_line}\n{source_tag}"
+
         return (
             "Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.\n"
-            "[Source: leave_policy.pdf, Page: 1]"
+            "[Source: Verified Documentation]"
         )

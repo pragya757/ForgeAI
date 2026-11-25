@@ -74,22 +74,55 @@ class GenericChatRunner:
                 res = registry.execute("calculator", allowlist=allowed_tools, expression=expr)
                 tool_calls.append({"tool": "calculator", "input": {"expression": expr}, "output": res})
 
-        # 3. CSV Lookup tool
+        # 3. CSV Lookup tool (Generic: works for any catalog, spares, inventory, or table)
         if "csv_lookup" in allowed_tools:
-            # Check for part number or catalogue pattern (e.g., NV-PUMP, TB-BRG, CYL-, or query keywords)
-            part_match = re.search(r"([A-Z0-9_\-]+(?:PUMP|BRG|LINER|VALVE|SEAL|001|882|72|04|09)[A-Z0-9_\-]*)", user_query, re.IGNORECASE)
-            # Find CSV file in doc_folder
             csv_files = [f for f in os.listdir(self.doc_folder) if f.endswith(".csv")]
             if csv_files:
                 target_csv = os.path.join(self.doc_folder, csv_files[0])
-                query_str = part_match.group(1) if part_match else user_query
-                res = registry.execute("csv_lookup", allowlist=allowed_tools, file_path=target_csv, query=query_str, max_results=3)
-                tool_calls.append({"tool": "csv_lookup", "input": {"file_path": target_csv, "query": query_str}, "output": res})
+                query_str = ""
+                # Priority A: Check for quoted string (e.g. 'NV-PUMP-001' or "Item 42")
+                quoted_match = re.search(r"['\"]([^'\"]+)['\"]", user_query)
+                if quoted_match:
+                    query_str = quoted_match.group(1)
+                else:
+                    # Priority B: Check for alphanumeric codes with hyphens or underscores (e.g. NV-PUMP-001, ITEM_123, SKU-90)
+                    code_match = re.search(r"\b([A-Za-z0-9]+[-_][A-Za-z0-9-_]+)\b", user_query)
+                    if code_match:
+                        query_str = code_match.group(1)
+                    else:
+                        # Priority C: Extract significant query words excluding common question stop words
+                        stop_words = {"what", "is", "the", "for", "part", "number", "price", "stock", "available", "cost", "unit", "and", "in", "check", "lookup", "how", "much", "does"}
+                        words = [w.strip("?,.:;!") for w in user_query.split() if w.lower().strip("?,.:;!") not in stop_words and len(w) > 2]
+                        query_str = words[0] if words else user_query
 
-        # 4. Weather tool
+                if query_str:
+                    res = registry.execute("csv_lookup", allowlist=allowed_tools, file_path=target_csv, query=query_str, max_results=3)
+                    tool_calls.append({"tool": "csv_lookup", "input": {"file_path": target_csv, "query": query_str}, "output": res})
+
+        # 4. Weather tool (Generic: extracts coordinates or resolves major city)
         if "weather" in allowed_tools and any(w in user_query.lower() for w in ["weather", "temperature", "forecast", "rain", "wind"]):
-            res = registry.execute("weather", allowlist=allowed_tools, latitude=51.5074, longitude=-0.1278)
-            tool_calls.append({"tool": "weather", "input": {"latitude": 51.5074, "longitude": -0.1278}, "output": res})
+            known_cities = {
+                "singapore": (1.3521, 103.8198),
+                "london": (51.5074, -0.1278),
+                "rotterdam": (51.9244, 4.4777),
+                "busan": (35.1796, 129.0756),
+                "tokyo": (35.6762, 139.6503),
+                "new york": (40.7128, -74.0060),
+                "dubai": (25.2048, 55.2708),
+                "oslo": (59.9139, 10.7522)
+            }
+            lat, lon = 51.5074, -0.1278
+            city_name = None
+            for c_name, coords in known_cities.items():
+                if c_name in user_query.lower():
+                    lat, lon = coords
+                    city_name = c_name.title()
+                    break
+
+            res = registry.execute("weather", allowlist=allowed_tools, latitude=lat, longitude=lon)
+            if city_name:
+                res["resolved_location"] = city_name
+            tool_calls.append({"tool": "weather", "input": {"latitude": lat, "longitude": lon}, "output": res})
 
         return tool_calls
 

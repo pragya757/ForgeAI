@@ -1,6 +1,6 @@
 # ForgeAI Honest Agent Quality & Verification Report
 
-**Generated On:** 2026-11-25 20:40:10  
+**Generated On:** 2026-11-25 21:37:06  
 **Agent Name:** Ship-Spares Procurement Assistant  
 **Evaluation Status:** `SUCCESS (PASSED)`  
 **Final Pass Rate:** **95.2%** (Initial: 95.2%)  
@@ -81,8 +81,8 @@ A total of **1** test cases remain unresolved:
 #### Test Case: `TC-014`
 - **Question:** What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?
 - **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent answered.
-- **Agent Response:** `Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.
-[Source: leave_policy.pdf, Page: 1]...`
+- **Agent Response:** `Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES
+[Source: procurement_guidelines.pdf, Page: 1]...`
 - **Metric Scores:** Factual: 0.0, Refusal: 0.0, Citation: 1.0
 
 ### Documented Limitations

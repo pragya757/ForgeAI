@@ -200,6 +200,12 @@ class CriticOptimizer:
                 # Reached max iterations
                 break
 
+            # Early stop if performance stagnates with identical failure profile
+            if iteration > 1 and len(scorecards) >= 2:
+                prev_failed_ids = [c.test_id for c in scorecards[-2].case_results if not c.passed]
+                if set(failed_ids) == set(prev_failed_ids) and current_score <= scorecards[-2].pass_rate:
+                    break
+
             # Classify failures
             classifications = self.classify_failures(failed_cases)
             failed_ids = [c.test_id for c in failed_cases]

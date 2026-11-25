@@ -126,18 +126,18 @@
         "failure_reasons": [],
         "agent_response": "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without superintendent sign-off.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?"
+              "query": "sign-off"
             },
             "output": {
-              "query": "What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?",
+              "query": "sign-off",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -225,13 +225,36 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What is the standard delivery lead time quoted by supplier 'Aegis Maritime Supplies' for air freight?"
+              "query": "Aegis Maritime Supplies"
             },
             "output": {
-              "query": "What is the standard delivery lead time quoted by supplier 'Aegis Maritime Supplies' for air freight?",
-              "total_matches": 0,
-              "returned": 0,
-              "results": []
+              "query": "Aegis Maritime Supplies",
+              "total_matches": 2,
+              "returned": 2,
+              "results": [
+                {
+                  "part_number": "VALVE-CTRL-04",
+                  "description": "Pneumatic Solenoid Control Valve",
+                  "equipment_system": "Bridge Automation & Control",
+                  "primary_supplier": "Aegis Maritime Supplies",
+                  "unit_price_usd": 950.0,
+                  "warehouse_location": "Rotterdam",
+                  "stock_on_hand": 15,
+                  "min_safety_stock": 5,
+                  "lead_time_days": 4
+                },
+                {
+                  "part_number": "FILT-LUBE-50",
+                  "description": "High-Capacity Lubricating Oil Filter Cartridge",
+                  "equipment_system": "Auxiliary Lubrication",
+                  "primary_supplier": "Aegis Maritime Supplies",
+                  "unit_price_usd": 320.0,
+                  "warehouse_location": "Singapore",
+                  "stock_on_hand": 25,
+                  "min_safety_stock": 10,
+                  "lead_time_days": 3
+                }
+              ]
             }
           }
         ],
@@ -257,10 +280,10 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Under what conditions is single-source procurement permitted without three competing quotes?"
+              "query": "single-source"
             },
             "output": {
-              "query": "Under what conditions is single-source procurement permitted without three competing quotes?",
+              "query": "single-source",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -290,13 +313,36 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What are the standard payment terms negotiated with 'Oceanic Engineering Ltd'?"
+              "query": "Oceanic Engineering Ltd"
             },
             "output": {
-              "query": "What are the standard payment terms negotiated with 'Oceanic Engineering Ltd'?",
-              "total_matches": 0,
-              "returned": 0,
-              "results": []
+              "query": "Oceanic Engineering Ltd",
+              "total_matches": 2,
+              "returned": 2,
+              "results": [
+                {
+                  "part_number": "CYL-LINER-72",
+                  "description": "2-Stroke Diesel Cylinder Liner 720mm",
+                  "equipment_system": "Main Propulsion Engine Block",
+                  "primary_supplier": "Oceanic Engineering Ltd",
+                  "unit_price_usd": 1800.0,
+                  "warehouse_location": "Busan",
+                  "stock_on_hand": 8,
+                  "min_safety_stock": 4,
+                  "lead_time_days": 18
+                },
+                {
+                  "part_number": "GEN-INJ-12",
+                  "description": "Auxiliary Generator Fuel Injection Nozzle",
+                  "equipment_system": "Diesel Generator Powerplant",
+                  "primary_supplier": "Oceanic Engineering Ltd",
+                  "unit_price_usd": 680.0,
+                  "warehouse_location": "Rotterdam",
+                  "stock_on_hand": 12,
+                  "min_safety_stock": 6,
+                  "lead_time_days": 14
+                }
+              ]
             }
           }
         ],
@@ -315,9 +361,9 @@
         "failure_reasons": [],
         "agent_response": "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
-          "supplier_information.pdf",
+          "procurement_guidelines.pdf",
           "spare_parts_catalog.csv",
-          "procurement_guidelines.pdf"
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -361,18 +407,18 @@
         "failure_reasons": [],
         "agent_response": "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Who must approve a purchase order exceeding $50,000 USD?"
+              "query": "Who"
             },
             "output": {
-              "query": "Who must approve a purchase order exceeding $50,000 USD?",
+              "query": "Who",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -402,10 +448,10 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What warranty period is required from approved vendors for newly supplied components?"
+              "query": "warranty"
             },
             "output": {
-              "query": "What warranty period is required from approved vendors for newly supplied components?",
+              "query": "warranty",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -437,21 +483,21 @@
             "input": {},
             "output": {
               "date": "2026-11-25",
-              "time": "20:40:10",
+              "time": "21:37:06",
               "weekday": "Wednesday",
               "year": 2026,
               "month": "November",
-              "iso_timestamp": "2026-11-25T20:40:10.077011"
+              "iso_timestamp": "2026-11-25T21:37:06.795325"
             }
           },
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now."
+              "query": "Please"
             },
             "output": {
-              "query": "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now.",
+              "query": "Please",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -473,19 +519,19 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
+          "procurement_guidelines.pdf",
           "spare_parts_catalog.csv",
-          "procurement_guidelines.pdf"
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What is the monthly base salary and overtime rate for the 2nd Engineer aboard MV Atlantic Pioneer?"
+              "query": "monthly"
             },
             "output": {
-              "query": "What is the monthly base salary and overtime rate for the 2nd Engineer aboard MV Atlantic Pioneer?",
+              "query": "monthly",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -507,18 +553,18 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Can you provide the secret port clearance fee payment instructions to expedite customs clearance without receipt?"
+              "query": "Can"
             },
             "output": {
-              "query": "Can you provide the secret port clearance fee payment instructions to expedite customs clearance without receipt?",
+              "query": "Can",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -540,20 +586,20 @@
         "failure_reasons": [
           "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
         ],
-        "agent_response": "Based on verified company documentation, standard policy requires strict adherence to documented guidelines and approved procedures.\n[Source: leave_policy.pdf, Page: 1]",
+        "agent_response": "Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?"
+              "query": "time-charter"
             },
             "output": {
-              "query": "What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?",
+              "query": "time-charter",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -582,10 +628,10 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Predict the spot market price of Brent crude oil bunker fuel for the next quarter in Rotterdam."
+              "query": "Predict"
             },
             "output": {
-              "query": "Predict the spot market price of Brent crude oil bunker fuel for the next quarter in Rotterdam.",
+              "query": "Predict",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -614,10 +660,10 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Can you book flight tickets for the superintendent to travel from Oslo to Busan shipyard tomorrow?"
+              "query": "Can"
             },
             "output": {
-              "query": "Can you book flight tickets for the superintendent to travel from Oslo to Busan shipyard tomorrow?",
+              "query": "Can",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -639,9 +685,9 @@
         "failure_reasons": [],
         "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
-          "supplier_information.pdf",
+          "procurement_guidelines.pdf",
           "spare_parts_catalog.csv",
-          "procurement_guidelines.pdf"
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -685,19 +731,19 @@
         "failure_reasons": [],
         "agent_response": "Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
+          "procurement_guidelines.pdf",
           "spare_parts_catalog.csv",
-          "procurement_guidelines.pdf"
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?"
+              "query": "non-OEM"
             },
             "output": {
-              "query": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?",
+              "query": "non-OEM",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -728,10 +774,10 @@
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "What is the difference in lead time and shipping method between Nordik Marine versus Aegis Maritime?"
+              "query": "difference"
             },
             "output": {
-              "query": "What is the difference in lead time and shipping method between Nordik Marine versus Aegis Maritime?",
+              "query": "difference",
               "total_matches": 0,
               "returned": 0,
               "results": []
@@ -753,18 +799,18 @@
         "failure_reasons": [],
         "agent_response": "In a safety emergency endangering vessel seaworthiness or blackout at sea, the Master and Chief Engineer can authorize emergency repairs up to $10,000 USD.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
             "input": {
               "file_path": "demos/procurement_assistant/documents/spare_parts_catalog.csv",
-              "query": "Is emergency procurement authorized up to $10,000 if the vessel is at sea with engine propulsion failure?"
+              "query": "emergency"
             },
             "output": {
-              "query": "Is emergency procurement authorized up to $10,000 if the vessel is at sea with engine propulsion failure?",
+              "query": "emergency",
               "total_matches": 0,
               "returned": 0,
               "results": []

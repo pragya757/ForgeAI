@@ -47,6 +47,48 @@ class IntakeInterviewer:
 
         return items
 
+    def generate_clarifying_questions(self, brief: str, doc_folder: str) -> List[str]:
+        """Formulate no more than five relevant clarifying questions regarding requirements and scope."""
+        inventory = self.inspect_documents(doc_folder)
+        doc_names = [item.filename for item in inventory]
+
+        prompt = (
+            f"Review this user brief and document inventory:\n"
+            f"User Brief: {brief}\n"
+            f"Available Documents: {doc_names}\n\n"
+            "Formulate up to 5 concise, critical clarifying questions to resolve ambiguities in scope, audience, tools, or policies.\n"
+            "Return a JSON list of questions: [\"Question 1\", \"Question 2\", ...]. Never output more than 5 questions."
+        )
+
+        try:
+            response = self.llm.generate(prompt=prompt, json_mode=True, temperature=0.1)
+            clean = response.strip()
+            if clean.startswith("```json"): clean = clean[7:]
+            if clean.startswith("```"): clean = clean[3:]
+            if clean.endswith("```"): clean = clean[:-3]
+            data = json.loads(clean.strip())
+            if isinstance(data, list):
+                questions = [str(q) for q in data[:5]]
+            elif isinstance(data, dict):
+                first_val = list(data.values())[0]
+                questions = [str(q) for q in first_val[:5]] if isinstance(first_val, list) else []
+            else:
+                questions = []
+        except Exception:
+            questions = []
+
+        if not questions:
+            questions = [
+                "Who is the primary target audience (e.g., internal staff, department managers, external clients)?",
+                "Are there specific topics or requests that the assistant must strictly refuse to answer?",
+                "What tone should the assistant maintain (e.g., formal and authoritative, supportive and friendly)?",
+                "Are there specific external tools or data sources required beyond the provided files?",
+                "Should responses follow a specific output structure (e.g., bulleted highlights, strict tabular format)?"
+            ]
+
+        # Enforce maximum 5 questions ceiling
+        return questions[:5]
+
     def conduct_interview(
         self,
         brief: str,

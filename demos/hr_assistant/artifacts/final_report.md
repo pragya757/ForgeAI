@@ -1,6 +1,6 @@
 # ForgeAI Honest Agent Quality & Verification Report
 
-**Generated On:** 2026-11-25 20:37:00  
+**Generated On:** 2026-11-25 21:37:03  
 **Agent Name:** HR Policy Assistant  
 **Evaluation Status:** `SUCCESS (PASSED)`  
 **Final Pass Rate:** **100.0%** (Initial: 100.0%)  
@@ -67,7 +67,7 @@
 
 | Iteration | Total Tests | Passed | Failed | Pass Rate | Grounding | Factual | Citation | Refusal | Relevance | Contract |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Iteration 1 | 21 | 21 | 0 | **100.0%** | 100% | 100% | 98% | 100% | 100% | 100% |
+| Iteration 1 | 21 | 21 | 0 | **100.0%** | 100% | 100% | 100% | 100% | 100% | 100% |
 
 ---
 

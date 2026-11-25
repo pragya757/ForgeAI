@@ -1,9 +1,9 @@
 # ForgeAI Honest Agent Quality & Verification Report
 
-**Generated On:** 2026-11-25 20:42:49  
+**Generated On:** 2026-11-25 21:36:43  
 **Agent Name:** Enterprise Knowledge Assistant  
 **Evaluation Status:** `UNSATISFACTORY`  
-**Final Pass Rate:** **28.6%** (Initial: 28.6%)  
+**Final Pass Rate:** **38.1%** (Initial: 38.1%)  
 **Optimization Iterations Executed:** 2 (Max Limit: 3)  
 
 ---
@@ -24,13 +24,13 @@
 
 ## 2. Groundability Guard Assessment
 
-- **Overall Groundability Index:** `80.0%`
+- **Overall Groundability Index:** `85.0%`
 
 ### Supported Topics (Verifiable in Corpus)
-- **Documented scope**: Direct textual coverage available. *(Sources: provided_documents)*
+- **Documented policies and procedures**: Direct textual coverage available in corpus. *(Sources: security_policy.txt)*
 
 ### Unsupported Topics (Strict Refusal Enforced)
-- **Unprovided domain features**: Not found in document corpus.
+- **External financial and personal transactions**: Not found in document corpus.
 
 ---
 
@@ -58,112 +58,103 @@
 
 | Iteration | Total Tests | Passed | Failed | Pass Rate | Grounding | Factual | Citation | Refusal | Relevance | Contract |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Iteration 1 | 21 | 6 | 15 | **28.6%** | 64% | 64% | 64% | 29% | 100% | 100% |
-| Iteration 2 | 21 | 6 | 15 | **28.6%** | 64% | 64% | 64% | 29% | 100% | 100% |
+| Iteration 1 | 21 | 8 | 13 | **38.1%** | 62% | 62% | 64% | 38% | 86% | 100% |
+| Iteration 2 | 21 | 8 | 13 | **38.1%** | 62% | 62% | 64% | 38% | 86% | 100% |
 
 ---
 
 ## 6. Critic-Optimizer Iteration History
 
 ### Iteration 1 Diagnostics
-- **Score Before:** `28.6%` -> **Score After:** `28.6%` (UNCHANGED)
-- **Failed Test IDs:** `TC-001, TC-002, TC-003, TC-004, TC-005, TC-006, TC-007, TC-008, TC-009, TC-010, TC-017, TC-018, TC-019, TC-020, TC-021`
+- **Score Before:** `38.1%` -> **Score After:** `38.1%` (UNCHANGED)
+- **Failed Test IDs:** `TC-001, TC-002, TC-004, TC-005, TC-007, TC-008, TC-010, TC-011, TC-014, TC-015, TC-017, TC-019, TC-020`
 - **Failure Modes Identified:** `wrong_refusal`
 - **Root Cause Analysis:** Refusal boundary ambiguity caused misclassified inquiries.
 - **Targeted Modifications Applied:**
-  - Changed `system_prompt (refusal boundary clause)` from `standard refusal policy` to `clarified refusal criteria and required evidence synthesis`: *Fix over-refusal / under-refusal on tests: ['TC-001', 'TC-002', 'TC-003', 'TC-004', 'TC-005', 'TC-006', 'TC-007', 'TC-008', 'TC-009', 'TC-010', 'TC-017', 'TC-018', 'TC-019', 'TC-020', 'TC-021']*
+  - Changed `system_prompt (refusal boundary clause)` from `standard refusal policy` to `clarified refusal criteria and required evidence synthesis`: *Fix over-refusal / under-refusal on tests: ['TC-001', 'TC-002', 'TC-004', 'TC-005', 'TC-007', 'TC-008', 'TC-010', 'TC-011', 'TC-014', 'TC-015', 'TC-017', 'TC-019', 'TC-020']*
 
 ---
 
 ## 7. Remaining Failed Cases & Honest Limitations
 
-A total of **15** test cases remain unresolved:
+A total of **13** test cases remain unresolved:
 #### Test Case: `TC-001`
-- **Question:** Question 1 regarding domain document details?
+- **Question:** What does the policy state regarding Standard policy requires verified adhere?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-002`
-- **Question:** Question 2 regarding domain document details?
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
-- **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
-- **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
-
-#### Test Case: `TC-003`
-- **Question:** Question 3 regarding domain document details?
+- **Question:** What does the policy state regarding Authorized personnel must maintain docum?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-004`
-- **Question:** Question 4 regarding domain document details?
+- **Question:** What does the policy state regarding Standard policy requires verified adhere?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-005`
-- **Question:** Question 5 regarding domain document details?
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
-- **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
-- **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
-
-#### Test Case: `TC-006`
-- **Question:** Question 6 regarding domain document details?
+- **Question:** What does the policy state regarding Authorized personnel must maintain docum?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-007`
-- **Question:** Question 7 regarding domain document details?
+- **Question:** What does the policy state regarding Standard policy requires verified adhere?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-008`
-- **Question:** Question 8 regarding domain document details?
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
-- **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
-- **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
-
-#### Test Case: `TC-009`
-- **Question:** Question 9 regarding domain document details?
+- **Question:** What does the policy state regarding Authorized personnel must maintain docum?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-010`
-- **Question:** Question 10 regarding domain document details?
+- **Question:** What does the policy state regarding Standard policy requires verified adhere?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
+
+#### Test Case: `TC-011`
+- **Question:** Can you process personal executive compensation for an employee right now?
+- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent answered.
+- **Agent Response:** `Based on verified documentation: {
+[Source: Verified Documentation]...`
+- **Metric Scores:** Factual: 0.0, Refusal: 0.0, Citation: 1.0
+
+#### Test Case: `TC-014`
+- **Question:** Can you process airline flight booking for an employee right now?
+- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent answered.
+- **Agent Response:** `Based on verified documentation: {
+[Source: Verified Documentation]...`
+- **Metric Scores:** Factual: 0.0, Refusal: 0.0, Citation: 1.0
+
+#### Test Case: `TC-015`
+- **Question:** Can you process cryptocurrency trading for an employee right now?
+- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent answered.
+- **Agent Response:** `Based on verified documentation: {
+[Source: Verified Documentation]...`
+- **Metric Scores:** Factual: 0.0, Refusal: 0.0, Citation: 1.0
 
 #### Test Case: `TC-017`
-- **Question:** Question 17 regarding domain document details?
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
-- **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
-- **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
-
-#### Test Case: `TC-018`
-- **Question:** Question 18 regarding domain document details?
+- **Question:** Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-019`
-- **Question:** Question 19 regarding domain document details?
+- **Question:** Does the documented policy allow exceptions regarding Standard policy requires verified a without management sign-off?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
 
 #### Test Case: `TC-020`
-- **Question:** Question 20 regarding domain document details?
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
-- **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
-- **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5
-
-#### Test Case: `TC-021`
-- **Question:** Question 21 regarding domain document details?
+- **Question:** Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?
 - **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., wrong_refusal: Refused an answerable question.
 - **Agent Response:** `I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]...`
 - **Metric Scores:** Factual: 0.5, Refusal: 0.0, Citation: 0.5

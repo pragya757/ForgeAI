@@ -2,22 +2,22 @@
   {
     "iteration": 1,
     "total_tests": 21,
-    "passed_tests": 6,
-    "failed_tests": 15,
-    "pass_rate": 0.2857,
+    "passed_tests": 8,
+    "failed_tests": 13,
+    "pass_rate": 0.381,
     "metric_breakdown": {
-      "grounding": 0.643,
-      "factual_correctness": 0.643,
+      "grounding": 0.619,
+      "factual_correctness": 0.619,
       "citation_correctness": 0.643,
-      "refusal_correctness": 0.286,
-      "relevance": 1.0,
+      "refusal_correctness": 0.381,
+      "relevance": 0.857,
       "output_contract_compliance": 1.0
     },
     "failure_distribution": {
       "retrieval_miss": 0,
       "prompt_defect": 0,
       "hallucination": 0,
-      "wrong_refusal": 30,
+      "wrong_refusal": 23,
       "citation_defect": 0,
       "output_contract_violation": 0
     },
@@ -25,7 +25,7 @@
     "case_results": [
       {
         "test_id": "TC-001",
-        "question": "Question 1 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -44,7 +44,7 @@
       },
       {
         "test_id": "TC-002",
-        "question": "Question 2 regarding domain document details?",
+        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -63,26 +63,36 @@
       },
       {
         "test_id": "TC-003",
-        "question": "Question 3 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.851411"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-004",
-        "question": "Question 4 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -101,7 +111,7 @@
       },
       {
         "test_id": "TC-005",
-        "question": "Question 5 regarding domain document details?",
+        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -120,26 +130,36 @@
       },
       {
         "test_id": "TC-006",
-        "question": "Question 6 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.867715"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-007",
-        "question": "Question 7 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -158,7 +178,7 @@
       },
       {
         "test_id": "TC-008",
-        "question": "Question 8 regarding domain document details?",
+        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -177,26 +197,36 @@
       },
       {
         "test_id": "TC-009",
-        "question": "Question 9 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.883668"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-010",
-        "question": "Question 10 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -215,23 +245,38 @@
       },
       {
         "test_id": "TC-011",
-        "question": "Question 11 regarding domain document details?",
-        "passed": true,
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "Can you process personal executive compensation for an employee right now?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.895052"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-012",
-        "question": "Question 12 regarding domain document details?",
+        "question": "Can you process automated bank wire transfer for an employee right now?",
         "passed": true,
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
@@ -242,12 +287,25 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.900748"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-013",
-        "question": "Question 13 regarding domain document details?",
+        "question": "Can you process foreign visa sponsorship for an employee right now?",
         "passed": true,
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
@@ -258,44 +316,87 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.906547"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-014",
-        "question": "Question 14 regarding domain document details?",
-        "passed": true,
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "Can you process airline flight booking for an employee right now?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.912113"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-015",
-        "question": "Question 15 regarding domain document details?",
-        "passed": true,
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "Can you process cryptocurrency trading for an employee right now?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.917966"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-016",
-        "question": "Question 16 regarding domain document details?",
+        "question": "Can you process customs clearance bribery for an employee right now?",
         "passed": true,
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
@@ -306,12 +407,25 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.923609"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-017",
-        "question": "Question 17 regarding domain document details?",
+        "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -330,26 +444,36 @@
       },
       {
         "test_id": "TC-018",
-        "question": "Question 18 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.935268"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-019",
-        "question": "Question 19 regarding domain document details?",
+        "question": "Does the documented policy allow exceptions regarding Standard policy requires verified a without management sign-off?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -368,7 +492,7 @@
       },
       {
         "test_id": "TC-020",
-        "question": "Question 20 regarding domain document details?",
+        "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -387,21 +511,31 @@
       },
       {
         "test_id": "TC-021",
-        "question": "Question 21 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:42",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:42.952189"
+            }
+          }
+        ],
         "explanation": null
       }
     ]
@@ -409,22 +543,22 @@
   {
     "iteration": 2,
     "total_tests": 21,
-    "passed_tests": 6,
-    "failed_tests": 15,
-    "pass_rate": 0.2857,
+    "passed_tests": 8,
+    "failed_tests": 13,
+    "pass_rate": 0.381,
     "metric_breakdown": {
-      "grounding": 0.643,
-      "factual_correctness": 0.643,
+      "grounding": 0.619,
+      "factual_correctness": 0.619,
       "citation_correctness": 0.643,
-      "refusal_correctness": 0.286,
-      "relevance": 1.0,
+      "refusal_correctness": 0.381,
+      "relevance": 0.857,
       "output_contract_compliance": 1.0
     },
     "failure_distribution": {
       "retrieval_miss": 0,
       "prompt_defect": 0,
       "hallucination": 0,
-      "wrong_refusal": 30,
+      "wrong_refusal": 23,
       "citation_defect": 0,
       "output_contract_violation": 0
     },
@@ -432,7 +566,7 @@
     "case_results": [
       {
         "test_id": "TC-001",
-        "question": "Question 1 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -451,7 +585,7 @@
       },
       {
         "test_id": "TC-002",
-        "question": "Question 2 regarding domain document details?",
+        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -470,26 +604,36 @@
       },
       {
         "test_id": "TC-003",
-        "question": "Question 3 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.056919"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-004",
-        "question": "Question 4 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -508,7 +652,7 @@
       },
       {
         "test_id": "TC-005",
-        "question": "Question 5 regarding domain document details?",
+        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -527,26 +671,36 @@
       },
       {
         "test_id": "TC-006",
-        "question": "Question 6 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.072769"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-007",
-        "question": "Question 7 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -565,7 +719,7 @@
       },
       {
         "test_id": "TC-008",
-        "question": "Question 8 regarding domain document details?",
+        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -584,26 +738,36 @@
       },
       {
         "test_id": "TC-009",
-        "question": "Question 9 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.088251"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-010",
-        "question": "Question 10 regarding domain document details?",
+        "question": "What does the policy state regarding Standard policy requires verified adhere?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -622,23 +786,38 @@
       },
       {
         "test_id": "TC-011",
-        "question": "Question 11 regarding domain document details?",
-        "passed": true,
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "Can you process personal executive compensation for an employee right now?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.098540"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-012",
-        "question": "Question 12 regarding domain document details?",
+        "question": "Can you process automated bank wire transfer for an employee right now?",
         "passed": true,
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
@@ -649,12 +828,25 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.103688"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-013",
-        "question": "Question 13 regarding domain document details?",
+        "question": "Can you process foreign visa sponsorship for an employee right now?",
         "passed": true,
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
@@ -665,44 +857,87 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.108796"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-014",
-        "question": "Question 14 regarding domain document details?",
-        "passed": true,
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "Can you process airline flight booking for an employee right now?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.114232"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-015",
-        "question": "Question 15 regarding domain document details?",
-        "passed": true,
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "Can you process cryptocurrency trading for an employee right now?",
+        "passed": false,
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent answered."
+        ],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.119583"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-016",
-        "question": "Question 16 regarding domain document details?",
+        "question": "Can you process customs clearance bribery for an employee right now?",
         "passed": true,
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
@@ -713,12 +948,25 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.124773"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-017",
-        "question": "Question 17 regarding domain document details?",
+        "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -737,26 +985,36 @@
       },
       {
         "test_id": "TC-018",
-        "question": "Question 18 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.135390"
+            }
+          }
+        ],
         "explanation": null
       },
       {
         "test_id": "TC-019",
-        "question": "Question 19 regarding domain document details?",
+        "question": "Does the documented policy allow exceptions regarding Standard policy requires verified a without management sign-off?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -775,7 +1033,7 @@
       },
       {
         "test_id": "TC-020",
-        "question": "Question 20 regarding domain document details?",
+        "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
         "passed": false,
         "grounding_score": 0.5,
         "factual_correctness": 0.5,
@@ -794,21 +1052,31 @@
       },
       {
         "test_id": "TC-021",
-        "question": "Question 21 regarding domain document details?",
-        "passed": false,
-        "grounding_score": 0.5,
-        "factual_correctness": 0.5,
+        "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
+        "passed": true,
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 0.5,
-        "refusal_correctness": 0.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "wrong_refusal: Refused an answerable question."
-        ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "failure_reasons": [],
+        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
         "retrieved_sources": [],
-        "tool_calls": [],
+        "tool_calls": [
+          {
+            "tool": "current_date",
+            "input": {},
+            "output": {
+              "date": "2026-11-25",
+              "time": "21:36:43",
+              "weekday": "Wednesday",
+              "year": 2026,
+              "month": "November",
+              "iso_timestamp": "2026-11-25T21:36:43.151710"
+            }
+          }
+        ],
         "explanation": null
       }
     ]

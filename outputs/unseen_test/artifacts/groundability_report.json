@@ -1,23 +1,27 @@
 {
   "supported_topics": [
     {
-      "topic": "Documented scope",
+      "topic": "Documented policies and procedures",
       "evidence_sources": [
-        "provided_documents"
+        "security_policy.txt"
       ],
-      "coverage_summary": "Direct textual coverage available."
+      "coverage_summary": "Direct textual coverage available in corpus."
     }
   ],
   "partially_supported_topics": [],
   "unsupported_topics": [
     {
-      "topic": "Unprovided domain features",
+      "topic": "External financial and personal transactions",
       "reason": "Not found in document corpus."
     }
   ],
-  "document_coverage_map": {},
+  "document_coverage_map": {
+    "security_policy.txt": [
+      "Documented policies and procedures"
+    ]
+  },
   "refusal_recommendations": [
     "Refuse questions not answered in context."
   ],
-  "overall_groundability_score": 0.8
+  "overall_groundability_score": 0.85
 }

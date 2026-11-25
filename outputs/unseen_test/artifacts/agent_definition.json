@@ -1,7 +1,7 @@
 {
   "agent_name": "Enterprise Knowledge Assistant",
   "description": "Generic knowledge assistant for uploaded documents.",
-  "system_prompt": "Answer queries based solely on retrieved evidence. Refuse ungrounded queries.\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.",
+  "system_prompt": "Answer queries based solely on retrieved evidence. Always cite source documents. Refuse ungrounded queries.\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.",
   "target_audience": "General users",
   "supported_topics": [
     "General policy",
@@ -14,7 +14,7 @@
     "External speculations"
   ],
   "document_references": [
-    "sample_doc.txt"
+    "security_policy.txt"
   ],
   "chunk_size": 500,
   "chunk_overlap": 100,

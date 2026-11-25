@@ -6,7 +6,7 @@ Agent Definition:
 {
   "agent_name": "Enterprise Knowledge Assistant",
   "description": "Generic knowledge assistant for uploaded documents.",
-  "system_prompt": "Answer queries based solely on retrieved evidence. Refuse ungrounded queries.",
+  "system_prompt": "Answer queries based solely on retrieved evidence. Always cite source documents. Refuse ungrounded queries.",
   "target_audience": "General users",
   "supported_topics": [
     "General policy",
@@ -19,7 +19,7 @@ Agent Definition:
     "External speculations"
   ],
   "document_references": [
-    "sample_doc.txt"
+    "security_policy.txt"
   ],
   "chunk_size": 500,
   "chunk_overlap": 100,
