@@ -71,47 +71,15 @@ class MockLLMClient(BaseLLMClient):
         return self._mock_runner_response(combined)
 
     def _mock_clarifying_questions(self, text: str) -> str:
-        t = text.lower()
-
-        # If brief explicitly specifies self-contained or unambiguous scope without gaps, return 0 questions
-        if ("self-contained" in t or "unambiguous" in t or "no clarification needed" in t) and "contradiction:" not in t:
-            return json.dumps([])
-
         qs = []
-
-        # Specific contradictions or gaps detected from documents
-        if "depth" in t or "3000m" in t or "4500m" in t:
+        if "depth" in text.lower() or "3000m" in text.lower() or "4500m" in text.lower():
             qs.append("Regarding conflicting depth specifications (3000m vs 4500m): which operational ceiling takes precedence?")
-        if "incomplete" in t or "[tbd]" in t:
+        if "incomplete" in text.lower() or "[tbd]" in text.lower():
             qs.append("The payload documentation contains incomplete [TBD] markers: should the assistant answer with conservative defaults?")
-        if "ionosphere" in t or "telemetry" in t:
+        if "ionosphere" in text.lower() or "telemetry" in text.lower():
             qs.append("The brief references atmospheric ionosphere telemetry not covered in the documents: should these requests be refused?")
-
-        # HR domain
-        if any(w in t for w in ["leave_policy", "attendance_policy", "employee_handbook", "leave", "attendance", "handbook", "hr policy"]):
-            qs.append("Should the assistant handle contract workers or temporary staff differently from standard full-time employees?")
-            qs.append("Are inquiries regarding personal compensation, salary records, or health insurance claims strictly out of scope?")
-
-        # Procurement domain
-        elif any(w in t for w in ["spare_parts_catalog", "procurement_guidelines", "supplier_information", "procurement", "spares", "catalog"]):
-            qs.append("Are emergency orders subject to standard PO approval threshold limits, or can superintendents approve up to $10,000?")
-            qs.append("Should price comparisons factor in express freight courier surcharges or list catalog unit prices only?")
-
-        # Academic domain
-        elif any(w in t for w in ["academic_regulations", "examination_guidelines", "student_handbook", "graduation", "academic"]):
-            qs.append("Should the assistant differentiate between undergraduate and graduate academic probation policies?")
-            qs.append("Are informal student grade grievance hearings within the assistant's advisory scope?")
-
-        # Medical domain
-        elif any(w in t for w in ["clinic", "medical", "telehealth", "patient", "triage"]):
-            qs.append("Should the assistant handle urgent emergency triage bookings or strictly redirect patients to emergency services?")
-            qs.append("What verification is required before disclosing medical record release timelines to third parties?")
-
-        # Generic / custom domain questions
-        if not qs:
-            qs.append("Who is the primary target audience (e.g., technical operators, internal staff, external clients)?")
-            qs.append("Are there specific sensitive operations or requests that the assistant must strictly refuse to answer?")
-
+        if "emergency" in text.lower() and "threshold" in text.lower():
+            qs.append("Are emergency orders subject to standard threshold limits?")
         return json.dumps(qs[:5])
 
     def _mock_interviewer(self, text: str) -> str:
