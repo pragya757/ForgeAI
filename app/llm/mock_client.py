@@ -211,20 +211,23 @@ class MockLLMClient(BaseLLMClient):
             name_m = re.search(r"(?:create|build|generate|develop)\s+(?:an?|the)?\s*([A-Za-z0-9_\-\s]{3,40}?)(?:\s+(?:assistant|agent|advisor|specialist|bot|system))", extracted_brief, re.IGNORECASE)
             if name_m:
                 agent_name = " ".join(w.capitalize() for w in name_m.group(1).strip().split()) + " Assistant"
-            elif any(w in extracted_brief.lower() for w in ["hr", "leave", "employee", "handbook"]):
+            elif bool(re.search(r"\b(hr|human resources|employee handbook)\b", extracted_brief.lower())):
                 agent_name = "HR Policy Assistant"
 
             # Infer domain from brief and document cues
-            domain_title = "Enterprise Operations"
+            base_agent = agent_name.replace(' Assistant', '')
+            domain_title = base_agent if (base_agent.endswith("Operations") or base_agent.endswith("Management")) else f"{base_agent} Operations"
+            if agent_name == "Autonomous Domain Assistant":
+                domain_title = "Enterprise Operations"
             t_low = text.lower()
-            if any(w in t_low for w in ["academic", "student", "grading", "university", "faculty"]):
+            if bool(re.search(r"\b(academic|student|grading|university|faculty)\b", t_low)):
                 domain_title = "Higher Education Academic Affairs"
-            elif any(w in t_low for w in ["hr", "employee", "leave", "attendance", "workplace"]):
-                domain_title = "Corporate Human Resources"
-            elif any(w in t_low for w in ["clinic", "medical", "patient", "triage", "health"]):
+            elif bool(re.search(r"\b(clinic|medical|patient|triage|telehealth)\b", t_low)):
                 domain_title = "Clinical Healthcare Administration"
-            elif any(w in t_low for w in ["procurement", "spares", "supplier", "vessel"]):
+            elif bool(re.search(r"\b(procurement|spares|supplier|vessel)\b", t_low)):
                 domain_title = "Maritime Procurement & Supply Chain"
+            elif bool(re.search(r"\b(hr|human resources|annual leave|sick leave|attendance policy)\b", t_low)):
+                domain_title = "Corporate Human Resources"
 
             # Extract detected topics from document summary
             detected_topics = []
