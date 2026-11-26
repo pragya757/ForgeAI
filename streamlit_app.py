@@ -2,6 +2,7 @@ import os
 import json
 import streamlit as st
 import pandas as pd
+from typing import Any, Dict, List, Optional
 from datetime import datetime
 
 from app.factory.pipeline import ForgeAIFactory
@@ -9,6 +10,32 @@ from app.runtime.chat_runner import GenericChatRunner
 from app.llm import get_llm_client
 from app.tools.registry import registry
 from app.schemas.requirements import DocumentItem
+
+def safe_to_dict(obj: Any) -> Dict[str, Any]:
+    """Safely convert Pydantic models or dicts to a standardized dictionary."""
+    if obj is None:
+        return {}
+    if hasattr(obj, "model_dump"):
+        try:
+            return obj.model_dump()
+        except Exception:
+            pass
+    if hasattr(obj, "dict"):
+        try:
+            return obj.dict()
+        except Exception:
+            pass
+    if isinstance(obj, dict):
+        return dict(obj)
+    return {}
+
+def safe_to_dict_list(items: Any) -> List[Dict[str, Any]]:
+    """Safely convert a list of Pydantic models or dicts to a list of dictionaries."""
+    if not items:
+        return []
+    if isinstance(items, list):
+        return [safe_to_dict(it) for it in items]
+    return [safe_to_dict(items)]
 
 # -------------------------------------------------------------------------------------------------
 # 1. Page Configuration & Favicon
@@ -284,12 +311,13 @@ with st.sidebar:
 
     active_preset = PRESETS[preset_choice]
 
-    if st.button("📂 Load Pre-Built Artifacts", use_container_width=True):
+    if st.button("📂 Load Pre-Built Artifacts", width="stretch"):
         target_artifacts = active_preset["artifacts"]
         req_file = os.path.join(target_artifacts, "requirements.json")
         if os.path.exists(req_file):
             st.session_state["artifacts_dir"] = target_artifacts
             st.session_state["doc_folder"] = active_preset["docs"]
+            st.session_state["last_run"] = None
             with open(os.path.join(target_artifacts, "requirements.json")) as f:
                 req_data = json.load(f)
             with open(os.path.join(target_artifacts, "groundability_report.json")) as f:
@@ -405,26 +433,38 @@ with tabs[0]:
             type=["pdf", "txt", "csv"]
         )
         if uploaded_files:
-            upload_dest = "outputs/custom_agent/documents"
+            if "custom_session_id" not in st.session_state:
+                st.session_state["custom_session_id"] = datetime.now().strftime("%Y%m%d_%H%M%S")
+            upload_dest = f"outputs/runs/{st.session_state['custom_session_id']}/documents"
+            upload_artifacts = f"outputs/runs/{st.session_state['custom_session_id']}/artifacts"
             os.makedirs(upload_dest, exist_ok=True)
             for uf in uploaded_files:
                 with open(os.path.join(upload_dest, uf.name), "wb") as f:
                     f.write(uf.getbuffer())
             doc_folder_input = upload_dest
-            st.success(f"Ingested {len(uploaded_files)} files into `{upload_dest}`")
+            default_artifacts_dir = upload_artifacts
+            st.session_state["loaded_demo"] = None
+            st.success(f"Ingested {len(uploaded_files)} file(s) into isolated directory `{upload_dest}`")
+        else:
+            default_artifacts_dir = active_preset["artifacts"]
 
         output_dir_input = st.text_input(
             "Artifacts Destination Path",
-            value=active_preset["artifacts"],
+            value=default_artifacts_dir,
             help="Destination folder for requirements, agent definitions, eval sets, and reports."
         )
+
+        if uploaded_files:
+            st.info(f"📁 **Active Corpus:** Custom Upload ({len(uploaded_files)} files: {', '.join([uf.name for uf in uploaded_files])})")
+        else:
+            st.caption(f"📁 **Active Corpus:** Preset ({doc_folder_input})")
 
     with col_build2:
         st.markdown("#### Clarification Dialogue (Intake)")
         st.caption("Optionally answer up to 5 clarifying questions formulated by ForgeAI.")
 
         clarification_answers = {}
-        if st.button("🔍 Generate Clarifying Questions", use_container_width=True):
+        if st.button("🔍 Generate Clarifying Questions", width="stretch"):
             if os.path.exists(doc_folder_input):
                 with st.spinner("Analyzing brief against knowledge corpus..."):
                     tmp_factory = ForgeAIFactory()
@@ -445,7 +485,7 @@ with tabs[0]:
 
     st.divider()
 
-    if st.button("🚀 Run Autonomous Agent Factory", type="primary", use_container_width=True):
+    if st.button("🚀 Run Autonomous Agent Factory", type="primary", width="stretch"):
         if not os.path.exists(doc_folder_input):
             st.error(f"Document directory '{doc_folder_input}' does not exist.")
         else:
@@ -479,7 +519,7 @@ with tabs[1]:
     run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
 
     if run_data:
-        reqs = run_data["requirements"] if isinstance(run_data["requirements"], dict) else run_data["requirements"].model_dump()
+        reqs = safe_to_dict(run_data.get("requirements"))
         
         col_m1, col_m2, col_m3 = st.columns(3)
         col_m1.metric("Indexed Documents", len(reqs.get("document_inventory", [])))
@@ -490,7 +530,8 @@ with tabs[1]:
         inv_list = reqs.get("document_inventory", [])
         if inv_list:
             inv_rows = []
-            for doc in inv_list:
+            for doc_item in inv_list:
+                doc = safe_to_dict(doc_item)
                 topics_str = ", ".join(doc.get("detected_topics", [])) if doc.get("detected_topics") else "General corpus"
                 inv_rows.append({
                     "Filename": doc.get("filename"),
@@ -499,7 +540,7 @@ with tabs[1]:
                     "Detected Topics": topics_str,
                     "Summary": doc.get("description", "")
                 })
-            st.dataframe(pd.DataFrame(inv_rows), use_container_width=True)
+            st.dataframe(pd.DataFrame(inv_rows), width="stretch")
 
         st.divider()
 
@@ -531,7 +572,7 @@ with tabs[2]:
     run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
 
     if run_data:
-        ground = run_data["groundability"] if isinstance(run_data["groundability"], dict) else run_data["groundability"].model_dump()
+        ground = safe_to_dict(run_data.get("groundability"))
         score = ground.get("overall_groundability_score", 0.0)
 
         g_col1, g_col2, g_col3 = st.columns(3)
@@ -544,7 +585,8 @@ with tabs[2]:
         col_g1, col_g2 = st.columns(2)
         with col_g1:
             st.markdown("#### Supported Topics (Corpus Evidenced)")
-            for item in ground.get("supported_topics", []):
+            for s_item in ground.get("supported_topics", []):
+                item = safe_to_dict(s_item)
                 srcs = ", ".join(item.get("evidence_sources", []))
                 conf = item.get("confidence_score", 1.0) * 100
                 st.markdown(f"**{item.get('topic')}** `<span class='badge-pass'>{conf:.0f}% confidence</span>`", unsafe_allow_html=True)
@@ -552,7 +594,8 @@ with tabs[2]:
 
         with col_g2:
             st.markdown("#### Unsupported Topics (Refusal Enforced)")
-            for item in ground.get("unsupported_topics", []):
+            for u_item in ground.get("unsupported_topics", []):
+                item = safe_to_dict(u_item)
                 nat = item.get("absence_nature", "missing_from_corpus")
                 st.markdown(f"**{item.get('topic')}** `<span class='badge-fail'>{nat}</span>`", unsafe_allow_html=True)
                 st.write(f"Reason: {item.get('reason')}")
@@ -572,7 +615,7 @@ with tabs[3]:
     run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
 
     if run_data:
-        agent_def = run_data["agent_definition"] if isinstance(run_data["agent_definition"], dict) else run_data["agent_definition"].model_dump()
+        agent_def = safe_to_dict(run_data.get("agent_definition"))
 
         col_cfg1, col_cfg2 = st.columns([1, 1])
 
@@ -588,7 +631,7 @@ with tabs[3]:
                 {"Parameter": "Similarity Threshold", "Value": str(agent_def.get("similarity_threshold"))},
                 {"Parameter": "Refusal Policy", "Value": str(agent_def.get("refusal_policy"))}
             ]
-            st.dataframe(pd.DataFrame(params), use_container_width=True)
+            st.dataframe(pd.DataFrame(params), width="stretch")
 
         with col_cfg2:
             st.markdown("#### Tool Registry & Security Allowlisting")
@@ -597,7 +640,7 @@ with tabs[3]:
             st.write(f"**Mounted Tools:** `{', '.join(tools) if tools else 'None (Strict RAG)'}`")
             if justifications:
                 j_rows = [{"Tool": t, "Justification": justifications.get(t, "Authorized tool.")} for t in tools]
-                st.dataframe(pd.DataFrame(j_rows), use_container_width=True)
+                st.dataframe(pd.DataFrame(j_rows), width="stretch")
             st.caption("🔒 Least-Privilege Security: Unmounted tools are blocked at the registry level via PermissionError.")
 
         st.divider()
@@ -614,10 +657,10 @@ with tabs[4]:
     run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
 
     if run_data:
-        eval_set = run_data["eval_set"] if isinstance(run_data["eval_set"], dict) else run_data["eval_set"].model_dump()
-        scorecards = run_data["scorecards"] if isinstance(run_data["scorecards"], list) else [run_data["scorecards"]]
-        sc_dicts = [sc if isinstance(sc, dict) else sc.model_dump() for sc in scorecards]
-        final_sc = sc_dicts[-1]
+        eval_set = safe_to_dict(run_data.get("eval_set"))
+        scorecards = run_data["scorecards"] if isinstance(run_data.get("scorecards"), list) else [run_data.get("scorecards")]
+        sc_dicts = [safe_to_dict(sc) for sc in scorecards if sc]
+        final_sc = sc_dicts[-1] if sc_dicts else {}
 
         ev_c1, ev_c2, ev_c3, ev_c4 = st.columns(4)
         ev_c1.metric("Benchmark Cases", len(eval_set.get("cases", [])))
@@ -629,7 +672,8 @@ with tabs[4]:
 
         st.markdown(f"#### Generated Test Cases ({len(eval_set.get('cases', []))} Cases)")
         cases_data = []
-        for c in eval_set.get("cases", []):
+        for case_item in eval_set.get("cases", []):
+            c = safe_to_dict(case_item)
             cases_data.append({
                 "Test ID": c.get("test_id"),
                 "Category": c.get("subcategory") or c.get("test_category"),
@@ -638,7 +682,7 @@ with tabs[4]:
                 "Expected Facts": "; ".join(c.get("expected_facts", []))[:100] + "...",
                 "Sources": ", ".join(c.get("expected_sources", []))
             })
-        st.dataframe(pd.DataFrame(cases_data), use_container_width=True)
+        st.dataframe(pd.DataFrame(cases_data), width="stretch")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -650,37 +694,54 @@ with tabs[5]:
     run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
 
     if run_data:
-        scorecards = run_data["scorecards"] if isinstance(run_data["scorecards"], list) else [run_data["scorecards"]]
-        sc_dicts = [sc if isinstance(sc, dict) else sc.model_dump() for sc in scorecards]
+        raw_scorecards = run_data.get("scorecards", [])
+        scorecards = raw_scorecards if isinstance(raw_scorecards, list) else [raw_scorecards]
+        sc_dicts = [safe_to_dict(sc) for sc in scorecards if sc]
 
         st.markdown("#### Progression History Across Iterations")
         opt_rows = []
         for sc in sc_dicts:
             m = sc.get("metric_breakdown", {})
             opt_rows.append({
-                "Iteration": f"Round {sc.get('iteration')}",
+                "Iteration": f"Round {sc.get('iteration', 1)}",
                 "Pass Rate (%)": f"{sc.get('pass_rate', 0)*100:.1f}%",
-                "Passed": sc.get("passed_tests"),
-                "Failed": sc.get("failed_tests"),
+                "Passed": sc.get("passed_tests", 0),
+                "Failed": sc.get("failed_tests", 0),
                 "Grounding (%)": f"{m.get('grounding', 0)*100:.0f}%",
                 "Factual (%)": f"{m.get('factual_correctness', 0)*100:.0f}%",
                 "Citation (%)": f"{m.get('citation_correctness', 0)*100:.0f}%",
                 "Refusal (%)": f"{m.get('refusal_correctness', 0)*100:.0f}%",
                 "Contract (%)": f"{m.get('output_contract_compliance', 0)*100:.0f}%",
-                "Status": sc.get("status")
+                "Status": sc.get("status", "COMPLETE")
             })
-        st.dataframe(pd.DataFrame(opt_rows), use_container_width=True)
+        st.dataframe(pd.DataFrame(opt_rows), width="stretch")
 
         st.divider()
 
-        iter_logs = run_data.get("iteration_logs", [])
+        raw_logs = run_data.get("iteration_logs", [])
+        iter_logs = safe_to_dict_list(raw_logs)
         if iter_logs:
             st.markdown("#### Critic Targeted Change History")
             for log in iter_logs:
-                with st.expander(f"Iter {log.get('iteration')}: {log.get('root_cause_diagnosis', 'Optimization step')}"):
-                    st.write(f"**Failure Category:** `{log.get('failure_category', 'general')}`")
-                    st.write(f"**Score Before:** {log.get('score_before', 0)*100:.1f}% ➔ **Score After:** {log.get('score_after', 0)*100:.1f}%")
-                    st.json(log.get("changes_applied", []))
+                iter_num = log.get("iteration_number") or log.get("iteration", 1)
+                diagnosis = log.get("identified_root_causes") or log.get("root_cause_diagnosis") or "Targeted optimization refinement"
+                fail_cats = log.get("failure_categories")
+                if isinstance(fail_cats, list):
+                    fail_cat_str = ", ".join(str(c) for c in fail_cats) if fail_cats else "general"
+                else:
+                    fail_cat_str = str(log.get("failure_category", "general"))
+
+                score_before = log.get("previous_score", log.get("score_before", 0.0))
+                score_after = log.get("new_score", log.get("score_after", 0.0))
+                changes = log.get("changes_applied", [])
+
+                with st.expander(f"Iteration {iter_num}: {diagnosis}"):
+                    st.write(f"**Failure Category:** `{fail_cat_str}`")
+                    st.write(f"**Score Before:** {score_before * 100:.1f}% ➔ **Score After:** {score_after * 100:.1f}%")
+                    if changes:
+                        st.json(changes)
+                    else:
+                        st.info("No configuration modifications required for this round.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -692,10 +753,13 @@ with tabs[6]:
     run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
 
     if run_data:
-        scorecards = run_data["scorecards"] if isinstance(run_data["scorecards"], list) else [run_data["scorecards"]]
-        sc_dicts = [sc if isinstance(sc, dict) else sc.model_dump() for sc in scorecards]
-        final_sc = sc_dicts[-1]
-        failed_cases = [c for c in final_sc.get("case_results", []) if not c.get("passed")]
+        raw_scorecards = run_data.get("scorecards", [])
+        scorecards = raw_scorecards if isinstance(raw_scorecards, list) else [raw_scorecards]
+        sc_dicts = [safe_to_dict(sc) for sc in scorecards if sc]
+        final_sc = sc_dicts[-1] if sc_dicts else {}
+        raw_cases = final_sc.get("case_results", [])
+        case_dicts = [safe_to_dict(c) for c in raw_cases]
+        failed_cases = [c for c in case_dicts if not c.get("passed")]
 
         st.markdown("#### Final Quality Metrics")
         m = final_sc.get("metric_breakdown", {})
@@ -759,8 +823,10 @@ with tabs[6]:
 # -------------------------------------------------------------------------------------------------
 with tabs[7]:
     st.markdown("### 💬 Step 8: Interactive Agent Playground")
-    default_def_path = active_preset["artifacts"] + "/agent_definition.json"
-    default_doc_path = active_preset["docs"]
+    current_artifacts_dir = st.session_state.get("artifacts_dir", active_preset["artifacts"])
+    current_doc_dir = st.session_state.get("doc_folder", active_preset["docs"])
+    default_def_path = os.path.join(current_artifacts_dir, "agent_definition.json")
+    default_doc_path = current_doc_dir
 
     cp_col1, cp_col2 = st.columns([3, 1])
     with cp_col1:
@@ -769,7 +835,7 @@ with tabs[7]:
     with cp_col2:
         st.write("")
         st.write("")
-        if st.button("🔄 Reset Chat History", use_container_width=True):
+        if st.button("🔄 Reset Chat History", width="stretch"):
             st.session_state["live_chat_history"] = []
             st.success("Chat history cleared.")
 

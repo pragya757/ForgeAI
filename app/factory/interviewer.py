@@ -13,6 +13,30 @@ from app.schemas.requirements import (
 from app.tools.registry import registry
 from app.retrieval.document_loader import DocumentLoader, RawDocument
 
+# Comprehensive set of generic instructions, prompt metadata, and stopwords to ignore during gap detection
+GENERIC_STOPWORDS: Set[str] = {
+    # Pronouns, prepositions, conjunctions, aux verbs
+    "this", "that", "these", "those", "with", "have", "from", "user", "agent",
+    "system", "please", "should", "could", "would", "must", "build", "will",
+    "shall", "can", "may", "might", "into", "onto", "upon", "about", "above",
+    "across", "after", "before", "behind", "below", "beside", "between", "both",
+    "each", "either", "neither", "other", "some", "such", "than", "then", "there",
+    "when", "where", "which", "while", "who", "whom", "whose", "why", "what",
+    # Prompting & meta-instruction words
+    "create", "make", "generate", "develop", "construct", "assistant", "bot",
+    "chatbot", "helper", "answer", "answers", "answering", "question", "questions",
+    "help", "helps", "helping", "provide", "provides", "providing", "using", "uses",
+    "used", "based", "according", "company", "organization", "enterprise", "business",
+    "document", "documents", "documentation", "file", "files", "corpus", "manual",
+    "handbook", "policy", "policies", "guideline", "guidelines", "rules", "rule",
+    "standard", "standards", "information", "info", "data", "detail", "details",
+    "knowledge", "employee", "employees", "staff", "personnel", "internal", "external",
+    "queries", "query", "request", "requests", "support", "service", "services",
+    "verify", "verified", "verifying", "check", "checking", "search", "searching",
+    "developer", "developers", "operator", "operators", "engineer", "engineers",
+    "client", "clients", "member", "members", "admin", "admins", "audience"
+}
+
 class IntakeInterviewer:
     """Module 1: Intake Interviewer - Conducts requirements intake and document inspection."""
 
@@ -188,14 +212,22 @@ class IntakeInterviewer:
         gaps.contradictory_information = contradictions[:5]
 
         # 4. Detect Missing Information (topics mentioned in user brief that have no document coverage)
-        # Extract candidate nouns / topic words from brief
-        brief_words = [w for w in re.findall(r"\b[A-Za-z]{4,}\b", brief) if w.lower() not in {
-            "this", "that", "with", "have", "from", "user", "agent", "system", "please", "should", "could", "would", "must", "build"
-        }]
+        # Extract candidate nouns / topic words from brief, filtering out generic instruction words
+        brief_words = [
+            w for w in re.findall(r"\b[A-Za-z]{4,}\b", brief)
+            if w.lower() not in GENERIC_STOPWORDS and not w.isdigit()
+        ]
         all_corpus_text = " ".join([d.content for d in raw_docs]).lower()
         missing_topics: List[str] = []
-        for word in set(brief_words):
-            if word.lower() not in all_corpus_text:
+        for word in sorted(set(brief_words)):
+            w = word.lower()
+            if (
+                w not in all_corpus_text
+                and (not w.endswith("s") or w[:-1] not in all_corpus_text)
+                and (not w.endswith("es") or w[:-2] not in all_corpus_text)
+                and (not w.endswith("ed") or w[:-2] not in all_corpus_text)
+                and (not w.endswith("ing") or w[:-3] not in all_corpus_text)
+            ):
                 missing_topics.append(word)
 
         if missing_topics:
@@ -206,7 +238,9 @@ class IntakeInterviewer:
         return gaps
 
     def generate_clarifying_questions(self, brief: str, doc_folder: str) -> List[str]:
-        """Formulate no more than five high-value clarifying questions regarding gaps and ambiguities."""
+        """Formulate no more than five high-value clarifying questions regarding genuine gaps and ambiguities.
+        If the brief and documents are clear and self-contained with no contradictions or gaps, returns an empty list.
+        """
         inventory = self.inspect_documents(doc_folder)
         doc_names = [item.filename for item in inventory]
         gaps = self.detect_information_gaps(inventory, doc_folder, brief)
@@ -220,13 +254,19 @@ class IntakeInterviewer:
         if gaps.missing_information:
             gap_summary.extend(gaps.missing_information[:2])
 
+        # If there are no contradictions, incomplete markers, or missing information gaps,
+        # the brief is sufficiently clear and grounded — return 0 questions
+        if not gap_summary:
+            return []
+
         prompt = (
             f"Review this user brief, document inventory, and detected information gaps:\n"
             f"User Brief: {brief}\n"
             f"Available Documents: {doc_names}\n"
-            f"Detected Information Gaps:\n" + ("\n".join(gap_summary) if gap_summary else "None detected.") + "\n\n"
+            f"Detected Information Gaps:\n" + ("\n".join(gap_summary)) + "\n\n"
             "Formulate up to 5 critical, high-value clarifying questions to resolve contradictions, missing scope, audience, or operational limits.\n"
-            "Return a JSON list of questions: [\"Question 1\", \"Question 2\", ...]. Never output more than 5 questions."
+            "If the brief is clear and self-contained, return an empty list: []. Never output more than 5 questions.\n"
+            "Return a JSON list of questions: [\"Question 1\", \"Question 2\", ...]."
         )
 
         try:
@@ -246,7 +286,7 @@ class IntakeInterviewer:
         except Exception:
             questions = []
 
-        # If LLM didn't return questions, formulate high-value questions deterministically from detected gaps
+        # If LLM didn't return questions, formulate high-value questions deterministically strictly from detected gaps
         if not questions:
             deterministic_qs = []
             for c in gaps.contradictory_information[:2]:
@@ -257,14 +297,10 @@ class IntakeInterviewer:
                 deterministic_qs.append(
                     f"The brief references terms not covered in the documents ({m}). Should the agent strictly refuse these out-of-scope requests?"
                 )
-            if not deterministic_qs:
-                deterministic_qs = [
-                    "Who is the primary target audience (e.g., technical operators, department managers, external clients)?",
-                    "Are there specific topics or requests that the assistant must strictly refuse to answer?",
-                    "What tone should the assistant maintain (e.g., formal and authoritative, concise and operational)?",
-                    "Are there external tools or databases required beyond the provided files?",
-                    "What is the required response format or citation structure for outputs?"
-                ]
+            for inc in gaps.incomplete_information[:1]:
+                deterministic_qs.append(
+                    f"The documentation contains incomplete specifications ({inc}). Should the agent defer or answer with conservative defaults?"
+                )
             questions = deterministic_qs
 
         # Enforce maximum 5 questions ceiling

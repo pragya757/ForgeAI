@@ -1,8 +1,8 @@
 # ForgeAI: Development Status & Engineering Milestones
-**Current Version:** 2.1 (Post-Validation & Quality Improvement)  
+**Current Version:** 2.2 (Dashboard Consistency, Bug Fixes & Corpus Isolation)  
 **Last Updated:** November 26, 2026  
 **Repository:** `https://github.com/pragya757/ForgeAI.git`  
-**Test Suite Status:** 89 Passed, 0 Failed (100% Pass Rate)
+**Test Suite Status:** 112 Passed, 0 Failed (100% Pass Rate)
 
 ---
 
@@ -18,6 +18,7 @@
 | **Phase 6: Streamlit UI Polish** | 15 assessment components, preset loaders, interactive chat. | **COMPLETED** | `streamlit_app.py` |
 | **Phase 7: Master Documentation** | 5 detailed specifications, architecture diagrams, interview Q&A. | **COMPLETED** | `FORGEAI_DETAILED_IMPLEMENTATION.md`, `ARCHITECTURE.md`, etc. |
 | **Phase 8: Validation & Quality Improvement** | Failure root-cause analysis, tool trigger hardening, multi-source synthesis, 4th domain. | **COMPLETED** | `generalization_test/`, `FINAL_VALIDATION_REPORT.md` |
+| **Phase 9: Dashboard Consistency & Bug Fixes** | Optimization log Pydantic serialization fix, corpus contamination elimination, clarification question filtering, isolated upload sessions. | **COMPLETED** | `streamlit_app.py`, `app/factory/interviewer.py`, `app/llm/mock_client.py`, `DASHBOARD_VALIDATION_REPORT.md`, `tests/test_dashboard_consistency.py` |
 
 ---
 
@@ -29,11 +30,15 @@
 | **Demo 2: Procurement** | 1 CSV, 2 PDFs | `['csv_lookup', 'calculator', 'current_date']` | 20 cases | 90.0% | **100.0%** | Target Reached ($\ge 90\%$) |
 | **Demo 3: Academic Unseen** | 3 PDFs | `['current_date']` | 20 cases | 45.0% | **60.0%** | Stagnation Early Stop |
 | **Demo 4: Medical Clinic** | 3 PDFs | `['current_date']` | 20 cases | 50.0% | **50.0%** | Stagnation Early Stop |
+| **Custom Upload (IT Interns)** | 1 TXT / PDF | `['current_date']` | 21 cases | 85.7% | **95.2%** | Isolated Corpus Dynamic Run |
 
 ---
 
 ## 3. Engineering Safeguards & Verification Status
 
+- [x] **Streamlit Pydantic Serialization Guard:** Tested and verified via `tests/test_dashboard_consistency.py::test_iteration_log_pydantic_and_dict_compatibility`.
+- [x] **Corpus Isolation & Anti-Contamination:** Tested and verified via `tests/test_dashboard_consistency.py::test_hr_brief_with_unrelated_uploaded_doc_prevents_contamination` and `test_consecutive_runs_corpus_isolation`.
+- [x] **Clarification Question Filtering (<= 5, 0 for clear):** Tested and verified via `tests/test_dashboard_consistency.py::test_clarifying_questions_clear_brief_returns_empty` and `test_clarifying_questions_ambiguous_brief_capped_at_five`.
 - [x] **Strict 3-Iteration Limit:** Tested and verified via `tests/test_critic_optimizer_advanced.py::test_iteration_limit_strictly_capped_at_three`.
 - [x] **Regression Detection & Rollback:** Tested and verified via `tests/test_critic_optimizer_advanced.py::test_regression_detection_and_rollback`.
 - [x] **Zero Code Execution (AST Evaluator):** Tested and verified via `tests/test_runtime_security_advanced.py::test_calculator_blocks_arbitrary_python_code`.

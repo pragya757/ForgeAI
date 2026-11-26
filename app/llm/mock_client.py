@@ -63,12 +63,31 @@ class MockLLMClient(BaseLLMClient):
         if "INTAKE INTERVIEWER" in combined or "Intake Interviewer" in combined or "conducting an intelligent intake interview" in combined:
             return self._mock_interviewer(combined)
 
+        # 6b. Clarifying questions request
+        if "clarifying questions" in combined.lower() or "formulate up to 5" in combined.lower():
+            return self._mock_clarifying_questions(combined)
+
         # 7. Generic chat runner / question answering
         return self._mock_runner_response(combined)
 
+    def _mock_clarifying_questions(self, text: str) -> str:
+        qs = []
+        if "depth" in text.lower() or "3000m" in text.lower() or "4500m" in text.lower():
+            qs.append("Regarding conflicting depth specifications (3000m vs 4500m): which operational ceiling takes precedence?")
+        if "incomplete" in text.lower() or "[tbd]" in text.lower():
+            qs.append("The payload documentation contains incomplete [TBD] markers: should the assistant answer with conservative defaults?")
+        if "ionosphere" in text.lower() or "telemetry" in text.lower():
+            qs.append("The brief references atmospheric ionosphere telemetry not covered in the documents: should these requests be refused?")
+        if "emergency" in text.lower() and "threshold" in text.lower():
+            qs.append("Are emergency orders subject to standard threshold limits?")
+        return json.dumps(qs[:5])
+
     def _mock_interviewer(self, text: str) -> str:
-        is_procurement = bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
+        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+
+        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
+        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
 
         if is_procurement:
             data = {
@@ -181,8 +200,11 @@ class MockLLMClient(BaseLLMClient):
         return json.dumps(data, indent=2)
 
     def _mock_groundability(self, text: str) -> str:
-        is_procurement = bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
+        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+
+        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
+        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
 
         if is_procurement:
             data = {
@@ -352,8 +374,11 @@ class MockLLMClient(BaseLLMClient):
         return json.dumps(data, indent=2)
 
     def _mock_agent_generator(self, text: str) -> str:
-        is_procurement = bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
+        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+
+        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
+        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
 
         if is_procurement:
             data = {
@@ -560,11 +585,14 @@ class MockLLMClient(BaseLLMClient):
         return json.dumps(data, indent=2)
 
     def _mock_eval_generator(self, text: str) -> str:
-        is_procurement = bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
+        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+
+        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
+        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
 
         cases = []
-        if "leave_policy" in text.lower() or "employee_handbook" in text.lower() or (is_hr and not is_procurement):
+        if is_hr:
             # 10 Answerable cases
             cases.extend([
                 {
@@ -1221,143 +1249,149 @@ class MockLLMClient(BaseLLMClient):
         if any(w in user_part for w in refusal_keywords):
             return "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]"
 
-        # Handle specific inquiries based on user_part
-        if "nv-pump-001" in user_part or "fuel oil delivery pump" in user_part:
-            return (
-                "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. "
-                "The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n"
-                "[Source: spare_parts_catalog.csv]"
-            )
-        elif "tb-brg-882" in user_part or "turbocharger" in user_part:
-            return (
-                "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating.\n"
-                "[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]"
-            )
-        elif "cyl-liner-72" in user_part and ("5%" in user_part or "discount" in user_part or "total cost" in user_part or "3" in user_part):
-            return (
-                "Ordering 3 units of CYL-LINER-72 at $1,800.00 each totals $5,400.00. Applying the 5% volume discount for orders over $5,000 from Oceanic Engineering yields a total cost of $5,130.00 USD.\n"
-                "[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]"
-            )
-        elif "annual leave" in user_part and "full-time" in user_part:
-            return (
-                "Full-time employees are entitled to 20 working days of paid annual leave per calendar year, accruing at 1.67 days per month.\n"
-                "[Source: leave_policy.pdf, Page: 1]"
-            )
-        elif "carry over" in user_part or "carried over" in user_part:
-            return (
-                "Employees may carry over a maximum of 5 unused annual leave days into the next calendar year, which must be utilized prior to March 31.\n"
-                "[Source: leave_policy.pdf, Page: 1]"
-            )
-        elif "sick leave" in user_part and ("medical certificate" in user_part or "exceeding" in user_part or "when is" in user_part):
-            return (
-                "An official medical certificate from a registered physician is mandatory for any sick leave exceeding two (2) consecutive working days.\n"
-                "[Source: leave_policy.pdf, Page: 1]"
-            )
-        elif "core" in user_part and ("hours" in user_part or "working" in user_part):
-            return (
-                "Standard office hours are 08:30 to 17:30 Monday through Friday. Mandatory core collaboration hours are 10:00 to 16:00.\n"
-                "[Source: attendance_policy.pdf, Page: 1]"
-            )
-        elif "grace" in user_part:
-            return (
-                "A 15-minute grace period allows arrival up to 08:45 without formal penalty at most twice per calendar month.\n"
-                "[Source: attendance_policy.pdf, Page: 1]"
-            )
-        elif "probation" in user_part and ("how long" in user_part or "standard" in user_part or "handbook" in user_part):
-            return (
-                "All newly hired employees undergo a standard probationary evaluation period of three (3) months, extendable by up to an additional three months.\n"
-                "[Source: employee_handbook.pdf, Page: 1]"
-            )
-        elif "probation" in user_part and "annual leave" in user_part:
-            return (
-                "During the initial 3-month probation period, employees accrue annual leave but cannot take paid vacation days until successful confirmation.\n"
-                "[Source: leave_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]"
-            )
-        elif "bereavement" in user_part or "compassionate" in user_part:
-            return (
-                "Up to five (5) consecutive paid working days are granted for bereavement in the event of the loss of an immediate family member.\n"
-                "[Source: leave_policy.pdf, Page: 1]"
-            )
-        elif "unexcused" in user_part or "job abandonment" in user_part or "absent without" in user_part:
-            return (
-                "Absence from work for three (3) consecutive working days without authorized communication is deemed voluntary job abandonment and constitutes grounds for termination.\n"
-                "[Source: attendance_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]"
-            )
-        elif "disciplinary" in user_part:
-            return (
-                "The progressive disciplinary framework consists of: 1) Verbal Counseling, 2) Written Warning, 3) Final Written Warning with 30-day PIP, and 4) Termination.\n"
-                "[Source: employee_handbook.pdf, Page: 1]"
-            )
-        elif "paternity" in user_part:
-            return (
-                "Eligible employees receive five (5) consecutive days of paid paternity leave upon presentation of the certified birth certificate or adoption order.\n"
-                "[Source: leave_policy.pdf, Page: 1]"
-            )
-        elif "notice period" in user_part:
-            return (
-                "Accrued annual leave days cannot be used to offset or shorten the thirty-day notice period without written sign-off from the Department Head and HR.\n"
-                "[Source: leave_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]"
-            )
-        elif "holiday" in user_part or "overtime" in user_part:
-            return (
-                "Salaried exempt personnel working on a declared public holiday receive an equivalent compensatory day off (day-in-lieu) to be taken within 60 days, rather than hourly cash overtime.\n"
-                "[Source: attendance_policy.pdf, Page: 1]"
-            )
-        elif "chief engineer" in user_part and "threshold" in user_part:
-            return (
-                "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without superintendent sign-off.\n"
-                "[Source: procurement_guidelines.pdf, Page: 1]"
-            )
-        elif "aegis" in user_part and "lead time" in user_part:
-            return (
-                "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n"
-                "[Source: supplier_information.pdf, Page: 1]"
-            )
-        elif "single-source" in user_part or "sole-source" in user_part:
-            return (
-                "Single-source procurement is permitted only when parts are proprietary OEM certified components to preserve class certification or emergency conditions endangering seaworthiness.\n"
-                "[Source: procurement_guidelines.pdf, Page: 1]"
-            )
-        elif "oceanic engineering" in user_part and "payment terms" in user_part:
-            return (
-                "Payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection.\n"
-                "[Source: supplier_information.pdf, Page: 1]"
-            )
-        elif "seal-prop-09" in user_part or "safety stock" in user_part:
-            return (
-                "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.\n"
-                "[Source: spare_parts_catalog.csv]"
-            )
-        elif "50,000" in user_part or "exceeding $50,000" in user_part:
-            return (
-                "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).\n"
-                "[Source: procurement_guidelines.pdf, Page: 1]"
-            )
-        elif "warranty" in user_part:
-            return (
-                "Approved suppliers must provide a minimum warranty period of 12 months from installation date or 18 months from delivery date.\n"
-                "[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]"
-            )
-        elif "4,250" in user_part or "nv-pump-001" in user_part and "valve-ctrl-04" in user_part:
-            return (
-                "Part NV-PUMP-001 costs $4,250 and VALVE-CTRL-04 costs $950, totaling $5,200 USD. This exceeds the Chief Engineer's $2,500 limit, so Superintendent approval is required.\n"
-                "[Source: spare_parts_catalog.csv] [Source: procurement_guidelines.pdf, Page: 1]"
-            )
-        elif "non-oem" in user_part:
-            return (
-                "Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.\n"
-                "[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]"
-            )
-        elif "nordik" in user_part and "aegis" in user_part:
-            return (
-                "Nordik Marine offers standard sea freight (10-14 days transit), while Aegis Maritime offers express air freight (3-5 business days) with a 15% courier surcharge.\n"
-                "[Source: supplier_information.pdf, Page: 1]"
-            )
-        elif "emergency" in user_part and "10,000" in user_part:
-            return (
-                "In a safety emergency endangering vessel seaworthiness or blackout at sea, the Master and Chief Engineer can authorize emergency repairs up to $10,000 USD.\n"
-                "[Source: procurement_guidelines.pdf, Page: 1]"
-            )
+        has_hr_docs = any(f in text.lower() for f in ["leave_policy", "attendance_policy", "employee_handbook"])
+        has_procurement_docs = any(f in text.lower() for f in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
+
+        # Handle specific inquiries based on verified domain corpus
+        if has_procurement_docs:
+            if "nv-pump-001" in user_part or "fuel oil delivery pump" in user_part:
+                return (
+                    "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. "
+                    "The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n"
+                    "[Source: spare_parts_catalog.csv]"
+                )
+            elif "tb-brg-882" in user_part or "turbocharger" in user_part:
+                return (
+                    "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating.\n"
+                    "[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]"
+                )
+            elif "cyl-liner-72" in user_part and ("5%" in user_part or "discount" in user_part or "total cost" in user_part or "3" in user_part):
+                return (
+                    "Ordering 3 units of CYL-LINER-72 at $1,800.00 each totals $5,400.00. Applying the 5% volume discount for orders over $5,000 from Oceanic Engineering yields a total cost of $5,130.00 USD.\n"
+                    "[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]"
+                )
+            elif "chief engineer" in user_part and "threshold" in user_part:
+                return (
+                    "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without superintendent sign-off.\n"
+                    "[Source: procurement_guidelines.pdf, Page: 1]"
+                )
+            elif "aegis" in user_part and "lead time" in user_part:
+                return (
+                    "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n"
+                    "[Source: supplier_information.pdf, Page: 1]"
+                )
+            elif "single-source" in user_part or "sole-source" in user_part:
+                return (
+                    "Single-source procurement is permitted only when parts are proprietary OEM certified components to preserve class certification or emergency conditions endangering seaworthiness.\n"
+                    "[Source: procurement_guidelines.pdf, Page: 1]"
+                )
+            elif "oceanic engineering" in user_part and "payment terms" in user_part:
+                return (
+                    "Payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection.\n"
+                    "[Source: supplier_information.pdf, Page: 1]"
+                )
+            elif "seal-prop-09" in user_part or "safety stock" in user_part:
+                return (
+                    "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.\n"
+                    "[Source: spare_parts_catalog.csv]"
+                )
+            elif "50,000" in user_part or "exceeding $50,000" in user_part:
+                return (
+                    "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).\n"
+                    "[Source: procurement_guidelines.pdf, Page: 1]"
+                )
+            elif "warranty" in user_part:
+                return (
+                    "Approved suppliers must provide a minimum warranty period of 12 months from installation date or 18 months from delivery date.\n"
+                    "[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]"
+                )
+            elif "4,250" in user_part or "nv-pump-001" in user_part and "valve-ctrl-04" in user_part:
+                return (
+                    "Part NV-PUMP-001 costs $4,250 and VALVE-CTRL-04 costs $950, totaling $5,200 USD. This exceeds the Chief Engineer's $2,500 limit, so Superintendent approval is required.\n"
+                    "[Source: spare_parts_catalog.csv] [Source: procurement_guidelines.pdf, Page: 1]"
+                )
+            elif "non-oem" in user_part:
+                return (
+                    "Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.\n"
+                    "[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]"
+                )
+            elif "nordik" in user_part and "aegis" in user_part:
+                return (
+                    "Nordik Marine offers standard sea freight (10-14 days transit), while Aegis Maritime offers express air freight (3-5 business days) with a 15% courier surcharge.\n"
+                    "[Source: supplier_information.pdf, Page: 1]"
+                )
+            elif "emergency" in user_part and "10,000" in user_part:
+                return (
+                    "In a safety emergency endangering vessel seaworthiness or blackout at sea, the Master and Chief Engineer can authorize emergency repairs up to $10,000 USD.\n"
+                    "[Source: procurement_guidelines.pdf, Page: 1]"
+                )
+
+        if has_hr_docs:
+            if "annual leave" in user_part and "full-time" in user_part:
+                return (
+                    "Full-time employees are entitled to 20 working days of paid annual leave per calendar year, accruing at 1.67 days per month.\n"
+                    "[Source: leave_policy.pdf, Page: 1]"
+                )
+            elif "carry over" in user_part or "carried over" in user_part:
+                return (
+                    "Employees may carry over a maximum of 5 unused annual leave days into the next calendar year, which must be utilized prior to March 31.\n"
+                    "[Source: leave_policy.pdf, Page: 1]"
+                )
+            elif "sick leave" in user_part and ("medical certificate" in user_part or "exceeding" in user_part or "when is" in user_part):
+                return (
+                    "An official medical certificate from a registered physician is mandatory for any sick leave exceeding two (2) consecutive working days.\n"
+                    "[Source: leave_policy.pdf, Page: 1]"
+                )
+            elif "core" in user_part and ("hours" in user_part or "working" in user_part):
+                return (
+                    "Standard office hours are 08:30 to 17:30 Monday through Friday. Mandatory core collaboration hours are 10:00 to 16:00.\n"
+                    "[Source: attendance_policy.pdf, Page: 1]"
+                )
+            elif "grace" in user_part:
+                return (
+                    "A 15-minute grace period allows arrival up to 08:45 without formal penalty at most twice per calendar month.\n"
+                    "[Source: attendance_policy.pdf, Page: 1]"
+                )
+            elif "probation" in user_part and ("how long" in user_part or "standard" in user_part or "handbook" in user_part):
+                return (
+                    "All newly hired employees undergo a standard probationary evaluation period of three (3) months, extendable by up to an additional three months.\n"
+                    "[Source: employee_handbook.pdf, Page: 1]"
+                )
+            elif "probation" in user_part and "annual leave" in user_part:
+                return (
+                    "During the initial 3-month probation period, employees accrue annual leave but cannot take paid vacation days until successful confirmation.\n"
+                    "[Source: leave_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]"
+                )
+            elif "bereavement" in user_part or "compassionate" in user_part:
+                return (
+                    "Up to five (5) consecutive paid working days are granted for bereavement in the event of the loss of an immediate family member.\n"
+                    "[Source: leave_policy.pdf, Page: 1]"
+                )
+            elif "unexcused" in user_part or "job abandonment" in user_part or "absent without" in user_part:
+                return (
+                    "Absence from work for three (3) consecutive working days without authorized communication is deemed voluntary job abandonment and constitutes grounds for termination.\n"
+                    "[Source: attendance_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]"
+                )
+            elif "disciplinary" in user_part:
+                return (
+                    "The progressive disciplinary framework consists of: 1) Verbal Counseling, 2) Written Warning, 3) Final Written Warning with 30-day PIP, and 4) Termination.\n"
+                    "[Source: employee_handbook.pdf, Page: 1]"
+                )
+            elif "paternity" in user_part:
+                return (
+                    "Eligible employees receive five (5) consecutive days of paid paternity leave upon presentation of the certified birth certificate or adoption order.\n"
+                    "[Source: leave_policy.pdf, Page: 1]"
+                )
+            elif "notice period" in user_part:
+                return (
+                    "Accrued annual leave days cannot be used to offset or shorten the thirty-day notice period without written sign-off from the Department Head and HR.\n"
+                    "[Source: leave_policy.pdf, Page: 1] [Source: employee_handbook.pdf, Page: 1]"
+                )
+            elif "holiday" in user_part or "overtime" in user_part:
+                return (
+                    "Salaried exempt personnel working on a declared public holiday receive an equivalent compensatory day off (day-in-lieu) to be taken within 60 days, rather than hourly cash overtime.\n"
+                    "[Source: attendance_policy.pdf, Page: 1]"
+                )
 
         # Dynamic fallback: Extract actual document source and grounded fact directly from VERIFIED CONTEXT
         if "--- VERIFIED CONTEXT ---" in text:
