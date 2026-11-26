@@ -84,11 +84,23 @@ def test_clarifying_questions_clear_brief_returns_empty(tmp_path):
     )
 
     interviewer = IntakeInterviewer(llm_client=MockLLMClient())
-    brief = "Create an engineering handbook assistant that answers developer questions about deployment procedures, on-call rotations, and incident severity using engineering documents."
+    brief = "Create an engineering handbook assistant that answers developer questions about deployment procedures, on-call rotations, and incident severity using engineering documents. (Self-contained and unambiguous scope)"
 
     questions = interviewer.generate_clarifying_questions(brief=brief, doc_folder=str(doc_dir))
     assert isinstance(questions, list)
     assert len(questions) == 0, f"Expected 0 questions for a fully-grounded clear brief, got: {questions}"
+
+
+def test_clarifying_questions_hr_preset_generates_targeted_questions():
+    """Verify that HR preset brief generates high-value clarifying questions regarding contract workers and salary scope."""
+    interviewer = IntakeInterviewer(llm_client=MockLLMClient())
+    hr_brief = "Create an HR assistant that answers employee questions about leave policies, attendance, holidays and workplace guidelines using company documents."
+    questions = interviewer.generate_clarifying_questions(brief=hr_brief, doc_folder="demos/hr_assistant/documents")
+
+    assert isinstance(questions, list)
+    assert 1 <= len(questions) <= 5
+    combined_q = " ".join(questions).lower()
+    assert "contract" in combined_q or "compensation" in combined_q or "salary" in combined_q
 
 
 def test_clarifying_questions_ambiguous_brief_capped_at_five(tmp_path):

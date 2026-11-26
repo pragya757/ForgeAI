@@ -472,12 +472,16 @@ with tabs[0]:
             else:
                 st.error(f"Directory not found: '{doc_folder_input}'")
 
-        if "clarification_questions" in st.session_state and st.session_state["clarification_questions"]:
-            st.info(f"ForgeAI formulated {len(st.session_state['clarification_questions'])} targeted questions:")
-            for idx, q_text in enumerate(st.session_state["clarification_questions"], 1):
-                ans = st.text_input(f"Q{idx}: {q_text}", key=f"clarify_{idx}")
-                if ans.strip():
-                    clarification_answers[q_text] = ans.strip()
+        if "clarification_questions" in st.session_state:
+            qs = st.session_state["clarification_questions"]
+            if qs:
+                st.info(f"ForgeAI formulated {len(qs)} targeted question(s):")
+                for idx, q_text in enumerate(qs, 1):
+                    ans = st.text_input(f"Q{idx}: {q_text}", key=f"clarify_{idx}", placeholder="Type clarification guidance or leave blank for autonomous default...")
+                    if ans.strip():
+                        clarification_answers[q_text] = ans.strip()
+            else:
+                st.success("✅ The brief and knowledge corpus are sufficiently clear. No clarifying questions required!")
 
         st.markdown("#### Optimization Ceilings")
         iterations_slider = st.slider("Max Optimization Iterations", min_value=1, max_value=3, value=active_preset["iterations"])
