@@ -40,6 +40,50 @@ GENERIC_STOPWORDS: Set[str] = {
 class IntakeInterviewer:
     """Module 1: Intake Interviewer - Conducts requirements intake and document inspection."""
 
+    @staticmethod
+    def infer_agent_identity(brief: str, doc_topics: Optional[List[str]] = None) -> Tuple[str, str, str]:
+        """Infer (agent_name, domain, target_audience) dynamically from brief and document topics."""
+        b_lower = brief.lower()
+        topics = doc_topics or []
+
+        if any(w in b_lower for w in ["hr", "human resources", "leave", "attendance", "employee handbook", "workplace"]):
+            return (
+                "HR Policy Assistant",
+                "Corporate Human Resources",
+                "Company employees, managers, and HR administrators"
+            )
+        elif any(w in b_lower for w in ["procurement", "spare parts", "supplier", "purchase order", "vessel", "marine"]):
+            return (
+                "Ship-Spares Procurement Assistant",
+                "Maritime Procurement & Supply Chain",
+                "Vessel superintendents, engineers, and procurement officers"
+            )
+        elif any(w in b_lower for w in ["academic", "university", "student", "grading", "probation", "graduation", "examination"]):
+            return (
+                "University Academic Regulations Assistant",
+                "Higher Education Academic Affairs",
+                "Students, faculty members, and academic advisors"
+            )
+        elif any(w in b_lower for w in ["clinic", "medical", "patient", "triage", "telehealth", "health information"]):
+            return (
+                "Medical Clinic Policy Assistant",
+                "Clinical Healthcare Administration",
+                "Clinic staff, medical personnel, and patients"
+            )
+
+        # Extract title from user brief if phrased like 'Create an [X] assistant/agent'
+        m = re.search(r"(?:create|build|generate|develop)\s+(?:an?|the)?\s*([A-Za-z0-9_\-\s]{3,40}?)(?:\s+(?:assistant|agent|advisor|specialist|bot|system))", brief, re.IGNORECASE)
+        if m:
+            clean_name = " ".join(w.capitalize() for w in m.group(1).strip().split()) + " Assistant"
+            domain = f"{clean_name.replace(' Assistant', '')} Operations"
+            return clean_name, domain, "Authorized personnel and domain operators"
+
+        if topics:
+            primary_topic = topics[0].strip()
+            return f"{primary_topic} Specialist", f"{primary_topic} Domain", "Authorized operators"
+
+        return "Autonomous Domain Assistant", "Generic Enterprise", "Domain operators and authorized personnel"
+
     def __init__(self, llm_client: Optional[BaseLLMClient] = None):
         self.llm = llm_client or get_llm_client()
 
@@ -395,8 +439,36 @@ class IntakeInterviewer:
             }
 
         # Merge actual disk inventory and detected information gaps
+        all_doc_topics = []
         if inventory:
             data["document_inventory"] = [item.model_dump() for item in inventory]
+            for item in inventory:
+                all_doc_topics.extend(item.detected_topics)
+
+        # Ensure agent_name, domain, and topics faithfully reflect the brief and corpus
+        current_name = data.get("agent_name", "")
+        if not current_name or current_name in {"Autonomous Operations Assistant", "Autonomous Domain Assistant", "Domain Specialist"}:
+            inferred_name, inferred_domain, inferred_audience = self.infer_agent_identity(brief, all_doc_topics)
+            data["agent_name"] = inferred_name
+            if data.get("domain") in {None, "Specialized Technical Operations", "Generic Enterprise", ""}:
+                data["domain"] = inferred_domain
+            if data.get("target_audience") in {None, "Technical operators, mission engineers, and authorized domain staff", "Domain operators and authorized personnel", ""}:
+                data["target_audience"] = inferred_audience
+
+        # If must_answer_topics contains generic technical operations topics but document inventory has real topics
+        if all_doc_topics and (not data.get("must_answer_topics") or data.get("must_answer_topics") == ["Documented specifications", "Standard operating procedures", "Safety thresholds"]):
+            data["must_answer_topics"] = list(dict.fromkeys(all_doc_topics))[:8]
+
+        # Enforce domain-specific refusal boundaries if domain is HR
+        if "hr" in data.get("domain", "").lower() or "human resources" in data.get("domain", "").lower():
+            if any("telemetry" in str(r).lower() or "hardware" in str(r).lower() for r in data.get("must_refuse_topics", [])):
+                data["must_refuse_topics"] = [
+                    "Personal salary records",
+                    "Stock option plans",
+                    "Health insurance claim processing",
+                    "Individual performance reviews",
+                    "Direct payroll execution"
+                ]
 
         if "information_gaps" not in data or not data["information_gaps"]:
             data["information_gaps"] = gaps.model_dump()

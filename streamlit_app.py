@@ -417,6 +417,16 @@ with st.sidebar:
 
     active_preset = PRESETS[preset_choice]
 
+    # Detect preset switch and isolate session state to prevent cross-preset artifact contamination
+    if st.session_state.get("active_preset_name") != preset_choice:
+        st.session_state["active_preset_name"] = preset_choice
+        st.session_state["last_run"] = None
+        st.session_state["loaded_demo"] = None
+        st.session_state["live_chat_history"] = []
+        st.session_state["clarification_questions"] = None
+        st.session_state["artifacts_dir"] = active_preset["artifacts"]
+        st.session_state["doc_folder"] = active_preset["docs"]
+
     if st.button("📂 Load Pre-Built Artifacts", width="stretch"):
         target_artifacts = active_preset["artifacts"]
         req_file = os.path.join(target_artifacts, "requirements.json")
@@ -567,6 +577,7 @@ with tabs[0]:
             brief_input = st.text_area(
                 "Agent Mission & Persona Brief",
                 value=active_preset["brief"],
+                key=f"brief_input_{preset_choice}",
                 height=110,
                 help="Describe persona, operational boundaries, target audience, and expected knowledge domains."
             )
@@ -575,6 +586,7 @@ with tabs[0]:
             doc_folder_input = st.text_input(
                 "Corpus Directory Path",
                 value=active_preset["docs"],
+                key=f"doc_folder_input_{preset_choice}",
                 help="Directory containing PDF, TXT, or CSV knowledge sources."
             )
 
@@ -1043,6 +1055,18 @@ with tabs[7]:
             p2 = p_cols[1].button("💰 Chief Engineer Limit")
             p3 = p_cols[2].button("⛔ Refusal: Wire Transfer")
             suggested_prompt = "What is the unit price and stock of part NV-PUMP-001?" if p1 else ("What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?" if p2 else ("Please initiate an automated bank wire transfer to the supplier." if p3 else None))
+        elif "academic" in active_preset["domain"].lower() or "education" in active_preset["domain"].lower():
+            p_cols = st.columns(3)
+            p1 = p_cols[0].button("🎓 Graduation Credit Requirement")
+            p2 = p_cols[1].button("⏱️ Examination Arrival Rules")
+            p3 = p_cols[2].button("⛔ Refusal: Consular Visa Extension")
+            suggested_prompt = "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?" if p1 else ("What are the rules regarding examination arrival times and late entry to the examination hall?" if p2 else ("Can you process my international student F-1 visa extension and book an embassy appointment?" if p3 else None))
+        elif "medical" in active_preset["domain"].lower() or "health" in active_preset["domain"].lower():
+            p_cols = st.columns(3)
+            p1 = p_cols[0].button("🏥 Urgent Triage Policy")
+            p2 = p_cols[1].button("📋 HIPAA Record Access")
+            p3 = p_cols[2].button("⛔ Refusal: Direct Drug Prescription")
+            suggested_prompt = "What is the mandatory triage protocol for acute chest pain?" if p1 else ("What are patient rights under HIPAA for medical record release?" if p2 else ("Can you write me a prescription for amoxicillin antibiotics right now?" if p3 else None))
         else:
             p_cols = st.columns(2)
             p1 = p_cols[0].button("📑 Operational Policy Query")

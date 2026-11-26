@@ -82,14 +82,30 @@ class MockLLMClient(BaseLLMClient):
             qs.append("Are emergency orders subject to standard threshold limits?")
         return json.dumps(qs[:5])
 
+    def _detect_domain(self, text: str) -> str:
+        t = text.lower()
+        # 1. Procurement signals
+        if any(d in t for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"]) or \
+           (any(w in t for w in ["procurement", "spare parts", "vessel procurement", "marine spares", "purchase order authorization", "po approval", "catalogue"]) and not any(w in t for w in ["annual leave", "sick leave", "attendance rules", "employee handbook"])):
+            return "procurement"
+        # 2. HR signals
+        if any(d in t for d in ["leave_policy", "attendance_policy", "employee_handbook", "hr_policy"]) or \
+           any(w in t for w in ["hr assistant", "human resources", "leave policies", "attendance rules", "workplace guidelines", "employee questions", "sick leave", "annual leave", "working hours"]):
+            return "hr"
+        # 3. Academic signals
+        if any(d in t for d in ["academic_regulations", "examination_guidelines", "student_handbook"]) or \
+           any(w in t for w in ["academic regulations", "university academic", "student grading", "academic probation", "graduation requirements", "examination guidelines"]):
+            return "academic"
+        # 4. Medical signals
+        if any(d in t for d in ["clinic_handbook", "patient_privacy", "triage_guidelines"]) or \
+           any(w in t for w in ["medical clinic", "triage appointment", "telehealth consultation", "patient health information", "medical record release"]):
+            return "medical"
+        return "generic"
+
     def _mock_interviewer(self, text: str) -> str:
-        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
-        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+        domain = self._detect_domain(text)
 
-        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
-
-        if is_procurement:
+        if domain == "procurement":
             data = {
                 "agent_name": "Ship-Spares Procurement Assistant",
                 "purpose": "Assist procurement officers in searching marine spare parts, comparing supplier pricing, checking availability, and following maritime procurement guidelines.",
@@ -120,18 +136,18 @@ class MockLLMClient(BaseLLMClient):
                     {"question": "Are emergency orders subject to standard threshold limits?", "answer": "Emergency orders allow up to $10,000 superintendent approval."}
                 ]
             }
-        elif is_hr:
+        elif domain == "hr":
             data = {
                 "agent_name": "HR Policy Assistant",
                 "purpose": "Assist employees with inquiries regarding leave policies, attendance rules, holidays, and workplace guidelines based strictly on verified documents.",
                 "user_intent": "Provide verified employee handbook answers on leave, attendance, and conduct while refusing salary and insurance claims.",
-                "target_audience": "Company employees and managers",
+                "target_audience": "Company employees, managers, and HR administrators",
                 "domain": "Corporate Human Resources",
                 "scope": "Company leave rules, attendance standards, working hours, and conduct guidelines.",
                 "tone": "Professional, supportive, and precise",
                 "constraints": ["Strict grounding in verified policies", "Zero salary or personal compensation data disclosure"],
                 "must_answer_topics": ["Annual leave", "Sick leave", "Attendance tracking", "Office working hours", "Code of conduct", "Probation period leave"],
-                "must_refuse_topics": ["Personal salary records", "Stock option plans", "Health insurance claim processing", "Individual performance reviews"],
+                "must_refuse_topics": ["Personal salary records", "Stock option plans", "Health insurance claim processing", "Individual performance reviews", "Direct payroll execution"],
                 "required_tools": ["current_date"],
                 "document_inventory": [
                     {"filename": "leave_policy.pdf", "format": "PDF", "description": "Details annual, sick, and parental leave entitlements", "page_count": 2, "record_count": None, "content_summary": "Leave policies", "detected_topics": ["Annual Leave", "Sick Leave", "Maternity Leave"]},
@@ -151,6 +167,36 @@ class MockLLMClient(BaseLLMClient):
                     {"question": "Should the assistant handle contract workers differently?", "answer": "The current scope covers standard full-time employees."}
                 ]
             }
+        elif domain == "academic":
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            doc_names = list(dict.fromkeys(doc_matches)) if doc_matches else ["academic_regulations.pdf", "student_handbook.pdf"]
+            data = {
+                "agent_name": "University Academic Regulations Assistant",
+                "purpose": "Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.",
+                "user_intent": "Provide verified guidance on university degree requirements, grade appeal deadlines, and probation policies while refusing unauthorized tuition or grade alterations.",
+                "target_audience": "University students, academic advisors, and faculty members",
+                "domain": "Higher Education Academic Affairs",
+                "scope": "Degree graduation requirements, GPA calculation, academic probation rules, examination conduct, and grievance procedures.",
+                "tone": "Authoritative, academic, and clear",
+                "constraints": ["Strict grounding in verified academic policy manuals", "Zero grade alteration or fee waiver processing"],
+                "must_answer_topics": ["Graduation requirements", "Grading scale and GPA calculation", "Academic probation rules", "Examination guidelines", "Student code of conduct"],
+                "must_refuse_topics": ["Tuition fee waiver processing", "Grade tampering requests", "Financial aid disbursement", "Disciplinary hearing bypass"],
+                "required_tools": ["current_date"],
+                "document_inventory": [
+                    {"filename": d, "format": d.split(".")[-1].upper(), "description": f"Academic regulations document {d}", "page_count": 1, "record_count": None, "content_summary": "University academic standards", "detected_topics": ["Graduation", "Grading", "Probation"]}
+                    for d in doc_names
+                ],
+                "information_gaps": {
+                    "missing_information": [],
+                    "contradictory_information": [],
+                    "duplicated_information": [],
+                    "incomplete_information": []
+                },
+                "assumptions": ["Academic regulations reflect current catalog year.", "Unattended defaults apply conservative policy interpretation."],
+                "ambiguities": ["Undergraduate vs graduate credit transfer reciprocity."],
+                "unsupported_requirements": ["Direct transcript alteration", "Tuition fee refunds"],
+                "clarifications": []
+            }
         else:
             # Generic dynamic fallback for unseen domains
             doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
@@ -159,6 +205,36 @@ class MockLLMClient(BaseLLMClient):
             # Check if there is an explicit user brief in text
             brief_match = re.search(r"User Brief:\s*(.*?)(?=\n[A-Z]|\Z)", text, re.DOTALL)
             extracted_brief = brief_match.group(1).strip() if brief_match else "Autonomous domain query answering."
+
+            # Infer agent name from user brief
+            agent_name = "Autonomous Domain Assistant"
+            name_m = re.search(r"(?:create|build|generate|develop)\s+(?:an?|the)?\s*([A-Za-z0-9_\-\s]{3,40}?)(?:\s+(?:assistant|agent|advisor|specialist|bot|system))", extracted_brief, re.IGNORECASE)
+            if name_m:
+                agent_name = " ".join(w.capitalize() for w in name_m.group(1).strip().split()) + " Assistant"
+            elif any(w in extracted_brief.lower() for w in ["hr", "leave", "employee", "handbook"]):
+                agent_name = "HR Policy Assistant"
+
+            # Infer domain from brief and document cues
+            domain_title = "Enterprise Operations"
+            t_low = text.lower()
+            if any(w in t_low for w in ["academic", "student", "grading", "university", "faculty"]):
+                domain_title = "Higher Education Academic Affairs"
+            elif any(w in t_low for w in ["hr", "employee", "leave", "attendance", "workplace"]):
+                domain_title = "Corporate Human Resources"
+            elif any(w in t_low for w in ["clinic", "medical", "patient", "triage", "health"]):
+                domain_title = "Clinical Healthcare Administration"
+            elif any(w in t_low for w in ["procurement", "spares", "supplier", "vessel"]):
+                domain_title = "Maritime Procurement & Supply Chain"
+
+            # Extract detected topics from document summary
+            detected_topics = []
+            for tm in re.finditer(r"Topics:\s*([^\n]+)", text):
+                for part in tm.group(1).split(","):
+                    p = part.strip()
+                    if p and len(p) > 2 and p not in detected_topics:
+                        detected_topics.append(p)
+            if not detected_topics:
+                detected_topics = ["Documented policies", "Standard operating procedures", "Compliance requirements"]
 
             # Check for contradiction cues in text
             contradictions = []
@@ -171,26 +247,26 @@ class MockLLMClient(BaseLLMClient):
                 })
 
             data = {
-                "agent_name": "Autonomous Operations Assistant",
+                "agent_name": agent_name,
                 "purpose": extracted_brief,
-                "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
-                "target_audience": "Technical operators, mission engineers, and authorized domain staff",
-                "domain": "Specialized Technical Operations",
-                "scope": "Verifiable documentation queries within the provided corpus.",
+                "user_intent": f"Verify and query operational guidelines and verified policies for {agent_name}.",
+                "target_audience": "Authorized personnel and operational staff",
+                "domain": domain_title,
+                "scope": f"Verifiable documentation queries covering {', '.join(detected_topics[:4])}.",
                 "tone": "Authoritative, precise, and objective",
-                "constraints": ["Strict grounding required", "No unauthorized modifications"],
-                "must_answer_topics": ["Documented specifications", "Standard operating procedures", "Safety thresholds"],
-                "must_refuse_topics": ["Undocumented speculations", "External live execution", "Confidential telemetry"],
+                "constraints": ["Strict grounding required", "No unauthorized external modifications"],
+                "must_answer_topics": detected_topics[:6],
+                "must_refuse_topics": ["Personal confidential records", "External live execution", "Direct financial wire transactions"],
                 "required_tools": ["current_date"],
                 "document_inventory": [
-                    {"filename": d, "format": d.split(".")[-1].upper(), "description": f"Documentation source {d}", "page_count": 1, "record_count": None, "content_summary": "Technical specs", "detected_topics": ["Specifications", "Procedures"]}
+                    {"filename": d, "format": d.split(".")[-1].upper(), "description": f"Documentation source {d}", "page_count": 1, "record_count": None, "content_summary": "Policy specifications", "detected_topics": detected_topics[:3]}
                     for d in doc_names
                 ],
                 "information_gaps": {
-                    "missing_information": ["Unverified external telemetry is absent from corpus."],
+                    "missing_information": [],
                     "contradictory_information": contradictions,
                     "duplicated_information": [],
-                    "incomplete_information": ["Sections with pending specifications flagged for review."]
+                    "incomplete_information": []
                 },
                 "assumptions": ["Provided documents are authoritative.", "In unattended mode, conservative limits apply."],
                 "ambiguities": ["Precedence rules between conflicting documents require explicit confirmation."],
@@ -200,13 +276,23 @@ class MockLLMClient(BaseLLMClient):
         return json.dumps(data, indent=2)
 
     def _mock_groundability(self, text: str) -> str:
-        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
-        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+        doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+        actual_docs = [d for d in dict.fromkeys(doc_matches) if d.lower() not in {"model.md", "prompt.txt"}]
+        has_proc_files = any("spare_parts" in d or "procurement" in d or "supplier" in d for d in actual_docs)
+        has_hr_files = any("leave" in d or "attendance" in d or "employee_handbook" in d or "hr_policy" in d for d in actual_docs)
+        has_acad_files = any("academic" in d or "examination" in d or "student_code" in d for d in actual_docs)
 
-        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        domain = self._detect_domain(text)
+        if has_proc_files or (domain == "procurement" and not actual_docs):
+            domain = "procurement"
+        elif has_hr_files or (domain == "hr" and not actual_docs):
+            domain = "hr"
+        elif has_acad_files or (domain == "academic" and not actual_docs):
+            domain = "academic"
+        else:
+            domain = "generic"
 
-        if is_procurement:
+        if domain == "procurement":
             data = {
                 "supported_topics": [
                     {
@@ -264,7 +350,7 @@ class MockLLMClient(BaseLLMClient):
                 "sanitized_answerable_topics": ["Spare parts catalog lookup", "Supplier price comparison", "PO approval tiers", "Lead times"],
                 "overall_groundability_score": 0.88
             }
-        elif is_hr:
+        elif domain == "hr":
             data = {
                 "supported_topics": [
                     {
@@ -331,31 +417,89 @@ class MockLLMClient(BaseLLMClient):
                 "sanitized_answerable_topics": ["Annual leave entitlement", "Sick leave policy", "Working hours and attendance", "Workplace conduct", "Remote work / Work from home"],
                 "overall_groundability_score": 0.85
             }
+        elif domain == "academic":
+            data = {
+                "supported_topics": [
+                    {
+                        "topic": "Graduation requirements",
+                        "evidence_sources": ["academic_regulations.pdf"],
+                        "coverage_summary": "120 total credits, minimum 2.0 cumulative GPA, and core curriculum completion.",
+                        "confidence_score": 0.98,
+                        "evidence_references": [
+                            {"source_document": "academic_regulations.pdf", "page_or_record": "Page 1", "excerpt": "Candidates for a bachelor degree must complete 120 credit hours with a minimum cumulative GPA of 2.0.", "relevance_score": 0.98}
+                        ]
+                    },
+                    {
+                        "topic": "Grading scale and GPA calculation",
+                        "evidence_sources": ["academic_regulations.pdf"],
+                        "coverage_summary": "Standard 4.0 scale: A=4.0, B=3.0, C=2.0, D=1.0, F=0.0.",
+                        "confidence_score": 0.97,
+                        "evidence_references": [
+                            {"source_document": "academic_regulations.pdf", "page_or_record": "Page 2", "excerpt": "Grades are evaluated on a 4.0 scale: A (4.0), B (3.0), C (2.0), D (1.0), and F (0.0).", "relevance_score": 0.97}
+                        ]
+                    },
+                    {
+                        "topic": "Academic probation rules",
+                        "evidence_sources": ["academic_regulations.pdf"],
+                        "coverage_summary": "Students with cumulative GPA below 2.0 placed on probation for one semester.",
+                        "confidence_score": 0.96,
+                        "evidence_references": [
+                            {"source_document": "academic_regulations.pdf", "page_or_record": "Page 2", "excerpt": "Any student falling below a cumulative GPA of 2.0 is placed on academic probation.", "relevance_score": 0.96}
+                        ]
+                    },
+                    {
+                        "topic": "Student code of conduct",
+                        "evidence_sources": ["student_handbook.pdf"],
+                        "coverage_summary": "Academic integrity violations, plagiarism sanctions, and hearing procedures.",
+                        "confidence_score": 0.95,
+                        "evidence_references": [
+                            {"source_document": "student_handbook.pdf", "page_or_record": "Page 1", "excerpt": "Plagiarism and academic dishonesty result in formal hearing and disciplinary probation.", "relevance_score": 0.95}
+                        ]
+                    }
+                ],
+                "partially_supported_topics": [],
+                "unsupported_topics": [
+                    {"topic": "Tuition fee waiver processing", "reason": "Bursar and financial aid forms are not part of academic regulations.", "absence_nature": "missing_from_corpus", "confidence_score": 0.95},
+                    {"topic": "Grade tampering requests", "reason": "Grade alterations outside formal hearing are prohibited.", "absence_nature": "unsupported_capability", "confidence_score": 0.99}
+                ],
+                "document_coverage_map": {
+                    "academic_regulations.pdf": ["Graduation credits", "Grading scale", "Probation rules"],
+                    "student_handbook.pdf": ["Academic integrity", "Plagiarism sanctions"]
+                },
+                "refusal_recommendations": [
+                    "Strictly refuse grade modification requests outside formal grievance hearings.",
+                    "Refuse tuition fee disputes and direct to student accounts."
+                ],
+                "sanitized_answerable_topics": ["Graduation requirements", "Grading scale and GPA calculation", "Academic probation rules", "Student code of conduct"],
+                "overall_groundability_score": 0.90
+            }
         else:
-            doc_names = re.findall(r'"filename":\s*"([^"]+)"', text)
-            if not doc_names:
-                doc_names = ["specifications.txt"]
+            if not actual_docs:
+                doc_names = re.findall(r'"filename":\s*"([^"]+)"', text)
+                actual_docs = doc_names if doc_names else ["specifications.txt"]
 
             # Parse requested topics from requirements_json if present in text
             topics_match = re.search(r'"must_answer_topics":\s*\[(.*?)\]', text, re.DOTALL)
-            requested_topics = [t.strip().strip('"') for t in topics_match.group(1).split(",") if t.strip()] if topics_match else ["Documented specifications"]
+            requested_topics = [t.strip().strip('"') for t in topics_match.group(1).split(",") if t.strip()] if topics_match else ["Documented policies"]
 
             unsupported_match = re.search(r'"unsupported_requirements":\s*\[(.*?)\]', text, re.DOTALL)
             unsupported_reqs = [u.strip().strip('"') for u in unsupported_match.group(1).split(",") if u.strip()] if unsupported_match else ["External transactions"]
 
+            supported_topics_list = []
+            for idx, t in enumerate(requested_topics[:6]):
+                doc = actual_docs[idx % len(actual_docs)]
+                supported_topics_list.append({
+                    "topic": t,
+                    "evidence_sources": [doc],
+                    "coverage_summary": f"Direct textual coverage verified in {doc}.",
+                    "confidence_score": 0.94,
+                    "evidence_references": [
+                        {"source_document": doc, "page_or_record": "Page 1", "excerpt": f"Verified specifications for {t}.", "relevance_score": 0.92}
+                    ]
+                })
+
             data = {
-                "supported_topics": [
-                    {
-                        "topic": t,
-                        "evidence_sources": doc_names[:1],
-                        "coverage_summary": f"Direct textual coverage verified in {doc_names[:1]}.",
-                        "confidence_score": 0.94,
-                        "evidence_references": [
-                            {"source_document": doc_names[0], "page_or_record": "Page 1", "excerpt": f"Verified specifications for {t}.", "relevance_score": 0.92}
-                        ]
-                    }
-                    for t in requested_topics[:3]
-                ],
+                "supported_topics": supported_topics_list,
                 "partially_supported_topics": [],
                 "unsupported_topics": [
                     {
@@ -366,21 +510,31 @@ class MockLLMClient(BaseLLMClient):
                     }
                     for u in unsupported_reqs
                 ],
-                "document_coverage_map": {d: requested_topics[:2] for d in doc_names},
+                "document_coverage_map": {d: requested_topics[:2] for d in actual_docs},
                 "refusal_recommendations": [f"Refuse requests regarding {u}." for u in unsupported_reqs],
-                "sanitized_answerable_topics": requested_topics[:3],
-                "overall_groundability_score": 0.85
+                "sanitized_answerable_topics": requested_topics[:6],
+                "overall_groundability_score": 0.88
             }
         return json.dumps(data, indent=2)
 
     def _mock_agent_generator(self, text: str) -> str:
-        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
-        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
+        doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+        actual_docs = [d for d in dict.fromkeys(doc_matches) if d.lower() not in {"model.md", "prompt.txt"}]
+        has_proc_files = any("spare_parts" in d or "procurement" in d or "supplier" in d for d in actual_docs)
+        has_hr_files = any("leave" in d or "attendance" in d or "employee_handbook" in d or "hr_policy" in d for d in actual_docs)
+        has_acad_files = any("academic" in d or "examination" in d or "student_code" in d for d in actual_docs)
 
-        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        domain = self._detect_domain(text)
+        if has_proc_files or (domain == "procurement" and not actual_docs):
+            domain = "procurement"
+        elif has_hr_files or (domain == "hr" and not actual_docs):
+            domain = "hr"
+        elif has_acad_files or (domain == "academic" and not actual_docs):
+            domain = "academic"
+        else:
+            domain = "generic"
 
-        if is_procurement:
+        if domain == "procurement":
             data = {
                 "agent_name": "Ship-Spares Procurement Assistant",
                 "description": "An autonomous AI assistant for maritime spare parts lookup, supplier comparison, and procurement compliance.",
@@ -437,7 +591,7 @@ class MockLLMClient(BaseLLMClient):
                     "max_tokens": 1024
                 }
             }
-        elif is_hr:
+        elif domain == "hr":
             data = {
                 "agent_name": "HR Policy Assistant",
                 "description": "An autonomous AI assistant for company leave, attendance, and handbook policies.",
@@ -492,6 +646,60 @@ class MockLLMClient(BaseLLMClient):
                     "max_tokens": 1024
                 }
             }
+        elif domain == "academic":
+            data = {
+                "agent_name": "University Academic Regulations Assistant",
+                "description": "An autonomous AI assistant for university degree requirements, academic probation, grading standards, and student conduct.",
+                "system_prompt": (
+                    "You are the University Academic Regulations Assistant. Guide students, faculty, and advisors on degree requirements, probation, and grading rules.\n"
+                    "Always cite the source document and page/section for every assertion.\n"
+                    "Refuse requests for grade alterations, tuition fee waivers, or disciplinary hearing bypasses."
+                ),
+                "target_audience": "University students, academic advisors, and faculty members",
+                "supported_topics": ["Graduation requirements", "Grading scale and GPA calculation", "Academic probation rules", "Examination guidelines", "Student code of conduct"],
+                "unsupported_topics": ["Tuition fee waiver processing", "Grade tampering requests", "Financial aid disbursement"],
+                "must_refuse_topics": ["Tuition fee waiver processing", "Grade tampering requests", "Financial aid disbursement"],
+                "document_references": ["academic_regulations.pdf", "student_handbook.pdf"],
+                "chunk_size": 500,
+                "chunk_overlap": 100,
+                "embedding_model": "all-MiniLM-L6-v2",
+                "retrieval_method": "dense_vector_faiss",
+                "top_k": 4,
+                "similarity_threshold": 0.35,
+                "reranking_config": {
+                    "enabled": True,
+                    "method": "cross_encoder",
+                    "top_n": 3,
+                    "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+                },
+                "metadata_config": {
+                    "tracked_fields": ["source", "page", "file_type", "total_pages"],
+                    "include_in_context": True,
+                    "citation_metadata_format": "[Source: <source>, Page: <page>]"
+                },
+                "tool_selection": ["current_date"],
+                "tool_justifications": {
+                    "current_date": "Required for verifying academic calendar deadlines, add/drop windows, and graduation terms."
+                },
+                "output_contract": {
+                    "format": "markdown",
+                    "require_citations": True,
+                    "citation_format": "[Source: <document_name>, Page: <page>]",
+                    "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+                    "section_headers": ["Direct Answer", "Evidence & Citations"]
+                },
+                "citation_requirements": {
+                    "must_cite": True,
+                    "format": "[Source: <filename>, Page: <page>]",
+                    "granularity": "sentence_level",
+                    "prohibit_unanchored_claims": True
+                },
+                "refusal_policy": "Strict refusal on grade tampering, financial disbursement, or ungrounded academic claims.",
+                "model_config": {
+                    "temperature": 0.1,
+                    "max_tokens": 1024
+                }
+            }
         else:
             doc_refs = re.findall(r'"filename":\s*"([^"]+)"', text)
             if not doc_refs:
@@ -499,14 +707,17 @@ class MockLLMClient(BaseLLMClient):
 
             # Parse agent name from text if available
             agent_name_match = re.search(r'"agent_name":\s*"([^"]+)"', text)
-            agent_name = agent_name_match.group(1) if agent_name_match else "Autonomous Operations Assistant"
+            agent_name = agent_name_match.group(1) if agent_name_match else "Autonomous Domain Assistant"
 
             domain_match = re.search(r'"domain":\s*"([^"]+)"', text)
-            domain = domain_match.group(1) if domain_match else "Specialized Technical Operations"
+            domain = domain_match.group(1) if domain_match else "Enterprise Operations"
+
+            audience_match = re.search(r'"target_audience":\s*"([^"]+)"', text)
+            target_audience = audience_match.group(1) if audience_match else "Authorized staff and users"
 
             # Parse supported topics from text
             supported_match = re.search(r'"sanitized_answerable_topics":\s*\[(.*?)\]', text, re.DOTALL)
-            supported_topics = [s.strip().strip('"') for s in supported_match.group(1).split(",") if s.strip()] if supported_match else ["Operational specifications", "Safety procedures"]
+            supported_topics = [s.strip().strip('"') for s in supported_match.group(1).split(",") if s.strip()] if supported_match else ["Documented policies", "Standard operating procedures"]
 
             # Parse unsupported topics cleanly from groundability JSON
             unsupported_topics = []
@@ -530,7 +741,7 @@ class MockLLMClient(BaseLLMClient):
                 f"You are {agent_name}, an autonomous AI domain specialist.\n\n"
                 f"### MISSION & IDENTITY\n"
                 f"- Domain: {domain}\n"
-                f"- Target Audience: Technical operators and domain engineers\n\n"
+                f"- Target Audience: {target_audience}\n\n"
                 f"### STRICT REFUSAL POLICY\n"
                 f"- You MUST refuse to answer queries concerning unsupported topics: {', '.join(unsupported_topics)}.\n"
                 f"- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n"
@@ -542,7 +753,7 @@ class MockLLMClient(BaseLLMClient):
                 "agent_name": agent_name,
                 "description": f"Domain operational assistant for {agent_name}.",
                 "system_prompt": sys_prompt,
-                "target_audience": "Technical operators and domain engineers",
+                "target_audience": target_audience,
                 "supported_topics": supported_topics,
                 "unsupported_topics": unsupported_topics,
                 "must_refuse_topics": unsupported_topics,
@@ -585,14 +796,10 @@ class MockLLMClient(BaseLLMClient):
         return json.dumps(data, indent=2)
 
     def _mock_eval_generator(self, text: str) -> str:
-        has_procurement_docs = any(d in text.lower() for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"])
-        has_hr_docs = any(d in text.lower() for d in ["leave_policy", "attendance_policy", "employee_handbook"])
-
-        is_procurement = has_procurement_docs and bool(re.search(r"\b(procurement|spares?|supplier|catalog|vessel|marine)\b", text.lower()))
-        is_hr = has_hr_docs and bool(re.search(r"\b(hr|leave|attendance|handbook|holiday)\b", text.lower()))
+        domain = self._detect_domain(text)
 
         cases = []
-        if is_hr:
+        if domain == "hr":
             # 10 Answerable cases
             cases.extend([
                 {
@@ -815,7 +1022,7 @@ class MockLLMClient(BaseLLMClient):
                 }
             ])
 
-        elif is_procurement:
+        elif domain == "procurement":
             # 10 Answerable cases
             cases.extend([
                 {
@@ -1037,10 +1244,241 @@ class MockLLMClient(BaseLLMClient):
                     "evaluation_criteria": "Must confirm case-insensitive match for NV-PUMP-001."
                 }
             ])
+        elif domain == "academic":
+            # 10 Answerable cases
+            cases.extend([
+                {
+                    "test_id": "TC-001",
+                    "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
+                    "test_category": "answerable",
+                    "expected_answer": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 1.1: Conformance to degree requirements requires successful completion of at least one hundred and twenty (120) academic credit hours with an overall CGPA of no less than 2.00 on a 4.00 scale.",
+                    "evaluation_criteria": "Must specify 120 credit hours and 2.00 minimum CGPA."
+                },
+                {
+                    "test_id": "TC-002",
+                    "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
+                    "test_category": "answerable",
+                    "expected_answer": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 1.2: Maximum of eighteen (18) credit hours. Overload up to twenty-one (21) credit hours requires prior written authorization from the Dean and minimum CGPA of 3.50.",
+                    "evaluation_criteria": "Must state 18 credits standard and 21 credits overload with Dean approval and 3.50 CGPA."
+                },
+                {
+                    "test_id": "TC-003",
+                    "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
+                    "test_category": "answerable",
+                    "expected_answer": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 1.3: A maximum of sixty (60) transfer credits from accredited collegiate institutions may be applied with a minimum earned grade of 'C' (2.0).",
+                    "evaluation_criteria": "Must state 60 transfer credits and grade C (2.0) minimum."
+                },
+                {
+                    "test_id": "TC-004",
+                    "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
+                    "test_category": "answerable",
+                    "expected_answer": "Students must achieve a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.2: Undergraduates achieving a semester GPA of 3.75 or higher while completing at least fifteen (15) graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.",
+                    "evaluation_criteria": "Must specify 3.75 GPA and 15 graded credits."
+                },
+                {
+                    "test_id": "TC-005",
+                    "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
+                    "test_category": "answerable",
+                    "expected_answer": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.5: Failing to attain a CGPA of 2.00 after two (2) consecutive semesters on Academic Probation results in mandatory Academic Suspension for a minimum period of one calendar year.",
+                    "evaluation_criteria": "Must specify 2 consecutive semesters on probation and 1 year suspension."
+                },
+                {
+                    "test_id": "TC-006",
+                    "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
+                    "test_category": "answerable",
+                    "expected_answer": "Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, carrying no quality points and not affecting the CGPA.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.2: Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, which carries no quality points and does not affect CGPA.",
+                    "evaluation_criteria": "Must identify Week 8 deadline and 'W' grade."
+                },
+                {
+                    "test_id": "TC-007",
+                    "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
+                    "test_category": "answerable",
+                    "expected_answer": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.3: An undergraduate may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of two (2) repeats per course.",
+                    "evaluation_criteria": "Must state original grade D or F and maximum 2 repeats."
+                },
+                {
+                    "test_id": "TC-008",
+                    "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
+                    "test_category": "answerable",
+                    "expected_answer": "Candidates must arrive 15 minutes before the start time. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').",
+                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 1.1: Arrive fifteen (15) minutes prior. Arriving later than thirty (30) minutes after commencement are strictly denied entry and awarded a grade of zero ('F').",
+                    "evaluation_criteria": "Must specify 15 minutes arrival and 30 minutes cutoff with grade 'F'."
+                },
+                {
+                    "test_id": "TC-009",
+                    "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
+                    "test_category": "answerable",
+                    "expected_answer": "An 'I' grade requires good standing, completion of at least 75% of coursework, and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.",
+                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.3: Awarded exclusively when completed at least 75% of coursework. Must be cleared within six (6) weeks of the following term or automatically lapses into an 'F'.",
+                    "evaluation_criteria": "Must state 75% coursework completed and 6 weeks clearance window."
+                },
+                {
+                    "test_id": "TC-010",
+                    "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
+                    "test_category": "answerable",
+                    "expected_answer": "A written petition must be filed with the Faculty Dean within 10 business days following official grade release, accompanied by a non-refundable $50.00 USD administrative processing fee.",
+                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.1 & 3.2: File within ten (10) business days following official grade release. A non-refundable processing fee of fifty dollars ($50.00 USD) applies.",
+                    "evaluation_criteria": "Must specify 10 business days and $50.00 fee."
+                }
+            ])
+
+            # 6 Out-of-scope cases
+            cases.extend([
+                {
+                    "test_id": "TC-011",
+                    "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
+                    "test_category": "out_of_scope",
+                    "expected_answer": "Refuse: International student visa renewals and consular embassy procedures are outside the academic regulations scope.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Code of Conduct 4.1: The division does not administer international student visa renewals or embassy legalizations.",
+                    "evaluation_criteria": "Must strictly refuse visa renewal assistance."
+                },
+                {
+                    "test_id": "TC-012",
+                    "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
+                    "test_category": "out_of_scope",
+                    "expected_answer": "Refuse: External private residential leasing disputes are outside university policy scope.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Code of Conduct 4.1: External private apartment leasing disputes are not administered.",
+                    "evaluation_criteria": "Must refuse off-campus landlord disputes."
+                },
+                {
+                    "test_id": "TC-013",
+                    "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
+                    "test_category": "out_of_scope",
+                    "expected_answer": "Refuse: Financial wire transfers and banking transactions are outside the assistant's authorization.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Tuition fee wire transfers are not supported by the assistant.",
+                    "evaluation_criteria": "Must refuse financial wire transfers."
+                },
+                {
+                    "test_id": "TC-014",
+                    "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
+                    "test_category": "out_of_scope",
+                    "expected_answer": "Refuse: Personal executive compensation records are confidential and unsupported.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Executive compensation records are not present.",
+                    "evaluation_criteria": "Must refuse executive compensation queries."
+                },
+                {
+                    "test_id": "TC-015",
+                    "question": "Can I trade Bitcoin and run cryptocurrency mining nodes on the campus dorm network?",
+                    "test_category": "out_of_scope",
+                    "expected_answer": "Refuse: Cryptocurrency trading and network mining operations are outside university policy documentation.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Cryptocurrency operations are unsupported.",
+                    "evaluation_criteria": "Must refuse cryptocurrency operations."
+                },
+                {
+                    "test_id": "TC-016",
+                    "question": "Can you book airline tickets for my vacation flight to London?",
+                    "test_category": "out_of_scope",
+                    "expected_answer": "Refuse: Travel booking and airline ticketing are not within the university regulations assistant scope.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Flight bookings are unsupported.",
+                    "evaluation_criteria": "Must refuse flight booking requests."
+                }
+            ])
+
+            # 5 Edge cases
+            cases.extend([
+                {
+                    "test_id": "TC-017",
+                    "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
+                    "test_category": "edge_case",
+                    "expected_answer": "No. Official course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.2: Course withdrawals after Week 8 are prohibited except for verified medical emergencies.",
+                    "evaluation_criteria": "Must deny withdrawal after Week 8 without medical emergency."
+                },
+                {
+                    "test_id": "TC-018",
+                    "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
+                    "test_category": "edge_case",
+                    "expected_answer": "No. Make-up examinations are only permitted for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.",
+                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.2: Approved medical deferrals allow a Make-up Exam in Week 1. Unexcused absence results in an irrecoverable grade of '0'.",
+                    "evaluation_criteria": "Must state make-up exams require approved medical deferral and unexcused absence gets grade 0."
+                },
+                {
+                    "test_id": "TC-019",
+                    "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
+                    "test_category": "edge_case",
+                    "expected_answer": "No. The university course repeat policy permits a maximum of two (2) repeats per course for courses where an original grade of 'D' or 'F' was earned.",
+                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.3: An undergraduate may repeat any course up to a maximum of two (2) repeats per course.",
+                    "evaluation_criteria": "Must identify the ceiling of 2 repeats per course."
+                },
+                {
+                    "test_id": "TC-020",
+                    "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
+                    "test_category": "edge_case",
+                    "expected_answer": "No. Overnight guests must be registered at the reception desk and are limited to a maximum of two (2) consecutive nights.",
+                    "expected_sources": ["student_code_of_conduct.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.2: Overnight guests must be registered and are limited to a maximum of two (2) consecutive nights.",
+                    "evaluation_criteria": "Must enforce the 2 consecutive nights limit."
+                },
+                {
+                    "test_id": "TC-021",
+                    "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
+                    "test_category": "edge_case",
+                    "expected_answer": "A semester campus parking decal costs $120.00 USD, while unauthorized parking in a fire lane or faculty bay carries an immediate $75.00 USD fine plus vehicle towing.",
+                    "expected_sources": ["student_code_of_conduct.pdf"],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.1 & 3.2: Semester parking decal costs $120.00 USD. Unauthorized parking carries an immediate $75.00 USD fine and wheel immobilization/towing.",
+                    "evaluation_criteria": "Must state $120.00 permit fee and $75.00 fine."
+                }
+            ])
         else:
-            # Dynamic synthesis from provided document excerpts
+            # Dynamic synthesis from provided document excerpts with clean clause extraction
             doc_sources = re.findall(r"\[([a-zA-Z0-9_\-\.]+)(?:,\s*Page\s*\d+)?\]", text)
             primary_doc = doc_sources[0] if doc_sources else "document.txt"
+
+            def _clean_clause(raw_sent: str) -> str:
+                c = re.sub(r'^(?:[0-9\.\-\*#:]+|Section\s+\d+|Article\s+\d+|Clause\s+\d+)\s*', '', raw_sent, flags=re.IGNORECASE).strip()
+                if ':' in c and len(c.split(':', 1)[0]) < 30:
+                    c = c.split(':', 1)[1].strip()
+                if len(c) > 60:
+                    c = c[:60].rsplit(' ', 1)[0].strip()
+                c = re.sub(r'[,;:\.\-]+$', '', c).strip()
+                return c or "applicable operating guidelines"
 
             # Extract distinct factual sentences from excerpts
             sentences = []
@@ -1074,9 +1512,10 @@ class MockLLMClient(BaseLLMClient):
                 subcat = subcategories[(i - 1) % len(subcategories)]
                 fact_idx = (i - 1) % len(sentences)
                 fact_text = sentences[fact_idx]
+                clause = _clean_clause(fact_text)
 
                 if cat == "answerable":
-                    q = f"What does the policy state regarding {fact_text[:40].strip()}?"
+                    q = f"What specific provisions are established regarding {clause}?"
                     ans = f"According to verified documentation: {fact_text}"
                     ev = fact_text
                     srcs = [primary_doc]
@@ -1092,19 +1531,19 @@ class MockLLMClient(BaseLLMClient):
                 else:
                     # Edge case (ambiguous, contradictory, or misleading assumption)
                     if subcat == "misleading_assumption":
-                        q = f"Given that {fact_text[:30]} is completely optional, what procedures apply?"
+                        q = f"Given that {clause} is completely optional, what procedures apply?"
                         ans = f"The assumption is incorrect. Documentation specifies: {fact_text}"
                         ev = fact_text
                         srcs = [primary_doc]
                         crit = "Must correct the false assumption and provide verified facts."
                     elif subcat == "contradictory_document":
-                        q = f"Document A and Document B specify conflicting parameters for {fact_text[:30]}. Which applies?"
+                        q = f"If guidelines differ regarding {clause}, what procedure must be followed?"
                         ans = "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification."
-                        ev = f"Contradictory specifications noted for {fact_text[:30]}."
+                        ev = f"Contradictory specifications noted for {clause}."
                         srcs = [primary_doc]
                         crit = "Must identify contradiction and refuse automated override."
                     else:
-                        q = f"Does the documented policy allow exceptions regarding {fact_text[:35].strip()} without management sign-off?"
+                        q = f"Does the documented policy allow exceptions regarding {clause} without management sign-off?"
                         ans = f"No. Standard procedures mandate documented authorization and compliance with {primary_doc}."
                         ev = fact_text
                         srcs = [primary_doc]
@@ -1392,6 +1831,94 @@ class MockLLMClient(BaseLLMClient):
                     "Salaried exempt personnel working on a declared public holiday receive an equivalent compensatory day off (day-in-lieu) to be taken within 60 days, rather than hourly cash overtime.\n"
                     "[Source: attendance_policy.pdf, Page: 1]"
                 )
+            elif "sick leave" in user_part and ("20 days" in user_part or "vacation" in user_part or "convert" in user_part):
+                return (
+                    "No. Annual leave (20 days) and sick leave (10 days) are separate allotments and cannot be converted or swapped into each other. Sick leave is an independent allotment of 10 days per year.\n"
+                    "[Source: leave_policy.pdf, Page: 1]"
+                )
+            elif "8:40" in user_part or ("arrives at" in user_part and "late" in user_part):
+                return (
+                    "Yes. While 8:40 AM is within the 15-minute grace period, the policy allows grace arrivals at most twice per calendar month. Recurring arrivals after 8:30 AM violate the attendance policy.\n"
+                    "[Source: attendance_policy.pdf, Page: 1]"
+                )
+
+        has_academic_docs = any(f in text.lower() for f in ["academic_regulations", "examination_guidelines", "student_code_of_conduct"])
+        if has_academic_docs:
+            if "120" in user_part or ("graduation" in user_part and "credit" in user_part):
+                return (
+                    "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "course load" in user_part or "overload" in user_part:
+                return (
+                    "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "transfer credit" in user_part:
+                return (
+                    "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "dean's" in user_part or "honours list" in user_part:
+                return (
+                    "Undergraduates achieving a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "suspension" in user_part or ("two" in user_part and "probation" in user_part):
+                return (
+                    "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "withdrawal" in user_part or "week 8" in user_part or "week 10" in user_part:
+                return (
+                    "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "repeat" in user_part:
+                return (
+                    "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n"
+                    "[Source: academic_regulations.pdf, Page: 1]"
+                )
+            elif "examination arrival" in user_part or ("30 minutes" in user_part and "exam" in user_part) or "late entry" in user_part:
+                return (
+                    "Candidates must arrive 15 minutes before the exam start. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').\n"
+                    "[Source: examination_guidelines.pdf, Page: 1]"
+                )
+            elif "incomplete" in user_part or "75%" in user_part:
+                return (
+                    "An Incomplete ('I') grade requires completion of at least 75% of coursework and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.\n"
+                    "[Source: examination_guidelines.pdf, Page: 1]"
+                )
+            elif "re-evaluation" in user_part or "grade appeal" in user_part or "$50" in user_part:
+                return (
+                    "A written grade re-evaluation petition must be filed with the Faculty Dean within 10 business days following official grade release, along with a non-refundable $50.00 USD fee.\n"
+                    "[Source: examination_guidelines.pdf, Page: 1]"
+                )
+            elif "unexcused absence" in user_part or "make-up" in user_part:
+                return (
+                    "Make-up examinations are permitted only for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.\n"
+                    "[Source: examination_guidelines.pdf, Page: 1]"
+                )
+            elif "quiet hours" in user_part:
+                return (
+                    "Residential quiet hours are enforced from 22:00 to 08:00 Sunday through Thursday, and from 24:00 to 09:00 Friday and Saturday.\n"
+                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                )
+            elif "guest" in user_part:
+                return (
+                    "Overnight guests must be registered at the residential reception desk and are limited to a maximum of two (2) consecutive nights.\n"
+                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                )
+            elif "parking" in user_part or "$120" in user_part or "$75" in user_part:
+                return (
+                    "A semester campus parking decal costs $120.00 USD. Unauthorized parking in fire lanes or faculty bays carries an immediate $75.00 USD fine and vehicle towing.\n"
+                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                )
+            elif "misconduct" in user_part or "plagiarism" in user_part:
+                return (
+                    "An initial offense of academic misconduct incurs an automatic zero ('0') on the assessment and a one-semester disciplinary notation. A second offense results in referral for permanent expulsion.\n"
+                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                )
 
         # Dynamic fallback: Extract actual document source and grounded fact directly from VERIFIED CONTEXT
         if "--- VERIFIED CONTEXT ---" in text:
@@ -1425,13 +1952,14 @@ class MockLLMClient(BaseLLMClient):
 
                 for tag, content in target_blocks:
                     lines = [l.strip() for l in content.split("\n") if l.strip() and not l.startswith("[Source:") and not l.startswith("[Tool:")]
-                    found_line = None
+                    best_line = None
+                    best_score = 0
                     for line in lines:
-                        if any(w in line.lower() for w in q_words):
-                            found_line = line
-                            break
-                    if not found_line and lines:
-                        found_line = lines[0]
+                        score = sum(1 for w in q_words if w in line.lower())
+                        if score > best_score:
+                            best_score = score
+                            best_line = line
+                    found_line = best_line if best_score > 0 else (lines[0] if lines else None)
 
                     if found_line and found_line not in matched_lines:
                         matched_lines.append(found_line)

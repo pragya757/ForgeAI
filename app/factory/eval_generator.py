@@ -373,11 +373,10 @@ class AutomaticEvalGenerator:
                     all_sentences.append({"source": d.source, "page": d.page, "location": page_loc, "text": s_clean})
 
         question_templates = [
-            ("What is the mandatory compliance requirement regarding '{snippet}' according to {source}?", "direct_factual", "answer"),
-            ("How does {source} instruct personnel to handle '{snippet}'?", "direct_factual", "answer"),
-            ("Under what circumstances does the rule on '{snippet}' apply in {source}?", "direct_factual", "answer"),
-            ("What operational steps are triggered by '{snippet}' as defined in {source}?", "direct_factual", "answer"),
-            ("What standard protocol governs '{snippet}' per {source}?", "direct_factual", "answer")
+            ("What is the documented requirement regarding {topic} according to {source}?", "direct_factual", "answer"),
+            ("How does {source} instruct personnel to comply with {topic}?", "direct_factual", "answer"),
+            ("Under what circumstances does the provision on {topic} apply per {source}?", "direct_factual", "answer"),
+            ("What standard protocol governs {topic} as established in {source}?", "direct_factual", "answer")
         ]
 
         attempts = 0
@@ -386,9 +385,17 @@ class AutomaticEvalGenerator:
             attempts += 1
             if all_sentences:
                 sent = all_sentences[attempts % len(all_sentences)]
-                tpl, subcat, act = question_templates[attempts % len(question_templates)]
-                snippet = sent['text'][:40].strip()
-                q = tpl.format(snippet=snippet, source=sent['source'])
+                tpl_str, subcat, act = question_templates[attempts % len(question_templates)]
+                
+                full_text = sent['text'].strip()
+                clean_text = re.sub(r"^(?:Section|Article|Rule|\d+[\.\)]|\*|-)\s*", "", full_text).strip()
+                clause_match = re.split(r"[:;]\s+|\.\s+", clean_text)
+                topic_clause = clause_match[0].strip() if clause_match and len(clause_match[0].strip()) >= 15 else clean_text
+                if len(topic_clause) > 65:
+                    topic_clause = topic_clause[:65].rsplit(" ", 1)[0].strip()
+                topic_clause = topic_clause.rstrip(".,:;")
+
+                q = tpl_str.format(topic=topic_clause, source=sent['source'])
                 if not self.is_duplicate_question(q, existing_questions) or attempts > 40:
                     existing_questions.append(q)
                     cases.append(EvalCase(

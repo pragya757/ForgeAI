@@ -401,8 +401,28 @@ class AgentGenerator:
         if "reranking_config" not in data or data["reranking_config"] is None:
             data["reranking_config"] = doc_chars["reranking_config"].model_dump() if doc_chars["reranking_config"] else None
 
+        # Enforce agent identity and topics from upstream verified requirements & groundability
+        if requirements.agent_name and requirements.agent_name not in {"Autonomous Operations Assistant", "Autonomous Domain Assistant"}:
+            data["agent_name"] = requirements.agent_name
+            if requirements.target_audience:
+                data["target_audience"] = requirements.target_audience
+            if requirements.purpose and data.get("description") in {None, "", f"Domain operational assistant for {data.get('agent_name')}."}:
+                data["description"] = requirements.purpose
+
+        # Ensure supported & unsupported topics match verified groundability
+        if sanitized_supported and (not data.get("supported_topics") or data.get("supported_topics") == ["Operational specifications", "Safety procedures"]):
+            data["supported_topics"] = sanitized_supported
+        
+        # Ensure unsupported topics and must_refuse_topics contain all groundability and requirements unsupported topics
+        all_unsupported = list(set(data.get("unsupported_topics", []) + unsupported_topics + requirements.unsupported_requirements))
+        data["unsupported_topics"] = sorted(all_unsupported)
+        all_refusals = set(data.get("must_refuse_topics", []))
+        all_refusals.update(all_unsupported)
+        all_refusals.update(requirements.must_refuse_topics)
+        data["must_refuse_topics"] = sorted(list(all_refusals))
+
         # Ensure system prompt incorporates domain identity and refusal policy
-        if "system_prompt" not in data or len(data.get("system_prompt", "")) < 100 or "STRICT REFUSAL" not in data.get("system_prompt", ""):
+        if "system_prompt" not in data or len(data.get("system_prompt", "")) < 100 or "STRICT REFUSAL" not in data.get("system_prompt", "") or ("Autonomous Operations Assistant" in data.get("system_prompt", "") and requirements.agent_name != "Autonomous Operations Assistant"):
             data["system_prompt"] = system_prompt
 
         # Build AgentDefinition
