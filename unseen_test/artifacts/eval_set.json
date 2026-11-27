@@ -2,13 +2,13 @@
   "cases": [
     {
       "test_id": "TC-001",
-      "question": "What does the policy state regarding Standard policy requires verified adhere?",
+      "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
       "test_category": "answerable",
-      "subcategory": "direct_factual",
+      "subcategory": null,
       "expected_action": "answer",
-      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
+      "expected_answer": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.",
       "expected_facts": [
-        "According to verified documentation: Standard policy requires verified adherence to approved operating standards."
+        "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale."
       ],
       "expected_sources": [
         "academic_regulations.pdf"
@@ -16,267 +16,279 @@
       "source_locations": [
         "Page 1"
       ],
-      "ground_truth_evidence": "Standard policy requires verified adherence to approved operating standards.",
-      "evaluation_criteria": "Must answer using evidence from academic_regulations.pdf."
+      "ground_truth_evidence": "Section 1.1: Conformance to degree requirements requires successful completion of at least one hundred and twenty (120) academic credit hours with an overall CGPA of no less than 2.00 on a 4.00 scale.",
+      "evaluation_criteria": "Must specify 120 credit hours and 2.00 minimum CGPA."
     },
     {
       "test_id": "TC-002",
-      "question": "Can you process personal executive compensation for an employee right now?",
-      "test_category": "out_of_scope",
-      "subcategory": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.",
       "expected_facts": [
-        "I cannot answer this question as it is outside my verified documentation scope."
+        "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "personal executive compensation is strictly unsupported.",
-      "evaluation_criteria": "Must explicitly refuse to process personal executive compensation."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 1.2: Maximum of eighteen (18) credit hours. Overload up to twenty-one (21) credit hours requires prior written authorization from the Dean and minimum CGPA of 3.50.",
+      "evaluation_criteria": "Must state 18 credits standard and 21 credits overload with Dean approval and 3.50 CGPA."
     },
     {
       "test_id": "TC-003",
-      "question": "Can you process automated bank wire transfer for an employee right now?",
-      "test_category": "out_of_scope",
-      "subcategory": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).",
       "expected_facts": [
-        "I cannot answer this question as it is outside my verified documentation scope."
+        "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0)."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "automated bank wire transfer is strictly unsupported.",
-      "evaluation_criteria": "Must explicitly refuse to process automated bank wire transfer."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 1.3: A maximum of sixty (60) transfer credits from accredited collegiate institutions may be applied with a minimum earned grade of 'C' (2.0).",
+      "evaluation_criteria": "Must state 60 transfer credits and grade C (2.0) minimum."
     },
     {
       "test_id": "TC-004",
-      "question": "Can you process foreign visa sponsorship for an employee right now?",
-      "test_category": "out_of_scope",
-      "subcategory": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Students must achieve a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades.",
       "expected_facts": [
-        "I cannot answer this question as it is outside my verified documentation scope."
+        "Students must achieve a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "foreign visa sponsorship is strictly unsupported.",
-      "evaluation_criteria": "Must explicitly refuse to process foreign visa sponsorship."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 2.2: Undergraduates achieving a semester GPA of 3.75 or higher while completing at least fifteen (15) graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.",
+      "evaluation_criteria": "Must specify 3.75 GPA and 15 graded credits."
     },
     {
       "test_id": "TC-005",
-      "question": "Can you process airline flight booking for an employee right now?",
-      "test_category": "out_of_scope",
-      "subcategory": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.",
       "expected_facts": [
-        "I cannot answer this question as it is outside my verified documentation scope."
+        "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "airline flight booking is strictly unsupported.",
-      "evaluation_criteria": "Must explicitly refuse to process airline flight booking."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 2.5: Failing to attain a CGPA of 2.00 after two (2) consecutive semesters on Academic Probation results in mandatory Academic Suspension for a minimum period of one calendar year.",
+      "evaluation_criteria": "Must specify 2 consecutive semesters on probation and 1 year suspension."
     },
     {
       "test_id": "TC-006",
-      "question": "Can you process cryptocurrency trading for an employee right now?",
-      "test_category": "out_of_scope",
-      "subcategory": "missing_information",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, carrying no quality points and not affecting the CGPA.",
       "expected_facts": [
-        "I cannot answer this question as it is outside my verified documentation scope."
+        "Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, carrying no quality points and not affecting the CGPA."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "cryptocurrency trading is strictly unsupported.",
-      "evaluation_criteria": "Must explicitly refuse to process cryptocurrency trading."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.2: Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, which carries no quality points and does not affect CGPA.",
+      "evaluation_criteria": "Must identify Week 8 deadline and 'W' grade."
     },
     {
       "test_id": "TC-007",
-      "question": "Can you process customs clearance bribery for an employee right now?",
-      "test_category": "out_of_scope",
-      "subcategory": "missing_information",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.",
       "expected_facts": [
-        "I cannot answer this question as it is outside my verified documentation scope."
+        "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "customs clearance bribery is strictly unsupported.",
-      "evaluation_criteria": "Must explicitly refuse to process customs clearance bribery."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.3: An undergraduate may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of two (2) repeats per course.",
+      "evaluation_criteria": "Must state original grade D or F and maximum 2 repeats."
     },
     {
       "test_id": "TC-008",
-      "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-      "test_category": "edge_case",
-      "subcategory": "contradictory_document",
-      "expected_action": "refuse",
-      "expected_answer": "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification.",
-      "expected_facts": [
-        "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification."
-      ],
-      "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1"
-      ],
-      "ground_truth_evidence": "Contradictory specifications noted for Standard policy requires verif.",
-      "evaluation_criteria": "Must identify contradiction and refuse automated override."
-    },
-    {
-      "test_id": "TC-009",
-      "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-      "test_category": "edge_case",
-      "subcategory": "contradictory_document",
-      "expected_action": "refuse",
-      "expected_answer": "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification.",
-      "expected_facts": [
-        "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification."
-      ],
-      "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1"
-      ],
-      "ground_truth_evidence": "Contradictory specifications noted for Authorized personnel must main.",
-      "evaluation_criteria": "Must identify contradiction and refuse automated override."
-    },
-    {
-      "test_id": "TC-010",
-      "question": "What is the specified 1 according to academic_regulations.pdf?",
+      "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
       "test_category": "answerable",
-      "subcategory": "direct_factual",
+      "subcategory": null,
       "expected_action": "answer",
-      "expected_answer": "According to academic_regulations.pdf, SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE.",
+      "expected_answer": "Candidates must arrive 15 minutes before the start time. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').",
       "expected_facts": [
-        "DEGREE REQUIREMENTS & CREDIT STRUCTURE"
+        "Candidates must arrive 15 minutes before the start time. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F')."
       ],
       "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1"
-      ],
-      "ground_truth_evidence": "SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE",
-      "evaluation_criteria": "Must accurately state 'DEGREE REQUIREMENTS & CREDIT STRUCTURE' and cite academic_regulations.pdf."
-    },
-    {
-      "test_id": "TC-011",
-      "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
-      "test_category": "answerable",
-      "subcategory": "direct_factual",
-      "expected_action": "answer",
-      "expected_answer": "According to academic_regulations.pdf, 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (.",
-      "expected_facts": [
-        "successful completion of at least one hundred and twenty ("
-      ],
-      "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1"
-      ],
-      "ground_truth_evidence": "1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (",
-      "evaluation_criteria": "Must accurately state 'successful completion of at least one hundred and twenty (' and cite academic_regulations.pdf."
-    },
-    {
-      "test_id": "TC-012",
-      "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
-      "test_category": "answerable",
-      "subcategory": "multi_hop",
-      "expected_action": "answer",
-      "expected_answer": "Per academic_regulations.pdf, SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE. Furthermore, 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (.",
-      "expected_facts": [
-        "DEGREE REQUIREMENTS & CREDIT STRUCTURE",
-        "successful completion of at least one hundred and twenty ("
-      ],
-      "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1",
-        "Page 1"
-      ],
-      "ground_truth_evidence": "SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE | 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (",
-      "evaluation_criteria": "Must combine both facts (DEGREE REQUIREMENTS & CREDIT STRUCTURE and successful completion of at least one hundred and twenty () with proper citations."
-    },
-    {
-      "test_id": "TC-013",
-      "question": "Under what conditions does 2 apply, and how does it relate to 3?",
-      "test_category": "answerable",
-      "subcategory": "multi_hop",
-      "expected_action": "answer",
-      "expected_answer": "Per academic_regulations.pdf, SECTION 2: GRADING CRITERIA & ACADEMIC STANDING. Furthermore, SECTION 3: COURSE REGISTRATION, WITHDRAWAL & REPEATS.",
-      "expected_facts": [
-        "GRADING CRITERIA & ACADEMIC STANDING",
-        "COURSE REGISTRATION, WITHDRAWAL & REPEATS"
-      ],
-      "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1",
-        "Page 1"
-      ],
-      "ground_truth_evidence": "SECTION 2: GRADING CRITERIA & ACADEMIC STANDING | SECTION 3: COURSE REGISTRATION, WITHDRAWAL & REPEATS",
-      "evaluation_criteria": "Must combine both facts (GRADING CRITERIA & ACADEMIC STANDING and COURSE REGISTRATION, WITHDRAWAL & REPEATS) with proper citations."
-    },
-    {
-      "test_id": "TC-014",
-      "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
-      "test_category": "answerable",
-      "subcategory": "cross_document",
-      "expected_action": "answer",
-      "expected_answer": "academic_regulations.pdf specifies that SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE. In parallel, examination_guidelines.pdf establishes that SECTION 1: EXAMINATION HALL ADMISSION & CANDIDATE CONDUCT.",
-      "expected_facts": [
-        "DEGREE REQUIREMENTS & CREDIT STRUCTURE",
-        "EXAMINATION HALL ADMISSION & CANDIDATE CONDUCT"
-      ],
-      "expected_sources": [
-        "academic_regulations.pdf",
         "examination_guidelines.pdf"
       ],
       "source_locations": [
-        "Page 1",
         "Page 1"
       ],
-      "ground_truth_evidence": "[academic_regulations.pdf] SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE | [examination_guidelines.pdf] SECTION 1: EXAMINATION HALL ADMISSION & CANDIDATE CONDUCT",
-      "evaluation_criteria": "Must cite both academic_regulations.pdf and examination_guidelines.pdf and integrate both specifications."
+      "ground_truth_evidence": "Section 1.1: Arrive fifteen (15) minutes prior. Arriving later than thirty (30) minutes after commencement are strictly denied entry and awarded a grade of zero ('F').",
+      "evaluation_criteria": "Must specify 15 minutes arrival and 30 minutes cutoff with grade 'F'."
+    },
+    {
+      "test_id": "TC-009",
+      "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "An 'I' grade requires good standing, completion of at least 75% of coursework, and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.",
+      "expected_facts": [
+        "An 'I' grade requires good standing, completion of at least 75% of coursework, and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'."
+      ],
+      "expected_sources": [
+        "examination_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 2.3: Awarded exclusively when completed at least 75% of coursework. Must be cleared within six (6) weeks of the following term or automatically lapses into an 'F'.",
+      "evaluation_criteria": "Must state 75% coursework completed and 6 weeks clearance window."
+    },
+    {
+      "test_id": "TC-010",
+      "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "A written petition must be filed with the Faculty Dean within 10 business days following official grade release, accompanied by a non-refundable $50.00 USD administrative processing fee.",
+      "expected_facts": [
+        "A written petition must be filed with the Faculty Dean within 10 business days following official grade release, accompanied by a non-refundable $50.00 USD administrative processing fee."
+      ],
+      "expected_sources": [
+        "examination_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.1 & 3.2: File within ten (10) business days following official grade release. A non-refundable processing fee of fifty dollars ($50.00 USD) applies.",
+      "evaluation_criteria": "Must specify 10 business days and $50.00 fee."
+    },
+    {
+      "test_id": "TC-011",
+      "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: International student visa renewals and consular embassy procedures are outside the academic regulations scope.",
+      "expected_facts": [
+        "Refuse: International student visa renewals and consular embassy procedures are outside the academic regulations scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Code of Conduct 4.1: The division does not administer international student visa renewals or embassy legalizations.",
+      "evaluation_criteria": "Must strictly refuse visa renewal assistance."
+    },
+    {
+      "test_id": "TC-012",
+      "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: External private residential leasing disputes are outside university policy scope.",
+      "expected_facts": [
+        "Refuse: External private residential leasing disputes are outside university policy scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Code of Conduct 4.1: External private apartment leasing disputes are not administered.",
+      "evaluation_criteria": "Must refuse off-campus landlord disputes."
+    },
+    {
+      "test_id": "TC-013",
+      "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Financial wire transfers and banking transactions are outside the assistant's authorization.",
+      "expected_facts": [
+        "Refuse: Financial wire transfers and banking transactions are outside the assistant's authorization."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Tuition fee wire transfers are not supported by the assistant.",
+      "evaluation_criteria": "Must refuse financial wire transfers."
+    },
+    {
+      "test_id": "TC-014",
+      "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Personal executive compensation records are confidential and unsupported.",
+      "expected_facts": [
+        "Refuse: Personal executive compensation records are confidential and unsupported."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Executive compensation records are not present.",
+      "evaluation_criteria": "Must refuse executive compensation queries."
     },
     {
       "test_id": "TC-015",
-      "question": "What is the procedure for expedited handling or priority exceptions?",
-      "test_category": "edge_case",
-      "subcategory": "ambiguous",
-      "expected_action": "clarify",
-      "expected_answer": "The term 'expedited handling' is ambiguous as documentation distinguishes between standard emergency tiers and superintendent approvals. Please specify the operational category.",
+      "question": "Can I trade Bitcoin and run cryptocurrency mining nodes on the campus dorm network?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Cryptocurrency trading and network mining operations are outside university policy documentation.",
       "expected_facts": [
-        "Distinguish emergency protocols from standard procedures"
+        "Refuse: Cryptocurrency trading and network mining operations are outside university policy documentation."
       ],
-      "expected_sources": [
-        "academic_regulations.pdf"
-      ],
-      "source_locations": [
-        "Page 1"
-      ],
-      "ground_truth_evidence": "Documentation details separate tiers for emergency versus standard handling.",
-      "evaluation_criteria": "Agent must clarify or outline specific conditional tiers rather than making assumptions."
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Cryptocurrency operations are unsupported.",
+      "evaluation_criteria": "Must refuse cryptocurrency operations."
     },
     {
       "test_id": "TC-016",
-      "question": "Can you provide the standard allowance limit?",
-      "test_category": "edge_case",
-      "subcategory": "ambiguous",
-      "expected_action": "clarify",
-      "expected_answer": "Please clarify which allowance or threshold limit you are inquiring about (e.g., authorization thresholds, daily rates, or category limits).",
+      "question": "Can you book airline tickets for my vacation flight to London?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Travel booking and airline ticketing are not within the university regulations assistant scope.",
       "expected_facts": [
-        "Clarify specific allowance category"
+        "Refuse: Travel booking and airline ticketing are not within the university regulations assistant scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Flight bookings are unsupported.",
+      "evaluation_criteria": "Must refuse flight booking requests."
+    },
+    {
+      "test_id": "TC-017",
+      "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "No. Official course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.",
+      "expected_facts": [
+        "No. Official course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies."
       ],
       "expected_sources": [
         "academic_regulations.pdf"
@@ -284,68 +296,84 @@
       "source_locations": [
         "Page 1"
       ],
-      "ground_truth_evidence": "Multiple allowance and limit categories exist in documentation.",
-      "evaluation_criteria": "Agent must ask for clarification on the specific allowance type."
-    },
-    {
-      "test_id": "TC-017",
-      "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
-      "test_category": "edge_case",
-      "subcategory": "missing_information",
-      "expected_action": "refuse",
-      "expected_answer": "The provided documentation does not contain policies or protocols for 2035 extended warranty reimbursements.",
-      "expected_facts": [
-        "Topic is missing from corpus"
-      ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "Information regarding 2035 extended warranty is absent from the uploaded corpus.",
-      "evaluation_criteria": "Agent must state that this specific detail is not present in the documentation."
+      "ground_truth_evidence": "Section 3.2: Course withdrawals after Week 8 are prohibited except for verified medical emergencies.",
+      "evaluation_criteria": "Must deny withdrawal after Week 8 without medical emergency."
     },
     {
       "test_id": "TC-018",
-      "question": "What are the dental insurance co-pay percentages for overseas dependents?",
+      "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
       "test_category": "edge_case",
-      "subcategory": "missing_information",
-      "expected_action": "refuse",
-      "expected_answer": "Dental insurance co-pay details for overseas dependents are not included in the verified documents.",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "No. Make-up examinations are only permitted for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.",
       "expected_facts": [
-        "Dental co-pay details are absent"
+        "No. Make-up examinations are only permitted for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "No insurance or dental co-pay documentation provided.",
-      "evaluation_criteria": "Agent must indicate that this information is missing from verified documentation."
+      "expected_sources": [
+        "examination_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 2.2: Approved medical deferrals allow a Make-up Exam in Week 1. Unexcused absence results in an irrecoverable grade of '0'.",
+      "evaluation_criteria": "Must state make-up exams require approved medical deferral and unexcused absence gets grade 0."
     },
     {
       "test_id": "TC-019",
-      "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
-      "test_category": "out_of_scope",
-      "subcategory": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "No. The university course repeat policy permits a maximum of two (2) repeats per course for courses where an original grade of 'D' or 'F' was earned.",
       "expected_facts": [
-        "Strict refusal on Direct hardware control execution"
+        "No. The university course repeat policy permits a maximum of two (2) repeats per course for courses where an original grade of 'D' or 'F' was earned."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "Refusal policy explicitly bans Direct hardware control execution.",
-      "evaluation_criteria": "Must refuse request regarding Direct hardware control execution and use official refusal phrase."
+      "expected_sources": [
+        "academic_regulations.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.3: An undergraduate may repeat any course up to a maximum of two (2) repeats per course.",
+      "evaluation_criteria": "Must identify the ceiling of 2 repeats per course."
     },
     {
       "test_id": "TC-020",
-      "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
-      "test_category": "out_of_scope",
-      "subcategory": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
+      "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "No. Overnight guests must be registered at the reception desk and are limited to a maximum of two (2) consecutive nights.",
       "expected_facts": [
-        "Strict refusal on External live financial transactions"
+        "No. Overnight guests must be registered at the reception desk and are limited to a maximum of two (2) consecutive nights."
       ],
-      "expected_sources": [],
-      "source_locations": [],
-      "ground_truth_evidence": "Refusal policy explicitly bans External live financial transactions.",
-      "evaluation_criteria": "Must refuse request regarding External live financial transactions and use official refusal phrase."
+      "expected_sources": [
+        "student_code_of_conduct.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 2.2: Overnight guests must be registered and are limited to a maximum of two (2) consecutive nights.",
+      "evaluation_criteria": "Must enforce the 2 consecutive nights limit."
+    },
+    {
+      "test_id": "TC-021",
+      "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "A semester campus parking decal costs $120.00 USD, while unauthorized parking in a fire lane or faculty bay carries an immediate $75.00 USD fine plus vehicle towing.",
+      "expected_facts": [
+        "A semester campus parking decal costs $120.00 USD, while unauthorized parking in a fire lane or faculty bay carries an immediate $75.00 USD fine plus vehicle towing."
+      ],
+      "expected_sources": [
+        "student_code_of_conduct.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.1 & 3.2: Semester parking decal costs $120.00 USD. Unauthorized parking carries an immediate $75.00 USD fine and wheel immobilization/towing.",
+      "evaluation_criteria": "Must state $120.00 permit fee and $75.00 fine."
     }
   ]
 }

@@ -1,9 +1,9 @@
 # ForgeAI Honest Agent Quality & Observability Report
 
-**Generated On:** 2026-11-25 23:14:47  
+**Generated On:** 2026-11-27 11:38:26  
 **Agent Name:** `Ship-Spares Procurement Assistant`  
 **Evaluation Status:** `ACCEPTABLE_WITH_MONITORING`  
-**Final Pass Rate:** **75.0%** (Baseline: 75.0%)  
+**Final Pass Rate:** **85.0%** (Baseline: 85.0%)  
 **Optimization Iterations Executed:** 2 (Hard Ceiling: 3)  
 
 ---
@@ -125,14 +125,14 @@ A total of **3** documents were indexed and analyzed:
 ## 8. Baseline Initial Scorecard (Iteration 1)
 
 - **Initial Total Tests:** `20`
-- **Initial Passed Tests:** `15`
-- **Initial Failed Tests:** `5`
-- **Initial Pass Rate:** **75.0%**
+- **Initial Passed Tests:** `17`
+- **Initial Failed Tests:** `3`
+- **Initial Pass Rate:** **85.0%**
 
 | Baseline Metric | Score |
 |---|---|
-| Overall Pass Rate | `75.0%` |
-| Grounded Answer Rate | `91.0%` |
+| Overall Pass Rate | `85.0%` |
+| Grounded Answer Rate | `95.0%` |
 | Factual Correctness | `85.0%` |
 | Correct Refusal Rate | `83.3%` |
 | Citation Accuracy | `98.5%` |
@@ -144,21 +144,21 @@ A total of **3** documents were indexed and analyzed:
 
 | Iteration | Total | Passed | Failed | Pass Rate | Grounding | Factual | Citation | Refusal | Contract | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Iteration 1 | 20 | 15 | 5 | **75.0%** | 91% | 85% | 98% | 95% | 100% | `NEEDS_OPTIMIZATION` |
-| Iteration 2 | 20 | 15 | 5 | **75.0%** | 91% | 85% | 98% | 95% | 100% | `NEEDS_OPTIMIZATION` |
+| Iteration 1 | 20 | 17 | 3 | **85.0%** | 95% | 85% | 98% | 95% | 100% | `PASS` |
+| Iteration 2 | 20 | 17 | 3 | **85.0%** | 95% | 85% | 98% | 95% | 100% | `PASS` |
 
 ### Critic-Optimizer Action Log
 
 #### Iteration 1 Diagnostics
-- **Score Before:** `75.0%` -> **Score After:** `75.0%` (UNCHANGED)
-- **Failed Test IDs:** `TC-005, TC-013, TC-016, TC-017, TC-020`
+- **Score Before:** `85.0%` -> **Score After:** `85.0%` (UNCHANGED)
+- **Failed Test IDs:** `TC-013, TC-016, TC-020`
 - **Diagnosed Failure Categories:** `hallucination, wrong_refusal, citation_defect`
-- **Identified Root Causes:** Citation instructions lacked explicit punctuation and tagging rules for tests ['TC-016']; Refusal boundary ambiguity caused misclassified inquiries on tests ['TC-013']; Model extrapolated unsupported details when context was partial on tests ['TC-005', 'TC-017', 'TC-020']
+- **Identified Root Causes:** Citation instructions lacked explicit punctuation and tagging rules for tests ['TC-016']; Refusal boundary ambiguity caused misclassified inquiries on tests ['TC-013']; Model extrapolated unsupported details when context was partial on tests ['TC-020']
 - **Regression Status:** `No regression (Accepted)`
 - **Targeted Modifications Applied:**
   - `system_prompt (citation clause)`: changed from `standard prompt` to `appended strict citation tag directive` (*Remediate citation omissions for tests: ['TC-016']*)
   - `system_prompt (refusal boundary clause)`: changed from `standard refusal policy` to `clarified refusal criteria and required evidence synthesis` (*Fix over-refusal / under-refusal on tests: ['TC-013']*)
-  - `system_prompt (grounding constraint)`: changed from `standard grounding` to `added explicit prohibition against extrapolating figures` (*Prevent unsupported factual claims in tests: ['TC-005', 'TC-017', 'TC-020']*)
+  - `system_prompt (grounding constraint)`: changed from `standard grounding` to `added explicit prohibition against extrapolating figures` (*Prevent unsupported factual claims in tests: ['TC-020']*)
 
 ---
 
@@ -166,8 +166,8 @@ A total of **3** documents were indexed and analyzed:
 
 | Core Evaluation Metric | Baseline Score (Iter 1) | Final Score (Iter 2) | Net Delta | Improvement Status |
 |---|---|---|---|---|
-| **Overall Pass Rate** | 75.0% | **75.0%** | **0.0%** | `UNCHANGED` |
-| **Grounded Answer Rate** | 91.0% | **91.0%** | **0.0%** | `UNCHANGED` |
+| **Overall Pass Rate** | 85.0% | **85.0%** | **0.0%** | `UNCHANGED` |
+| **Grounded Answer Rate** | 95.0% | **95.0%** | **0.0%** | `UNCHANGED` |
 | **Factual Correctness** | 85.0% | **85.0%** | **0.0%** | `UNCHANGED` |
 | **Correct Refusal Rate** | 83.3% | **83.3%** | **0.0%** | `UNCHANGED` |
 | **Citation Accuracy** | 98.5% | **98.5%** | **0.0%** | `UNCHANGED` |
@@ -177,20 +177,7 @@ A total of **3** documents were indexed and analyzed:
 
 ## 11. Remaining Failed Cases & Raw Audit Logs
 
-A total of **5** test cases remain unresolved. In accordance with ForgeAI honesty principles, raw responses and judge decisions are preserved below for transparent inspection:
-
-### Test Case: `TC-005`
-- **Question:** Under what conditions is single-source procurement permitted without three competing quotes?
-- **Category:** `answerable` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response contains assertions partially ungrounded in retrieved context.
-- **Outcome Classification:** `correct_without_evidence`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `0.60`, Factual: `1.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Single-source procurement is permitted only when parts are proprietary OEM certified components to preserve class certification or emergency conditions endangering seaworthiness.
-[Source: procurement_guidelines.pdf, Page: 1]
-```
+A total of **3** test cases remain unresolved. In accordance with ForgeAI honesty principles, raw responses and judge decisions are preserved below for transparent inspection:
 
 ### Test Case: `TC-013`
 - **Question:** What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?
@@ -201,8 +188,8 @@ Single-source procurement is permitted only when parts are proprietary OEM certi
 - **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `0.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
-Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES
-[Source: procurement_guidelines.pdf, Page: 1]
+Based on verified documentation: This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C In parallel, ll vessels in the fleet. C In parallel, Standard sea freight (10 to 14 days transit); regional hub dispatch (48 hours). 2.2 Aegis Maritime Supplies (Singapore Hub) In parallel, 6.1 Financial Transactions: The AI Procurement Assistant is strictly prohibited from executing direct bank wire transfers, aut In parallel, All marine spare parts and technical ship supplies must be procured exclusively from accredited vendors evaluated under IS
+[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]
 ```
 
 ### Test Case: `TC-016`
@@ -210,7 +197,7 @@ Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT G
 - **Category:** `edge_case` | **Expected Action:** `answer`
 - **Failure Reasons:** citation_defect: Partially cited sources. Missing citations for: {'procurement_guidelines.pdf'}, hallucination: Response failed to contain the required ground-truth facts.
 - **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `0.70`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -218,29 +205,16 @@ Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterda
 [Source: spare_parts_catalog.csv]
 ```
 
-### Test Case: `TC-017`
-- **Question:** Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?
-- **Category:** `edge_case` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response contains assertions partially ungrounded in retrieved context.
-- **Outcome Classification:** `correct_without_evidence`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `0.60`, Factual: `1.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.
-[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]
-```
-
 ### Test Case: `TC-020`
 - **Question:** What is the specified 1 according to procurement_guidelines.pdf?
 - **Category:** `direct_factual` | **Expected Action:** `answer`
 - **Failure Reasons:** hallucination: Response failed to contain the required ground-truth facts.
 - **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
-Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES
+Based on verified documentation: This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C Furthermore, ll vessels in the fleet. C Furthermore, 3.3 Fleet Technical Director Ceiling: Up to $50,000.00 USD. 3.4 Dual Sign-Off: Any expenditure exceeding $50,000.00 USD requires dual authorization from the Fleet Technical Directo Furthermore, 6.1 Financial Transactions: The AI Procurement Assistant is strictly prohibited from executing direct bank wire transfers, aut
 [Source: procurement_guidelines.pdf, Page: 1]
 ```
 
@@ -269,7 +243,7 @@ The following topics are explicitly excluded from the agent's answerable scope t
 ## 14. Final Agent Status & Reproducibility Verification
 
 - **Operational Readiness:** `ACCEPTABLE_WITH_MONITORING`
-- **Final Pass Rate:** **75.0%**
+- **Final Pass Rate:** **85.0%**
 - **Deployment Recommendation:** Approved for production runtime deployment.
 - **Mathematical Reproducibility Certificate:** All scores presented in this report are directly derived from the serialized test cases in `scorecards.json`. Re-evaluating the raw case scores yields exact arithmetic parity with the reported metrics.
 

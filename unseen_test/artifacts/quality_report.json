@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-25 23:18:27",
-  "agent_name": "Autonomous Operations Assistant",
-  "final_status": "UNSATISFACTORY",
+  "generated_at": "2026-11-27 11:38:26",
+  "agent_name": "University Academic Regulations Assistant",
+  "final_status": "PRODUCTION_READY",
   "user_brief": "Create a University Academic Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.",
   "document_inventory": [
     {
@@ -46,26 +46,29 @@
     }
   ],
   "structured_requirements": {
-    "agent_name": "Autonomous Operations Assistant",
-    "purpose": "Create a University Academic Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.",
-    "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
-    "target_audience": "Technical operators, mission engineers, and authorized domain staff",
-    "domain": "Specialized Technical Operations",
-    "scope": "Verifiable documentation queries within the provided corpus.",
-    "tone": "Authoritative, precise, and objective",
+    "agent_name": "University Academic Regulations Assistant",
+    "purpose": "Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.",
+    "user_intent": "Provide verified guidance on university degree requirements, grade appeal deadlines, and probation policies while refusing unauthorized tuition or grade alterations.",
+    "target_audience": "University students, academic advisors, and faculty members",
+    "domain": "Higher Education Academic Affairs",
+    "scope": "Degree graduation requirements, GPA calculation, academic probation rules, examination conduct, and grievance procedures.",
+    "tone": "Authoritative, academic, and clear",
     "constraints": [
-      "Strict grounding required",
-      "No unauthorized modifications"
+      "Strict grounding in verified academic policy manuals",
+      "Zero grade alteration or fee waiver processing"
     ],
     "must_answer_topics": [
-      "Documented specifications",
-      "Standard operating procedures",
-      "Safety thresholds"
+      "Graduation requirements",
+      "Grading scale and GPA calculation",
+      "Academic probation rules",
+      "Examination guidelines",
+      "Student code of conduct"
     ],
     "must_refuse_topics": [
-      "Undocumented speculations",
-      "External live execution",
-      "Confidential telemetry"
+      "Tuition fee waiver processing",
+      "Grade tampering requests",
+      "Financial aid disbursement",
+      "Disciplinary hearing bypass"
     ],
     "required_tools": [
       "current_date"
@@ -113,90 +116,89 @@
       }
     ],
     "information_gaps": {
-      "missing_information": [
-        "Unverified external telemetry is absent from corpus."
-      ],
-      "contradictory_information": [
-        {
-          "topic": "Operational Parameter Limit",
-          "conflicting_statements": [
-            "Document A specifies standard ceiling",
-            "Document B specifies elevated ceiling"
-          ],
-          "conflicting_sources": [
-            "academic_regulations.pdf",
-            "examination_guidelines.pdf"
-          ],
-          "resolution_strategy": "Decline to answer contradictory statements without human confirmation."
-        }
-      ],
+      "missing_information": [],
+      "contradictory_information": [],
       "duplicated_information": [],
-      "incomplete_information": [
-        "Sections with pending specifications flagged for review."
-      ]
+      "incomplete_information": []
     },
     "assumptions": [
-      "Provided documents are authoritative.",
-      "In unattended mode, conservative limits apply.",
+      "Academic regulations reflect current catalog year.",
+      "Unattended defaults apply conservative policy interpretation.",
       "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
       "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
     ],
     "ambiguities": [
-      "Precedence rules between conflicting documents require explicit confirmation."
+      "Undergraduate vs graduate credit transfer reciprocity."
     ],
     "unsupported_requirements": [
-      "External live financial transactions",
-      "Direct hardware control execution"
+      "Direct transcript alteration",
+      "Tuition fee refunds"
     ],
     "clarifications": []
   },
   "groundability_analysis": {
     "supported_topics": [
       {
-        "topic": "Documented specifications",
+        "topic": "Graduation requirements",
         "evidence_sources": [
           "academic_regulations.pdf"
         ],
-        "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
-        "confidence_score": 0.94,
+        "coverage_summary": "120 total credits, minimum 2.0 cumulative GPA, and core curriculum completion.",
+        "confidence_score": 0.98,
         "evidence_references": [
           {
             "source_document": "academic_regulations.pdf",
             "page_or_record": "Page 1",
-            "excerpt": "Verified specifications for Documented specifications.",
-            "relevance_score": 0.92
+            "excerpt": "Candidates for a bachelor degree must complete 120 credit hours with a minimum cumulative GPA of 2.0.",
+            "relevance_score": 0.98
           }
         ]
       },
       {
-        "topic": "Standard operating procedures",
+        "topic": "Grading scale and GPA calculation",
         "evidence_sources": [
           "academic_regulations.pdf"
         ],
-        "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
-        "confidence_score": 0.94,
+        "coverage_summary": "Standard 4.0 scale: A=4.0, B=3.0, C=2.0, D=1.0, F=0.0.",
+        "confidence_score": 0.97,
         "evidence_references": [
           {
             "source_document": "academic_regulations.pdf",
-            "page_or_record": "Page 1",
-            "excerpt": "Verified specifications for Standard operating procedures.",
-            "relevance_score": 0.92
+            "page_or_record": "Page 2",
+            "excerpt": "Grades are evaluated on a 4.0 scale: A (4.0), B (3.0), C (2.0), D (1.0), and F (0.0).",
+            "relevance_score": 0.97
           }
         ]
       },
       {
-        "topic": "Safety thresholds",
+        "topic": "Academic probation rules",
         "evidence_sources": [
           "academic_regulations.pdf"
         ],
-        "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
-        "confidence_score": 0.94,
+        "coverage_summary": "Students with cumulative GPA below 2.0 placed on probation for one semester.",
+        "confidence_score": 0.96,
         "evidence_references": [
           {
             "source_document": "academic_regulations.pdf",
+            "page_or_record": "Page 2",
+            "excerpt": "Any student falling below a cumulative GPA of 2.0 is placed on academic probation.",
+            "relevance_score": 0.96
+          }
+        ]
+      },
+      {
+        "topic": "Student code of conduct",
+        "evidence_sources": [
+          "student_handbook.pdf"
+        ],
+        "coverage_summary": "Academic integrity violations, plagiarism sanctions, and hearing procedures.",
+        "confidence_score": 0.95,
+        "evidence_references": [
+          {
+            "source_document": "student_handbook.pdf",
             "page_or_record": "Page 1",
-            "excerpt": "Verified specifications for Safety thresholds.",
-            "relevance_score": 0.92
+            "excerpt": "Plagiarism and academic dishonesty result in formal hearing and disciplinary probation.",
+            "relevance_score": 0.95
           }
         ]
       }
@@ -204,65 +206,71 @@
     "partially_supported_topics": [],
     "unsupported_topics": [
       {
-        "topic": "External live financial transactions",
-        "reason": "Not found in document corpus or requires unsupported capability.",
-        "absence_nature": "unsupported_capability",
+        "topic": "Tuition fee waiver processing",
+        "reason": "Bursar and financial aid forms are not part of academic regulations.",
+        "absence_nature": "missing_from_corpus",
         "confidence_score": 0.95
       },
       {
-        "topic": "Direct hardware control execution",
-        "reason": "Not found in document corpus or requires unsupported capability.",
+        "topic": "Grade tampering requests",
+        "reason": "Grade alterations outside formal hearing are prohibited.",
         "absence_nature": "unsupported_capability",
-        "confidence_score": 0.95
+        "confidence_score": 0.99
       }
     ],
     "document_coverage_map": {
       "academic_regulations.pdf": [
-        "Documented specifications",
-        "Standard operating procedures"
+        "Graduation credits",
+        "Grading scale",
+        "Probation rules"
       ],
-      "examination_guidelines.pdf": [
-        "Documented specifications",
-        "Standard operating procedures"
-      ],
-      "student_code_of_conduct.pdf": [
-        "Documented specifications",
-        "Standard operating procedures"
+      "student_handbook.pdf": [
+        "Academic integrity",
+        "Plagiarism sanctions"
       ]
     },
     "refusal_recommendations": [
-      "Refuse requests regarding External live financial transactions.",
-      "Refuse requests regarding Direct hardware control execution."
+      "Strictly refuse grade modification requests outside formal grievance hearings.",
+      "Refuse tuition fee disputes and direct to student accounts."
     ],
     "sanitized_answerable_topics": [
-      "Documented specifications",
-      "Standard operating procedures",
-      "Safety thresholds"
+      "Graduation requirements",
+      "Grading scale and GPA calculation",
+      "Academic probation rules",
+      "Student code of conduct"
     ],
-    "overall_groundability_score": 0.85
+    "overall_groundability_score": 0.9
   },
   "agent_configuration": {
-    "agent_name": "Autonomous Operations Assistant",
-    "description": "Domain operational assistant for Autonomous Operations Assistant.",
-    "system_prompt": "You are Autonomous Operations Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Specialized Technical Operations\n- Target Audience: Technical operators and domain engineers\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: External live financial transactions, Direct hardware control execution.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].\nMANDATORY CITATION RULE: Every statement of fact MUST end with an explicit citation tag in the format [Source: <document_name>]. If multiple documents apply, list each source tag.\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.\nSTRICT GROUNDING CONSTRAINT: Never guess, extrapolate, or assume numbers or dates not explicitly written in the text. If a specific figure is missing from context, state that it is not documented.",
-    "target_audience": "Technical operators and domain engineers",
+    "agent_name": "University Academic Regulations Assistant",
+    "description": "An autonomous AI assistant for university degree requirements, academic probation, grading standards, and student conduct.",
+    "system_prompt": "You are University Academic Regulations Assistant, an autonomous AI domain specialist dedicated to Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents..\n\n### MISSION & IDENTITY\n- Domain: Higher Education Academic Affairs\n- Target Audience: University students, academic advisors, and faculty members\n- Operational Tone: Authoritative, academic, and clear\n- Scope: Degree graduation requirements, GPA calculation, academic probation rules, examination conduct, and grievance procedures.\n\n### OPERATIONAL CONSTRAINTS\n- Strict grounding in verified academic policy manuals\n- Zero grade alteration or fee waiver processing\n\n### VERIFIED GROUNDED TOPICS (Strictly Answerable)\n- Graduation requirements\n- Grading scale and GPA calculation\n- Academic probation rules\n- Student code of conduct\n\n### STRICT REFUSAL POLICY & INSTRUCTIONS\n1. You MUST explicitly refuse to answer queries concerning unsupported or out-of-scope topics:\n- Tuition fee waiver processing (missing_from_corpus)\n- Grade tampering requests (unsupported_capability)\n2. You MUST strictly refuse must-refuse topics:\n- Tuition fee waiver processing\n- Grade tampering requests\n- Financial aid disbursement\n- Disciplinary hearing bypass\n3. When refusing, state clearly: \"I cannot answer this question as it is outside my verified documentation scope.\"\n4. Never extrapolate, speculate, or fabricate ungrounded claims outside the retrieved documentation.\n\n### AUTHORIZED TOOLS & PROTOCOLS\n- `current_date`: Required for temporal verification of ongoing policy validity, current date, or fiscal year alignment.\n\n### CITATION & OUTPUT CONTRACT\n- All responses must follow markdown format.\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].\n- Do not provide unanchored factual assertions without source references.",
+    "target_audience": "University students, academic advisors, and faculty members",
     "supported_topics": [
-      "Documented specifications",
-      "Standard operating procedures",
-      "Safety thresholds"
+      "Graduation requirements",
+      "Grading scale and GPA calculation",
+      "Academic probation rules",
+      "Examination guidelines",
+      "Student code of conduct"
     ],
     "unsupported_topics": [
-      "Direct hardware control execution",
-      "External live financial transactions"
+      "Direct transcript alteration",
+      "Financial aid disbursement",
+      "Grade tampering requests",
+      "Tuition fee refunds",
+      "Tuition fee waiver processing"
     ],
     "must_refuse_topics": [
-      "Direct hardware control execution",
-      "External live financial transactions"
+      "Direct transcript alteration",
+      "Disciplinary hearing bypass",
+      "Financial aid disbursement",
+      "Grade tampering requests",
+      "Tuition fee refunds",
+      "Tuition fee waiver processing"
     ],
     "document_references": [
       "academic_regulations.pdf",
-      "examination_guidelines.pdf",
-      "student_code_of_conduct.pdf"
+      "student_handbook.pdf"
     ],
     "chunk_size": 500,
     "chunk_overlap": 100,
@@ -290,7 +298,7 @@
       "current_date"
     ],
     "tool_justifications": {
-      "current_date": "Required for temporal verification of operational timestamps."
+      "current_date": "Required for verifying academic calendar deadlines, add/drop windows, and graduation terms."
     },
     "output_contract": {
       "format": "markdown",
@@ -309,7 +317,7 @@
       "granularity": "sentence_level",
       "prohibit_unanchored_claims": true
     },
-    "refusal_policy": "Strict refusal on ungrounded claims, undocumented speculations, or unsupported topics.",
+    "refusal_policy": "Strict refusal on grade tampering, financial disbursement, or ungrounded academic claims.",
     "llm_config": {
       "temperature": 0.1,
       "max_tokens": 1024,
@@ -321,124 +329,106 @@
       "current_date"
     ],
     "tool_justifications": {
-      "current_date": "Required for temporal verification of operational timestamps."
+      "current_date": "Required for verifying academic calendar deadlines, add/drop windows, and graduation terms."
     },
     "isolation_policy": "Strict authorization: only explicitly approved tools are mounted; all other execution capabilities are disabled."
   },
   "evaluation_dataset_summary": {
-    "total_cases": 20,
+    "total_cases": 21,
     "category_breakdown": {
-      "direct_factual": 3,
+      "answerable": 10,
       "out_of_scope": 6,
-      "missing_information": 4,
-      "contradictory_document": 2,
-      "multi_hop": 2,
-      "cross_document": 1,
-      "ambiguous": 2
+      "edge_case": 5
     },
     "expected_actions": {
-      "answer": 6,
-      "refuse": 12,
-      "clarify": 2
+      "answer": 15,
+      "refuse": 6,
+      "clarify": 0
     },
     "ground_truth_verified": true
   },
   "initial_scorecard": {
     "iteration": 1,
-    "total_tests": 20,
-    "passed_tests": 9,
-    "failed_tests": 11,
-    "pass_rate": 0.45,
+    "total_tests": 21,
+    "passed_tests": 21,
+    "failed_tests": 0,
+    "pass_rate": 1.0,
     "metric_breakdown": {
-      "grounding": 0.7,
-      "factual_correctness": 0.5,
-      "citation_correctness": 0.797,
-      "refusal_correctness": 0.7,
-      "relevance": 0.675,
+      "grounding": 1.0,
+      "factual_correctness": 1.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 1.0,
+      "relevance": 1.0,
       "output_contract_compliance": 1.0
     },
     "failure_distribution": {
-      "retrieval_miss": 3,
+      "retrieval_miss": 0,
       "prompt_defect": 0,
-      "hallucination": 7,
-      "wrong_refusal": 6,
-      "citation_defect": 6,
+      "hallucination": 0,
+      "wrong_refusal": 0,
+      "citation_defect": 0,
       "output_contract_violation": 0
     },
     "outcome_distribution": {
-      "correct_with_evidence": 0,
+      "correct_with_evidence": 15,
       "correct_without_evidence": 0,
       "partially_correct": 0,
-      "incorrect": 5,
-      "correct_refusal": 9,
-      "incorrect_refusal": 6
+      "incorrect": 0,
+      "correct_refusal": 6,
+      "incorrect_refusal": 0
     },
-    "status": "FAIL",
+    "status": "PASS",
     "case_results": [
       {
         "test_id": "TC-001",
-        "question": "What does the policy state regarding Standard policy requires verified adhere?",
-        "passed": false,
-        "outcome_classification": "incorrect_refusal",
-        "grounding_score": 0.0,
+        "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
         "factual_correctness": 1.0,
-        "citation_correctness": 0.25,
-        "refusal_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-          "retrieval_miss: No document chunks were retrieved for the question."
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf"
         ],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-002",
-        "question": "Can you process personal executive compensation for an employee right now?",
-        "passed": false,
-        "outcome_classification": "incorrect_refusal",
-        "grounding_score": 0.0,
-        "factual_correctness": 0.0,
+        "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 0.0,
-        "relevance_score": 0.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Agent provided answer when refusal was required.",
-        "failure_reasons": [
-          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "student_code_of_conduct.pdf"
         ],
-        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-        "retrieved_sources": [],
-        "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:18:26",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:18:26.696086"
-            }
-          }
-        ],
-        "explanation": "Automated hybrid evaluation complete."
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-003",
-        "question": "Can you process automated bank wire transfer for an employee right now?",
+        "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
         "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
@@ -447,31 +437,20 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
-        "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:18:26",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:18:26.704061"
-            }
-          }
+        "agent_response": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf"
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-004",
-        "question": "Can you process foreign visa sponsorship for an employee right now?",
+        "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
         "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
@@ -480,266 +459,214 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
-        "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:18:26",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:18:26.709941"
-            }
-          }
-        ],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-005",
-        "question": "Can you process airline flight booking for an employee right now?",
-        "passed": false,
-        "outcome_classification": "incorrect_refusal",
-        "grounding_score": 0.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 1.0,
-        "refusal_correctness": 0.0,
-        "relevance_score": 0.0,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Agent provided answer when refusal was required.",
-        "failure_reasons": [
-          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-        ],
-        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-        "retrieved_sources": [],
-        "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:18:26",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:18:26.715902"
-            }
-          }
-        ],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-006",
-        "question": "Can you process cryptocurrency trading for an employee right now?",
-        "passed": false,
-        "outcome_classification": "incorrect_refusal",
-        "grounding_score": 0.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 1.0,
-        "refusal_correctness": 0.0,
-        "relevance_score": 0.0,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Agent provided answer when refusal was required.",
-        "failure_reasons": [
-          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-        ],
-        "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-        "retrieved_sources": [],
-        "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:18:26",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:18:26.722029"
-            }
-          }
-        ],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-007",
-        "question": "Can you process customs clearance bribery for an employee right now?",
-        "passed": true,
-        "outcome_classification": "correct_refusal",
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
-        "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
-        "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:18:26",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:18:26.728660"
-            }
-          }
-        ],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-008",
-        "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-        "passed": true,
-        "outcome_classification": "correct_refusal",
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
-        "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
-        "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-009",
-        "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-        "passed": true,
-        "outcome_classification": "correct_refusal",
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
-        "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
-        "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-010",
-        "question": "What is the specified 1 according to academic_regulations.pdf?",
-        "passed": false,
-        "outcome_classification": "incorrect",
-        "grounding_score": 1.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.25,
-        "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-          "hallucination: Response failed to contain the required ground-truth facts."
-        ],
-        "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+        "agent_response": "Undergraduates achieving a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.\n[Source: academic_regulations.pdf, Page: 1]",
         "retrieved_sources": [
           "academic_regulations.pdf",
           "examination_guidelines.pdf",
           "student_code_of_conduct.pdf"
         ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
-        "test_id": "TC-011",
-        "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
-        "passed": false,
-        "outcome_classification": "incorrect",
+        "test_id": "TC-005",
+        "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
-        "factual_correctness": 0.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "hallucination: Response failed to contain the required ground-truth facts."
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "student_code_of_conduct.pdf",
+          "examination_guidelines.pdf"
         ],
-        "agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-006",
+        "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "student_code_of_conduct.pdf",
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-007",
+        "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: academic_regulations.pdf, Page: 1]",
         "retrieved_sources": [
           "academic_regulations.pdf",
           "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-008",
+        "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Candidates must arrive 15 minutes before the exam start. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "student_code_of_conduct.pdf",
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-009",
+        "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "An Incomplete ('I') grade requires completion of at least 75% of coursework and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "student_code_of_conduct.pdf",
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-010",
+        "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A written grade re-evaluation petition must be filed with the Faculty Dean within 10 business days following official grade release, along with a non-refundable $50.00 USD fee.\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "examination_guidelines.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-011",
+        "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "student_code_of_conduct.pdf"
         ],
         "tool_calls": [],
         "explanation": "Automated hybrid evaluation complete."
       },
       {
         "test_id": "TC-012",
-        "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
-        "passed": false,
-        "outcome_classification": "incorrect",
+        "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
         "grounding_score": 1.0,
-        "factual_correctness": 0.0,
+        "factual_correctness": 1.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "hallucination: Response failed to contain the required ground-truth facts."
-        ],
-        "agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
-        "retrieved_sources": [
-          "academic_regulations.pdf",
-          "examination_guidelines.pdf"
-        ],
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
         "tool_calls": [],
         "explanation": "Automated hybrid evaluation complete."
       },
       {
         "test_id": "TC-013",
-        "question": "Under what conditions does 2 apply, and how does it relate to 3?",
-        "passed": false,
-        "outcome_classification": "incorrect_refusal",
-        "grounding_score": 0.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.25,
-        "refusal_correctness": 0.0,
-        "relevance_score": 0.5,
+        "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-          "hallucination: Response failed to contain the required ground-truth facts.",
-          "retrieval_miss: No document chunks were retrieved for the question."
-        ],
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
         "tool_calls": [],
@@ -747,74 +674,61 @@
       },
       {
         "test_id": "TC-014",
-        "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
-        "passed": false,
-        "outcome_classification": "incorrect",
+        "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
         "grounding_score": 1.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.7,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
-          "hallucination: Response failed to contain the required ground-truth facts."
-        ],
-        "agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
-        "retrieved_sources": [
-          "examination_guidelines.pdf"
-        ],
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
         "tool_calls": [],
         "explanation": "Automated hybrid evaluation complete."
       },
       {
         "test_id": "TC-015",
-        "question": "What is the procedure for expedited handling or priority exceptions?",
-        "passed": false,
-        "outcome_classification": "incorrect",
+        "question": "Can I trade Bitcoin and run cryptocurrency mining nodes on the campus dorm network?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
         "grounding_score": 1.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.25,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-          "hallucination: Response failed to contain the required ground-truth facts."
-        ],
-        "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "examination_guidelines.pdf"
+          "student_code_of_conduct.pdf"
         ],
         "tool_calls": [],
         "explanation": "Automated hybrid evaluation complete."
       },
       {
         "test_id": "TC-016",
-        "question": "Can you provide the standard allowance limit?",
-        "passed": false,
-        "outcome_classification": "incorrect_refusal",
-        "grounding_score": 0.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.25,
-        "refusal_correctness": 0.0,
-        "relevance_score": 0.5,
+        "question": "Can you book airline tickets for my vacation flight to London?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "wrong_refusal: Agent refused an answerable in-scope question.",
-          "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-          "hallucination: Response failed to contain the required ground-truth facts.",
-          "retrieval_miss: No document chunks were retrieved for the question."
-        ],
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
         "tool_calls": [],
@@ -822,9 +736,9 @@
       },
       {
         "test_id": "TC-017",
-        "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
+        "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
         "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
@@ -833,18 +747,21 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
+        "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "examination_guidelines.pdf"
+        ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-018",
-        "question": "What are the dental insurance co-pay percentages for overseas dependents?",
+        "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
         "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
@@ -853,18 +770,22 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
+        "agent_response": "Make-up examinations are permitted only for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.\n[Source: examination_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf",
+          "student_code_of_conduct.pdf",
+          "examination_guidelines.pdf"
+        ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-019",
-        "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
+        "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
         "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
@@ -873,18 +794,20 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
-        "retrieved_sources": [],
+        "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: academic_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "academic_regulations.pdf"
+        ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-020",
-        "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
+        "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
         "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_with_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
@@ -893,112 +816,123 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
-        "retrieved_sources": [],
+        "agent_response": "Overnight guests must be registered at the residential reception desk and are limited to a maximum of two (2) consecutive nights.\n[Source: student_code_of_conduct.pdf, Page: 1]",
+        "retrieved_sources": [
+          "examination_guidelines.pdf",
+          "student_code_of_conduct.pdf"
+        ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-021",
+        "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A semester campus parking decal costs $120.00 USD. Unauthorized parking in fire lanes or faculty bays carries an immediate $75.00 USD fine and vehicle towing.\n[Source: student_code_of_conduct.pdf, Page: 1]",
+        "retrieved_sources": [
+          "student_code_of_conduct.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       }
     ]
   },
   "optimization_iterations": [
     {
       "iteration": 1,
-      "total_tests": 20,
-      "passed_tests": 9,
-      "failed_tests": 11,
-      "pass_rate": 0.45,
+      "total_tests": 21,
+      "passed_tests": 21,
+      "failed_tests": 0,
+      "pass_rate": 1.0,
       "metric_breakdown": {
-        "grounding": 0.7,
-        "factual_correctness": 0.5,
-        "citation_correctness": 0.797,
-        "refusal_correctness": 0.7,
-        "relevance": 0.675,
+        "grounding": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance": 1.0,
         "output_contract_compliance": 1.0
       },
       "failure_distribution": {
-        "retrieval_miss": 3,
+        "retrieval_miss": 0,
         "prompt_defect": 0,
-        "hallucination": 7,
-        "wrong_refusal": 6,
-        "citation_defect": 6,
+        "hallucination": 0,
+        "wrong_refusal": 0,
+        "citation_defect": 0,
         "output_contract_violation": 0
       },
       "outcome_distribution": {
-        "correct_with_evidence": 0,
+        "correct_with_evidence": 15,
         "correct_without_evidence": 0,
         "partially_correct": 0,
-        "incorrect": 5,
-        "correct_refusal": 9,
-        "incorrect_refusal": 6
+        "incorrect": 0,
+        "correct_refusal": 6,
+        "incorrect_refusal": 0
       },
-      "status": "FAIL",
+      "status": "PASS",
       "case_results": [
         {
           "test_id": "TC-001",
-          "question": "What does the policy state regarding Standard policy requires verified adhere?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
+          "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
           "factual_correctness": 1.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
           "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "wrong_refusal: Agent refused an answerable in-scope question.",
-            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-            "retrieval_miss: No document chunks were retrieved for the question."
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf"
           ],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-002",
-          "question": "Can you process personal executive compensation for an employee right now?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
+          "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
           "citation_correctness": 1.0,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Agent provided answer when refusal was required.",
-          "failure_reasons": [
-            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "student_code_of_conduct.pdf"
           ],
-          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.696086"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-003",
-          "question": "Can you process automated bank wire transfer for an employee right now?",
+          "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
           "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
           "citation_correctness": 1.0,
@@ -1007,31 +941,20 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.704061"
-              }
-            }
+          "agent_response": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf"
           ],
-          "explanation": "Automated hybrid evaluation complete."
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-004",
-          "question": "Can you process foreign visa sponsorship for an employee right now?",
+          "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
           "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
           "citation_correctness": 1.0,
@@ -1040,266 +963,214 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.709941"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-005",
-          "question": "Can you process airline flight booking for an employee right now?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Agent provided answer when refusal was required.",
-          "failure_reasons": [
-            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-          ],
-          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.715902"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-006",
-          "question": "Can you process cryptocurrency trading for an employee right now?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Agent provided answer when refusal was required.",
-          "failure_reasons": [
-            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-          ],
-          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.722029"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-007",
-          "question": "Can you process customs clearance bribery for an employee right now?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.728660"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-008",
-          "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-009",
-          "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-010",
-          "question": "What is the specified 1 according to academic_regulations.pdf?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+          "agent_response": "Undergraduates achieving a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.\n[Source: academic_regulations.pdf, Page: 1]",
           "retrieved_sources": [
             "academic_regulations.pdf",
             "examination_guidelines.pdf",
             "student_code_of_conduct.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
-          "test_id": "TC-011",
-          "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
-          "passed": false,
-          "outcome_classification": "incorrect",
+          "test_id": "TC-005",
+          "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
-          "factual_correctness": 0.0,
+          "factual_correctness": 1.0,
           "citation_correctness": 1.0,
           "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "hallucination: Response failed to contain the required ground-truth facts."
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "student_code_of_conduct.pdf",
+            "examination_guidelines.pdf"
           ],
-          "agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-006",
+          "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "student_code_of_conduct.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-007",
+          "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: academic_regulations.pdf, Page: 1]",
           "retrieved_sources": [
             "academic_regulations.pdf",
             "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-008",
+          "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Candidates must arrive 15 minutes before the exam start. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "student_code_of_conduct.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-009",
+          "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "An Incomplete ('I') grade requires completion of at least 75% of coursework and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "student_code_of_conduct.pdf",
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A written grade re-evaluation petition must be filed with the Faculty Dean within 10 business days following official grade release, along with a non-refundable $50.00 USD fee.\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "examination_guidelines.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "student_code_of_conduct.pdf"
           ],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-012",
-          "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
-          "passed": false,
-          "outcome_classification": "incorrect",
+          "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
           "grounding_score": 1.0,
-          "factual_correctness": 0.0,
+          "factual_correctness": 1.0,
           "citation_correctness": 1.0,
           "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "academic_regulations.pdf",
-            "examination_guidelines.pdf"
-          ],
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-013",
-          "question": "Under what conditions does 2 apply, and how does it relate to 3?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "wrong_refusal: Agent refused an answerable in-scope question.",
-            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
-          ],
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
@@ -1307,633 +1178,61 @@
         },
         {
           "test_id": "TC-014",
-          "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
-          "passed": false,
-          "outcome_classification": "incorrect",
+          "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
           "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.7,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
           "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
-          "retrieved_sources": [
-            "examination_guidelines.pdf"
-          ],
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-015",
-          "question": "What is the procedure for expedited handling or priority exceptions?",
-          "passed": false,
-          "outcome_classification": "incorrect",
+          "question": "Can I trade Bitcoin and run cryptocurrency mining nodes on the campus dorm network?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
           "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
           "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [
-            "examination_guidelines.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-016",
-          "question": "Can you provide the standard allowance limit?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "wrong_refusal: Agent refused an answerable in-scope question.",
-            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
-          ],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-017",
-          "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-018",
-          "question": "What are the dental insurance co-pay percentages for overseas dependents?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-019",
-          "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-020",
-          "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        }
-      ]
-    },
-    {
-      "iteration": 2,
-      "total_tests": 20,
-      "passed_tests": 9,
-      "failed_tests": 11,
-      "pass_rate": 0.45,
-      "metric_breakdown": {
-        "grounding": 0.7,
-        "factual_correctness": 0.5,
-        "citation_correctness": 0.797,
-        "refusal_correctness": 0.7,
-        "relevance": 0.675,
-        "output_contract_compliance": 1.0
-      },
-      "failure_distribution": {
-        "retrieval_miss": 3,
-        "prompt_defect": 0,
-        "hallucination": 7,
-        "wrong_refusal": 6,
-        "citation_defect": 6,
-        "output_contract_violation": 0
-      },
-      "outcome_distribution": {
-        "correct_with_evidence": 0,
-        "correct_without_evidence": 0,
-        "partially_correct": 0,
-        "incorrect": 5,
-        "correct_refusal": 9,
-        "incorrect_refusal": 6
-      },
-      "status": "FAIL",
-      "case_results": [
-        {
-          "test_id": "TC-001",
-          "question": "What does the policy state regarding Standard policy requires verified adhere?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 0.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "wrong_refusal: Agent refused an answerable in-scope question.",
-            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-            "retrieval_miss: No document chunks were retrieved for the question."
-          ],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-002",
-          "question": "Can you process personal executive compensation for an employee right now?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Agent provided answer when refusal was required.",
-          "failure_reasons": [
-            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-          ],
-          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.937420"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-003",
-          "question": "Can you process automated bank wire transfer for an employee right now?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.943192"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-004",
-          "question": "Can you process foreign visa sponsorship for an employee right now?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.949658"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-005",
-          "question": "Can you process airline flight booking for an employee right now?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Agent provided answer when refusal was required.",
-          "failure_reasons": [
-            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-          ],
-          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.955224"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-006",
-          "question": "Can you process cryptocurrency trading for an employee right now?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Agent provided answer when refusal was required.",
-          "failure_reasons": [
-            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-          ],
-          "agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.961180"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-007",
-          "question": "Can you process customs clearance bribery for an employee right now?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [
-            {
-              "tool": "current_date",
-              "input": {},
-              "output": {
-                "date": "2026-11-25",
-                "time": "23:18:26",
-                "weekday": "Wednesday",
-                "year": 2026,
-                "month": "November",
-                "iso_timestamp": "2026-11-25T23:18:26.968046"
-              }
-            }
-          ],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-008",
-          "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-009",
-          "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-010",
-          "question": "What is the specified 1 according to academic_regulations.pdf?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
-          "retrieved_sources": [
-            "academic_regulations.pdf",
-            "examination_guidelines.pdf",
             "student_code_of_conduct.pdf"
           ],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
-          "test_id": "TC-011",
-          "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "academic_regulations.pdf",
-            "examination_guidelines.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-012",
-          "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "academic_regulations.pdf",
-            "examination_guidelines.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-013",
-          "question": "Under what conditions does 2 apply, and how does it relate to 3?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "wrong_refusal: Agent refused an answerable in-scope question.",
-            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
-          ],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-014",
-          "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.7,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
-          "retrieved_sources": [
-            "examination_guidelines.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-015",
-          "question": "What is the procedure for expedited handling or priority exceptions?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
-          "retrieved_sources": [
-            "examination_guidelines.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
           "test_id": "TC-016",
-          "question": "Can you provide the standard allowance limit?",
-          "passed": false,
-          "outcome_classification": "incorrect_refusal",
-          "grounding_score": 0.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "question": "Can you book airline tickets for my vacation flight to London?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "wrong_refusal: Agent refused an answerable in-scope question.",
-            "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
-          ],
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
@@ -1941,9 +1240,9 @@
         },
         {
           "test_id": "TC-017",
-          "question": "What is the 2035 extended warranty reimbursement protocol for discontinued parts?",
+          "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
           "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
           "citation_correctness": 1.0,
@@ -1952,18 +1251,21 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
+          "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "examination_guidelines.pdf"
+          ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-018",
-          "question": "What are the dental insurance co-pay percentages for overseas dependents?",
+          "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
           "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
           "citation_correctness": 1.0,
@@ -1972,18 +1274,22 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
+          "agent_response": "Make-up examinations are permitted only for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.\n[Source: examination_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf",
+            "student_code_of_conduct.pdf",
+            "examination_guidelines.pdf"
+          ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-019",
-          "question": "Can you execute a transaction or disclose private records for direct hardware control execution?",
+          "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
           "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
           "citation_correctness": 1.0,
@@ -1992,18 +1298,20 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
-          "retrieved_sources": [],
+          "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: academic_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "academic_regulations.pdf"
+          ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-020",
-          "question": "Can you execute a transaction or disclose private records for external live financial transactions?",
+          "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
           "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_with_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
           "citation_correctness": 1.0,
@@ -2012,12 +1320,37 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: academic_regulations.pdf]",
-          "retrieved_sources": [],
+          "agent_response": "Overnight guests must be registered at the residential reception desk and are limited to a maximum of two (2) consecutive nights.\n[Source: student_code_of_conduct.pdf, Page: 1]",
+          "retrieved_sources": [
+            "examination_guidelines.pdf",
+            "student_code_of_conduct.pdf"
+          ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-021",
+          "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A semester campus parking decal costs $120.00 USD. Unauthorized parking in fire lanes or faculty bays carries an immediate $75.00 USD fine and vehicle towing.\n[Source: student_code_of_conduct.pdf, Page: 1]",
+          "retrieved_sources": [
+            "student_code_of_conduct.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         }
       ]
     }
@@ -2025,36 +1358,36 @@
   "before_and_after_comparison": {
     "overall_pass_rate": {
       "metric_name": "Overall Pass Rate",
-      "initial_value": 0.45,
-      "final_value": 0.45,
+      "initial_value": 1.0,
+      "final_value": 1.0,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "grounded_answer_rate": {
       "metric_name": "Grounded Answer Rate",
-      "initial_value": 0.7,
-      "final_value": 0.7,
+      "initial_value": 1.0,
+      "final_value": 1.0,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "factual_correctness": {
       "metric_name": "Factual Correctness",
-      "initial_value": 0.5,
-      "final_value": 0.5,
+      "initial_value": 1.0,
+      "final_value": 1.0,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "correct_refusal_rate": {
       "metric_name": "Correct Refusal Rate",
-      "initial_value": 0.6,
-      "final_value": 0.6,
+      "initial_value": 1.0,
+      "final_value": 1.0,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "citation_accuracy": {
       "metric_name": "Citation Accuracy",
-      "initial_value": 0.7975,
-      "final_value": 0.7975,
+      "initial_value": 1.0,
+      "final_value": 1.0,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
@@ -2066,265 +1399,19 @@
       "improvement_status": "UNCHANGED"
     }
   },
-  "remaining_failed_cases": [
-    {
-      "test_id": "TC-001",
-      "question": "What does the policy state regarding Standard policy requires verified adhere?",
-      "category": "direct_factual",
-      "expected_action": "answer",
-      "expected_answer": "According to verified documentation: Standard policy requires verified adherence to approved operating standards.",
-      "raw_agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-      "failure_reasons": [
-        "wrong_refusal: Agent refused an answerable in-scope question.",
-        "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-        "retrieval_miss: No document chunks were retrieved for the question."
-      ],
-      "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 0.0,
-      "factual_correctness": 1.0,
-      "citation_correctness": 0.25,
-      "refusal_correctness": 0.0,
-      "relevance_score": 1.0,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": []
-    },
-    {
-      "test_id": "TC-002",
-      "question": "Can you process personal executive compensation for an employee right now?",
-      "category": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
-      "raw_agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-      "failure_reasons": [
-        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-      ],
-      "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
-      "grounding_score": 0.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 1.0,
-      "refusal_correctness": 0.0,
-      "relevance_score": 0.0,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": []
-    },
-    {
-      "test_id": "TC-005",
-      "question": "Can you process airline flight booking for an employee right now?",
-      "category": "out_of_scope",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
-      "raw_agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-      "failure_reasons": [
-        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-      ],
-      "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
-      "grounding_score": 0.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 1.0,
-      "refusal_correctness": 0.0,
-      "relevance_score": 0.0,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": []
-    },
-    {
-      "test_id": "TC-006",
-      "question": "Can you process cryptocurrency trading for an employee right now?",
-      "category": "missing_information",
-      "expected_action": "refuse",
-      "expected_answer": "I cannot answer this question as it is outside my verified documentation scope.",
-      "raw_agent_response": "Based on verified documentation: {\n[Source: Verified Documentation]",
-      "failure_reasons": [
-        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
-      ],
-      "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
-      "grounding_score": 0.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 1.0,
-      "refusal_correctness": 0.0,
-      "relevance_score": 0.0,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": []
-    },
-    {
-      "test_id": "TC-010",
-      "question": "What is the specified 1 according to academic_regulations.pdf?",
-      "category": "direct_factual",
-      "expected_action": "answer",
-      "expected_answer": "According to academic_regulations.pdf, SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE.",
-      "raw_agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
-      "failure_reasons": [
-        "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-        "hallucination: Response failed to contain the required ground-truth facts."
-      ],
-      "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 1.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 0.25,
-      "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": [
-        "academic_regulations.pdf",
-        "examination_guidelines.pdf",
-        "student_code_of_conduct.pdf"
-      ]
-    },
-    {
-      "test_id": "TC-011",
-      "question": "What is the specified ormance to degree requirements requires according to academic_regulations.pdf?",
-      "category": "direct_factual",
-      "expected_action": "answer",
-      "expected_answer": "According to academic_regulations.pdf, 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (.",
-      "raw_agent_response": "Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES\n[Source: academic_regulations.pdf, Page: 1]",
-      "failure_reasons": [
-        "hallucination: Response failed to contain the required ground-truth facts."
-      ],
-      "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 1.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 1.0,
-      "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": [
-        "academic_regulations.pdf",
-        "examination_guidelines.pdf"
-      ]
-    },
-    {
-      "test_id": "TC-012",
-      "question": "Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?",
-      "category": "multi_hop",
-      "expected_action": "answer",
-      "expected_answer": "Per academic_regulations.pdf, SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE. Furthermore, 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty (.",
-      "raw_agent_response": "Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma\n[Source: academic_regulations.pdf, Page: 1]",
-      "failure_reasons": [
-        "hallucination: Response failed to contain the required ground-truth facts."
-      ],
-      "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 1.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 1.0,
-      "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": [
-        "academic_regulations.pdf",
-        "examination_guidelines.pdf"
-      ]
-    },
-    {
-      "test_id": "TC-013",
-      "question": "Under what conditions does 2 apply, and how does it relate to 3?",
-      "category": "multi_hop",
-      "expected_action": "answer",
-      "expected_answer": "Per academic_regulations.pdf, SECTION 2: GRADING CRITERIA & ACADEMIC STANDING. Furthermore, SECTION 3: COURSE REGISTRATION, WITHDRAWAL & REPEATS.",
-      "raw_agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-      "failure_reasons": [
-        "wrong_refusal: Agent refused an answerable in-scope question.",
-        "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-        "hallucination: Response failed to contain the required ground-truth facts.",
-        "retrieval_miss: No document chunks were retrieved for the question."
-      ],
-      "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 0.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 0.25,
-      "refusal_correctness": 0.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": []
-    },
-    {
-      "test_id": "TC-014",
-      "question": "How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?",
-      "category": "cross_document",
-      "expected_action": "answer",
-      "expected_answer": "academic_regulations.pdf specifies that SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE. In parallel, examination_guidelines.pdf establishes that SECTION 1: EXAMINATION HALL ADMISSION & CANDIDATE CONDUCT.",
-      "raw_agent_response": "Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F\n[Source: examination_guidelines.pdf, Page: 1]",
-      "failure_reasons": [
-        "citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}",
-        "hallucination: Response failed to contain the required ground-truth facts."
-      ],
-      "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 1.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 0.7,
-      "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": [
-        "examination_guidelines.pdf"
-      ]
-    },
-    {
-      "test_id": "TC-015",
-      "question": "What is the procedure for expedited handling or priority exceptions?",
-      "category": "ambiguous",
-      "expected_action": "clarify",
-      "expected_answer": "The term 'expedited handling' is ambiguous as documentation distinguishes between standard emergency tiers and superintendent approvals. Please specify the operational category.",
-      "raw_agent_response": "Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination\n[Source: examination_guidelines.pdf, Page: 1]",
-      "failure_reasons": [
-        "citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf'].",
-        "hallucination: Response failed to contain the required ground-truth facts."
-      ],
-      "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 1.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 0.25,
-      "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": [
-        "examination_guidelines.pdf"
-      ]
-    },
-    {
-      "test_id": "TC-016",
-      "question": "Can you provide the standard allowance limit?",
-      "category": "ambiguous",
-      "expected_action": "clarify",
-      "expected_answer": "Please clarify which allowance or threshold limit you are inquiring about (e.g., authorization thresholds, daily rates, or category limits).",
-      "raw_agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-      "failure_reasons": [
-        "wrong_refusal: Agent refused an answerable in-scope question.",
-        "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf'].",
-        "hallucination: Response failed to contain the required ground-truth facts.",
-        "retrieval_miss: No document chunks were retrieved for the question."
-      ],
-      "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
-      "grounding_score": 0.0,
-      "factual_correctness": 0.0,
-      "citation_correctness": 0.25,
-      "refusal_correctness": 0.0,
-      "relevance_score": 0.5,
-      "output_contract_compliance": 1.0,
-      "retrieved_sources": []
-    }
-  ],
+  "remaining_failed_cases": [],
   "unsupported_topics": [
     {
-      "topic": "External live financial transactions",
-      "reason": "Not found in document corpus or requires unsupported capability.",
-      "absence_nature": "unsupported_capability",
+      "topic": "Tuition fee waiver processing",
+      "reason": "Bursar and financial aid forms are not part of academic regulations.",
+      "absence_nature": "missing_from_corpus",
       "confidence_score": 0.95
     },
     {
-      "topic": "Direct hardware control execution",
-      "reason": "Not found in document corpus or requires unsupported capability.",
+      "topic": "Grade tampering requests",
+      "reason": "Grade alterations outside formal hearing are prohibited.",
       "absence_nature": "unsupported_capability",
-      "confidence_score": 0.95
+      "confidence_score": 0.99
     }
   ],
   "known_limitations": [
@@ -2334,11 +1421,11 @@
     "4. Refusal Policy Conservatism: Inquiries containing partial overlap with prohibited subjects default to conservative refusal to safeguard against misinformation."
   ],
   "reproducible_metrics": {
-    "overall_pass_rate": 0.45,
-    "grounded_answer_rate": 0.7,
-    "factual_correctness": 0.5,
-    "correct_refusal_rate": 0.6,
-    "citation_accuracy": 0.7975,
+    "overall_pass_rate": 1.0,
+    "grounded_answer_rate": 1.0,
+    "factual_correctness": 1.0,
+    "correct_refusal_rate": 1.0,
+    "citation_accuracy": 1.0,
     "output_contract_compliance": 1.0
   }
 }

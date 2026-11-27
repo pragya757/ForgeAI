@@ -1,24 +1,27 @@
 {
-  "agent_name": "Autonomous Operations Assistant",
-  "purpose": "Create a University Academic Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.",
-  "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
-  "target_audience": "Technical operators, mission engineers, and authorized domain staff",
-  "domain": "Specialized Technical Operations",
-  "scope": "Verifiable documentation queries within the provided corpus.",
-  "tone": "Authoritative, precise, and objective",
+  "agent_name": "University Academic Regulations Assistant",
+  "purpose": "Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.",
+  "user_intent": "Provide verified guidance on university degree requirements, grade appeal deadlines, and probation policies while refusing unauthorized tuition or grade alterations.",
+  "target_audience": "University students, academic advisors, and faculty members",
+  "domain": "Higher Education Academic Affairs",
+  "scope": "Degree graduation requirements, GPA calculation, academic probation rules, examination conduct, and grievance procedures.",
+  "tone": "Authoritative, academic, and clear",
   "constraints": [
-    "Strict grounding required",
-    "No unauthorized modifications"
+    "Strict grounding in verified academic policy manuals",
+    "Zero grade alteration or fee waiver processing"
   ],
   "must_answer_topics": [
-    "Documented specifications",
-    "Standard operating procedures",
-    "Safety thresholds"
+    "Graduation requirements",
+    "Grading scale and GPA calculation",
+    "Academic probation rules",
+    "Examination guidelines",
+    "Student code of conduct"
   ],
   "must_refuse_topics": [
-    "Undocumented speculations",
-    "External live execution",
-    "Confidential telemetry"
+    "Tuition fee waiver processing",
+    "Grade tampering requests",
+    "Financial aid disbursement",
+    "Disciplinary hearing bypass"
   ],
   "required_tools": [
     "current_date"
@@ -66,40 +69,23 @@
     }
   ],
   "information_gaps": {
-    "missing_information": [
-      "Unverified external telemetry is absent from corpus."
-    ],
-    "contradictory_information": [
-      {
-        "topic": "Operational Parameter Limit",
-        "conflicting_statements": [
-          "Document A specifies standard ceiling",
-          "Document B specifies elevated ceiling"
-        ],
-        "conflicting_sources": [
-          "academic_regulations.pdf",
-          "examination_guidelines.pdf"
-        ],
-        "resolution_strategy": "Decline to answer contradictory statements without human confirmation."
-      }
-    ],
+    "missing_information": [],
+    "contradictory_information": [],
     "duplicated_information": [],
-    "incomplete_information": [
-      "Sections with pending specifications flagged for review."
-    ]
+    "incomplete_information": []
   },
   "assumptions": [
-    "Provided documents are authoritative.",
-    "In unattended mode, conservative limits apply.",
+    "Academic regulations reflect current catalog year.",
+    "Unattended defaults apply conservative policy interpretation.",
     "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
     "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
   ],
   "ambiguities": [
-    "Precedence rules between conflicting documents require explicit confirmation."
+    "Undergraduate vs graduate credit transfer reciprocity."
   ],
   "unsupported_requirements": [
-    "External live financial transactions",
-    "Direct hardware control execution"
+    "Direct transcript alteration",
+    "Tuition fee refunds"
   ],
   "clarifications": []
 }

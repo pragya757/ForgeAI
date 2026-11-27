@@ -1,0 +1,84 @@
+[
+  {
+    "iteration_number": 1,
+    "previous_score": 0.45,
+    "failed_test_ids": [
+      "TC-001",
+      "TC-002",
+      "TC-005",
+      "TC-006",
+      "TC-010",
+      "TC-011",
+      "TC-012",
+      "TC-013",
+      "TC-014",
+      "TC-015",
+      "TC-016"
+    ],
+    "failure_categories": [
+      "hallucination",
+      "wrong_refusal",
+      "citation_defect"
+    ],
+    "identified_root_causes": "Citation instructions lacked explicit punctuation and tagging rules for tests ['TC-010', 'TC-014', 'TC-015']; Refusal boundary ambiguity caused misclassified inquiries on tests ['TC-001', 'TC-002', 'TC-005', 'TC-006', 'TC-013', 'TC-016']; Model extrapolated unsupported details when context was partial on tests ['TC-011', 'TC-012']",
+    "changes_applied": [
+      {
+        "target": "system_prompt (citation clause)",
+        "field": "system_prompt",
+        "content": "\nMANDATORY CITATION RULE: Every statement of fact MUST end with an explicit citation tag in the format [Source: <document_name>]. If multiple documents apply, list each source tag.",
+        "previous_value": "standard prompt",
+        "new_value": "appended strict citation tag directive",
+        "reason": "Remediate citation omissions for tests: ['TC-010', 'TC-014', 'TC-015']",
+        "affected_tests": [
+          "TC-010",
+          "TC-014",
+          "TC-015"
+        ]
+      },
+      {
+        "target": "system_prompt (refusal boundary clause)",
+        "field": "system_prompt",
+        "content": "\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.",
+        "previous_value": "standard refusal policy",
+        "new_value": "clarified refusal criteria and required evidence synthesis",
+        "reason": "Fix over-refusal / under-refusal on tests: ['TC-001', 'TC-002', 'TC-005', 'TC-006', 'TC-013', 'TC-016']",
+        "affected_tests": [
+          "TC-001",
+          "TC-002",
+          "TC-005",
+          "TC-006",
+          "TC-013",
+          "TC-016"
+        ]
+      },
+      {
+        "target": "system_prompt (grounding constraint)",
+        "field": "system_prompt",
+        "content": "\nSTRICT GROUNDING CONSTRAINT: Never guess, extrapolate, or assume numbers or dates not explicitly written in the text. If a specific figure is missing from context, state that it is not documented.",
+        "previous_value": "standard grounding",
+        "new_value": "added explicit prohibition against extrapolating figures",
+        "reason": "Prevent unsupported factual claims in tests: ['TC-011', 'TC-012']",
+        "affected_tests": [
+          "TC-011",
+          "TC-012"
+        ]
+      }
+    ],
+    "reason_for_each_change": "Targeted adjustments addressing specific diagnosed failure modes without full regeneration.",
+    "updated_configuration": {
+      "top_k": 4,
+      "similarity_threshold": 0.35,
+      "chunk_size": 500,
+      "chunk_overlap": 100,
+      "system_prompt_length": 1193
+    },
+    "new_score": 0.45,
+    "improvement_or_regression": "UNCHANGED",
+    "score_difference": 0.0,
+    "resolved_test_ids": [],
+    "regressed_test_ids": [],
+    "regression_detected": false,
+    "change_accepted": true,
+    "snapshot_path": "unseen_test/artifacts/agent_definition_iter_1.json"
+  }
+]

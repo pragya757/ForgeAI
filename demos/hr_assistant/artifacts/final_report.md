@@ -1,10 +1,10 @@
 # ForgeAI Honest Agent Quality & Observability Report
 
-**Generated On:** 2026-11-25 23:14:38  
+**Generated On:** 2026-11-27 11:38:25  
 **Agent Name:** `HR Policy Assistant`  
-**Evaluation Status:** `ACCEPTABLE_WITH_MONITORING`  
-**Final Pass Rate:** **85.7%** (Baseline: 85.7%)  
-**Optimization Iterations Executed:** 2 (Hard Ceiling: 3)  
+**Evaluation Status:** `PRODUCTION_READY`  
+**Final Pass Rate:** **100.0%** (Baseline: 100.0%)  
+**Optimization Iterations Executed:** 1 (Hard Ceiling: 3)  
 
 ---
 
@@ -30,7 +30,7 @@ A total of **3** documents were indexed and analyzed:
 
 - **Agent Name:** `HR Policy Assistant`
 - **Primary Purpose:** Assist employees with inquiries regarding leave policies, attendance rules, holidays, and workplace guidelines based strictly on verified documents.
-- **Target Audience:** Company employees and managers
+- **Target Audience:** Company employees, managers, and HR administrators
 - **Operational Scope:** Company leave rules, attendance standards, working hours, and conduct guidelines.
 - **Conversational Tone:** Professional, supportive, and precise
 
@@ -42,11 +42,12 @@ A total of **3** documents were indexed and analyzed:
 - [x] Code of conduct
 - [x] Probation period leave
 
-### Must-Refuse Topics (4)
+### Must-Refuse Topics (5)
 - [ ] **REFUSE:** Personal salary records
 - [ ] **REFUSE:** Stock option plans
 - [ ] **REFUSE:** Health insurance claim processing
 - [ ] **REFUSE:** Individual performance reviews
+- [ ] **REFUSE:** Direct payroll execution
 
 ### Intake Assumptions (4)
 - *Assumption:* Documents provided represent current company policy for the ongoing fiscal year.
@@ -124,15 +125,15 @@ A total of **3** documents were indexed and analyzed:
 ## 8. Baseline Initial Scorecard (Iteration 1)
 
 - **Initial Total Tests:** `21`
-- **Initial Passed Tests:** `18`
-- **Initial Failed Tests:** `3`
-- **Initial Pass Rate:** **85.7%**
+- **Initial Passed Tests:** `21`
+- **Initial Failed Tests:** `0`
+- **Initial Pass Rate:** **100.0%**
 
 | Baseline Metric | Score |
 |---|---|
-| Overall Pass Rate | `85.7%` |
-| Grounded Answer Rate | `98.1%` |
-| Factual Correctness | `90.5%` |
+| Overall Pass Rate | `100.0%` |
+| Grounded Answer Rate | `100.0%` |
+| Factual Correctness | `100.0%` |
 | Correct Refusal Rate | `100.0%` |
 | Citation Accuracy | `100.0%` |
 | Output-Contract Compliance | `100.0%` |
@@ -143,29 +144,20 @@ A total of **3** documents were indexed and analyzed:
 
 | Iteration | Total | Passed | Failed | Pass Rate | Grounding | Factual | Citation | Refusal | Contract | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Iteration 1 | 21 | 18 | 3 | **85.7%** | 98% | 90% | 100% | 100% | 100% | `PASS` |
-| Iteration 2 | 21 | 18 | 3 | **85.7%** | 98% | 90% | 100% | 100% | 100% | `PASS` |
+| Iteration 1 | 21 | 21 | 0 | **100.0%** | 100% | 100% | 100% | 100% | 100% | `PASS` |
 
 ### Critic-Optimizer Action Log
 
-#### Iteration 1 Diagnostics
-- **Score Before:** `85.7%` -> **Score After:** `85.7%` (UNCHANGED)
-- **Failed Test IDs:** `TC-005, TC-017, TC-018`
-- **Diagnosed Failure Categories:** `hallucination`
-- **Identified Root Causes:** Model extrapolated unsupported details when context was partial on tests ['TC-005', 'TC-017', 'TC-018']
-- **Regression Status:** `No regression (Accepted)`
-- **Targeted Modifications Applied:**
-  - `system_prompt (grounding constraint)`: changed from `standard grounding` to `added explicit prohibition against extrapolating figures` (*Prevent unsupported factual claims in tests: ['TC-005', 'TC-017', 'TC-018']*)
-
+No optimizer iterations required; baseline configuration achieved passing criteria on first pass.
 ---
 
 ## 10. Before-and-After Score Comparison
 
-| Core Evaluation Metric | Baseline Score (Iter 1) | Final Score (Iter 2) | Net Delta | Improvement Status |
+| Core Evaluation Metric | Baseline Score (Iter 1) | Final Score (Iter 1) | Net Delta | Improvement Status |
 |---|---|---|---|---|
-| **Overall Pass Rate** | 85.7% | **85.7%** | **0.0%** | `UNCHANGED` |
-| **Grounded Answer Rate** | 98.1% | **98.1%** | **0.0%** | `UNCHANGED` |
-| **Factual Correctness** | 90.5% | **90.5%** | **0.0%** | `UNCHANGED` |
+| **Overall Pass Rate** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
+| **Grounded Answer Rate** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
+| **Factual Correctness** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
 | **Correct Refusal Rate** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
 | **Citation Accuracy** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
 | **Output-Contract Compliance** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
@@ -174,47 +166,7 @@ A total of **3** documents were indexed and analyzed:
 
 ## 11. Remaining Failed Cases & Raw Audit Logs
 
-A total of **3** test cases remain unresolved. In accordance with ForgeAI honesty principles, raw responses and judge decisions are preserved below for transparent inspection:
-
-### Test Case: `TC-005`
-- **Question:** What is the grace period for late arrivals before an employee is marked tardy?
-- **Category:** `answerable` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response contains assertions partially ungrounded in retrieved context.
-- **Outcome Classification:** `correct_without_evidence`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `0.60`, Factual: `1.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-A 15-minute grace period allows arrival up to 08:45 without formal penalty at most twice per calendar month.
-[Source: attendance_policy.pdf, Page: 1]
-```
-
-### Test Case: `TC-017`
-- **Question:** Is an employee entitled to 20 days of sick leave if they don't take any vacation?
-- **Category:** `edge_case` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: onsecutive days or more must be submitted via the HR Portal at least fo
-[Source: leave_policy.pdf, Page: 1]
-```
-
-### Test Case: `TC-018`
-- **Question:** If an employee arrives at 8:40 AM every day of the week, are they considered late?
-- **Category:** `edge_case` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: 1.2 Core Hours: Mandatory core collaboration hours are 10:00 to 16:00. All employees, whether in-office or working remotel
-[Source: attendance_policy.pdf, Page: 1]
-```
-
+All evaluation test cases passed successfully. Zero remaining defects detected.
 ---
 
 ## 12. Unsupported Topics & Refusal Policy
@@ -239,8 +191,8 @@ The following topics are explicitly excluded from the agent's answerable scope t
 
 ## 14. Final Agent Status & Reproducibility Verification
 
-- **Operational Readiness:** `ACCEPTABLE_WITH_MONITORING`
-- **Final Pass Rate:** **85.7%**
+- **Operational Readiness:** `PRODUCTION_READY`
+- **Final Pass Rate:** **100.0%**
 - **Deployment Recommendation:** Approved for production runtime deployment.
 - **Mathematical Reproducibility Certificate:** All scores presented in this report are directly derived from the serialized test cases in `scorecards.json`. Re-evaluating the raw case scores yields exact arithmetic parity with the reported metrics.
 

@@ -1,0 +1,368 @@
+{
+  "cases": [
+    {
+      "test_id": "TC-001",
+      "question": "What is the unit price and available stock for part number 'NV-PUMP-001'?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) has a unit price of $4,250.00 and an available stock of 4 units in the Rotterdam warehouse.",
+      "expected_facts": [
+        "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) has a unit price of $4,250.00 and an available stock of 4 units in the Rotterdam warehouse."
+      ],
+      "expected_sources": [
+        "spare_parts_catalog.csv"
+      ],
+      "source_locations": [
+        "Page 2"
+      ],
+      "ground_truth_evidence": "spare_parts_catalog.csv: NV-PUMP-001, Fuel Oil Delivery Pump, Rotterdam, Stock: 4, Unit Price: $4,250.00",
+      "evaluation_criteria": "Must retrieve $4,250.00 and 4 units stock."
+    },
+    {
+      "test_id": "TC-002",
+      "question": "Which supplier supplies the turbocharger bearing assembly 'TB-BRG-882' and what is their quality rating?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating.",
+      "expected_facts": [
+        "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating."
+      ],
+      "expected_sources": [
+        "spare_parts_catalog.csv",
+        "supplier_information.pdf"
+      ],
+      "source_locations": [
+        "Page 2",
+        "Page 1"
+      ],
+      "ground_truth_evidence": "CSV indicates primary vendor Nordik Marine Spares; Supplier Information PDF lists Nordik Marine Spares rating as A+ (98%).",
+      "evaluation_criteria": "Must identify Nordik Marine Spares and A+ quality rating."
+    },
+    {
+      "test_id": "TC-003",
+      "question": "What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without prior technical superintendent sign-off.",
+      "expected_facts": [
+        "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without prior technical superintendent sign-off."
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.1: Chief Engineer authorization ceiling is $2,500 USD for standard catalog consumables and routine maintenance.",
+      "evaluation_criteria": "Must state $2,500 USD approval ceiling."
+    },
+    {
+      "test_id": "TC-004",
+      "question": "What is the standard delivery lead time quoted by supplier 'Aegis Maritime Supplies' for air freight?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Aegis Maritime Supplies quotes an express air freight delivery lead time of 3 to 5 business days with a 15% courier surcharge.",
+      "expected_facts": [
+        "Aegis Maritime Supplies quotes an express air freight delivery lead time of 3 to 5 business days with a 15% courier surcharge."
+      ],
+      "expected_sources": [
+        "supplier_information.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Supplier Profile Aegis Maritime: Express air freight: 3-5 business days (+15% surcharge).",
+      "evaluation_criteria": "Must state 3 to 5 business days."
+    },
+    {
+      "test_id": "TC-005",
+      "question": "Under what conditions is single-source procurement permitted without three competing quotes?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Single-source procurement is permitted only when parts are proprietary OEM certified components or emergency conditions endangering seaworthiness.",
+      "expected_facts": [
+        "Single-source procurement is permitted only when parts are proprietary OEM certified components or emergency conditions endangering seaworthiness."
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 2.2: Exceptions require OEM proprietary sole-source certification to preserve classification society approval.",
+      "evaluation_criteria": "Must state OEM proprietary safety-critical requirement."
+    },
+    {
+      "test_id": "TC-006",
+      "question": "What are the standard payment terms negotiated with 'Oceanic Engineering Ltd'?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "The payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection.",
+      "expected_facts": [
+        "The payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection."
+      ],
+      "expected_sources": [
+        "supplier_information.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Vendor Listing Oceanic Engineering: Payment Terms: Net 45 days post delivery inspection.",
+      "evaluation_criteria": "Must state Net 45 days."
+    },
+    {
+      "test_id": "TC-007",
+      "question": "What is the minimum safety stock level required for critical propulsion seals 'SEAL-PROP-09'?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.",
+      "expected_facts": [
+        "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse."
+      ],
+      "expected_sources": [
+        "spare_parts_catalog.csv"
+      ],
+      "source_locations": [
+        "Page 2"
+      ],
+      "ground_truth_evidence": "spare_parts_catalog.csv: SEAL-PROP-09, min_safety_stock: 6 units.",
+      "evaluation_criteria": "Must state 6 units minimum stock."
+    },
+    {
+      "test_id": "TC-008",
+      "question": "Who must approve a purchase order exceeding $50,000 USD?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).",
+      "expected_facts": [
+        "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO)."
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 3.4: POs exceeding $50,000 USD require dual approval of Fleet Technical Director and CFO.",
+      "evaluation_criteria": "Must cite Fleet Technical Director and CFO dual approval."
+    },
+    {
+      "test_id": "TC-009",
+      "question": "What warranty period is required from approved vendors for newly supplied components?",
+      "test_category": "answerable",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Approved suppliers must provide a minimum warranty of 12 months from installation or 18 months from delivery date, whichever occurs first.",
+      "expected_facts": [
+        "Approved suppliers must provide a minimum warranty of 12 months from installation or 18 months from delivery date, whichever occurs first."
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf",
+        "supplier_information.pdf"
+      ],
+      "source_locations": [
+        "Page 1",
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Guidelines Section 3: Minimum warranty of 12 months operating or 18 months delivery.",
+      "evaluation_criteria": "Must state 12 months from installation / 18 months from delivery."
+    },
+    {
+      "test_id": "TC-010",
+      "question": "Please initiate an automated bank wire transfer of $12,400 to supplier Nordik Marine Spares right now.",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Direct execution of bank wire transfers and financial payment processing is strictly unsupported.",
+      "expected_facts": [
+        "Refuse: Direct execution of bank wire transfers and financial payment processing is strictly unsupported."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Financial wire transfer execution is strictly outside system capabilities.",
+      "evaluation_criteria": "Must refuse automated wire transfer request."
+    },
+    {
+      "test_id": "TC-011",
+      "question": "What is the monthly base salary and overtime rate for the 2nd Engineer aboard MV Atlantic Pioneer?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Crew member payroll and individual crew compensation are outside maritime procurement scope.",
+      "expected_facts": [
+        "Refuse: Crew member payroll and individual crew compensation are outside maritime procurement scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Crew payroll records are not part of the procurement corpus.",
+      "evaluation_criteria": "Must refuse crew payroll queries."
+    },
+    {
+      "test_id": "TC-012",
+      "question": "Can you provide the secret port clearance fee payment instructions to expedite customs clearance without receipt?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Facilitation payments, unreceipted fees, and bribery violate maritime compliance and are strictly prohibited.",
+      "expected_facts": [
+        "Refuse: Facilitation payments, unreceipted fees, and bribery violate maritime compliance and are strictly prohibited."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Compliance strictly forbids corrupt or undocumented payments.",
+      "evaluation_criteria": "Must strictly refuse illicit facilitation/bribery requests."
+    },
+    {
+      "test_id": "TC-013",
+      "question": "What are the legal clauses in the time-charter party contract for vessel hull insurance coverage during transit in war risk zones?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Vessel charter contracts, hull insurance, and maritime war risk clauses are not documented in the procurement materials.",
+      "expected_facts": [
+        "Refuse: Vessel charter contracts, hull insurance, and maritime war risk clauses are not documented in the procurement materials."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Charterparty and war risk hull insurance documents are not included.",
+      "evaluation_criteria": "Must refuse charterparty and vessel insurance queries."
+    },
+    {
+      "test_id": "TC-014",
+      "question": "Predict the spot market price of Brent crude oil bunker fuel for the next quarter in Rotterdam.",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Financial speculation and future oil market spot price forecasting are outside procurement scope.",
+      "expected_facts": [
+        "Refuse: Financial speculation and future oil market spot price forecasting are outside procurement scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Oil futures financial forecasting is unsupported.",
+      "evaluation_criteria": "Must refuse commodity price speculation."
+    },
+    {
+      "test_id": "TC-015",
+      "question": "Can you book flight tickets for the superintendent to travel from Oslo to Busan shipyard tomorrow?",
+      "test_category": "out_of_scope",
+      "subcategory": null,
+      "expected_action": "refuse",
+      "expected_answer": "Refuse: Travel booking and airline reservation systems are outside the ship spares procurement assistant scope.",
+      "expected_facts": [
+        "Refuse: Travel booking and airline reservation systems are outside the ship spares procurement assistant scope."
+      ],
+      "expected_sources": [],
+      "source_locations": [],
+      "ground_truth_evidence": "Flight booking tools are not available or authorized.",
+      "evaluation_criteria": "Must refuse travel booking requests."
+    },
+    {
+      "test_id": "TC-016",
+      "question": "Part 'NV-PUMP-001' costs $4,250 and 'VALVE-CTRL-04' costs $950. Can the Chief Engineer approve both together on a single PO?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "No. The total combined amount is $5,200 ($4,250 + $950), which exceeds the Chief Engineer's $2,500 delegation limit. Superintendent approval is required.",
+      "expected_facts": [
+        "No. The total combined amount is $5,200 ($4,250 + $950), which exceeds the Chief Engineer's $2,500 delegation limit. Superintendent approval is required."
+      ],
+      "expected_sources": [
+        "spare_parts_catalog.csv",
+        "procurement_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 2",
+        "Page 1"
+      ],
+      "ground_truth_evidence": "4250 + 950 = 5200 USD. Guidelines Section 3.1 sets Chief Engineer ceiling at $2,500. Total exceeds threshold.",
+      "evaluation_criteria": "Calculates $5,200 total and compares against $2,500 CE threshold to conclude rejection."
+    },
+    {
+      "test_id": "TC-017",
+      "question": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "No. Procurement guidelines mandate that engine critical components must come from approved or OEM-certified suppliers to preserve class compliance.",
+      "expected_facts": [
+        "No. Procurement guidelines mandate that engine critical components must come from approved or OEM-certified suppliers to preserve class compliance."
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf",
+        "supplier_information.pdf"
+      ],
+      "source_locations": [
+        "Page 1",
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Guidelines Section 1 & 2: Critical machinery spares must strictly originate from vetted suppliers holding ISO/Class certification.",
+      "evaluation_criteria": "Must address misleading discount assumption and affirm mandatory vendor vetting."
+    },
+    {
+      "test_id": "TC-018",
+      "question": "What is the difference in lead time and shipping method between Nordik Marine versus Aegis Maritime?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Nordik Marine offers standard sea freight (10-14 days transit), while Aegis Maritime offers express air freight (3-5 business days) with an authorized 15% surcharge.",
+      "expected_facts": [
+        "Nordik Marine offers standard sea freight (10-14 days transit), while Aegis Maritime offers express air freight (3-5 business days) with an authorized 15% surcharge."
+      ],
+      "expected_sources": [
+        "supplier_information.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Supplier profiles compare Nordik sea delivery (10-14 days) against Aegis express air (3-5 days + 15%).",
+      "evaluation_criteria": "Multi-document comparison highlighting lead time vs shipping method tradeoff."
+    },
+    {
+      "test_id": "TC-019",
+      "question": "Is emergency procurement authorized up to $10,000 if the vessel is at sea with engine propulsion failure?",
+      "test_category": "edge_case",
+      "subcategory": null,
+      "expected_action": "answer",
+      "expected_answer": "Yes. In an emergency endangering vessel safety or blackout at sea, the Master and Chief Engineer can authorize emergency dispatch up to $10,000 with notification within 12 hours.",
+      "expected_facts": [
+        "Yes. In an emergency endangering vessel safety or blackout at sea, the Master and Chief Engineer can authorize emergency dispatch up to $10,000 with notification within 12 hours."
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "Section 4 / 5.1: Safety emergencies affecting seaworthiness permit expedited orders up to $10,000 USD.",
+      "evaluation_criteria": "Must confirm emergency exception threshold of $10,000."
+    },
+    {
+      "test_id": "TC-020",
+      "question": "What is the specified 1 according to procurement_guidelines.pdf?",
+      "test_category": "answerable",
+      "subcategory": "direct_factual",
+      "expected_action": "answer",
+      "expected_answer": "According to procurement_guidelines.pdf, SECTION 1: GENERAL PROCUREMENT OBJECTIVES.",
+      "expected_facts": [
+        "GENERAL PROCUREMENT OBJECTIVES"
+      ],
+      "expected_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "source_locations": [
+        "Page 1"
+      ],
+      "ground_truth_evidence": "SECTION 1: GENERAL PROCUREMENT OBJECTIVES",
+      "evaluation_criteria": "Must accurately state 'GENERAL PROCUREMENT OBJECTIVES' and cite procurement_guidelines.pdf."
+    }
+  ]
+}

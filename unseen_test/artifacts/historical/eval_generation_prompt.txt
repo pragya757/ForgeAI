@@ -1,0 +1,135 @@
+You are the Automatic Evaluation Generator in ForgeAI.
+
+Analyze the uploaded document collection and generate at least 20 evaluation test cases directly from the verified source documents.
+
+Agent Definition:
+{
+  "agent_name": "Autonomous Operations Assistant",
+  "description": "Domain operational assistant for Autonomous Operations Assistant.",
+  "system_prompt": "You are Autonomous Operations Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Specialized Technical Operations\n- Target Audience: Technical operators and domain engineers\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: External live financial transactions, Direct hardware control execution.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].",
+  "target_audience": "Technical operators and domain engineers",
+  "supported_topics": [
+    "Documented specifications",
+    "Standard operating procedures",
+    "Safety thresholds"
+  ],
+  "unsupported_topics": [
+    "Direct hardware control execution",
+    "External live financial transactions"
+  ],
+  "must_refuse_topics": [
+    "Direct hardware control execution",
+    "External live financial transactions"
+  ],
+  "document_references": [
+    "academic_regulations.pdf",
+    "examination_guidelines.pdf",
+    "student_code_of_conduct.pdf"
+  ],
+  "chunk_size": 500,
+  "chunk_overlap": 100,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "retrieval_method": "dense_vector_faiss",
+  "top_k": 4,
+  "similarity_threshold": 0.35,
+  "reranking_config": {
+    "enabled": true,
+    "method": "cross_encoder",
+    "top_n": 3,
+    "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+  },
+  "metadata_config": {
+    "tracked_fields": [
+      "source",
+      "page",
+      "file_type",
+      "total_pages"
+    ],
+    "include_in_context": true,
+    "citation_metadata_format": "[Source: <source>, Page: <page>]"
+  },
+  "tool_selection": [
+    "current_date"
+  ],
+  "tool_justifications": {
+    "current_date": "Required for temporal verification of operational timestamps."
+  },
+  "output_contract": {
+    "format": "markdown",
+    "require_citations": true,
+    "citation_format": "[Source: <document_name>, Page: <page>]",
+    "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+    "section_headers": [
+      "Direct Answer",
+      "Evidence & Citations"
+    ],
+    "disclaimer": null
+  },
+  "citation_requirements": {
+    "must_cite": true,
+    "format": "[Source: <filename>, Page: <page>]",
+    "granularity": "sentence_level",
+    "prohibit_unanchored_claims": true
+  },
+  "refusal_policy": "Strict refusal on ungrounded claims, undocumented speculations, or unsupported topics.",
+  "model_config": {
+    "temperature": 0.1,
+    "max_tokens": 1024,
+    "model_name": null
+  }
+}
+
+Document Excerpts & Evidence:
+[academic_regulations.pdf, Page 1] ST. JUDE METROPOLITAN UNIVERSITY - UNDERGRADUATE ACADEMIC REGULATIONS POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES SECTION 1: DEGREE REQUIREMENTS & CREDIT STRUCTURE 1.1 Graduation Credits: Conformance to degree requirements requires successful completion of at least one hundred and twenty ( 1.2 Maximum Semester Course Load: Full-time undergraduate students may enroll in a maximum of eighteen (18) credit hours pe 1.3 Transfer Credit Allowances: A maximum of sixty (60)
+
+[examination_guidelines.pdf, Page 1] ST. JUDE METROPOLITAN UNIVERSITY - EXAMINATION PROTOCOLS & GUIDELINES POLICY DOCUMENT REF: EXAM-POL-04 | OFFICE OF THE UNIVERSITY REGISTRAR SECTION 1: EXAMINATION HALL ADMISSION & CANDIDATE CONDUCT 1.1 Examination Arrival: Candidates must arrive at the examination hall fifteen (15) minutes prior to scheduled start. Students arriv 1.2 Identification Requirement: Presentation of a valid University Student Identification Card is mandatory to sit for any invigilated e 1.3 Prohibited Electronic Devic
+
+[student_code_of_conduct.pdf, Page 1] ST. JUDE METROPOLITAN UNIVERSITY - STUDENT CODE OF CONDUCT & COMMUNITY STANDARDS POLICY DOCUMENT REF: STU-CODE-2024 | DIVISION OF STUDENT AFFAIRS SECTION 1: ACADEMIC HONESTY & SCHOLASTIC INTEGRITY 1.1 Violations of Scholastic Integrity: Plagiarism, unauthorized collaboration, fabrication of research findings, and unauthorized pos 1.2 First Offense Penalties: For an initial validated offense, the student receives an automatic zero ('0') on the assessment and a o 1.3 Second Offense Penalties: Any 
+
+Requirements for the test set:
+1. Generate at least 20 total evaluation test cases.
+2. Ensure rigorous coverage across all 8 mandatory question categories:
+   - direct_factual: Single-document factual lookup.
+   - multi_hop: Synthesizing multiple facts within the same document.
+   - cross_document: Requiring facts from two distinct documents.
+   - ambiguous: Underspecified questions requiring clarification rather than assumptions.
+   - missing_information: Plausible questions whose facts do not exist in the corpus (expected_action = refuse).
+   - out_of_scope: Questions outside the agent's authorized domain (expected_action = refuse).
+   - contradictory_document: Inquiries regarding conflicting statements between documents.
+   - misleading_assumption: Questions with false embedded premises that must be corrected from evidence.
+
+3. For EVERY test case, provide:
+   - test_id: "TC-001", "TC-002", etc.
+   - question: Clear user question.
+   - test_category: "answerable", "out_of_scope", or "edge_case".
+   - subcategory: One of the 8 categories above.
+   - expected_action: "answer", "refuse", or "clarify".
+   - expected_answer: Authoritative expected answer.
+   - expected_facts: Bulleted list of key factual assertions.
+   - expected_sources: List of source document filenames.
+   - source_locations: Page or row numbers where available (e.g. ["Page 2"]).
+   - ground_truth_evidence: Verbatim excerpt from source documents.
+   - evaluation_criteria: Scoring rubric for the judge.
+
+4. Never fabricate expected facts. Every expected fact must be strictly supported by ground-truth evidence.
+5. Avoid duplicate or near-identical questions.
+
+Produce valid JSON with structure:
+{
+  "cases": [
+    {
+      "test_id": "TC-001",
+      "question": "...",
+      "test_category": "answerable",
+      "subcategory": "direct_factual",
+      "expected_action": "answer",
+      "expected_answer": "...",
+      "expected_facts": ["..."],
+      "expected_sources": ["..."],
+      "source_locations": ["Page 1"],
+      "ground_truth_evidence": "...",
+      "evaluation_criteria": "..."
+    }
+  ]
+}
+Output ONLY valid JSON.

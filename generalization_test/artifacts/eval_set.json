@@ -2,7 +2,7 @@
   "cases": [
     {
       "test_id": "TC-001",
-      "question": "What does the policy state regarding Authorized personnel must maintain docum?",
+      "question": "What specific provisions are established regarding Authorized personnel must maintain documented records of?",
       "test_category": "answerable",
       "subcategory": "direct_factual",
       "expected_action": "answer",
@@ -21,7 +21,7 @@
     },
     {
       "test_id": "TC-002",
-      "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+      "question": "What specific provisions are established regarding Compliance protocols mandate strict security and?",
       "test_category": "answerable",
       "subcategory": "multi_hop",
       "expected_action": "answer",
@@ -130,7 +130,7 @@
     },
     {
       "test_id": "TC-009",
-      "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
+      "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain documented records of without management sign-off?",
       "test_category": "edge_case",
       "subcategory": "ambiguous",
       "expected_action": "answer",
@@ -149,7 +149,7 @@
     },
     {
       "test_id": "TC-010",
-      "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
+      "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict security and without management sign-off?",
       "test_category": "edge_case",
       "subcategory": "ambiguous",
       "expected_action": "answer",
@@ -168,7 +168,7 @@
     },
     {
       "test_id": "TC-011",
-      "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
+      "question": "If guidelines differ regarding Standard policy requires verified adherence to approved, what procedure must be followed?",
       "test_category": "edge_case",
       "subcategory": "contradictory_document",
       "expected_action": "refuse",
@@ -182,12 +182,12 @@
       "source_locations": [
         "Page 1"
       ],
-      "ground_truth_evidence": "Contradictory specifications noted for Standard policy requires verif.",
+      "ground_truth_evidence": "Contradictory specifications noted for Standard policy requires verified adherence to approved.",
       "evaluation_criteria": "Must identify contradiction and refuse automated override."
     },
     {
       "test_id": "TC-012",
-      "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
+      "question": "If guidelines differ regarding Authorized personnel must maintain documented records of, what procedure must be followed?",
       "test_category": "edge_case",
       "subcategory": "contradictory_document",
       "expected_action": "refuse",
@@ -201,12 +201,12 @@
       "source_locations": [
         "Page 1"
       ],
-      "ground_truth_evidence": "Contradictory specifications noted for Authorized personnel must main.",
+      "ground_truth_evidence": "Contradictory specifications noted for Authorized personnel must maintain documented records of.",
       "evaluation_criteria": "Must identify contradiction and refuse automated override."
     },
     {
       "test_id": "TC-013",
-      "question": "Given that Compliance protocols mandate s is completely optional, what procedures apply?",
+      "question": "Given that Compliance protocols mandate strict security and is completely optional, what procedures apply?",
       "test_category": "edge_case",
       "subcategory": "misleading_assumption",
       "expected_action": "answer",

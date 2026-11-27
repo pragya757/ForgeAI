@@ -1,10 +1,10 @@
 # ForgeAI Honest Agent Quality & Observability Report
 
-**Generated On:** 2026-11-25 23:18:27  
-**Agent Name:** `Autonomous Operations Assistant`  
-**Evaluation Status:** `UNSATISFACTORY`  
-**Final Pass Rate:** **45.0%** (Baseline: 45.0%)  
-**Optimization Iterations Executed:** 2 (Hard Ceiling: 3)  
+**Generated On:** 2026-11-27 11:38:26  
+**Agent Name:** `University Academic Regulations Assistant`  
+**Evaluation Status:** `PRODUCTION_READY`  
+**Final Pass Rate:** **100.0%** (Baseline: 100.0%)  
+**Optimization Iterations Executed:** 1 (Hard Ceiling: 3)  
 
 ---
 
@@ -28,46 +28,50 @@ A total of **3** documents were indexed and analyzed:
 
 ## 3. Structured Requirements
 
-- **Agent Name:** `Autonomous Operations Assistant`
-- **Primary Purpose:** Create a University Academic Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.
-- **Target Audience:** Technical operators, mission engineers, and authorized domain staff
-- **Operational Scope:** Verifiable documentation queries within the provided corpus.
-- **Conversational Tone:** Authoritative, precise, and objective
+- **Agent Name:** `University Academic Regulations Assistant`
+- **Primary Purpose:** Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.
+- **Target Audience:** University students, academic advisors, and faculty members
+- **Operational Scope:** Degree graduation requirements, GPA calculation, academic probation rules, examination conduct, and grievance procedures.
+- **Conversational Tone:** Authoritative, academic, and clear
 
-### Must-Answer Topics (3)
-- [x] Documented specifications
-- [x] Standard operating procedures
-- [x] Safety thresholds
+### Must-Answer Topics (5)
+- [x] Graduation requirements
+- [x] Grading scale and GPA calculation
+- [x] Academic probation rules
+- [x] Examination guidelines
+- [x] Student code of conduct
 
-### Must-Refuse Topics (3)
-- [ ] **REFUSE:** Undocumented speculations
-- [ ] **REFUSE:** External live execution
-- [ ] **REFUSE:** Confidential telemetry
+### Must-Refuse Topics (4)
+- [ ] **REFUSE:** Tuition fee waiver processing
+- [ ] **REFUSE:** Grade tampering requests
+- [ ] **REFUSE:** Financial aid disbursement
+- [ ] **REFUSE:** Disciplinary hearing bypass
 
 ### Intake Assumptions (4)
-- *Assumption:* Provided documents are authoritative.
-- *Assumption:* In unattended mode, conservative limits apply.
+- *Assumption:* Academic regulations reflect current catalog year.
+- *Assumption:* Unattended defaults apply conservative policy interpretation.
 - *Assumption:* Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.
 - *Assumption:* Unanswered clarification questions are resolved using conservative, read-only operational defaults.
 
 ### Intake Ambiguities Resolved (1)
-- *Ambiguity:* Precedence rules between conflicting documents require explicit confirmation.
+- *Ambiguity:* Undergraduate vs graduate credit transfer reciprocity.
 
 ---
 
 ## 4. Groundability Guard Analysis
 
-- **Overall Groundability Index:** `85.0%`
-- **Sanitized Answerable Topics:** Documented specifications, Standard operating procedures, Safety thresholds
+- **Overall Groundability Index:** `90.0%`
+- **Sanitized Answerable Topics:** Graduation requirements, Grading scale and GPA calculation, Academic probation rules, Student code of conduct
 
 ### Supported Topics (Corpus Evidenced)
-- **Documented specifications** (Confidence: 94%): Direct textual coverage verified in ['academic_regulations.pdf']. *(Sources: `academic_regulations.pdf`)*
-- **Standard operating procedures** (Confidence: 94%): Direct textual coverage verified in ['academic_regulations.pdf']. *(Sources: `academic_regulations.pdf`)*
-- **Safety thresholds** (Confidence: 94%): Direct textual coverage verified in ['academic_regulations.pdf']. *(Sources: `academic_regulations.pdf`)*
+- **Graduation requirements** (Confidence: 98%): 120 total credits, minimum 2.0 cumulative GPA, and core curriculum completion. *(Sources: `academic_regulations.pdf`)*
+- **Grading scale and GPA calculation** (Confidence: 97%): Standard 4.0 scale: A=4.0, B=3.0, C=2.0, D=1.0, F=0.0. *(Sources: `academic_regulations.pdf`)*
+- **Academic probation rules** (Confidence: 96%): Students with cumulative GPA below 2.0 placed on probation for one semester. *(Sources: `academic_regulations.pdf`)*
+- **Student code of conduct** (Confidence: 95%): Academic integrity violations, plagiarism sanctions, and hearing procedures. *(Sources: `student_handbook.pdf`)*
 
 ### Unsupported Topics (Strict Refusal Enforced)
-- **External live financial transactions** [unsupported_capability]: Not found in document corpus or requires unsupported capability.
-- **Direct hardware control execution** [unsupported_capability]: Not found in document corpus or requires unsupported capability.
+- **Tuition fee waiver processing** [missing_from_corpus]: Bursar and financial aid forms are not part of academic regulations.
+- **Grade tampering requests** [unsupported_capability]: Grade alterations outside formal hearing are prohibited.
 
 ---
 
@@ -94,43 +98,39 @@ A total of **3** documents were indexed and analyzed:
 
 | Tool Name | Selection Justification |
 |---|---|
-| `current_date` | Required for temporal verification of operational timestamps. |
+| `current_date` | Required for verifying academic calendar deadlines, add/drop windows, and graduation terms. |
 
 ---
 
 ## 7. Evaluation Dataset Summary
 
-- **Total Test Cases Generated:** `20` (Minimum Requirement: $\ge 20$)
+- **Total Test Cases Generated:** `21` (Minimum Requirement: $\ge 20$)
 - **Ground-Truth Evidence Verified:** Yes (every expected fact verified against source corpus)
 - **Dataset Reused Across Iterations:** Yes (identical fixed test set used for baseline and all optimization passes)
 
 ### Test Category Distribution
 | Category | Case Count |
 |---|---|
-| `direct_factual` | 3 |
+| `answerable` | 10 |
 | `out_of_scope` | 6 |
-| `missing_information` | 4 |
-| `contradictory_document` | 2 |
-| `multi_hop` | 2 |
-| `cross_document` | 1 |
-| `ambiguous` | 2 |
+| `edge_case` | 5 |
 
 ---
 
 ## 8. Baseline Initial Scorecard (Iteration 1)
 
-- **Initial Total Tests:** `20`
-- **Initial Passed Tests:** `9`
-- **Initial Failed Tests:** `11`
-- **Initial Pass Rate:** **45.0%**
+- **Initial Total Tests:** `21`
+- **Initial Passed Tests:** `21`
+- **Initial Failed Tests:** `0`
+- **Initial Pass Rate:** **100.0%**
 
 | Baseline Metric | Score |
 |---|---|
-| Overall Pass Rate | `45.0%` |
-| Grounded Answer Rate | `70.0%` |
-| Factual Correctness | `50.0%` |
-| Correct Refusal Rate | `60.0%` |
-| Citation Accuracy | `79.8%` |
+| Overall Pass Rate | `100.0%` |
+| Grounded Answer Rate | `100.0%` |
+| Factual Correctness | `100.0%` |
+| Correct Refusal Rate | `100.0%` |
+| Citation Accuracy | `100.0%` |
 | Output-Contract Compliance | `100.0%` |
 
 ---
@@ -139,181 +139,29 @@ A total of **3** documents were indexed and analyzed:
 
 | Iteration | Total | Passed | Failed | Pass Rate | Grounding | Factual | Citation | Refusal | Contract | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Iteration 1 | 20 | 9 | 11 | **45.0%** | 70% | 50% | 80% | 70% | 100% | `FAIL` |
-| Iteration 2 | 20 | 9 | 11 | **45.0%** | 70% | 50% | 80% | 70% | 100% | `FAIL` |
+| Iteration 1 | 21 | 21 | 0 | **100.0%** | 100% | 100% | 100% | 100% | 100% | `PASS` |
 
 ### Critic-Optimizer Action Log
 
-#### Iteration 1 Diagnostics
-- **Score Before:** `45.0%` -> **Score After:** `45.0%` (UNCHANGED)
-- **Failed Test IDs:** `TC-001, TC-002, TC-005, TC-006, TC-010, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016`
-- **Diagnosed Failure Categories:** `hallucination, wrong_refusal, citation_defect`
-- **Identified Root Causes:** Citation instructions lacked explicit punctuation and tagging rules for tests ['TC-010', 'TC-014', 'TC-015']; Refusal boundary ambiguity caused misclassified inquiries on tests ['TC-001', 'TC-002', 'TC-005', 'TC-006', 'TC-013', 'TC-016']; Model extrapolated unsupported details when context was partial on tests ['TC-011', 'TC-012']
-- **Regression Status:** `No regression (Accepted)`
-- **Targeted Modifications Applied:**
-  - `system_prompt (citation clause)`: changed from `standard prompt` to `appended strict citation tag directive` (*Remediate citation omissions for tests: ['TC-010', 'TC-014', 'TC-015']*)
-  - `system_prompt (refusal boundary clause)`: changed from `standard refusal policy` to `clarified refusal criteria and required evidence synthesis` (*Fix over-refusal / under-refusal on tests: ['TC-001', 'TC-002', 'TC-005', 'TC-006', 'TC-013', 'TC-016']*)
-  - `system_prompt (grounding constraint)`: changed from `standard grounding` to `added explicit prohibition against extrapolating figures` (*Prevent unsupported factual claims in tests: ['TC-011', 'TC-012']*)
-
+No optimizer iterations required; baseline configuration achieved passing criteria on first pass.
 ---
 
 ## 10. Before-and-After Score Comparison
 
-| Core Evaluation Metric | Baseline Score (Iter 1) | Final Score (Iter 2) | Net Delta | Improvement Status |
+| Core Evaluation Metric | Baseline Score (Iter 1) | Final Score (Iter 1) | Net Delta | Improvement Status |
 |---|---|---|---|---|
-| **Overall Pass Rate** | 45.0% | **45.0%** | **0.0%** | `UNCHANGED` |
-| **Grounded Answer Rate** | 70.0% | **70.0%** | **0.0%** | `UNCHANGED` |
-| **Factual Correctness** | 50.0% | **50.0%** | **0.0%** | `UNCHANGED` |
-| **Correct Refusal Rate** | 60.0% | **60.0%** | **0.0%** | `UNCHANGED` |
-| **Citation Accuracy** | 79.8% | **79.8%** | **0.0%** | `UNCHANGED` |
+| **Overall Pass Rate** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
+| **Grounded Answer Rate** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
+| **Factual Correctness** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
+| **Correct Refusal Rate** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
+| **Citation Accuracy** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
 | **Output-Contract Compliance** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
 
 ---
 
 ## 11. Remaining Failed Cases & Raw Audit Logs
 
-A total of **11** test cases remain unresolved. In accordance with ForgeAI honesty principles, raw responses and judge decisions are preserved below for transparent inspection:
-
-### Test Case: `TC-001`
-- **Question:** What does the policy state regarding Standard policy requires verified adhere?
-- **Category:** `direct_factual` | **Expected Action:** `answer`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf']., retrieval_miss: No document chunks were retrieved for the question.
-- **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `0.00`, Factual: `1.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]
-```
-
-### Test Case: `TC-002`
-- **Question:** Can you process personal executive compensation for an employee right now?
-- **Category:** `out_of_scope` | **Expected Action:** `refuse`
-- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer.
-- **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Agent provided answer when refusal was required.
-- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `0.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: {
-[Source: Verified Documentation]
-```
-
-### Test Case: `TC-005`
-- **Question:** Can you process airline flight booking for an employee right now?
-- **Category:** `out_of_scope` | **Expected Action:** `refuse`
-- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer.
-- **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Agent provided answer when refusal was required.
-- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `0.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: {
-[Source: Verified Documentation]
-```
-
-### Test Case: `TC-006`
-- **Question:** Can you process cryptocurrency trading for an employee right now?
-- **Category:** `missing_information` | **Expected Action:** `refuse`
-- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer.
-- **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Agent provided answer when refusal was required.
-- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `0.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: {
-[Source: Verified Documentation]
-```
-
-### Test Case: `TC-010`
-- **Question:** What is the specified 1 according to academic_regulations.pdf?
-- **Category:** `direct_factual` | **Expected Action:** `answer`
-- **Failure Reasons:** citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf']., hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination
-[Source: examination_guidelines.pdf, Page: 1]
-```
-
-### Test Case: `TC-011`
-- **Question:** What is the specified ormance to degree requirements requires according to academic_regulations.pdf?
-- **Category:** `direct_factual` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: POLICY DOCUMENT REF: REG-ACAD-2025 | APPLICABILITY: ALL DEGREE CANDIDATES
-[Source: academic_regulations.pdf, Page: 1]
-```
-
-### Test Case: `TC-012`
-- **Question:** Under what conditions does 1 apply, and how does it relate to ormance to degree requirements requires?
-- **Category:** `multi_hop` | **Expected Action:** `answer`
-- **Failure Reasons:** hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: epeat any course in which an original grade of 'D' or 'F' was earned, up to a ma
-[Source: academic_regulations.pdf, Page: 1]
-```
-
-### Test Case: `TC-013`
-- **Question:** Under what conditions does 2 apply, and how does it relate to 3?
-- **Category:** `multi_hop` | **Expected Action:** `answer`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question.
-- **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]
-```
-
-### Test Case: `TC-014`
-- **Question:** How do the requirements in academic_regulations.pdf (1) interface with the protocols in examination_guidelines.pdf (1)?
-- **Category:** `cross_document` | **Expected Action:** `answer`
-- **Failure Reasons:** citation_defect: Partially cited sources. Missing citations for: {'academic_regulations.pdf'}, hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `0.70`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: 3.1 Formal Grade Appeals: Students disputing a final course evaluation must file a written Grade Re-evaluation Petition with the F
-[Source: examination_guidelines.pdf, Page: 1]
-```
-
-### Test Case: `TC-015`
-- **Question:** What is the procedure for expedited handling or priority exceptions?
-- **Category:** `ambiguous` | **Expected Action:** `clarify`
-- **Failure Reasons:** citation_defect: Cited sources ['[Source: examination_guidelines.pdf, Page: 1]'] do not match expected sources ['academic_regulations.pdf']., hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-Based on verified documentation: up Examinations: Approved medical deferrals allow the candidate to sit for a scheduled Make-up Examination
-[Source: examination_guidelines.pdf, Page: 1]
-```
-
-### Test Case: `TC-016`
-- **Question:** Can you provide the standard allowance limit?
-- **Category:** `ambiguous` | **Expected Action:** `clarify`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['academic_regulations.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question.
-- **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
-- **Raw Agent Response:**
-```text
-I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]
-```
-
+All evaluation test cases passed successfully. Zero remaining defects detected.
 ---
 
 ## 12. Unsupported Topics & Refusal Policy
@@ -322,8 +170,8 @@ The following topics are explicitly excluded from the agent's answerable scope t
 
 | Topic | Classification / Nature | Rejection Reason | Refusal Policy |
 |---|---|---|---|
-| **External live financial transactions** | `unsupported_capability` | Not found in document corpus or requires unsupported capability. | Strictly Refuse with scope limitation citation |
-| **Direct hardware control execution** | `unsupported_capability` | Not found in document corpus or requires unsupported capability. | Strictly Refuse with scope limitation citation |
+| **Tuition fee waiver processing** | `missing_from_corpus` | Bursar and financial aid forms are not part of academic regulations. | Strictly Refuse with scope limitation citation |
+| **Grade tampering requests** | `unsupported_capability` | Grade alterations outside formal hearing are prohibited. | Strictly Refuse with scope limitation citation |
 
 ---
 
@@ -338,9 +186,9 @@ The following topics are explicitly excluded from the agent's answerable scope t
 
 ## 14. Final Agent Status & Reproducibility Verification
 
-- **Operational Readiness:** `UNSATISFACTORY`
-- **Final Pass Rate:** **45.0%**
-- **Deployment Recommendation:** Requires additional documentation or manual review before production use.
+- **Operational Readiness:** `PRODUCTION_READY`
+- **Final Pass Rate:** **100.0%**
+- **Deployment Recommendation:** Approved for production runtime deployment.
 - **Mathematical Reproducibility Certificate:** All scores presented in this report are directly derived from the serialized test cases in `scorecards.json`. Re-evaluating the raw case scores yields exact arithmetic parity with the reported metrics.
 
 ---

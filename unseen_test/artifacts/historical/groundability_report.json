@@ -1,0 +1,91 @@
+{
+  "supported_topics": [
+    {
+      "topic": "Documented specifications",
+      "evidence_sources": [
+        "academic_regulations.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "academic_regulations.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Documented specifications.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Standard operating procedures",
+      "evidence_sources": [
+        "academic_regulations.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "academic_regulations.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Standard operating procedures.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Safety thresholds",
+      "evidence_sources": [
+        "academic_regulations.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "academic_regulations.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Safety thresholds.",
+          "relevance_score": 0.92
+        }
+      ]
+    }
+  ],
+  "partially_supported_topics": [],
+  "unsupported_topics": [
+    {
+      "topic": "External live financial transactions",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "unsupported_capability",
+      "confidence_score": 0.95
+    },
+    {
+      "topic": "Direct hardware control execution",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "unsupported_capability",
+      "confidence_score": 0.95
+    }
+  ],
+  "document_coverage_map": {
+    "academic_regulations.pdf": [
+      "Documented specifications",
+      "Standard operating procedures"
+    ],
+    "examination_guidelines.pdf": [
+      "Documented specifications",
+      "Standard operating procedures"
+    ],
+    "student_code_of_conduct.pdf": [
+      "Documented specifications",
+      "Standard operating procedures"
+    ]
+  },
+  "refusal_recommendations": [
+    "Refuse requests regarding External live financial transactions.",
+    "Refuse requests regarding Direct hardware control execution."
+  ],
+  "sanitized_answerable_topics": [
+    "Documented specifications",
+    "Standard operating procedures",
+    "Safety thresholds"
+  ],
+  "overall_groundability_score": 0.85
+}

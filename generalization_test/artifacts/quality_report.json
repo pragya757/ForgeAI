@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-26 00:14:19",
-  "agent_name": "Autonomous Operations Assistant",
+  "generated_at": "2026-11-27 11:38:27",
+  "agent_name": "Medical Clinic Policy Assistant",
   "final_status": "UNSATISFACTORY",
   "user_brief": "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations.",
   "document_inventory": [
@@ -50,26 +50,29 @@
     }
   ],
   "structured_requirements": {
-    "agent_name": "Autonomous Operations Assistant",
+    "agent_name": "Medical Clinic Policy Assistant",
     "purpose": "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations.",
-    "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
-    "target_audience": "Technical operators, mission engineers, and authorized domain staff",
-    "domain": "Specialized Technical Operations",
-    "scope": "Verifiable documentation queries within the provided corpus.",
+    "user_intent": "Verify and query operational guidelines and verified policies for Medical Clinic Policy Assistant.",
+    "target_audience": "Authorized personnel and operational staff",
+    "domain": "Clinical Healthcare Administration",
+    "scope": "Verifiable documentation queries covering SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS, Urgent Clinical Triage, Emergency Department, Routine Consultation Scheduling.",
     "tone": "Authoritative, precise, and objective",
     "constraints": [
       "Strict grounding required",
-      "No unauthorized modifications"
+      "No unauthorized external modifications"
     ],
     "must_answer_topics": [
-      "Documented specifications",
-      "Standard operating procedures",
-      "Safety thresholds"
+      "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+      "Urgent Clinical Triage",
+      "Emergency Department",
+      "Routine Consultation Scheduling",
+      "Missed Appointment Fees",
+      "Patient Release Authorization"
     ],
     "must_refuse_topics": [
-      "Undocumented speculations",
+      "Personal confidential records",
       "External live execution",
-      "Confidential telemetry"
+      "Direct financial wire transactions"
     ],
     "required_tools": [
       "current_date"
@@ -121,9 +124,7 @@
       }
     ],
     "information_gaps": {
-      "missing_information": [
-        "Unverified external telemetry is absent from corpus."
-      ],
+      "missing_information": [],
       "contradictory_information": [
         {
           "topic": "Operational Parameter Limit",
@@ -139,9 +140,7 @@
         }
       ],
       "duplicated_information": [],
-      "incomplete_information": [
-        "Sections with pending specifications flagged for review."
-      ]
+      "incomplete_information": []
     },
     "assumptions": [
       "Provided documents are authoritative.",
@@ -161,49 +160,97 @@
   "groundability_analysis": {
     "supported_topics": [
       {
-        "topic": "Documented specifications",
+        "topic": "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
         "evidence_sources": [
           "clinical_triage_guidelines.pdf"
         ],
-        "coverage_summary": "Direct textual coverage verified in ['clinical_triage_guidelines.pdf'].",
+        "coverage_summary": "Direct textual coverage verified in clinical_triage_guidelines.pdf.",
         "confidence_score": 0.94,
         "evidence_references": [
           {
             "source_document": "clinical_triage_guidelines.pdf",
             "page_or_record": "Page 1",
-            "excerpt": "Verified specifications for Documented specifications.",
+            "excerpt": "Verified specifications for SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS.",
             "relevance_score": 0.92
           }
         ]
       },
       {
-        "topic": "Standard operating procedures",
+        "topic": "Urgent Clinical Triage",
         "evidence_sources": [
-          "clinical_triage_guidelines.pdf"
+          "patient_privacy_hipaa.pdf"
         ],
-        "coverage_summary": "Direct textual coverage verified in ['clinical_triage_guidelines.pdf'].",
+        "coverage_summary": "Direct textual coverage verified in patient_privacy_hipaa.pdf.",
         "confidence_score": 0.94,
         "evidence_references": [
           {
-            "source_document": "clinical_triage_guidelines.pdf",
+            "source_document": "patient_privacy_hipaa.pdf",
             "page_or_record": "Page 1",
-            "excerpt": "Verified specifications for Standard operating procedures.",
+            "excerpt": "Verified specifications for Urgent Clinical Triage.",
             "relevance_score": 0.92
           }
         ]
       },
       {
-        "topic": "Safety thresholds",
+        "topic": "Emergency Department",
+        "evidence_sources": [
+          "telehealth_regulations.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in telehealth_regulations.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "telehealth_regulations.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Emergency Department.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Routine Consultation Scheduling",
         "evidence_sources": [
           "clinical_triage_guidelines.pdf"
         ],
-        "coverage_summary": "Direct textual coverage verified in ['clinical_triage_guidelines.pdf'].",
+        "coverage_summary": "Direct textual coverage verified in clinical_triage_guidelines.pdf.",
         "confidence_score": 0.94,
         "evidence_references": [
           {
             "source_document": "clinical_triage_guidelines.pdf",
             "page_or_record": "Page 1",
-            "excerpt": "Verified specifications for Safety thresholds.",
+            "excerpt": "Verified specifications for Routine Consultation Scheduling.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Missed Appointment Fees",
+        "evidence_sources": [
+          "patient_privacy_hipaa.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in patient_privacy_hipaa.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "patient_privacy_hipaa.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Missed Appointment Fees.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Patient Release Authorization",
+        "evidence_sources": [
+          "telehealth_regulations.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in telehealth_regulations.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "telehealth_regulations.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Patient Release Authorization.",
             "relevance_score": 0.92
           }
         ]
@@ -226,16 +273,16 @@
     ],
     "document_coverage_map": {
       "clinical_triage_guidelines.pdf": [
-        "Documented specifications",
-        "Standard operating procedures"
+        "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+        "Urgent Clinical Triage"
       ],
       "patient_privacy_hipaa.pdf": [
-        "Documented specifications",
-        "Standard operating procedures"
+        "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+        "Urgent Clinical Triage"
       ],
       "telehealth_regulations.pdf": [
-        "Documented specifications",
-        "Standard operating procedures"
+        "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+        "Urgent Clinical Triage"
       ]
     },
     "refusal_recommendations": [
@@ -243,29 +290,38 @@
       "Refuse requests regarding Direct hardware control execution."
     ],
     "sanitized_answerable_topics": [
-      "Documented specifications",
-      "Standard operating procedures",
-      "Safety thresholds"
+      "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+      "Urgent Clinical Triage",
+      "Emergency Department",
+      "Routine Consultation Scheduling",
+      "Missed Appointment Fees",
+      "Patient Release Authorization"
     ],
-    "overall_groundability_score": 0.85
+    "overall_groundability_score": 0.88
   },
   "agent_configuration": {
-    "agent_name": "Autonomous Operations Assistant",
-    "description": "Domain operational assistant for Autonomous Operations Assistant.",
-    "system_prompt": "You are Autonomous Operations Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Specialized Technical Operations\n- Target Audience: Technical operators and domain engineers\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: External live financial transactions, Direct hardware control execution.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].\nMANDATORY CITATION RULE: Every statement of fact MUST end with an explicit citation tag in the format [Source: <document_name>]. If multiple documents apply, list each source tag.\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.\nSTRICT GROUNDING CONSTRAINT: Never guess, extrapolate, or assume numbers or dates not explicitly written in the text. If a specific figure is missing from context, state that it is not documented.",
-    "target_audience": "Technical operators and domain engineers",
+    "agent_name": "Medical Clinic Policy Assistant",
+    "description": "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations.",
+    "system_prompt": "You are Medical Clinic Policy Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Clinical Healthcare Administration\n- Target Audience: Authorized personnel and operational staff\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: External live financial transactions, Direct hardware control execution.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].\nMANDATORY CITATION RULE: Every statement of fact MUST end with an explicit citation tag in the format [Source: <document_name>]. If multiple documents apply, list each source tag.\nREFUSAL BOUNDARY RULE: Only refuse questions that clearly fall outside the supported documentation scope. For supported topics, search the context thoroughly and synthesize the answer before concluding refusal.\nSTRICT GROUNDING CONSTRAINT: Never guess, extrapolate, or assume numbers or dates not explicitly written in the text. If a specific figure is missing from context, state that it is not documented.",
+    "target_audience": "Authorized personnel and operational staff",
     "supported_topics": [
-      "Documented specifications",
-      "Standard operating procedures",
-      "Safety thresholds"
+      "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+      "Urgent Clinical Triage",
+      "Emergency Department",
+      "Routine Consultation Scheduling",
+      "Missed Appointment Fees",
+      "Patient Release Authorization"
     ],
     "unsupported_topics": [
       "Direct hardware control execution",
       "External live financial transactions"
     ],
     "must_refuse_topics": [
+      "Direct financial wire transactions",
       "Direct hardware control execution",
-      "External live financial transactions"
+      "External live execution",
+      "External live financial transactions",
+      "Personal confidential records"
     ],
     "document_references": [
       "clinical_triage_guidelines.pdf",
@@ -355,38 +411,38 @@
   "initial_scorecard": {
     "iteration": 1,
     "total_tests": 20,
-    "passed_tests": 10,
-    "failed_tests": 10,
-    "pass_rate": 0.5,
+    "passed_tests": 8,
+    "failed_tests": 12,
+    "pass_rate": 0.4,
     "metric_breakdown": {
-      "grounding": 0.8,
-      "factual_correctness": 0.625,
+      "grounding": 0.7,
+      "factual_correctness": 0.575,
       "citation_correctness": 0.7,
-      "refusal_correctness": 0.8,
-      "relevance": 0.825,
+      "refusal_correctness": 0.7,
+      "relevance": 0.9,
       "output_contract_compliance": 1.0
     },
     "failure_distribution": {
       "retrieval_miss": 4,
       "prompt_defect": 0,
-      "hallucination": 8,
-      "wrong_refusal": 4,
+      "hallucination": 7,
+      "wrong_refusal": 10,
       "citation_defect": 8,
       "output_contract_violation": 0
     },
     "outcome_distribution": {
       "correct_with_evidence": 0,
-      "correct_without_evidence": 2,
+      "correct_without_evidence": 3,
       "partially_correct": 1,
-      "incorrect": 3,
-      "correct_refusal": 10,
-      "incorrect_refusal": 4
+      "incorrect": 2,
+      "correct_refusal": 8,
+      "incorrect_refusal": 6
     },
     "status": "FAIL",
     "case_results": [
       {
         "test_id": "TC-001",
-        "question": "What does the policy state regarding Authorized personnel must maintain docum?",
+        "question": "What specific provisions are established regarding Authorized personnel must maintain documented records of?",
         "passed": false,
         "outcome_classification": "correct_without_evidence",
         "grounding_score": 1.0,
@@ -397,21 +453,20 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
-          "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]', '[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+          "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
         ],
-        "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY In parallel, 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: telehealth_regulations.pdf, Page: 1]",
+        "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, POLICY REF: PRIV-HIPAA-03 | OFFICE OF HEALTHCARE COMPLIANCE Furthermore, of ten (10) years following last date of service. 2.2 Mandatory Breach Notification: Any unauthorized access to or exfiltration of electronic PHI affecting more than ten (10)\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
         "retrieved_sources": [
-          "patient_privacy_hipaa.pdf",
-          "telehealth_regulations.pdf"
+          "patient_privacy_hipaa.pdf"
         ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-002",
-        "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+        "question": "What specific provisions are established regarding Compliance protocols mandate strict security and?",
         "passed": false,
         "outcome_classification": "correct_without_evidence",
         "grounding_score": 1.0,
@@ -422,7 +477,7 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
         ],
@@ -431,7 +486,7 @@
           "telehealth_regulations.pdf"
         ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-003",
@@ -555,118 +610,127 @@
       },
       {
         "test_id": "TC-009",
-        "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
+        "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain documented records of without management sign-off?",
         "passed": false,
-        "outcome_classification": "incorrect",
-        "grounding_score": 1.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.25,
-        "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-          "hallucination: Response failed to contain the required ground-truth facts."
-        ],
-        "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
-        "retrieved_sources": [
-          "telehealth_regulations.pdf"
-        ],
-        "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-010",
-        "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
-        "passed": false,
-        "outcome_classification": "incorrect",
-        "grounding_score": 1.0,
-        "factual_correctness": 0.0,
-        "citation_correctness": 0.25,
-        "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
-        "output_contract_compliance": 1.0,
-        "verdict_confidence": 1.0,
-        "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-          "hallucination: Response failed to contain the required ground-truth facts."
-        ],
-        "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
-        "retrieved_sources": [
-          "telehealth_regulations.pdf"
-        ],
-        "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
-      },
-      {
-        "test_id": "TC-011",
-        "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-        "passed": true,
-        "outcome_classification": "correct_refusal",
+        "outcome_classification": "correct_without_evidence",
         "grounding_score": 1.0,
         "factual_correctness": 1.0,
-        "citation_correctness": 1.0,
+        "citation_correctness": 0.25,
         "refusal_correctness": 1.0,
         "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [
+          "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+        ],
+        "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
+        "retrieved_sources": [
+          "patient_privacy_hipaa.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-010",
+        "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict security and without management sign-off?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 0.25,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [
+          "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "telehealth_regulations.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-011",
+        "question": "If guidelines differ regarding Standard policy requires verified adherence to approved, what procedure must be followed?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Agent provided answer when refusal was required.",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+        ],
+        "agent_response": "Based on verified documentation: 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: telehealth_regulations.pdf, Page: 1]",
+        "retrieved_sources": [
+          "telehealth_regulations.pdf"
+        ],
         "tool_calls": [],
         "explanation": "Automated hybrid evaluation complete."
       },
       {
         "test_id": "TC-012",
-        "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-        "passed": true,
-        "outcome_classification": "correct_refusal",
-        "grounding_score": 1.0,
-        "factual_correctness": 1.0,
+        "question": "If guidelines differ regarding Authorized personnel must maintain documented records of, what procedure must be followed?",
+        "passed": false,
+        "outcome_classification": "incorrect_refusal",
+        "grounding_score": 0.0,
+        "factual_correctness": 0.0,
         "citation_correctness": 1.0,
-        "refusal_correctness": 1.0,
-        "relevance_score": 1.0,
+        "refusal_correctness": 0.0,
+        "relevance_score": 0.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-        "failure_reasons": [],
-        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
+        "evidence_reasoning": "Agent provided answer when refusal was required.",
+        "failure_reasons": [
+          "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+        ],
+        "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, 1.1 Protected Health Information Restrictions: Disclosure of patient medical records, lab findings, or diagnosis codes to In parallel, itals Documentation: Triage nurses must record resting blood pressure, radial pulse rate, peripheral oxygen saturation, and body temperature prior to physician evaluation.\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: clinical_triage_guidelines.pdf, Page: 1]",
+        "retrieved_sources": [
+          "clinical_triage_guidelines.pdf",
+          "patient_privacy_hipaa.pdf"
+        ],
         "tool_calls": [],
         "explanation": "Automated hybrid evaluation complete."
       },
       {
         "test_id": "TC-013",
-        "question": "Given that Compliance protocols mandate s is completely optional, what procedures apply?",
+        "question": "Given that Compliance protocols mandate strict security and is completely optional, what procedures apply?",
         "passed": false,
         "outcome_classification": "incorrect_refusal",
         "grounding_score": 0.0,
         "factual_correctness": 0.0,
         "citation_correctness": 0.25,
         "refusal_correctness": 0.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "wrong_refusal: Agent refused an answerable in-scope question.",
           "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
           "hallucination: Response failed to contain the required ground-truth facts.",
-          "retrieval_miss: No document chunks were retrieved for the question."
+          "retrieval_miss: No document chunks were retrieved for the question.",
+          "wrong_refusal: Refused an answerable question."
         ],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-014",
@@ -677,11 +741,11 @@
         "factual_correctness": 0.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "hallucination: Response failed to contain the required ground-truth facts."
         ],
@@ -690,7 +754,7 @@
           "clinical_triage_guidelines.pdf"
         ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-015",
@@ -701,21 +765,22 @@
         "factual_correctness": 0.0,
         "citation_correctness": 0.25,
         "refusal_correctness": 0.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "wrong_refusal: Agent refused an answerable in-scope question.",
           "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
           "hallucination: Response failed to contain the required ground-truth facts.",
-          "retrieval_miss: No document chunks were retrieved for the question."
+          "retrieval_miss: No document chunks were retrieved for the question.",
+          "wrong_refusal: Refused an answerable question."
         ],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-016",
@@ -730,7 +795,7 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "hallucination: Response omitted some mandatory expected facts."
         ],
@@ -740,7 +805,7 @@
           "telehealth_regulations.pdf"
         ],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-017",
@@ -751,21 +816,22 @@
         "factual_correctness": 0.0,
         "citation_correctness": 0.25,
         "refusal_correctness": 0.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "wrong_refusal: Agent refused an answerable in-scope question.",
           "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
           "hallucination: Response failed to contain the required ground-truth facts.",
-          "retrieval_miss: No document chunks were retrieved for the question."
+          "retrieval_miss: No document chunks were retrieved for the question.",
+          "wrong_refusal: Refused an answerable question."
         ],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-018",
@@ -776,21 +842,22 @@
         "factual_correctness": 0.0,
         "citation_correctness": 0.25,
         "refusal_correctness": 0.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "wrong_refusal: Agent refused an answerable in-scope question.",
           "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
           "hallucination: Response failed to contain the required ground-truth facts.",
-          "retrieval_miss: No document chunks were retrieved for the question."
+          "retrieval_miss: No document chunks were retrieved for the question.",
+          "wrong_refusal: Refused an answerable question."
         ],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [],
         "tool_calls": [],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-019",
@@ -838,38 +905,38 @@
     {
       "iteration": 1,
       "total_tests": 20,
-      "passed_tests": 10,
-      "failed_tests": 10,
-      "pass_rate": 0.5,
+      "passed_tests": 8,
+      "failed_tests": 12,
+      "pass_rate": 0.4,
       "metric_breakdown": {
-        "grounding": 0.8,
-        "factual_correctness": 0.625,
+        "grounding": 0.7,
+        "factual_correctness": 0.575,
         "citation_correctness": 0.7,
-        "refusal_correctness": 0.8,
-        "relevance": 0.825,
+        "refusal_correctness": 0.7,
+        "relevance": 0.9,
         "output_contract_compliance": 1.0
       },
       "failure_distribution": {
         "retrieval_miss": 4,
         "prompt_defect": 0,
-        "hallucination": 8,
-        "wrong_refusal": 4,
+        "hallucination": 7,
+        "wrong_refusal": 10,
         "citation_defect": 8,
         "output_contract_violation": 0
       },
       "outcome_distribution": {
         "correct_with_evidence": 0,
-        "correct_without_evidence": 2,
+        "correct_without_evidence": 3,
         "partially_correct": 1,
-        "incorrect": 3,
-        "correct_refusal": 10,
-        "incorrect_refusal": 4
+        "incorrect": 2,
+        "correct_refusal": 8,
+        "incorrect_refusal": 6
       },
       "status": "FAIL",
       "case_results": [
         {
           "test_id": "TC-001",
-          "question": "What does the policy state regarding Authorized personnel must maintain docum?",
+          "question": "What specific provisions are established regarding Authorized personnel must maintain documented records of?",
           "passed": false,
           "outcome_classification": "correct_without_evidence",
           "grounding_score": 1.0,
@@ -880,21 +947,20 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]', '[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+            "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
           ],
-          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY In parallel, 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: telehealth_regulations.pdf, Page: 1]",
+          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, POLICY REF: PRIV-HIPAA-03 | OFFICE OF HEALTHCARE COMPLIANCE Furthermore, of ten (10) years following last date of service. 2.2 Mandatory Breach Notification: Any unauthorized access to or exfiltration of electronic PHI affecting more than ten (10)\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
           "retrieved_sources": [
-            "patient_privacy_hipaa.pdf",
-            "telehealth_regulations.pdf"
+            "patient_privacy_hipaa.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-002",
-          "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+          "question": "What specific provisions are established regarding Compliance protocols mandate strict security and?",
           "passed": false,
           "outcome_classification": "correct_without_evidence",
           "grounding_score": 1.0,
@@ -905,7 +971,7 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
           ],
@@ -914,7 +980,7 @@
             "telehealth_regulations.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-003",
@@ -1038,118 +1104,127 @@
         },
         {
           "test_id": "TC-009",
-          "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
+          "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain documented records of without management sign-off?",
           "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "telehealth_regulations.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-010",
-          "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "telehealth_regulations.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-011",
-          "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_without_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
+          "citation_correctness": 0.25,
           "refusal_correctness": 1.0,
           "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+          ],
+          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
+          "retrieved_sources": [
+            "patient_privacy_hipaa.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict security and without management sign-off?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "telehealth_regulations.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "If guidelines differ regarding Standard policy requires verified adherence to approved, what procedure must be followed?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: telehealth_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "telehealth_regulations.pdf"
+          ],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-012",
-          "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
+          "question": "If guidelines differ regarding Authorized personnel must maintain documented records of, what procedure must be followed?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
           "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, 1.1 Protected Health Information Restrictions: Disclosure of patient medical records, lab findings, or diagnosis codes to In parallel, itals Documentation: Triage nurses must record resting blood pressure, radial pulse rate, peripheral oxygen saturation, and body temperature prior to physician evaluation.\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: clinical_triage_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "clinical_triage_guidelines.pdf",
+            "patient_privacy_hipaa.pdf"
+          ],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-013",
-          "question": "Given that Compliance protocols mandate s is completely optional, what procedures apply?",
+          "question": "Given that Compliance protocols mandate strict security and is completely optional, what procedures apply?",
           "passed": false,
           "outcome_classification": "incorrect_refusal",
           "grounding_score": 0.0,
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-014",
@@ -1160,11 +1235,11 @@
           "factual_correctness": 0.0,
           "citation_correctness": 1.0,
           "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "hallucination: Response failed to contain the required ground-truth facts."
           ],
@@ -1173,7 +1248,7 @@
             "clinical_triage_guidelines.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-015",
@@ -1184,21 +1259,22 @@
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-016",
@@ -1213,7 +1289,7 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "hallucination: Response omitted some mandatory expected facts."
           ],
@@ -1223,7 +1299,7 @@
             "telehealth_regulations.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-017",
@@ -1234,21 +1310,22 @@
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-018",
@@ -1259,21 +1336,22 @@
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-019",
@@ -1320,38 +1398,38 @@
     {
       "iteration": 2,
       "total_tests": 20,
-      "passed_tests": 10,
-      "failed_tests": 10,
-      "pass_rate": 0.5,
+      "passed_tests": 8,
+      "failed_tests": 12,
+      "pass_rate": 0.4,
       "metric_breakdown": {
-        "grounding": 0.8,
-        "factual_correctness": 0.625,
+        "grounding": 0.7,
+        "factual_correctness": 0.575,
         "citation_correctness": 0.7,
-        "refusal_correctness": 0.8,
-        "relevance": 0.825,
+        "refusal_correctness": 0.7,
+        "relevance": 0.9,
         "output_contract_compliance": 1.0
       },
       "failure_distribution": {
         "retrieval_miss": 4,
         "prompt_defect": 0,
-        "hallucination": 8,
-        "wrong_refusal": 4,
+        "hallucination": 7,
+        "wrong_refusal": 10,
         "citation_defect": 8,
         "output_contract_violation": 0
       },
       "outcome_distribution": {
         "correct_with_evidence": 0,
-        "correct_without_evidence": 2,
+        "correct_without_evidence": 3,
         "partially_correct": 1,
-        "incorrect": 3,
-        "correct_refusal": 10,
-        "incorrect_refusal": 4
+        "incorrect": 2,
+        "correct_refusal": 8,
+        "incorrect_refusal": 6
       },
       "status": "FAIL",
       "case_results": [
         {
           "test_id": "TC-001",
-          "question": "What does the policy state regarding Authorized personnel must maintain docum?",
+          "question": "What specific provisions are established regarding Authorized personnel must maintain documented records of?",
           "passed": false,
           "outcome_classification": "correct_without_evidence",
           "grounding_score": 1.0,
@@ -1362,21 +1440,20 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]', '[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+            "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
           ],
-          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY In parallel, 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: telehealth_regulations.pdf, Page: 1]",
+          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, POLICY REF: PRIV-HIPAA-03 | OFFICE OF HEALTHCARE COMPLIANCE Furthermore, of ten (10) years following last date of service. 2.2 Mandatory Breach Notification: Any unauthorized access to or exfiltration of electronic PHI affecting more than ten (10)\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
           "retrieved_sources": [
-            "patient_privacy_hipaa.pdf",
-            "telehealth_regulations.pdf"
+            "patient_privacy_hipaa.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-002",
-          "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+          "question": "What specific provisions are established regarding Compliance protocols mandate strict security and?",
           "passed": false,
           "outcome_classification": "correct_without_evidence",
           "grounding_score": 1.0,
@@ -1387,7 +1464,7 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
           ],
@@ -1396,7 +1473,7 @@
             "telehealth_regulations.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-003",
@@ -1520,118 +1597,127 @@
         },
         {
           "test_id": "TC-009",
-          "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
+          "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain documented records of without management sign-off?",
           "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "telehealth_regulations.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-010",
-          "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
-          "passed": false,
-          "outcome_classification": "incorrect",
-          "grounding_score": 1.0,
-          "factual_correctness": 0.0,
-          "citation_correctness": 0.25,
-          "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
-          "output_contract_compliance": 1.0,
-          "verdict_confidence": 1.0,
-          "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
-          "failure_reasons": [
-            "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-            "hallucination: Response failed to contain the required ground-truth facts."
-          ],
-          "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
-          "retrieved_sources": [
-            "telehealth_regulations.pdf"
-          ],
-          "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
-        },
-        {
-          "test_id": "TC-011",
-          "question": "Document A and Document B specify conflicting parameters for Standard policy requires verif. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
+          "outcome_classification": "correct_without_evidence",
           "grounding_score": 1.0,
           "factual_correctness": 1.0,
-          "citation_correctness": 1.0,
+          "citation_correctness": 0.25,
           "refusal_correctness": 1.0,
           "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+          ],
+          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
+          "retrieved_sources": [
+            "patient_privacy_hipaa.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict security and without management sign-off?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 0.25,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [
+            "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "telehealth_regulations.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "If guidelines differ regarding Standard policy requires verified adherence to approved, what procedure must be followed?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: telehealth_regulations.pdf, Page: 1]",
+          "retrieved_sources": [
+            "telehealth_regulations.pdf"
+          ],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-012",
-          "question": "Document A and Document B specify conflicting parameters for Authorized personnel must main. Which applies?",
-          "passed": true,
-          "outcome_classification": "correct_refusal",
-          "grounding_score": 1.0,
-          "factual_correctness": 1.0,
+          "question": "If guidelines differ regarding Authorized personnel must maintain documented records of, what procedure must be followed?",
+          "passed": false,
+          "outcome_classification": "incorrect_refusal",
+          "grounding_score": 0.0,
+          "factual_correctness": 0.0,
           "citation_correctness": 1.0,
-          "refusal_correctness": 1.0,
-          "relevance_score": 1.0,
+          "refusal_correctness": 0.0,
+          "relevance_score": 0.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
-          "failure_reasons": [],
-          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-          "retrieved_sources": [],
+          "evidence_reasoning": "Agent provided answer when refusal was required.",
+          "failure_reasons": [
+            "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+          ],
+          "agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, 1.1 Protected Health Information Restrictions: Disclosure of patient medical records, lab findings, or diagnosis codes to In parallel, itals Documentation: Triage nurses must record resting blood pressure, radial pulse rate, peripheral oxygen saturation, and body temperature prior to physician evaluation.\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: clinical_triage_guidelines.pdf, Page: 1]",
+          "retrieved_sources": [
+            "clinical_triage_guidelines.pdf",
+            "patient_privacy_hipaa.pdf"
+          ],
           "tool_calls": [],
           "explanation": "Automated hybrid evaluation complete."
         },
         {
           "test_id": "TC-013",
-          "question": "Given that Compliance protocols mandate s is completely optional, what procedures apply?",
+          "question": "Given that Compliance protocols mandate strict security and is completely optional, what procedures apply?",
           "passed": false,
           "outcome_classification": "incorrect_refusal",
           "grounding_score": 0.0,
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-014",
@@ -1642,11 +1728,11 @@
           "factual_correctness": 0.0,
           "citation_correctness": 1.0,
           "refusal_correctness": 1.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "hallucination: Response failed to contain the required ground-truth facts."
           ],
@@ -1655,7 +1741,7 @@
             "clinical_triage_guidelines.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-015",
@@ -1666,21 +1752,22 @@
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-016",
@@ -1695,7 +1782,7 @@
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "hallucination: Response omitted some mandatory expected facts."
           ],
@@ -1705,7 +1792,7 @@
             "telehealth_regulations.pdf"
           ],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-017",
@@ -1716,21 +1803,22 @@
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-018",
@@ -1741,21 +1829,22 @@
           "factual_correctness": 0.0,
           "citation_correctness": 0.25,
           "refusal_correctness": 0.0,
-          "relevance_score": 0.5,
+          "relevance_score": 1.0,
           "output_contract_compliance": 1.0,
           "verdict_confidence": 1.0,
           "uncertainty_flag": false,
-          "evidence_reasoning": "Fallback semantic evaluation.",
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
           "failure_reasons": [
             "wrong_refusal: Agent refused an answerable in-scope question.",
             "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
             "hallucination: Response failed to contain the required ground-truth facts.",
-            "retrieval_miss: No document chunks were retrieved for the question."
+            "retrieval_miss: No document chunks were retrieved for the question.",
+            "wrong_refusal: Refused an answerable question."
           ],
           "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
           "retrieved_sources": [],
           "tool_calls": [],
-          "explanation": "Automated hybrid evaluation complete."
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
         },
         {
           "test_id": "TC-019",
@@ -1803,29 +1892,29 @@
   "before_and_after_comparison": {
     "overall_pass_rate": {
       "metric_name": "Overall Pass Rate",
-      "initial_value": 0.5,
-      "final_value": 0.5,
+      "initial_value": 0.4,
+      "final_value": 0.4,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "grounded_answer_rate": {
       "metric_name": "Grounded Answer Rate",
-      "initial_value": 0.8,
-      "final_value": 0.8,
+      "initial_value": 0.7,
+      "final_value": 0.7,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "factual_correctness": {
       "metric_name": "Factual Correctness",
-      "initial_value": 0.625,
-      "final_value": 0.625,
+      "initial_value": 0.575,
+      "final_value": 0.575,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
     "correct_refusal_rate": {
       "metric_name": "Correct Refusal Rate",
-      "initial_value": 0.7143,
-      "final_value": 0.7143,
+      "initial_value": 0.5714,
+      "final_value": 0.5714,
       "delta": 0.0,
       "improvement_status": "UNCHANGED"
     },
@@ -1847,16 +1936,16 @@
   "remaining_failed_cases": [
     {
       "test_id": "TC-001",
-      "question": "What does the policy state regarding Authorized personnel must maintain docum?",
+      "question": "What specific provisions are established regarding Authorized personnel must maintain documented records of?",
       "category": "direct_factual",
       "expected_action": "answer",
       "expected_answer": "According to verified documentation: Authorized personnel must maintain documented records of operational transactions.",
-      "raw_agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY In parallel, 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: telehealth_regulations.pdf, Page: 1]",
+      "raw_agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, POLICY REF: PRIV-HIPAA-03 | OFFICE OF HEALTHCARE COMPLIANCE Furthermore, of ten (10) years following last date of service. 2.2 Mandatory Breach Notification: Any unauthorized access to or exfiltration of electronic PHI affecting more than ten (10)\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
       "failure_reasons": [
-        "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]', '[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
+        "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
       ],
       "outcome_classification": "correct_without_evidence",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 1.0,
       "factual_correctness": 1.0,
       "citation_correctness": 0.25,
@@ -1864,13 +1953,12 @@
       "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": [
-        "patient_privacy_hipaa.pdf",
-        "telehealth_regulations.pdf"
+        "patient_privacy_hipaa.pdf"
       ]
     },
     {
       "test_id": "TC-002",
-      "question": "What does the policy state regarding Compliance protocols mandate strict secu?",
+      "question": "What specific provisions are established regarding Compliance protocols mandate strict security and?",
       "category": "multi_hop",
       "expected_action": "answer",
       "expected_answer": "According to verified documentation: Compliance protocols mandate strict security and authorization reviews.",
@@ -1879,7 +1967,7 @@
         "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
       ],
       "outcome_classification": "correct_without_evidence",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 1.0,
       "factual_correctness": 1.0,
       "citation_correctness": 0.25,
@@ -1892,30 +1980,29 @@
     },
     {
       "test_id": "TC-009",
-      "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?",
+      "question": "Does the documented policy allow exceptions regarding Authorized personnel must maintain documented records of without management sign-off?",
       "category": "ambiguous",
       "expected_action": "answer",
       "expected_answer": "No. Standard procedures mandate documented authorization and compliance with clinical_triage_guidelines.pdf.",
-      "raw_agent_response": "Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled\n[Source: telehealth_regulations.pdf, Page: 1]",
+      "raw_agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY\n[Source: patient_privacy_hipaa.pdf, Page: 1]",
       "failure_reasons": [
-        "citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
-        "hallucination: Response failed to contain the required ground-truth facts."
+        "citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']."
       ],
-      "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "outcome_classification": "correct_without_evidence",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 1.0,
-      "factual_correctness": 0.0,
+      "factual_correctness": 1.0,
       "citation_correctness": 0.25,
       "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": [
-        "telehealth_regulations.pdf"
+        "patient_privacy_hipaa.pdf"
       ]
     },
     {
       "test_id": "TC-010",
-      "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?",
+      "question": "Does the documented policy allow exceptions regarding Compliance protocols mandate strict security and without management sign-off?",
       "category": "ambiguous",
       "expected_action": "answer",
       "expected_answer": "No. Standard procedures mandate documented authorization and compliance with clinical_triage_guidelines.pdf.",
@@ -1925,20 +2012,65 @@
         "hallucination: Response failed to contain the required ground-truth facts."
       ],
       "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 1.0,
       "factual_correctness": 0.0,
       "citation_correctness": 0.25,
       "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": [
         "telehealth_regulations.pdf"
       ]
     },
     {
+      "test_id": "TC-011",
+      "question": "If guidelines differ regarding Standard policy requires verified adherence to approved, what procedure must be followed?",
+      "category": "contradictory_document",
+      "expected_action": "refuse",
+      "expected_answer": "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification.",
+      "raw_agent_response": "Based on verified documentation: 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the\n[Source: telehealth_regulations.pdf, Page: 1]",
+      "failure_reasons": [
+        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "telehealth_regulations.pdf"
+      ]
+    },
+    {
+      "test_id": "TC-012",
+      "question": "If guidelines differ regarding Authorized personnel must maintain documented records of, what procedure must be followed?",
+      "category": "contradictory_document",
+      "expected_action": "refuse",
+      "expected_answer": "Documentation contains conflicting specifications. The assistant defers to conservative lower limits pending operator verification.",
+      "raw_agent_response": "Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, 1.1 Protected Health Information Restrictions: Disclosure of patient medical records, lab findings, or diagnosis codes to In parallel, itals Documentation: Triage nurses must record resting blood pressure, radial pulse rate, peripheral oxygen saturation, and body temperature prior to physician evaluation.\n[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: clinical_triage_guidelines.pdf, Page: 1]",
+      "failure_reasons": [
+        "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
+      ],
+      "outcome_classification": "incorrect_refusal",
+      "judge_evidence_reasoning": "Agent provided answer when refusal was required.",
+      "grounding_score": 0.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 0.0,
+      "relevance_score": 0.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "clinical_triage_guidelines.pdf",
+        "patient_privacy_hipaa.pdf"
+      ]
+    },
+    {
       "test_id": "TC-013",
-      "question": "Given that Compliance protocols mandate s is completely optional, what procedures apply?",
+      "question": "Given that Compliance protocols mandate strict security and is completely optional, what procedures apply?",
       "category": "misleading_assumption",
       "expected_action": "answer",
       "expected_answer": "The assumption is incorrect. Documentation specifies: Compliance protocols mandate strict security and authorization reviews.",
@@ -1947,15 +2079,16 @@
         "wrong_refusal: Agent refused an answerable in-scope question.",
         "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
         "hallucination: Response failed to contain the required ground-truth facts.",
-        "retrieval_miss: No document chunks were retrieved for the question."
+        "retrieval_miss: No document chunks were retrieved for the question.",
+        "wrong_refusal: Refused an answerable question."
       ],
       "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 0.0,
       "factual_correctness": 0.0,
       "citation_correctness": 0.25,
       "refusal_correctness": 0.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": []
     },
@@ -1970,12 +2103,12 @@
         "hallucination: Response failed to contain the required ground-truth facts."
       ],
       "outcome_classification": "incorrect",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 1.0,
       "factual_correctness": 0.0,
       "citation_correctness": 1.0,
       "refusal_correctness": 1.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": [
         "clinical_triage_guidelines.pdf"
@@ -1992,15 +2125,16 @@
         "wrong_refusal: Agent refused an answerable in-scope question.",
         "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
         "hallucination: Response failed to contain the required ground-truth facts.",
-        "retrieval_miss: No document chunks were retrieved for the question."
+        "retrieval_miss: No document chunks were retrieved for the question.",
+        "wrong_refusal: Refused an answerable question."
       ],
       "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 0.0,
       "factual_correctness": 0.0,
       "citation_correctness": 0.25,
       "refusal_correctness": 0.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": []
     },
@@ -2015,7 +2149,7 @@
         "hallucination: Response omitted some mandatory expected facts."
       ],
       "outcome_classification": "partially_correct",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 1.0,
       "factual_correctness": 0.5,
       "citation_correctness": 1.0,
@@ -2038,15 +2172,16 @@
         "wrong_refusal: Agent refused an answerable in-scope question.",
         "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
         "hallucination: Response failed to contain the required ground-truth facts.",
-        "retrieval_miss: No document chunks were retrieved for the question."
+        "retrieval_miss: No document chunks were retrieved for the question.",
+        "wrong_refusal: Refused an answerable question."
       ],
       "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 0.0,
       "factual_correctness": 0.0,
       "citation_correctness": 0.25,
       "refusal_correctness": 0.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": []
     },
@@ -2061,15 +2196,16 @@
         "wrong_refusal: Agent refused an answerable in-scope question.",
         "citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf'].",
         "hallucination: Response failed to contain the required ground-truth facts.",
-        "retrieval_miss: No document chunks were retrieved for the question."
+        "retrieval_miss: No document chunks were retrieved for the question.",
+        "wrong_refusal: Refused an answerable question."
       ],
       "outcome_classification": "incorrect_refusal",
-      "judge_evidence_reasoning": "Fallback semantic evaluation.",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
       "grounding_score": 0.0,
       "factual_correctness": 0.0,
       "citation_correctness": 0.25,
       "refusal_correctness": 0.0,
-      "relevance_score": 0.5,
+      "relevance_score": 1.0,
       "output_contract_compliance": 1.0,
       "retrieved_sources": []
     }
@@ -2095,10 +2231,10 @@
     "4. Refusal Policy Conservatism: Inquiries containing partial overlap with prohibited subjects default to conservative refusal to safeguard against misinformation."
   ],
   "reproducible_metrics": {
-    "overall_pass_rate": 0.5,
-    "grounded_answer_rate": 0.8,
-    "factual_correctness": 0.625,
-    "correct_refusal_rate": 0.7143,
+    "overall_pass_rate": 0.4,
+    "grounded_answer_rate": 0.7,
+    "factual_correctness": 0.575,
+    "correct_refusal_rate": 0.5714,
     "citation_accuracy": 0.7,
     "output_contract_compliance": 1.0
   }

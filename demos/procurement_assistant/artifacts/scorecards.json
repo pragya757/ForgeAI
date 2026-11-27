@@ -2,34 +2,34 @@
   {
     "iteration": 1,
     "total_tests": 20,
-    "passed_tests": 15,
-    "failed_tests": 5,
-    "pass_rate": 0.75,
+    "passed_tests": 17,
+    "failed_tests": 3,
+    "pass_rate": 0.85,
     "metric_breakdown": {
-      "grounding": 0.91,
+      "grounding": 0.95,
       "factual_correctness": 0.85,
       "citation_correctness": 0.985,
       "refusal_correctness": 0.95,
-      "relevance": 0.9,
+      "relevance": 0.95,
       "output_contract_compliance": 1.0
     },
     "failure_distribution": {
       "retrieval_miss": 0,
       "prompt_defect": 0,
-      "hallucination": 4,
+      "hallucination": 2,
       "wrong_refusal": 1,
       "citation_defect": 1,
       "output_contract_violation": 0
     },
     "outcome_distribution": {
-      "correct_with_evidence": 10,
-      "correct_without_evidence": 2,
+      "correct_with_evidence": 12,
+      "correct_without_evidence": 0,
       "partially_correct": 0,
       "incorrect": 2,
       "correct_refusal": 5,
       "incorrect_refusal": 1
     },
-    "status": "NEEDS_OPTIMIZATION",
+    "status": "PASS",
     "case_results": [
       {
         "test_id": "TC-001",
@@ -44,7 +44,7 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
@@ -77,7 +77,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-002",
@@ -92,12 +92,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating.\n[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -126,7 +126,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-003",
@@ -141,12 +141,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without superintendent sign-off.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -163,7 +163,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-004",
@@ -178,12 +178,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n[Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -223,14 +223,14 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-005",
         "question": "Under what conditions is single-source procurement permitted without three competing quotes?",
-        "passed": false,
-        "outcome_classification": "correct_without_evidence",
-        "grounding_score": 0.6,
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
@@ -238,13 +238,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "hallucination: Response contains assertions partially ungrounded in retrieved context."
-        ],
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
         "agent_response": "Single-source procurement is permitted only when parts are proprietary OEM certified components to preserve class certification or emergency conditions endangering seaworthiness.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -261,7 +260,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-006",
@@ -276,12 +275,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection.\n[Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -321,7 +320,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-007",
@@ -336,11 +335,10 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
           "spare_parts_catalog.csv"
         ],
@@ -371,7 +369,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-008",
@@ -386,12 +384,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -408,7 +406,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-009",
@@ -423,12 +421,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Approved suppliers must provide a minimum warranty period of 12 months from installation date or 18 months from delivery date.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -445,7 +443,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-010",
@@ -464,23 +462,11 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:14:47",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:14:47.424213"
-            }
-          },
           {
             "tool": "csv_lookup",
             "input": {
@@ -514,9 +500,8 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -552,8 +537,8 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -589,9 +574,10 @@
         "failure_reasons": [
           "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
         ],
-        "agent_response": "Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "agent_response": "Based on verified documentation: This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C In parallel, ll vessels in the fleet. C In parallel, Standard sea freight (10 to 14 days transit); regional hub dispatch (48 hours). 2.2 Aegis Maritime Supplies (Singapore Hub) In parallel, 6.1 Financial Transactions: The AI Procurement Assistant is strictly prohibited from executing direct bank wire transfers, aut In parallel, All marine spare parts and technical ship supplies must be procured exclusively from accredited vendors evaluated under IS\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -626,7 +612,9 @@
         "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
+        "retrieved_sources": [
+          "spare_parts_catalog.csv"
+        ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
@@ -661,6 +649,7 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
+          "spare_parts_catalog.csv",
           "supplier_information.pdf"
         ],
         "tool_calls": [
@@ -689,20 +678,20 @@
         "factual_correctness": 0.0,
         "citation_correctness": 0.7,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "citation_defect: Partially cited sources. Missing citations for: {'procurement_guidelines.pdf'}",
           "hallucination: Response failed to contain the required ground-truth facts."
         ],
         "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -731,14 +720,14 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-017",
         "question": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?",
-        "passed": false,
-        "outcome_classification": "correct_without_evidence",
-        "grounding_score": 0.6,
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
@@ -746,15 +735,13 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "hallucination: Response contains assertions partially ungrounded in retrieved context."
-        ],
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
         "agent_response": "Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -771,7 +758,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-018",
@@ -786,12 +773,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n[Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -808,7 +795,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-019",
@@ -823,12 +810,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "In a safety emergency endangering vessel seaworthiness or blackout at sea, the Master and Chief Engineer can authorize emergency repairs up to $10,000 USD.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -845,7 +832,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-020",
@@ -856,18 +843,18 @@
         "factual_correctness": 0.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "hallucination: Response failed to contain the required ground-truth facts."
         ],
-        "agent_response": "Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "agent_response": "Based on verified documentation: This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C Furthermore, ll vessels in the fleet. C Furthermore, 3.3 Fleet Technical Director Ceiling: Up to $50,000.00 USD. 3.4 Dual Sign-Off: Any expenditure exceeding $50,000.00 USD requires dual authorization from the Fleet Technical Directo Furthermore, 6.1 Financial Transactions: The AI Procurement Assistant is strictly prohibited from executing direct bank wire transfers, aut\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -884,41 +871,41 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       }
     ]
   },
   {
     "iteration": 2,
     "total_tests": 20,
-    "passed_tests": 15,
-    "failed_tests": 5,
-    "pass_rate": 0.75,
+    "passed_tests": 17,
+    "failed_tests": 3,
+    "pass_rate": 0.85,
     "metric_breakdown": {
-      "grounding": 0.91,
+      "grounding": 0.95,
       "factual_correctness": 0.85,
       "citation_correctness": 0.985,
       "refusal_correctness": 0.95,
-      "relevance": 0.9,
+      "relevance": 0.95,
       "output_contract_compliance": 1.0
     },
     "failure_distribution": {
       "retrieval_miss": 0,
       "prompt_defect": 0,
-      "hallucination": 4,
+      "hallucination": 2,
       "wrong_refusal": 1,
       "citation_defect": 1,
       "output_contract_violation": 0
     },
     "outcome_distribution": {
-      "correct_with_evidence": 10,
-      "correct_without_evidence": 2,
+      "correct_with_evidence": 12,
+      "correct_without_evidence": 0,
       "partially_correct": 0,
       "incorrect": 2,
       "correct_refusal": 5,
       "incorrect_refusal": 1
     },
-    "status": "NEEDS_OPTIMIZATION",
+    "status": "PASS",
     "case_results": [
       {
         "test_id": "TC-001",
@@ -933,7 +920,7 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
@@ -966,7 +953,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-002",
@@ -981,12 +968,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "The turbocharger bearing assembly TB-BRG-882 is supplied by Nordik Marine Spares, which holds an A+ (98%) quality compliance rating.\n[Source: spare_parts_catalog.csv] [Source: supplier_information.pdf]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1015,7 +1002,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-003",
@@ -1030,12 +1017,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "A Chief Engineer can authorize routine spare purchases up to $2,500.00 USD without superintendent sign-off.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1052,7 +1039,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-004",
@@ -1067,12 +1054,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n[Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1112,14 +1099,14 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-005",
         "question": "Under what conditions is single-source procurement permitted without three competing quotes?",
-        "passed": false,
-        "outcome_classification": "correct_without_evidence",
-        "grounding_score": 0.6,
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
@@ -1127,13 +1114,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "hallucination: Response contains assertions partially ungrounded in retrieved context."
-        ],
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
         "agent_response": "Single-source procurement is permitted only when parts are proprietary OEM certified components to preserve class certification or emergency conditions endangering seaworthiness.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1150,7 +1136,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-006",
@@ -1165,12 +1151,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Payment terms with Oceanic Engineering Ltd are Net 45 days post delivery inspection.\n[Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1210,7 +1196,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-007",
@@ -1225,11 +1211,10 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "The minimum safety stock level for SEAL-PROP-09 is 6 units in the Dubai warehouse.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
           "spare_parts_catalog.csv"
         ],
@@ -1260,7 +1245,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-008",
@@ -1275,12 +1260,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Purchase orders exceeding $50,000 USD require dual authorization from the Fleet Technical Director and Chief Financial Officer (CFO).\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1297,7 +1282,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-009",
@@ -1312,12 +1297,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Approved suppliers must provide a minimum warranty period of 12 months from installation date or 18 months from delivery date.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1334,7 +1319,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-010",
@@ -1353,23 +1338,11 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
-          {
-            "tool": "current_date",
-            "input": {},
-            "output": {
-              "date": "2026-11-25",
-              "time": "23:14:47",
-              "weekday": "Wednesday",
-              "year": 2026,
-              "month": "November",
-              "iso_timestamp": "2026-11-25T23:14:47.723598"
-            }
-          },
           {
             "tool": "csv_lookup",
             "input": {
@@ -1403,9 +1376,8 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1441,8 +1413,8 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1478,9 +1450,10 @@
         "failure_reasons": [
           "wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer."
         ],
-        "agent_response": "Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "agent_response": "Based on verified documentation: This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C In parallel, ll vessels in the fleet. C In parallel, Standard sea freight (10 to 14 days transit); regional hub dispatch (48 hours). 2.2 Aegis Maritime Supplies (Singapore Hub) In parallel, 6.1 Financial Transactions: The AI Procurement Assistant is strictly prohibited from executing direct bank wire transfers, aut In parallel, All marine spare parts and technical ship supplies must be procured exclusively from accredited vendors evaluated under IS\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1515,7 +1488,9 @@
         "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
-        "retrieved_sources": [],
+        "retrieved_sources": [
+          "spare_parts_catalog.csv"
+        ],
         "tool_calls": [
           {
             "tool": "csv_lookup",
@@ -1550,6 +1525,7 @@
         "failure_reasons": [],
         "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
         "retrieved_sources": [
+          "spare_parts_catalog.csv",
           "supplier_information.pdf"
         ],
         "tool_calls": [
@@ -1578,20 +1554,20 @@
         "factual_correctness": 0.0,
         "citation_correctness": 0.7,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "citation_defect: Partially cited sources. Missing citations for: {'procurement_guidelines.pdf'}",
           "hallucination: Response failed to contain the required ground-truth facts."
         ],
         "agent_response": "Part NV-PUMP-001 (Main Engine Fuel Oil Delivery Pump) is stocked in the Rotterdam warehouse with 4 units available. The unit price is $4,250.00 USD, supplied by Nordik Marine Spares.\n[Source: spare_parts_catalog.csv]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1620,14 +1596,14 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-017",
         "question": "Can we purchase non-OEM filter elements for the main engine from unverified suppliers if they are 50% cheaper?",
-        "passed": false,
-        "outcome_classification": "correct_without_evidence",
-        "grounding_score": 0.6,
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
         "factual_correctness": 1.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
@@ -1635,15 +1611,13 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
-        "failure_reasons": [
-          "hallucination: Response contains assertions partially ungrounded in retrieved context."
-        ],
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
         "agent_response": "Critical engine machinery spares must strictly originate from vetted suppliers holding ISO/Class certification; purchasing unverified non-OEM parts is prohibited regardless of discount.\n[Source: procurement_guidelines.pdf, Page: 1] [Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
           "procurement_guidelines.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1660,7 +1634,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-018",
@@ -1675,12 +1649,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "Aegis Maritime Supplies quotes express air freight delivery lead time of 3 to 5 business days with an authorized 15% courier surcharge.\n[Source: supplier_information.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "spare_parts_catalog.csv"
+          "spare_parts_catalog.csv",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1697,7 +1671,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-019",
@@ -1712,12 +1686,12 @@
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [],
         "agent_response": "In a safety emergency endangering vessel seaworthiness or blackout at sea, the Master and Chief Engineer can authorize emergency repairs up to $10,000 USD.\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1734,7 +1708,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       },
       {
         "test_id": "TC-020",
@@ -1745,18 +1719,18 @@
         "factual_correctness": 0.0,
         "citation_correctness": 1.0,
         "refusal_correctness": 1.0,
-        "relevance_score": 0.5,
+        "relevance_score": 1.0,
         "output_contract_compliance": 1.0,
         "verdict_confidence": 1.0,
         "uncertainty_flag": false,
-        "evidence_reasoning": "Fallback semantic evaluation.",
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
         "failure_reasons": [
           "hallucination: Response failed to contain the required ground-truth facts."
         ],
-        "agent_response": "Based on verified documentation: PACIFIC HORIZON MARITIME - VESSEL PROCUREMENT GUIDELINES\n[Source: procurement_guidelines.pdf, Page: 1]",
+        "agent_response": "Based on verified documentation: This policy governs technical procurement of machinery, spare parts, and drydock consumables for all vessels in the fleet. C Furthermore, ll vessels in the fleet. C Furthermore, 3.3 Fleet Technical Director Ceiling: Up to $50,000.00 USD. 3.4 Dual Sign-Off: Any expenditure exceeding $50,000.00 USD requires dual authorization from the Fleet Technical Directo Furthermore, 6.1 Financial Transactions: The AI Procurement Assistant is strictly prohibited from executing direct bank wire transfers, aut\n[Source: procurement_guidelines.pdf, Page: 1]",
         "retrieved_sources": [
-          "supplier_information.pdf",
-          "procurement_guidelines.pdf"
+          "procurement_guidelines.pdf",
+          "supplier_information.pdf"
         ],
         "tool_calls": [
           {
@@ -1773,7 +1747,7 @@
             }
           }
         ],
-        "explanation": "Automated hybrid evaluation complete."
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
       }
     ]
   }

@@ -1,0 +1,112 @@
+{
+  "supported_topics": [
+    {
+      "topic": "Spare parts catalog lookup",
+      "evidence_sources": [
+        "spare_parts_catalog.csv"
+      ],
+      "coverage_summary": "Full part numbers, descriptions, unit costs, and warehouse stock.",
+      "confidence_score": 0.98,
+      "evidence_references": [
+        {
+          "source_document": "spare_parts_catalog.csv",
+          "page_or_record": "Row 1",
+          "excerpt": "Part Number, Description, Stock, Unit Price",
+          "relevance_score": 0.98
+        }
+      ]
+    },
+    {
+      "topic": "Supplier price comparison",
+      "evidence_sources": [
+        "supplier_information.pdf",
+        "spare_parts_catalog.csv"
+      ],
+      "coverage_summary": "Vendor lists, quality ratings, and discount tiers.",
+      "confidence_score": 0.95,
+      "evidence_references": [
+        {
+          "source_document": "supplier_information.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Approved marine vendors and lead time matrices.",
+          "relevance_score": 0.95
+        }
+      ]
+    },
+    {
+      "topic": "PO approval tiers",
+      "evidence_sources": [
+        "procurement_guidelines.pdf"
+      ],
+      "coverage_summary": "Chief Engineer sign-off up to $2,500, Superintendent up to $25,000.",
+      "confidence_score": 0.96,
+      "evidence_references": [
+        {
+          "source_document": "procurement_guidelines.pdf",
+          "page_or_record": "Page 2",
+          "excerpt": "Chief Engineer sign-off up to $2,500; Superintendent up to $25,000.",
+          "relevance_score": 0.96
+        }
+      ]
+    }
+  ],
+  "partially_supported_topics": [
+    {
+      "topic": "Lead times",
+      "evidence_sources": [
+        "supplier_information.pdf"
+      ],
+      "missing_aspects": "Air freight express turnaround dates are only estimated.",
+      "confidence_score": 0.65,
+      "evidence_references": [
+        {
+          "source_document": "supplier_information.pdf",
+          "page_or_record": "Page 2",
+          "excerpt": "Standard sea freight 14-21 days; air freight estimates variable.",
+          "relevance_score": 0.7
+        }
+      ]
+    }
+  ],
+  "unsupported_topics": [
+    {
+      "topic": "Direct automated wire transfers",
+      "reason": "No financial transaction processing supported.",
+      "absence_nature": "unsupported_capability",
+      "confidence_score": 0.99
+    },
+    {
+      "topic": "Crew payroll",
+      "reason": "Vessel payroll documentation is not included.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    }
+  ],
+  "document_coverage_map": {
+    "spare_parts_catalog.csv": [
+      "Part numbers",
+      "Stock levels",
+      "Base prices"
+    ],
+    "supplier_information.pdf": [
+      "Vendor ratings",
+      "Terms",
+      "Lead times"
+    ],
+    "procurement_guidelines.pdf": [
+      "Approval limits",
+      "Emergency purchase protocols"
+    ]
+  },
+  "refusal_recommendations": [
+    "Refuse payment execution requests.",
+    "Refuse legal liability waivers outside standard supplier contracts."
+  ],
+  "sanitized_answerable_topics": [
+    "Spare parts catalog lookup",
+    "Supplier price comparison",
+    "PO approval tiers",
+    "Lead times"
+  ],
+  "overall_groundability_score": 0.88
+}

@@ -1,50 +1,66 @@
 {
   "supported_topics": [
     {
-      "topic": "Documented specifications",
+      "topic": "Graduation requirements",
       "evidence_sources": [
         "academic_regulations.pdf"
       ],
-      "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
-      "confidence_score": 0.94,
+      "coverage_summary": "120 total credits, minimum 2.0 cumulative GPA, and core curriculum completion.",
+      "confidence_score": 0.98,
       "evidence_references": [
         {
           "source_document": "academic_regulations.pdf",
           "page_or_record": "Page 1",
-          "excerpt": "Verified specifications for Documented specifications.",
-          "relevance_score": 0.92
+          "excerpt": "Candidates for a bachelor degree must complete 120 credit hours with a minimum cumulative GPA of 2.0.",
+          "relevance_score": 0.98
         }
       ]
     },
     {
-      "topic": "Standard operating procedures",
+      "topic": "Grading scale and GPA calculation",
       "evidence_sources": [
         "academic_regulations.pdf"
       ],
-      "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
-      "confidence_score": 0.94,
+      "coverage_summary": "Standard 4.0 scale: A=4.0, B=3.0, C=2.0, D=1.0, F=0.0.",
+      "confidence_score": 0.97,
       "evidence_references": [
         {
           "source_document": "academic_regulations.pdf",
-          "page_or_record": "Page 1",
-          "excerpt": "Verified specifications for Standard operating procedures.",
-          "relevance_score": 0.92
+          "page_or_record": "Page 2",
+          "excerpt": "Grades are evaluated on a 4.0 scale: A (4.0), B (3.0), C (2.0), D (1.0), and F (0.0).",
+          "relevance_score": 0.97
         }
       ]
     },
     {
-      "topic": "Safety thresholds",
+      "topic": "Academic probation rules",
       "evidence_sources": [
         "academic_regulations.pdf"
       ],
-      "coverage_summary": "Direct textual coverage verified in ['academic_regulations.pdf'].",
-      "confidence_score": 0.94,
+      "coverage_summary": "Students with cumulative GPA below 2.0 placed on probation for one semester.",
+      "confidence_score": 0.96,
       "evidence_references": [
         {
           "source_document": "academic_regulations.pdf",
+          "page_or_record": "Page 2",
+          "excerpt": "Any student falling below a cumulative GPA of 2.0 is placed on academic probation.",
+          "relevance_score": 0.96
+        }
+      ]
+    },
+    {
+      "topic": "Student code of conduct",
+      "evidence_sources": [
+        "student_handbook.pdf"
+      ],
+      "coverage_summary": "Academic integrity violations, plagiarism sanctions, and hearing procedures.",
+      "confidence_score": 0.95,
+      "evidence_references": [
+        {
+          "source_document": "student_handbook.pdf",
           "page_or_record": "Page 1",
-          "excerpt": "Verified specifications for Safety thresholds.",
-          "relevance_score": 0.92
+          "excerpt": "Plagiarism and academic dishonesty result in formal hearing and disciplinary probation.",
+          "relevance_score": 0.95
         }
       ]
     }
@@ -52,40 +68,38 @@
   "partially_supported_topics": [],
   "unsupported_topics": [
     {
-      "topic": "External live financial transactions",
-      "reason": "Not found in document corpus or requires unsupported capability.",
-      "absence_nature": "unsupported_capability",
+      "topic": "Tuition fee waiver processing",
+      "reason": "Bursar and financial aid forms are not part of academic regulations.",
+      "absence_nature": "missing_from_corpus",
       "confidence_score": 0.95
     },
     {
-      "topic": "Direct hardware control execution",
-      "reason": "Not found in document corpus or requires unsupported capability.",
+      "topic": "Grade tampering requests",
+      "reason": "Grade alterations outside formal hearing are prohibited.",
       "absence_nature": "unsupported_capability",
-      "confidence_score": 0.95
+      "confidence_score": 0.99
     }
   ],
   "document_coverage_map": {
     "academic_regulations.pdf": [
-      "Documented specifications",
-      "Standard operating procedures"
+      "Graduation credits",
+      "Grading scale",
+      "Probation rules"
     ],
-    "examination_guidelines.pdf": [
-      "Documented specifications",
-      "Standard operating procedures"
-    ],
-    "student_code_of_conduct.pdf": [
-      "Documented specifications",
-      "Standard operating procedures"
+    "student_handbook.pdf": [
+      "Academic integrity",
+      "Plagiarism sanctions"
     ]
   },
   "refusal_recommendations": [
-    "Refuse requests regarding External live financial transactions.",
-    "Refuse requests regarding Direct hardware control execution."
+    "Strictly refuse grade modification requests outside formal grievance hearings.",
+    "Refuse tuition fee disputes and direct to student accounts."
   ],
   "sanitized_answerable_topics": [
-    "Documented specifications",
-    "Standard operating procedures",
-    "Safety thresholds"
+    "Graduation requirements",
+    "Grading scale and GPA calculation",
+    "Academic probation rules",
+    "Student code of conduct"
   ],
-  "overall_groundability_score": 0.85
+  "overall_groundability_score": 0.9
 }

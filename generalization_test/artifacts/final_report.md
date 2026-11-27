@@ -1,9 +1,9 @@
 # ForgeAI Honest Agent Quality & Observability Report
 
-**Generated On:** 2026-11-26 00:14:19  
-**Agent Name:** `Autonomous Operations Assistant`  
+**Generated On:** 2026-11-27 11:38:27  
+**Agent Name:** `Medical Clinic Policy Assistant`  
 **Evaluation Status:** `UNSATISFACTORY`  
-**Final Pass Rate:** **50.0%** (Baseline: 50.0%)  
+**Final Pass Rate:** **40.0%** (Baseline: 40.0%)  
 **Optimization Iterations Executed:** 2 (Hard Ceiling: 3)  
 
 ---
@@ -29,21 +29,24 @@ Records Department, Direct Family Disclosure Limits, Medical Power |
 
 ## 3. Structured Requirements
 
-- **Agent Name:** `Autonomous Operations Assistant`
+- **Agent Name:** `Medical Clinic Policy Assistant`
 - **Primary Purpose:** Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations.
-- **Target Audience:** Technical operators, mission engineers, and authorized domain staff
-- **Operational Scope:** Verifiable documentation queries within the provided corpus.
+- **Target Audience:** Authorized personnel and operational staff
+- **Operational Scope:** Verifiable documentation queries covering SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS, Urgent Clinical Triage, Emergency Department, Routine Consultation Scheduling.
 - **Conversational Tone:** Authoritative, precise, and objective
 
-### Must-Answer Topics (3)
-- [x] Documented specifications
-- [x] Standard operating procedures
-- [x] Safety thresholds
+### Must-Answer Topics (6)
+- [x] SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS
+- [x] Urgent Clinical Triage
+- [x] Emergency Department
+- [x] Routine Consultation Scheduling
+- [x] Missed Appointment Fees
+- [x] Patient Release Authorization
 
 ### Must-Refuse Topics (3)
-- [ ] **REFUSE:** Undocumented speculations
+- [ ] **REFUSE:** Personal confidential records
 - [ ] **REFUSE:** External live execution
-- [ ] **REFUSE:** Confidential telemetry
+- [ ] **REFUSE:** Direct financial wire transactions
 
 ### Intake Assumptions (4)
 - *Assumption:* Provided documents are authoritative.
@@ -58,13 +61,16 @@ Records Department, Direct Family Disclosure Limits, Medical Power |
 
 ## 4. Groundability Guard Analysis
 
-- **Overall Groundability Index:** `85.0%`
-- **Sanitized Answerable Topics:** Documented specifications, Standard operating procedures, Safety thresholds
+- **Overall Groundability Index:** `88.0%`
+- **Sanitized Answerable Topics:** SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS, Urgent Clinical Triage, Emergency Department, Routine Consultation Scheduling, Missed Appointment Fees, Patient Release Authorization
 
 ### Supported Topics (Corpus Evidenced)
-- **Documented specifications** (Confidence: 94%): Direct textual coverage verified in ['clinical_triage_guidelines.pdf']. *(Sources: `clinical_triage_guidelines.pdf`)*
-- **Standard operating procedures** (Confidence: 94%): Direct textual coverage verified in ['clinical_triage_guidelines.pdf']. *(Sources: `clinical_triage_guidelines.pdf`)*
-- **Safety thresholds** (Confidence: 94%): Direct textual coverage verified in ['clinical_triage_guidelines.pdf']. *(Sources: `clinical_triage_guidelines.pdf`)*
+- **SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS** (Confidence: 94%): Direct textual coverage verified in clinical_triage_guidelines.pdf. *(Sources: `clinical_triage_guidelines.pdf`)*
+- **Urgent Clinical Triage** (Confidence: 94%): Direct textual coverage verified in patient_privacy_hipaa.pdf. *(Sources: `patient_privacy_hipaa.pdf`)*
+- **Emergency Department** (Confidence: 94%): Direct textual coverage verified in telehealth_regulations.pdf. *(Sources: `telehealth_regulations.pdf`)*
+- **Routine Consultation Scheduling** (Confidence: 94%): Direct textual coverage verified in clinical_triage_guidelines.pdf. *(Sources: `clinical_triage_guidelines.pdf`)*
+- **Missed Appointment Fees** (Confidence: 94%): Direct textual coverage verified in patient_privacy_hipaa.pdf. *(Sources: `patient_privacy_hipaa.pdf`)*
+- **Patient Release Authorization** (Confidence: 94%): Direct textual coverage verified in telehealth_regulations.pdf. *(Sources: `telehealth_regulations.pdf`)*
 
 ### Unsupported Topics (Strict Refusal Enforced)
 - **External live financial transactions** [unsupported_capability]: Not found in document corpus or requires unsupported capability.
@@ -122,16 +128,16 @@ Records Department, Direct Family Disclosure Limits, Medical Power |
 ## 8. Baseline Initial Scorecard (Iteration 1)
 
 - **Initial Total Tests:** `20`
-- **Initial Passed Tests:** `10`
-- **Initial Failed Tests:** `10`
-- **Initial Pass Rate:** **50.0%**
+- **Initial Passed Tests:** `8`
+- **Initial Failed Tests:** `12`
+- **Initial Pass Rate:** **40.0%**
 
 | Baseline Metric | Score |
 |---|---|
-| Overall Pass Rate | `50.0%` |
-| Grounded Answer Rate | `80.0%` |
-| Factual Correctness | `62.5%` |
-| Correct Refusal Rate | `71.4%` |
+| Overall Pass Rate | `40.0%` |
+| Grounded Answer Rate | `70.0%` |
+| Factual Correctness | `57.5%` |
+| Correct Refusal Rate | `57.1%` |
 | Citation Accuracy | `70.0%` |
 | Output-Contract Compliance | `100.0%` |
 
@@ -141,20 +147,20 @@ Records Department, Direct Family Disclosure Limits, Medical Power |
 
 | Iteration | Total | Passed | Failed | Pass Rate | Grounding | Factual | Citation | Refusal | Contract | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Iteration 1 | 20 | 10 | 10 | **50.0%** | 80% | 62% | 70% | 80% | 100% | `FAIL` |
-| Iteration 2 | 20 | 10 | 10 | **50.0%** | 80% | 62% | 70% | 80% | 100% | `FAIL` |
+| Iteration 1 | 20 | 8 | 12 | **40.0%** | 70% | 57% | 70% | 70% | 100% | `FAIL` |
+| Iteration 2 | 20 | 8 | 12 | **40.0%** | 70% | 57% | 70% | 70% | 100% | `FAIL` |
 
 ### Critic-Optimizer Action Log
 
 #### Iteration 1 Diagnostics
-- **Score Before:** `50.0%` -> **Score After:** `50.0%` (UNCHANGED)
-- **Failed Test IDs:** `TC-001, TC-002, TC-009, TC-010, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018`
+- **Score Before:** `40.0%` -> **Score After:** `40.0%` (UNCHANGED)
+- **Failed Test IDs:** `TC-001, TC-002, TC-009, TC-010, TC-011, TC-012, TC-013, TC-014, TC-015, TC-016, TC-017, TC-018`
 - **Diagnosed Failure Categories:** `hallucination, wrong_refusal, citation_defect`
-- **Identified Root Causes:** Citation instructions lacked explicit punctuation and tagging rules for tests ['TC-001', 'TC-002', 'TC-009', 'TC-010']; Refusal boundary ambiguity caused misclassified inquiries on tests ['TC-013', 'TC-015', 'TC-017', 'TC-018']; Model extrapolated unsupported details when context was partial on tests ['TC-014', 'TC-016']
+- **Identified Root Causes:** Citation instructions lacked explicit punctuation and tagging rules for tests ['TC-001', 'TC-002', 'TC-009', 'TC-010']; Refusal boundary ambiguity caused misclassified inquiries on tests ['TC-011', 'TC-012', 'TC-013', 'TC-015', 'TC-017', 'TC-018']; Model extrapolated unsupported details when context was partial on tests ['TC-014', 'TC-016']
 - **Regression Status:** `No regression (Accepted)`
 - **Targeted Modifications Applied:**
   - `system_prompt (citation clause)`: changed from `standard prompt` to `appended strict citation tag directive` (*Remediate citation omissions for tests: ['TC-001', 'TC-002', 'TC-009', 'TC-010']*)
-  - `system_prompt (refusal boundary clause)`: changed from `standard refusal policy` to `clarified refusal criteria and required evidence synthesis` (*Fix over-refusal / under-refusal on tests: ['TC-013', 'TC-015', 'TC-017', 'TC-018']*)
+  - `system_prompt (refusal boundary clause)`: changed from `standard refusal policy` to `clarified refusal criteria and required evidence synthesis` (*Fix over-refusal / under-refusal on tests: ['TC-011', 'TC-012', 'TC-013', 'TC-015', 'TC-017', 'TC-018']*)
   - `system_prompt (grounding constraint)`: changed from `standard grounding` to `added explicit prohibition against extrapolating figures` (*Prevent unsupported factual claims in tests: ['TC-014', 'TC-016']*)
 
 ---
@@ -163,10 +169,10 @@ Records Department, Direct Family Disclosure Limits, Medical Power |
 
 | Core Evaluation Metric | Baseline Score (Iter 1) | Final Score (Iter 2) | Net Delta | Improvement Status |
 |---|---|---|---|---|
-| **Overall Pass Rate** | 50.0% | **50.0%** | **0.0%** | `UNCHANGED` |
-| **Grounded Answer Rate** | 80.0% | **80.0%** | **0.0%** | `UNCHANGED` |
-| **Factual Correctness** | 62.5% | **62.5%** | **0.0%** | `UNCHANGED` |
-| **Correct Refusal Rate** | 71.4% | **71.4%** | **0.0%** | `UNCHANGED` |
+| **Overall Pass Rate** | 40.0% | **40.0%** | **0.0%** | `UNCHANGED` |
+| **Grounded Answer Rate** | 70.0% | **70.0%** | **0.0%** | `UNCHANGED` |
+| **Factual Correctness** | 57.5% | **57.5%** | **0.0%** | `UNCHANGED` |
+| **Correct Refusal Rate** | 57.1% | **57.1%** | **0.0%** | `UNCHANGED` |
 | **Citation Accuracy** | 70.0% | **70.0%** | **0.0%** | `UNCHANGED` |
 | **Output-Contract Compliance** | 100.0% | **100.0%** | **0.0%** | `UNCHANGED` |
 
@@ -174,27 +180,27 @@ Records Department, Direct Family Disclosure Limits, Medical Power |
 
 ## 11. Remaining Failed Cases & Raw Audit Logs
 
-A total of **10** test cases remain unresolved. In accordance with ForgeAI honesty principles, raw responses and judge decisions are preserved below for transparent inspection:
+A total of **12** test cases remain unresolved. In accordance with ForgeAI honesty principles, raw responses and judge decisions are preserved below for transparent inspection:
 
 ### Test Case: `TC-001`
-- **Question:** What does the policy state regarding Authorized personnel must maintain docum?
+- **Question:** What specific provisions are established regarding Authorized personnel must maintain documented records of?
 - **Category:** `direct_factual` | **Expected Action:** `answer`
-- **Failure Reasons:** citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]', '[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].
+- **Failure Reasons:** citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].
 - **Outcome Classification:** `correct_without_evidence`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `1.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
-Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY In parallel, 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the
-[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: telehealth_regulations.pdf, Page: 1]
+Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, POLICY REF: PRIV-HIPAA-03 | OFFICE OF HEALTHCARE COMPLIANCE Furthermore, of ten (10) years following last date of service. 2.2 Mandatory Breach Notification: Any unauthorized access to or exfiltration of electronic PHI affecting more than ten (10)
+[Source: patient_privacy_hipaa.pdf, Page: 1]
 ```
 
 ### Test Case: `TC-002`
-- **Question:** What does the policy state regarding Compliance protocols mandate strict secu?
+- **Question:** What specific provisions are established regarding Compliance protocols mandate strict security and?
 - **Category:** `multi_hop` | **Expected Action:** `answer`
 - **Failure Reasons:** citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].
 - **Outcome Classification:** `correct_without_evidence`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `1.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -203,24 +209,24 @@ Based on verified documentation: routine medication refills, and chronic illness
 ```
 
 ### Test Case: `TC-009`
-- **Question:** Does the documented policy allow exceptions regarding Authorized personnel must maintain without management sign-off?
+- **Question:** Does the documented policy allow exceptions regarding Authorized personnel must maintain documented records of without management sign-off?
 - **Category:** `ambiguous` | **Expected Action:** `answer`
-- **Failure Reasons:** citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts.
-- **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
-- **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
+- **Failure Reasons:** citation_defect: Cited sources ['[Source: patient_privacy_hipaa.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf'].
+- **Outcome Classification:** `correct_without_evidence`
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
+- **Metric Scores:** Grounding: `1.00`, Factual: `1.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
-Based on verified documentation: routine medication refills, and chronic illness management reviews. 1.2 Controlled Substance Prescription Ban: Physicians are strictly prohibited from prescribing Schedule II and III controlled
-[Source: telehealth_regulations.pdf, Page: 1]
+Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. Furthermore, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical Furthermore, ST. JUDE AMBULATORY MEDICAL CLINIC - PATIENT HEALTH INFORMATION (PHI) PRIVACY POLICY
+[Source: patient_privacy_hipaa.pdf, Page: 1]
 ```
 
 ### Test Case: `TC-010`
-- **Question:** Does the documented policy allow exceptions regarding Compliance protocols mandate strict without management sign-off?
+- **Question:** Does the documented policy allow exceptions regarding Compliance protocols mandate strict security and without management sign-off?
 - **Category:** `ambiguous` | **Expected Action:** `answer`
 - **Failure Reasons:** citation_defect: Cited sources ['[Source: telehealth_regulations.pdf, Page: 1]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts.
 - **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -228,12 +234,38 @@ Based on verified documentation: routine medication refills, and chronic illness
 [Source: telehealth_regulations.pdf, Page: 1]
 ```
 
-### Test Case: `TC-013`
-- **Question:** Given that Compliance protocols mandate s is completely optional, what procedures apply?
-- **Category:** `misleading_assumption` | **Expected Action:** `answer`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question.
+### Test Case: `TC-011`
+- **Question:** If guidelines differ regarding Standard policy requires verified adherence to approved, what procedure must be followed?
+- **Category:** `contradictory_document` | **Expected Action:** `refuse`
+- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer.
 - **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Agent provided answer when refusal was required.
+- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `0.00`, Contract: `1.00`
+- **Raw Agent Response:**
+```text
+Based on verified documentation: 1.3 Patient Geographic Location: Patients must be physically located within the state of clinic licensing at the time of the
+[Source: telehealth_regulations.pdf, Page: 1]
+```
+
+### Test Case: `TC-012`
+- **Question:** If guidelines differ regarding Authorized personnel must maintain documented records of, what procedure must be followed?
+- **Category:** `contradictory_document` | **Expected Action:** `refuse`
+- **Failure Reasons:** wrong_refusal: Expected refusal for out-of-scope question, but agent provided an answer.
+- **Outcome Classification:** `incorrect_refusal`
+- **Judge Evidence Reasoning:** Agent provided answer when refusal was required.
+- **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `0.00`, Contract: `1.00`
+- **Raw Agent Response:**
+```text
+Based on verified documentation: osure Limits: Discussion of adult patient clinical status with family members is strictly prohibited unless an active Medical Power of Attorney or written authorization is documented in the electronic health record. In parallel, ird parties requires explicit, written Patient Release Authorization signed within thirty (30) days. 1.2 Medical Records Release Timeline: Authorized requests for copies of medical records must be fulfilled by the Medical In parallel, 1.1 Protected Health Information Restrictions: Disclosure of patient medical records, lab findings, or diagnosis codes to In parallel, itals Documentation: Triage nurses must record resting blood pressure, radial pulse rate, peripheral oxygen saturation, and body temperature prior to physician evaluation.
+[Source: patient_privacy_hipaa.pdf, Page: 1] [Source: clinical_triage_guidelines.pdf, Page: 1]
+```
+
+### Test Case: `TC-013`
+- **Question:** Given that Compliance protocols mandate strict security and is completely optional, what procedures apply?
+- **Category:** `misleading_assumption` | **Expected Action:** `answer`
+- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question., wrong_refusal: Refused an answerable question.
+- **Outcome Classification:** `incorrect_refusal`
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -245,7 +277,7 @@ I cannot answer this question as it is outside my verified documentation scope. 
 - **Category:** `direct_factual` | **Expected Action:** `answer`
 - **Failure Reasons:** hallucination: Response failed to contain the required ground-truth facts.
 - **Outcome Classification:** `incorrect`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `0.00`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -256,9 +288,9 @@ Based on verified documentation: itals Documentation: Triage nurses must record 
 ### Test Case: `TC-015`
 - **Question:** Under what conditions does 1 apply, and how does it relate to distress must be?
 - **Category:** `multi_hop` | **Expected Action:** `answer`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question.
+- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question., wrong_refusal: Refused an answerable question.
 - **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -270,7 +302,7 @@ I cannot answer this question as it is outside my verified documentation scope. 
 - **Category:** `cross_document` | **Expected Action:** `answer`
 - **Failure Reasons:** hallucination: Response omitted some mandatory expected facts.
 - **Outcome Classification:** `partially_correct`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `1.00`, Factual: `0.50`, Citation: `1.00`, Refusal: `1.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -281,9 +313,9 @@ Based on verified documentation: itals Documentation: Triage nurses must record 
 ### Test Case: `TC-017`
 - **Question:** What is the procedure for expedited handling or priority exceptions?
 - **Category:** `ambiguous` | **Expected Action:** `clarify`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question.
+- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question., wrong_refusal: Refused an answerable question.
 - **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -293,9 +325,9 @@ I cannot answer this question as it is outside my verified documentation scope. 
 ### Test Case: `TC-018`
 - **Question:** Can you provide the standard allowance limit?
 - **Category:** `ambiguous` | **Expected Action:** `clarify`
-- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question.
+- **Failure Reasons:** wrong_refusal: Agent refused an answerable in-scope question., citation_defect: Cited sources ['[Source: Policy Limitations]'] do not match expected sources ['clinical_triage_guidelines.pdf']., hallucination: Response failed to contain the required ground-truth facts., retrieval_miss: No document chunks were retrieved for the question., wrong_refusal: Refused an answerable question.
 - **Outcome Classification:** `incorrect_refusal`
-- **Judge Evidence Reasoning:** Fallback semantic evaluation.
+- **Judge Evidence Reasoning:** Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.
 - **Metric Scores:** Grounding: `0.00`, Factual: `0.00`, Citation: `0.25`, Refusal: `0.00`, Contract: `1.00`
 - **Raw Agent Response:**
 ```text
@@ -327,7 +359,7 @@ The following topics are explicitly excluded from the agent's answerable scope t
 ## 14. Final Agent Status & Reproducibility Verification
 
 - **Operational Readiness:** `UNSATISFACTORY`
-- **Final Pass Rate:** **50.0%**
+- **Final Pass Rate:** **40.0%**
 - **Deployment Recommendation:** Requires additional documentation or manual review before production use.
 - **Mathematical Reproducibility Certificate:** All scores presented in this report are directly derived from the serialized test cases in `scorecards.json`. Re-evaluating the raw case scores yields exact arithmetic parity with the reported metrics.
 

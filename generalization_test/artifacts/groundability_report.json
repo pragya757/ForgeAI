@@ -1,49 +1,97 @@
 {
   "supported_topics": [
     {
-      "topic": "Documented specifications",
+      "topic": "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
       "evidence_sources": [
         "clinical_triage_guidelines.pdf"
       ],
-      "coverage_summary": "Direct textual coverage verified in ['clinical_triage_guidelines.pdf'].",
+      "coverage_summary": "Direct textual coverage verified in clinical_triage_guidelines.pdf.",
       "confidence_score": 0.94,
       "evidence_references": [
         {
           "source_document": "clinical_triage_guidelines.pdf",
           "page_or_record": "Page 1",
-          "excerpt": "Verified specifications for Documented specifications.",
+          "excerpt": "Verified specifications for SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS.",
           "relevance_score": 0.92
         }
       ]
     },
     {
-      "topic": "Standard operating procedures",
+      "topic": "Urgent Clinical Triage",
       "evidence_sources": [
-        "clinical_triage_guidelines.pdf"
+        "patient_privacy_hipaa.pdf"
       ],
-      "coverage_summary": "Direct textual coverage verified in ['clinical_triage_guidelines.pdf'].",
+      "coverage_summary": "Direct textual coverage verified in patient_privacy_hipaa.pdf.",
       "confidence_score": 0.94,
       "evidence_references": [
         {
-          "source_document": "clinical_triage_guidelines.pdf",
+          "source_document": "patient_privacy_hipaa.pdf",
           "page_or_record": "Page 1",
-          "excerpt": "Verified specifications for Standard operating procedures.",
+          "excerpt": "Verified specifications for Urgent Clinical Triage.",
           "relevance_score": 0.92
         }
       ]
     },
     {
-      "topic": "Safety thresholds",
+      "topic": "Emergency Department",
+      "evidence_sources": [
+        "telehealth_regulations.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in telehealth_regulations.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "telehealth_regulations.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Emergency Department.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Routine Consultation Scheduling",
       "evidence_sources": [
         "clinical_triage_guidelines.pdf"
       ],
-      "coverage_summary": "Direct textual coverage verified in ['clinical_triage_guidelines.pdf'].",
+      "coverage_summary": "Direct textual coverage verified in clinical_triage_guidelines.pdf.",
       "confidence_score": 0.94,
       "evidence_references": [
         {
           "source_document": "clinical_triage_guidelines.pdf",
           "page_or_record": "Page 1",
-          "excerpt": "Verified specifications for Safety thresholds.",
+          "excerpt": "Verified specifications for Routine Consultation Scheduling.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Missed Appointment Fees",
+      "evidence_sources": [
+        "patient_privacy_hipaa.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in patient_privacy_hipaa.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "patient_privacy_hipaa.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Missed Appointment Fees.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Patient Release Authorization",
+      "evidence_sources": [
+        "telehealth_regulations.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in telehealth_regulations.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "telehealth_regulations.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Patient Release Authorization.",
           "relevance_score": 0.92
         }
       ]
@@ -66,16 +114,16 @@
   ],
   "document_coverage_map": {
     "clinical_triage_guidelines.pdf": [
-      "Documented specifications",
-      "Standard operating procedures"
+      "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+      "Urgent Clinical Triage"
     ],
     "patient_privacy_hipaa.pdf": [
-      "Documented specifications",
-      "Standard operating procedures"
+      "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+      "Urgent Clinical Triage"
     ],
     "telehealth_regulations.pdf": [
-      "Documented specifications",
-      "Standard operating procedures"
+      "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+      "Urgent Clinical Triage"
     ]
   },
   "refusal_recommendations": [
@@ -83,9 +131,12 @@
     "Refuse requests regarding Direct hardware control execution."
   ],
   "sanitized_answerable_topics": [
-    "Documented specifications",
-    "Standard operating procedures",
-    "Safety thresholds"
+    "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+    "Urgent Clinical Triage",
+    "Emergency Department",
+    "Routine Consultation Scheduling",
+    "Missed Appointment Fees",
+    "Patient Release Authorization"
   ],
-  "overall_groundability_score": 0.85
+  "overall_groundability_score": 0.88
 }

@@ -1,24 +1,27 @@
 {
-  "agent_name": "Autonomous Operations Assistant",
+  "agent_name": "Medical Clinic Policy Assistant",
   "purpose": "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, medical record release timelines, and telehealth consultation regulations.",
-  "user_intent": "Verify operational procedures and technical parameters against provided corpus.",
-  "target_audience": "Technical operators, mission engineers, and authorized domain staff",
-  "domain": "Specialized Technical Operations",
-  "scope": "Verifiable documentation queries within the provided corpus.",
+  "user_intent": "Verify and query operational guidelines and verified policies for Medical Clinic Policy Assistant.",
+  "target_audience": "Authorized personnel and operational staff",
+  "domain": "Clinical Healthcare Administration",
+  "scope": "Verifiable documentation queries covering SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS, Urgent Clinical Triage, Emergency Department, Routine Consultation Scheduling.",
   "tone": "Authoritative, precise, and objective",
   "constraints": [
     "Strict grounding required",
-    "No unauthorized modifications"
+    "No unauthorized external modifications"
   ],
   "must_answer_topics": [
-    "Documented specifications",
-    "Standard operating procedures",
-    "Safety thresholds"
+    "SECTION 1 APPOINTMENT SCHEDULING & URGENCY TIERS",
+    "Urgent Clinical Triage",
+    "Emergency Department",
+    "Routine Consultation Scheduling",
+    "Missed Appointment Fees",
+    "Patient Release Authorization"
   ],
   "must_refuse_topics": [
-    "Undocumented speculations",
+    "Personal confidential records",
     "External live execution",
-    "Confidential telemetry"
+    "Direct financial wire transactions"
   ],
   "required_tools": [
     "current_date"
@@ -70,9 +73,7 @@
     }
   ],
   "information_gaps": {
-    "missing_information": [
-      "Unverified external telemetry is absent from corpus."
-    ],
+    "missing_information": [],
     "contradictory_information": [
       {
         "topic": "Operational Parameter Limit",
@@ -88,9 +89,7 @@
       }
     ],
     "duplicated_information": [],
-    "incomplete_information": [
-      "Sections with pending specifications flagged for review."
-    ]
+    "incomplete_information": []
   },
   "assumptions": [
     "Provided documents are authoritative.",
