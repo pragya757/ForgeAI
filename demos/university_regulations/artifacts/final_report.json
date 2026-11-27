@@ -1,0 +1,1389 @@
+{
+  "generated_at": "2026-11-27 14:17:06",
+  "agent_name": "University Regulations Assistant",
+  "final_status": "PRODUCTION_READY",
+  "user_brief": "Create an autonomous University Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals.",
+  "document_inventory": [
+    {
+      "filename": "University_Regulations_Test_Document.pdf",
+      "format": "PDF",
+      "description": "Format PDF. Approx 5857 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY COMPREHENSIVE ACADEMIC REGULATIONS & STUDENT POLICY MANUAL Document Reference: REG-ACAD...",
+      "page_count": 1,
+      "record_count": null,
+      "content_summary": "Covers topics: SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE, SECTION 2 GRADING CRITERIA & ACADEMIC STANDING, SECTION 4 EXAMINATION PROTOCOLS & ATTENDANCE, An Incomplete",
+      "detected_topics": [
+        "SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE",
+        "SECTION 2 GRADING CRITERIA & ACADEMIC STANDING",
+        "SECTION 4 EXAMINATION PROTOCOLS & ATTENDANCE",
+        "An Incomplete",
+        "SECTION 5 GRADE APPEALS & RE-EVALUATION PETITIONS",
+        "SECTION 7 SCOPE BOUNDARIES & PROHIBITED REQUESTS"
+      ]
+    }
+  ],
+  "structured_requirements": {
+    "agent_name": "University Regulations Assistant",
+    "purpose": "Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.",
+    "user_intent": "Provide verified guidance on university degree requirements, grade appeal deadlines, and probation policies while refusing unauthorized tuition or grade alterations.",
+    "target_audience": "University students, academic advisors, and faculty members",
+    "domain": "Higher Education Academic Affairs",
+    "scope": "Degree graduation requirements, GPA calculation, academic probation rules, examination conduct, and grievance procedures.",
+    "tone": "Authoritative, academic, and clear",
+    "constraints": [
+      "Strict grounding in verified academic policy manuals",
+      "Zero grade alteration or fee waiver processing"
+    ],
+    "must_answer_topics": [
+      "Graduation requirements",
+      "Grading scale and GPA calculation",
+      "Academic probation rules",
+      "Examination guidelines",
+      "Student code of conduct"
+    ],
+    "must_refuse_topics": [
+      "Tuition fee waiver processing",
+      "Grade tampering requests",
+      "Financial aid disbursement",
+      "Disciplinary hearing bypass"
+    ],
+    "required_tools": [
+      "current_date"
+    ],
+    "document_inventory": [
+      {
+        "filename": "University_Regulations_Test_Document.pdf",
+        "format": "PDF",
+        "description": "Format PDF. Approx 5857 chars. Preview: ST. JUDE METROPOLITAN UNIVERSITY COMPREHENSIVE ACADEMIC REGULATIONS & STUDENT POLICY MANUAL Document Reference: REG-ACAD...",
+        "page_count": 1,
+        "record_count": null,
+        "content_summary": "Covers topics: SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE, SECTION 2 GRADING CRITERIA & ACADEMIC STANDING, SECTION 4 EXAMINATION PROTOCOLS & ATTENDANCE, An Incomplete",
+        "detected_topics": [
+          "SECTION 1 DEGREE REQUIREMENTS & CREDIT STRUCTURE",
+          "SECTION 2 GRADING CRITERIA & ACADEMIC STANDING",
+          "SECTION 4 EXAMINATION PROTOCOLS & ATTENDANCE",
+          "An Incomplete",
+          "SECTION 5 GRADE APPEALS & RE-EVALUATION PETITIONS",
+          "SECTION 7 SCOPE BOUNDARIES & PROHIBITED REQUESTS"
+        ]
+      }
+    ],
+    "information_gaps": {
+      "missing_information": [],
+      "contradictory_information": [],
+      "duplicated_information": [],
+      "incomplete_information": []
+    },
+    "assumptions": [
+      "Academic regulations reflect current catalog year.",
+      "Unattended defaults apply conservative policy interpretation.",
+      "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
+      "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
+    ],
+    "ambiguities": [
+      "Undergraduate vs graduate credit transfer reciprocity."
+    ],
+    "unsupported_requirements": [
+      "Direct transcript alteration",
+      "Tuition fee refunds"
+    ],
+    "clarifications": []
+  },
+  "groundability_analysis": {
+    "supported_topics": [
+      {
+        "topic": "Graduation requirements",
+        "evidence_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "University_Regulations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Graduation requirements.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Grading scale and GPA calculation",
+        "evidence_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "University_Regulations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Grading scale and GPA calculation.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Academic probation rules",
+        "evidence_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "University_Regulations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Academic probation rules.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Examination guidelines",
+        "evidence_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "University_Regulations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Examination guidelines.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Student code of conduct",
+        "evidence_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "University_Regulations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Student code of conduct.",
+            "relevance_score": 0.92
+          }
+        ]
+      }
+    ],
+    "partially_supported_topics": [],
+    "unsupported_topics": [
+      {
+        "topic": "Direct transcript alteration",
+        "reason": "Not found in document corpus or requires unsupported capability.",
+        "absence_nature": "missing_from_corpus",
+        "confidence_score": 0.95
+      },
+      {
+        "topic": "Tuition fee refunds",
+        "reason": "Not found in document corpus or requires unsupported capability.",
+        "absence_nature": "missing_from_corpus",
+        "confidence_score": 0.95
+      }
+    ],
+    "document_coverage_map": {
+      "University_Regulations_Test_Document.pdf": [
+        "Graduation requirements",
+        "Grading scale and GPA calculation"
+      ]
+    },
+    "refusal_recommendations": [
+      "Refuse requests regarding Direct transcript alteration.",
+      "Refuse requests regarding Tuition fee refunds."
+    ],
+    "sanitized_answerable_topics": [
+      "Graduation requirements",
+      "Grading scale and GPA calculation",
+      "Academic probation rules",
+      "Examination guidelines",
+      "Student code of conduct"
+    ],
+    "overall_groundability_score": 0.88
+  },
+  "agent_configuration": {
+    "agent_name": "University Regulations Assistant",
+    "description": "Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.",
+    "system_prompt": "You are University Regulations Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Higher Education Academic Affairs\n- Target Audience: University students, academic advisors, and faculty members\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: Direct transcript alteration, Tuition fee refunds.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].",
+    "target_audience": "University students, academic advisors, and faculty members",
+    "supported_topics": [
+      "Graduation requirements",
+      "Grading scale and GPA calculation",
+      "Academic probation rules",
+      "Examination guidelines",
+      "Student code of conduct"
+    ],
+    "unsupported_topics": [
+      "Direct transcript alteration",
+      "Tuition fee refunds"
+    ],
+    "must_refuse_topics": [
+      "Direct transcript alteration",
+      "Disciplinary hearing bypass",
+      "Financial aid disbursement",
+      "Grade tampering requests",
+      "Tuition fee refunds",
+      "Tuition fee waiver processing"
+    ],
+    "document_references": [
+      "University_Regulations_Test_Document.pdf"
+    ],
+    "corpus_directory": "/Users/pragya/Downloads/OceanAI/demos/university_regulations",
+    "indexed_documents": [
+      "University_Regulations_Test_Document.pdf"
+    ],
+    "chunk_size": 500,
+    "chunk_overlap": 100,
+    "embedding_model": "all-MiniLM-L6-v2",
+    "retrieval_method": "dense_vector_faiss",
+    "top_k": 4,
+    "similarity_threshold": 0.35,
+    "reranking_config": {
+      "enabled": false,
+      "method": "cross_encoder",
+      "top_n": 3,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    },
+    "metadata_config": {
+      "tracked_fields": [
+        "source",
+        "page",
+        "file_type",
+        "total_pages"
+      ],
+      "include_in_context": true,
+      "citation_metadata_format": "[Source: <source>, Page: <page>]"
+    },
+    "tool_selection": [
+      "current_date"
+    ],
+    "tool_justifications": {
+      "current_date": "Required for temporal verification of operational timestamps."
+    },
+    "output_contract": {
+      "format": "markdown",
+      "require_citations": true,
+      "citation_format": "[Source: <document_name>, Page: <page>]",
+      "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+      "section_headers": [
+        "Direct Answer",
+        "Evidence & Citations"
+      ],
+      "disclaimer": null
+    },
+    "citation_requirements": {
+      "must_cite": true,
+      "format": "[Source: <filename>, Page: <page>]",
+      "granularity": "sentence_level",
+      "prohibit_unanchored_claims": true
+    },
+    "refusal_policy": "Strict refusal on ungrounded claims, undocumented speculations, or unsupported topics.",
+    "llm_config": {
+      "temperature": 0.1,
+      "max_tokens": 1024,
+      "model_name": null
+    }
+  },
+  "selected_tools_and_justifications": {
+    "selected_tools": [
+      "current_date"
+    ],
+    "tool_justifications": {
+      "current_date": "Required for temporal verification of operational timestamps."
+    },
+    "isolation_policy": "Strict authorization: only explicitly approved tools are mounted; all other execution capabilities are disabled."
+  },
+  "evaluation_dataset_summary": {
+    "total_cases": 21,
+    "category_breakdown": {
+      "direct_factual": 4,
+      "multi_hop": 2,
+      "grading_and_academic_standing": 3,
+      "attendance_and_examinations": 2,
+      "graduation_and_appeals": 2,
+      "out_of_scope": 5,
+      "missing_information": 1,
+      "residential_regulations": 1,
+      "campus_regulations": 1
+    },
+    "expected_actions": {
+      "answer": 15,
+      "refuse": 6,
+      "clarify": 0
+    },
+    "ground_truth_verified": true
+  },
+  "initial_scorecard": {
+    "iteration": 1,
+    "total_tests": 21,
+    "passed_tests": 21,
+    "failed_tests": 0,
+    "pass_rate": 1.0,
+    "metric_breakdown": {
+      "grounding": 1.0,
+      "factual_correctness": 1.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 1.0,
+      "relevance": 1.0,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 0,
+      "prompt_defect": 0,
+      "hallucination": 0,
+      "wrong_refusal": 0,
+      "citation_defect": 0,
+      "output_contract_violation": 0
+    },
+    "outcome_distribution": {
+      "correct_with_evidence": 15,
+      "correct_without_evidence": 0,
+      "partially_correct": 0,
+      "incorrect": 0,
+      "correct_refusal": 6,
+      "incorrect_refusal": 0
+    },
+    "status": "PASS",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "eval_generation_prompt.txt",
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-002",
+        "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-003",
+        "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "eval_generation_prompt.txt",
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-004",
+        "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Undergraduates achieving a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-005",
+        "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-006",
+        "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-007",
+        "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-008",
+        "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Candidates must arrive 15 minutes before the exam start. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-009",
+        "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "An Incomplete ('I') grade requires completion of at least 75% of coursework and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "eval_generation_prompt.txt",
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-010",
+        "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A written grade re-evaluation petition must be filed with the Faculty Dean within 10 business days following official grade release, along with a non-refundable $50.00 USD fee.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "eval_generation_prompt.txt",
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-011",
+        "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-012",
+        "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-014",
+        "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-015",
+        "question": "What is the institutional application deadline and partner university list for the summer study-abroad program in Tokyo?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "eval_generation_prompt.txt",
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-016",
+        "question": "Can you book airline tickets for my vacation flight to London?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-017",
+        "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-018",
+        "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Make-up examinations are permitted only for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-019",
+        "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-020",
+        "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Overnight guests must be registered at the residential reception desk and are limited to a maximum of two (2) consecutive nights.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-021",
+        "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A semester campus parking decal costs $120.00 USD. Unauthorized parking in fire lanes or faculty bays carries an immediate $75.00 USD fine and vehicle towing.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "University_Regulations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      }
+    ]
+  },
+  "optimization_iterations": [
+    {
+      "iteration": 1,
+      "total_tests": 21,
+      "passed_tests": 21,
+      "failed_tests": 0,
+      "pass_rate": 1.0,
+      "metric_breakdown": {
+        "grounding": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance": 1.0,
+        "output_contract_compliance": 1.0
+      },
+      "failure_distribution": {
+        "retrieval_miss": 0,
+        "prompt_defect": 0,
+        "hallucination": 0,
+        "wrong_refusal": 0,
+        "citation_defect": 0,
+        "output_contract_violation": 0
+      },
+      "outcome_distribution": {
+        "correct_with_evidence": 15,
+        "correct_without_evidence": 0,
+        "partially_correct": 0,
+        "incorrect": 0,
+        "correct_refusal": 6,
+        "incorrect_refusal": 0
+      },
+      "status": "PASS",
+      "case_results": [
+        {
+          "test_id": "TC-001",
+          "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "eval_generation_prompt.txt",
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-002",
+          "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-003",
+          "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "eval_generation_prompt.txt",
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-004",
+          "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Undergraduates achieving a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-005",
+          "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-006",
+          "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-007",
+          "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-008",
+          "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Candidates must arrive 15 minutes before the exam start. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-009",
+          "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "An Incomplete ('I') grade requires completion of at least 75% of coursework and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "eval_generation_prompt.txt",
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A written grade re-evaluation petition must be filed with the Faculty Dean within 10 business days following official grade release, along with a non-refundable $50.00 USD fee.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "eval_generation_prompt.txt",
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-012",
+          "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-013",
+          "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-014",
+          "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-015",
+          "question": "What is the institutional application deadline and partner university list for the summer study-abroad program in Tokyo?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "eval_generation_prompt.txt",
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-016",
+          "question": "Can you book airline tickets for my vacation flight to London?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-017",
+          "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-018",
+          "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Make-up examinations are permitted only for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-019",
+          "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-020",
+          "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Overnight guests must be registered at the residential reception desk and are limited to a maximum of two (2) consecutive nights.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-021",
+          "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A semester campus parking decal costs $120.00 USD. Unauthorized parking in fire lanes or faculty bays carries an immediate $75.00 USD fine and vehicle towing.\n[Source: University_Regulations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "University_Regulations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        }
+      ]
+    }
+  ],
+  "before_and_after_comparison": {
+    "overall_pass_rate": {
+      "metric_name": "Overall Pass Rate",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "grounded_answer_rate": {
+      "metric_name": "Grounded Answer Rate",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "factual_correctness": {
+      "metric_name": "Factual Correctness",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "correct_refusal_rate": {
+      "metric_name": "Correct Refusal Rate",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "citation_accuracy": {
+      "metric_name": "Citation Accuracy",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "output_contract_compliance": {
+      "metric_name": "Output-Contract Compliance",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    }
+  },
+  "remaining_failed_cases": [],
+  "unsupported_topics": [
+    {
+      "topic": "Direct transcript alteration",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    },
+    {
+      "topic": "Tuition fee refunds",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    }
+  ],
+  "known_limitations": [
+    "1. Corpus Boundary Constraint: The agent answers strictly from provided text. Topics not documented in indexed sources are systematically refused.",
+    "2. Non-Extrapolation Grounding: The agent is forbidden from assuming or estimating dates, figures, or policies not explicitly written in source files.",
+    "3. OCR / Parser Dependency: Text fidelity depends on pre-extracted formatting. Complex scanned PDF diagrams require textual extraction.",
+    "4. Refusal Policy Conservatism: Inquiries containing partial overlap with prohibited subjects default to conservative refusal to safeguard against misinformation."
+  ],
+  "reproducible_metrics": {
+    "overall_pass_rate": 1.0,
+    "grounded_answer_rate": 1.0,
+    "factual_correctness": 1.0,
+    "correct_refusal_rate": 1.0,
+    "citation_accuracy": 1.0,
+    "output_contract_compliance": 1.0
+  }
+}

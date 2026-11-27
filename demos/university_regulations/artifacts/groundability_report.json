@@ -1,0 +1,117 @@
+{
+  "supported_topics": [
+    {
+      "topic": "Graduation requirements",
+      "evidence_sources": [
+        "University_Regulations_Test_Document.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "University_Regulations_Test_Document.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Graduation requirements.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Grading scale and GPA calculation",
+      "evidence_sources": [
+        "University_Regulations_Test_Document.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "University_Regulations_Test_Document.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Grading scale and GPA calculation.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Academic probation rules",
+      "evidence_sources": [
+        "University_Regulations_Test_Document.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "University_Regulations_Test_Document.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Academic probation rules.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Examination guidelines",
+      "evidence_sources": [
+        "University_Regulations_Test_Document.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "University_Regulations_Test_Document.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Examination guidelines.",
+          "relevance_score": 0.92
+        }
+      ]
+    },
+    {
+      "topic": "Student code of conduct",
+      "evidence_sources": [
+        "University_Regulations_Test_Document.pdf"
+      ],
+      "coverage_summary": "Direct textual coverage verified in University_Regulations_Test_Document.pdf.",
+      "confidence_score": 0.94,
+      "evidence_references": [
+        {
+          "source_document": "University_Regulations_Test_Document.pdf",
+          "page_or_record": "Page 1",
+          "excerpt": "Verified specifications for Student code of conduct.",
+          "relevance_score": 0.92
+        }
+      ]
+    }
+  ],
+  "partially_supported_topics": [],
+  "unsupported_topics": [
+    {
+      "topic": "Direct transcript alteration",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    },
+    {
+      "topic": "Tuition fee refunds",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    }
+  ],
+  "document_coverage_map": {
+    "University_Regulations_Test_Document.pdf": [
+      "Graduation requirements",
+      "Grading scale and GPA calculation"
+    ]
+  },
+  "refusal_recommendations": [
+    "Refuse requests regarding Direct transcript alteration.",
+    "Refuse requests regarding Tuition fee refunds."
+  ],
+  "sanitized_answerable_topics": [
+    "Graduation requirements",
+    "Grading scale and GPA calculation",
+    "Academic probation rules",
+    "Examination guidelines",
+    "Student code of conduct"
+  ],
+  "overall_groundability_score": 0.88
+}

@@ -93,8 +93,8 @@ class MockLLMClient(BaseLLMClient):
            any(w in t for w in ["hr assistant", "human resources", "leave policies", "attendance rules", "workplace guidelines", "employee questions", "sick leave", "annual leave", "working hours"]):
             return "hr"
         # 3. Academic signals
-        if any(d in t for d in ["academic_regulations", "examination_guidelines", "student_handbook"]) or \
-           any(w in t for w in ["academic regulations", "university academic", "student grading", "academic probation", "graduation requirements", "examination guidelines"]):
+        if any(d in t for d in ["academic_regulations", "examination_guidelines", "student_handbook", "university_regulations", "student_code_of_conduct"]) or \
+           any(w in t for w in ["academic regulations", "university academic", "student grading", "academic probation", "graduation requirements", "examination guidelines", "university regulations", "regulations assistant", "university_regulations"]):
             return "academic"
         # 4. Medical signals
         if any(d in t for d in ["clinic_handbook", "patient_privacy", "triage_guidelines"]) or \
@@ -170,8 +170,14 @@ class MockLLMClient(BaseLLMClient):
         elif domain == "academic":
             doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
             doc_names = list(dict.fromkeys(doc_matches)) if doc_matches else ["academic_regulations.pdf", "student_handbook.pdf"]
+
+            if "university regulations assistant" in text.lower() or ("university" in text.lower() and "regulations" in text.lower()):
+                agent_name = "University Regulations Assistant"
+            else:
+                agent_name = "University Academic Regulations Assistant"
+
             data = {
-                "agent_name": "University Academic Regulations Assistant",
+                "agent_name": agent_name,
                 "purpose": "Assist students, faculty, and academic advisors with questions regarding graduation requirements, grading scales, academic probation, examination guidelines, and student conduct based strictly on verified university documents.",
                 "user_intent": "Provide verified guidance on university degree requirements, grade appeal deadlines, and probation policies while refusing unauthorized tuition or grade alterations.",
                 "target_audience": "University students, academic advisors, and faculty members",
@@ -1248,14 +1254,21 @@ class MockLLMClient(BaseLLMClient):
                 }
             ])
         elif domain == "academic":
+            doc_sources = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            single_doc = doc_sources[0] if (doc_sources and any("university_regulations" in d.lower() for d in doc_sources)) else None
+            acad_src = single_doc or "academic_regulations.pdf"
+            exam_src = single_doc or "examination_guidelines.pdf"
+            conduct_src = single_doc or "student_code_of_conduct.pdf"
+
             # 10 Answerable cases
             cases.extend([
                 {
                     "test_id": "TC-001",
                     "question": "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?",
                     "test_category": "answerable",
+                    "subcategory": "direct_factual",
                     "expected_answer": "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 1.1: Conformance to degree requirements requires successful completion of at least one hundred and twenty (120) academic credit hours with an overall CGPA of no less than 2.00 on a 4.00 scale.",
                     "evaluation_criteria": "Must specify 120 credit hours and 2.00 minimum CGPA."
@@ -1264,8 +1277,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-002",
                     "question": "What is the maximum semester course load for full-time undergraduate students, and what are the overload requirements?",
                     "test_category": "answerable",
+                    "subcategory": "multi_hop",
                     "expected_answer": "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 1.2: Maximum of eighteen (18) credit hours. Overload up to twenty-one (21) credit hours requires prior written authorization from the Dean and minimum CGPA of 3.50.",
                     "evaluation_criteria": "Must state 18 credits standard and 21 credits overload with Dean approval and 3.50 CGPA."
@@ -1274,8 +1288,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-003",
                     "question": "What is the maximum number of transfer credits allowed and what is the minimum grade required?",
                     "test_category": "answerable",
+                    "subcategory": "direct_factual",
                     "expected_answer": "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 1.3: A maximum of sixty (60) transfer credits from accredited collegiate institutions may be applied with a minimum earned grade of 'C' (2.0).",
                     "evaluation_criteria": "Must state 60 transfer credits and grade C (2.0) minimum."
@@ -1284,8 +1299,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-004",
                     "question": "What criteria must a student satisfy to be named to the Dean's Honours List?",
                     "test_category": "answerable",
+                    "subcategory": "multi_hop",
                     "expected_answer": "Students must achieve a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 2.2: Undergraduates achieving a semester GPA of 3.75 or higher while completing at least fifteen (15) graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.",
                     "evaluation_criteria": "Must specify 3.75 GPA and 15 graded credits."
@@ -1294,8 +1310,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-005",
                     "question": "Under what condition is an undergraduate student subject to mandatory Academic Suspension?",
                     "test_category": "answerable",
+                    "subcategory": "grading_and_academic_standing",
                     "expected_answer": "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 2.5: Failing to attain a CGPA of 2.00 after two (2) consecutive semesters on Academic Probation results in mandatory Academic Suspension for a minimum period of one calendar year.",
                     "evaluation_criteria": "Must specify 2 consecutive semesters on probation and 1 year suspension."
@@ -1304,8 +1321,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-006",
                     "question": "What is the deadline for official course withdrawal and what grade is recorded on the transcript?",
                     "test_category": "answerable",
+                    "subcategory": "direct_factual",
                     "expected_answer": "Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, carrying no quality points and not affecting the CGPA.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 3.2: Students may withdraw from a course through the end of Week 8. A grade of 'W' is assigned, which carries no quality points and does not affect CGPA.",
                     "evaluation_criteria": "Must identify Week 8 deadline and 'W' grade."
@@ -1314,8 +1332,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-007",
                     "question": "What is the university's course repeat policy regarding previous grades and repeat limits?",
                     "test_category": "answerable",
+                    "subcategory": "direct_factual",
                     "expected_answer": "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 3.3: An undergraduate may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of two (2) repeats per course.",
                     "evaluation_criteria": "Must state original grade D or F and maximum 2 repeats."
@@ -1324,8 +1343,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-008",
                     "question": "What are the rules regarding examination arrival times and late entry to the examination hall?",
                     "test_category": "answerable",
+                    "subcategory": "attendance_and_examinations",
                     "expected_answer": "Candidates must arrive 15 minutes before the start time. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').",
-                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_sources": [exam_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 1.1: Arrive fifteen (15) minutes prior. Arriving later than thirty (30) minutes after commencement are strictly denied entry and awarded a grade of zero ('F').",
                     "evaluation_criteria": "Must specify 15 minutes arrival and 30 minutes cutoff with grade 'F'."
@@ -1334,8 +1354,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-009",
                     "question": "What requirements govern the award and resolution of an Incomplete ('I') grade?",
                     "test_category": "answerable",
+                    "subcategory": "grading_and_academic_standing",
                     "expected_answer": "An 'I' grade requires good standing, completion of at least 75% of coursework, and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.",
-                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_sources": [exam_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 2.3: Awarded exclusively when completed at least 75% of coursework. Must be cleared within six (6) weeks of the following term or automatically lapses into an 'F'.",
                     "evaluation_criteria": "Must state 75% coursework completed and 6 weeks clearance window."
@@ -1344,20 +1365,22 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-010",
                     "question": "What is the procedure and fee for filing a formal Grade Re-evaluation Petition?",
                     "test_category": "answerable",
+                    "subcategory": "graduation_and_appeals",
                     "expected_answer": "A written petition must be filed with the Faculty Dean within 10 business days following official grade release, accompanied by a non-refundable $50.00 USD administrative processing fee.",
-                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_sources": [exam_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 3.1 & 3.2: File within ten (10) business days following official grade release. A non-refundable processing fee of fifty dollars ($50.00 USD) applies.",
                     "evaluation_criteria": "Must specify 10 business days and $50.00 fee."
                 }
             ])
 
-            # 6 Out-of-scope cases
+            # 6 Out-of-scope & Missing-information cases
             cases.extend([
                 {
                     "test_id": "TC-011",
                     "question": "Can you process my international student F-1 visa extension and book an embassy appointment?",
                     "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
                     "expected_answer": "Refuse: International student visa renewals and consular embassy procedures are outside the academic regulations scope.",
                     "expected_sources": [],
                     "expected_action": "refuse",
@@ -1368,6 +1391,7 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-012",
                     "question": "How can I resolve a security deposit dispute with my private off-campus apartment landlord?",
                     "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
                     "expected_answer": "Refuse: External private residential leasing disputes are outside university policy scope.",
                     "expected_sources": [],
                     "expected_action": "refuse",
@@ -1378,6 +1402,7 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-013",
                     "question": "Can you execute a bank wire transfer to pay my tuition fee invoice?",
                     "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
                     "expected_answer": "Refuse: Financial wire transfers and banking transactions are outside the assistant's authorization.",
                     "expected_sources": [],
                     "expected_action": "refuse",
@@ -1388,6 +1413,7 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-014",
                     "question": "What is the corporate salary and equity compensation package of the University Chancellor?",
                     "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
                     "expected_answer": "Refuse: Personal executive compensation records are confidential and unsupported.",
                     "expected_sources": [],
                     "expected_action": "refuse",
@@ -1396,18 +1422,20 @@ class MockLLMClient(BaseLLMClient):
                 },
                 {
                     "test_id": "TC-015",
-                    "question": "Can I trade Bitcoin and run cryptocurrency mining nodes on the campus dorm network?",
-                    "test_category": "out_of_scope",
-                    "expected_answer": "Refuse: Cryptocurrency trading and network mining operations are outside university policy documentation.",
+                    "question": "What is the institutional application deadline and partner university list for the summer study-abroad program in Tokyo?",
+                    "test_category": "edge_case",
+                    "subcategory": "missing_information",
+                    "expected_answer": "Refuse: Information regarding study-abroad programs in Tokyo or partner university lists is not present in the verified policy manual.",
                     "expected_sources": [],
                     "expected_action": "refuse",
-                    "ground_truth_evidence": "Cryptocurrency operations are unsupported.",
-                    "evaluation_criteria": "Must refuse cryptocurrency operations."
+                    "ground_truth_evidence": "Study-abroad programs and partner university lists are absent from the document corpus.",
+                    "evaluation_criteria": "Must indicate that study-abroad exchange details are not present in the documentation."
                 },
                 {
                     "test_id": "TC-016",
                     "question": "Can you book airline tickets for my vacation flight to London?",
                     "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
                     "expected_answer": "Refuse: Travel booking and airline ticketing are not within the university regulations assistant scope.",
                     "expected_sources": [],
                     "expected_action": "refuse",
@@ -1416,14 +1444,15 @@ class MockLLMClient(BaseLLMClient):
                 }
             ])
 
-            # 5 Edge cases
+            # 5 Edge & policy constraint cases
             cases.extend([
                 {
                     "test_id": "TC-017",
                     "question": "Can a student withdraw from a course in Week 10 if they do not have a medical emergency?",
                     "test_category": "edge_case",
+                    "subcategory": "graduation_and_appeals",
                     "expected_answer": "No. Official course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 3.2: Course withdrawals after Week 8 are prohibited except for verified medical emergencies.",
                     "evaluation_criteria": "Must deny withdrawal after Week 8 without medical emergency."
@@ -1432,8 +1461,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-018",
                     "question": "If a student has an unexcused absence from an examination, can they sit for the make-up exam in Week 1 of next term?",
                     "test_category": "edge_case",
+                    "subcategory": "attendance_and_examinations",
                     "expected_answer": "No. Make-up examinations are only permitted for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.",
-                    "expected_sources": ["examination_guidelines.pdf"],
+                    "expected_sources": [exam_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 2.2: Approved medical deferrals allow a Make-up Exam in Week 1. Unexcused absence results in an irrecoverable grade of '0'.",
                     "evaluation_criteria": "Must state make-up exams require approved medical deferral and unexcused absence gets grade 0."
@@ -1442,8 +1472,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-019",
                     "question": "Can an undergraduate student repeat the same course three times to raise their CGPA?",
                     "test_category": "edge_case",
+                    "subcategory": "grading_and_academic_standing",
                     "expected_answer": "No. The university course repeat policy permits a maximum of two (2) repeats per course for courses where an original grade of 'D' or 'F' was earned.",
-                    "expected_sources": ["academic_regulations.pdf"],
+                    "expected_sources": [acad_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 3.3: An undergraduate may repeat any course up to a maximum of two (2) repeats per course.",
                     "evaluation_criteria": "Must identify the ceiling of 2 repeats per course."
@@ -1452,8 +1483,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-020",
                     "question": "Is a resident student allowed to host an overnight guest in the dormitory for four consecutive nights?",
                     "test_category": "edge_case",
+                    "subcategory": "residential_regulations",
                     "expected_answer": "No. Overnight guests must be registered at the reception desk and are limited to a maximum of two (2) consecutive nights.",
-                    "expected_sources": ["student_code_of_conduct.pdf"],
+                    "expected_sources": [conduct_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 2.2: Overnight guests must be registered and are limited to a maximum of two (2) consecutive nights.",
                     "evaluation_criteria": "Must enforce the 2 consecutive nights limit."
@@ -1462,8 +1494,9 @@ class MockLLMClient(BaseLLMClient):
                     "test_id": "TC-021",
                     "question": "What is the fee for a semester campus parking permit versus the fine for unauthorized parking in a fire lane?",
                     "test_category": "edge_case",
+                    "subcategory": "campus_regulations",
                     "expected_answer": "A semester campus parking decal costs $120.00 USD, while unauthorized parking in a fire lane or faculty bay carries an immediate $75.00 USD fine plus vehicle towing.",
-                    "expected_sources": ["student_code_of_conduct.pdf"],
+                    "expected_sources": [conduct_src],
                     "expected_action": "answer",
                     "ground_truth_evidence": "Section 3.1 & 3.2: Semester parking decal costs $120.00 USD. Unauthorized parking carries an immediate $75.00 USD fine and wheel immobilization/towing.",
                     "evaluation_criteria": "Must state $120.00 permit fee and $75.00 fine."
@@ -1686,7 +1719,8 @@ class MockLLMClient(BaseLLMClient):
             "out_of_scope", "salary", "wire transfer", "insurance claim", "visa", "bribery",
             "brent crude", "flight ticket", "flight booking", "airline", "stock option",
             "customs clearance", "marriott", "compensation", "cryptocurrency", "trading",
-            "personal executive", "disclose private records", "execute a transaction"
+            "personal executive", "disclose private records", "execute a transaction",
+            "apartment", "landlord", "deposit dispute", "off-campus", "study-abroad", "study abroad", "tokyo"
         ]
         if any(w in user_part for w in refusal_keywords):
             return "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]"
@@ -1845,77 +1879,83 @@ class MockLLMClient(BaseLLMClient):
                     "[Source: attendance_policy.pdf, Page: 1]"
                 )
 
-        has_academic_docs = any(f in text.lower() for f in ["academic_regulations", "examination_guidelines", "student_code_of_conduct"])
+        has_academic_docs = any(f in text.lower() for f in ["academic_regulations", "examination_guidelines", "student_code_of_conduct", "university_regulations", "university", "regulations"])
         if has_academic_docs:
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            single_doc = doc_matches[0] if (doc_matches and any("university_regulations" in d.lower() for d in doc_matches)) else None
+            acad_tag = single_doc or "academic_regulations.pdf"
+            exam_tag = single_doc or "examination_guidelines.pdf"
+            conduct_tag = single_doc or "student_code_of_conduct.pdf"
+
             if "120" in user_part or ("graduation" in user_part and "credit" in user_part):
                 return (
                     "Undergraduate graduation requires completion of at least 120 academic credit hours with an overall Cumulative Grade Point Average (CGPA) of no less than 2.00 on a 4.00 scale.\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "course load" in user_part or "overload" in user_part:
                 return (
                     "The maximum standard course load is 18 credit hours per semester. Overload up to 21 credit hours requires written authorization from the Dean of Academic Affairs and a minimum prior CGPA of 3.50.\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "transfer credit" in user_part:
                 return (
                     "A maximum of 60 transfer credits may be applied toward an undergraduate degree, requiring a minimum earned grade of 'C' (2.0).\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "dean's" in user_part or "honours list" in user_part:
                 return (
                     "Undergraduates achieving a semester GPA of 3.75 or higher while completing at least 15 graded credit hours with no incomplete or failing grades are named to the Dean's Honours List.\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "suspension" in user_part or ("two" in user_part and "probation" in user_part):
                 return (
                     "A student failing to attain a CGPA of 2.00 after two consecutive semesters on Academic Probation is subjected to mandatory Academic Suspension for a minimum of one calendar year.\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "withdrawal" in user_part or "week 8" in user_part or "week 10" in user_part:
                 return (
                     "Students may withdraw from a course through the end of Week 8 with a grade of 'W'. Course withdrawals after Week 8 are strictly prohibited except for verified medical emergencies.\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "repeat" in user_part:
                 return (
                     "A student may repeat any course in which an original grade of 'D' or 'F' was earned, up to a maximum of 2 repeats per course. The higher grade is used in the CGPA calculation.\n"
-                    "[Source: academic_regulations.pdf, Page: 1]"
+                    f"[Source: {acad_tag}, Page: 1]"
                 )
             elif "examination arrival" in user_part or ("30 minutes" in user_part and "exam" in user_part) or "late entry" in user_part:
                 return (
                     "Candidates must arrive 15 minutes before the exam start. Students arriving later than 30 minutes after commencement are strictly denied entry and awarded a grade of zero ('F').\n"
-                    "[Source: examination_guidelines.pdf, Page: 1]"
+                    f"[Source: {exam_tag}, Page: 1]"
                 )
             elif "incomplete" in user_part or "75%" in user_part:
                 return (
                     "An Incomplete ('I') grade requires completion of at least 75% of coursework and a certified emergency. It must be cleared within 6 weeks of the following term or it lapses into an 'F'.\n"
-                    "[Source: examination_guidelines.pdf, Page: 1]"
+                    f"[Source: {exam_tag}, Page: 1]"
                 )
             elif "re-evaluation" in user_part or "grade appeal" in user_part or "$50" in user_part:
                 return (
                     "A written grade re-evaluation petition must be filed with the Faculty Dean within 10 business days following official grade release, along with a non-refundable $50.00 USD fee.\n"
-                    "[Source: examination_guidelines.pdf, Page: 1]"
+                    f"[Source: {exam_tag}, Page: 1]"
                 )
             elif "unexcused absence" in user_part or "make-up" in user_part:
                 return (
                     "Make-up examinations are permitted only for approved medical deferrals certified by the University Medical Director. Unexcused absence results in an irrecoverable grade of '0'.\n"
-                    "[Source: examination_guidelines.pdf, Page: 1]"
+                    f"[Source: {exam_tag}, Page: 1]"
                 )
             elif "quiet hours" in user_part:
                 return (
                     "Residential quiet hours are enforced from 22:00 to 08:00 Sunday through Thursday, and from 24:00 to 09:00 Friday and Saturday.\n"
-                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                    f"[Source: {conduct_tag}, Page: 1]"
                 )
             elif "guest" in user_part:
                 return (
                     "Overnight guests must be registered at the residential reception desk and are limited to a maximum of two (2) consecutive nights.\n"
-                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                    f"[Source: {conduct_tag}, Page: 1]"
                 )
             elif "parking" in user_part or "$120" in user_part or "$75" in user_part:
                 return (
                     "A semester campus parking decal costs $120.00 USD. Unauthorized parking in fire lanes or faculty bays carries an immediate $75.00 USD fine and vehicle towing.\n"
-                    "[Source: student_code_of_conduct.pdf, Page: 1]"
+                    f"[Source: {conduct_tag}, Page: 1]"
                 )
             elif "misconduct" in user_part or "plagiarism" in user_part:
                 return (

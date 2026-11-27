@@ -162,7 +162,7 @@ class AutomaticEvalGenerator:
 
         # 1. Direct Factual Questions (4 cases)
         for f in facts[:4]:
-            q = f"What is the specified {f['topic'].lower().strip()} according to {f['source']}?"
+            q = f"What is the specified requirement for {f['topic'].lower().strip()}?"
             if not self.is_duplicate_question(q, existing_questions):
                 existing_questions.append(q)
                 cases.append(EvalCase(
@@ -207,7 +207,7 @@ class AutomaticEvalGenerator:
             facts_src_b = [f for f in facts if f['source'] == source_b]
             for i in range(min(3, len(facts_src_a), len(facts_src_b))):
                 fa, fb = facts_src_a[i], facts_src_b[i]
-                q = f"How do the requirements in {source_a} ({fa['topic'].lower()}) interface with the protocols in {source_b} ({fb['topic'].lower()})?"
+                q = f"How do the requirements for {fa['topic'].lower()} interface with the protocols for {fb['topic'].lower()}?"
                 if not self.is_duplicate_question(q, existing_questions):
                     existing_questions.append(q)
                     cases.append(EvalCase(
@@ -263,7 +263,23 @@ class AutomaticEvalGenerator:
             tc_counter += 1
 
         # 5. Missing-Information Questions (2 cases)
-        missing_q1 = "What is the 2035 extended warranty reimbursement protocol for discontinued parts?"
+        corpus_all_lower = " ".join(d.content.lower() for d in docs)
+        is_academic = any(k in corpus_all_lower for k in ["university", "academic", "student", "faculty", "cgpa"])
+        if is_academic:
+            missing_q1 = "What is the institutional application deadline and partner university list for the summer study-abroad program in Tokyo?"
+            ans1 = "The provided documentation does not contain information regarding study-abroad application deadlines or partner universities."
+            ev1 = "Information regarding study-abroad programs in Tokyo is absent from the uploaded corpus."
+            missing_q2 = "What are the dental insurance co-pay percentages and vision care allowances for graduate teaching assistants?"
+            ans2 = "Dental insurance co-pay and vision care allowances for graduate teaching assistants are not included in the verified documents."
+            ev2 = "No dental or vision insurance documentation is provided in the uploaded manual."
+        else:
+            missing_q1 = "What is the documented protocol for emergency equipment warranty reimbursement under 2035 terms?"
+            ans1 = "The provided documentation does not contain policies or protocols for 2035 equipment warranty reimbursements."
+            ev1 = "Information regarding 2035 extended warranty is absent from the uploaded corpus."
+            missing_q2 = "What are the dental insurance co-pay percentages for overseas dependents?"
+            ans2 = "Dental insurance co-pay details for overseas dependents are not included in the verified documents."
+            ev2 = "No insurance or dental co-pay documentation provided."
+
         if not self.is_duplicate_question(missing_q1, existing_questions):
             existing_questions.append(missing_q1)
             cases.append(EvalCase(
@@ -272,16 +288,15 @@ class AutomaticEvalGenerator:
                 test_category="edge_case",
                 subcategory="missing_information",
                 expected_action="refuse",
-                expected_answer="The provided documentation does not contain policies or protocols for 2035 extended warranty reimbursements.",
+                expected_answer=ans1,
                 expected_facts=["Topic is missing from corpus"],
                 expected_sources=[],
                 source_locations=[],
-                ground_truth_evidence="Information regarding 2035 extended warranty is absent from the uploaded corpus.",
+                ground_truth_evidence=ev1,
                 evaluation_criteria="Agent must state that this specific detail is not present in the documentation."
             ))
             tc_counter += 1
 
-        missing_q2 = "What are the dental insurance co-pay percentages for overseas dependents?"
         if not self.is_duplicate_question(missing_q2, existing_questions):
             existing_questions.append(missing_q2)
             cases.append(EvalCase(
@@ -290,11 +305,11 @@ class AutomaticEvalGenerator:
                 test_category="edge_case",
                 subcategory="missing_information",
                 expected_action="refuse",
-                expected_answer="Dental insurance co-pay details for overseas dependents are not included in the verified documents.",
-                expected_facts=["Dental co-pay details are absent"],
+                expected_answer=ans2,
+                expected_facts=["Requested details are absent from verified corpus"],
                 expected_sources=[],
                 source_locations=[],
-                ground_truth_evidence="No insurance or dental co-pay documentation provided.",
+                ground_truth_evidence=ev2,
                 evaluation_criteria="Agent must indicate that this information is missing from verified documentation."
             ))
             tc_counter += 1
@@ -373,10 +388,10 @@ class AutomaticEvalGenerator:
                     all_sentences.append({"source": d.source, "page": d.page, "location": page_loc, "text": s_clean})
 
         question_templates = [
-            ("What is the documented requirement regarding {topic} according to {source}?", "direct_factual", "answer"),
-            ("How does {source} instruct personnel to comply with {topic}?", "direct_factual", "answer"),
-            ("Under what circumstances does the provision on {topic} apply per {source}?", "direct_factual", "answer"),
-            ("What standard protocol governs {topic} as established in {source}?", "direct_factual", "answer")
+            ("What is the documented requirement regarding {topic}?", "direct_factual", "answer"),
+            ("What operational procedure governs compliance with {topic}?", "direct_factual", "answer"),
+            ("Under what circumstances does the provision regarding {topic} apply?", "direct_factual", "answer"),
+            ("What standard protocol governs {topic} as established in official policy?", "direct_factual", "answer")
         ]
 
         attempts = 0
@@ -395,7 +410,7 @@ class AutomaticEvalGenerator:
                     topic_clause = topic_clause[:65].rsplit(" ", 1)[0].strip()
                 topic_clause = topic_clause.rstrip(".,:;")
 
-                q = tpl_str.format(topic=topic_clause, source=sent['source'])
+                q = tpl_str.format(topic=topic_clause)
                 if not self.is_duplicate_question(q, existing_questions) or attempts > 40:
                     existing_questions.append(q)
                     cases.append(EvalCase(

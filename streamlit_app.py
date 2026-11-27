@@ -419,6 +419,100 @@ with st.sidebar:
 
     active_preset = PRESETS[preset_choice]
 
+    def _load_artifacts_from_dir(target_artifacts: str) -> Optional[Dict[str, Any]]:
+        agent_file = os.path.join(target_artifacts, "agent_definition.json")
+        if not os.path.exists(agent_file):
+            return None
+        try:
+            def _read_json(fpath):
+                if os.path.exists(fpath):
+                    with open(fpath, "r", encoding="utf-8") as f:
+                        return json.load(f)
+                return {}
+
+            req_data = _read_json(os.path.join(target_artifacts, "requirements.json"))
+            ground_data = _read_json(os.path.join(target_artifacts, "groundability_report.json"))
+            agent_data = _read_json(agent_file)
+            eval_data = _read_json(os.path.join(target_artifacts, "eval_set.json"))
+            sc_data = _read_json(os.path.join(target_artifacts, "scorecards.json"))
+            iter_data = _read_json(os.path.join(target_artifacts, "iteration_logs.json"))
+            report_md_file = os.path.join(target_artifacts, "final_report.md")
+            report_md = open(report_md_file, "r", encoding="utf-8").read() if os.path.exists(report_md_file) else ""
+            return {
+                "requirements": req_data,
+                "groundability": ground_data,
+                "agent_definition": agent_data,
+                "eval_set": eval_data,
+                "scorecards": sc_data if isinstance(sc_data, list) else ([sc_data] if sc_data else []),
+                "iteration_logs": iter_data if isinstance(iter_data, list) else ([iter_data] if iter_data else []),
+                "report_md": report_md
+            }
+        except Exception:
+            return None
+
+    def get_active_run_context() -> Dict[str, Any]:
+        """
+        Returns single-source active run context to guarantee absolute isolation
+        between custom document uploads and pre-built demonstration presets.
+        """
+        is_custom = st.session_state.get("is_custom_upload_active", False)
+        last_run = st.session_state.get("last_run")
+        loaded_demo = st.session_state.get("loaded_demo")
+
+        if is_custom:
+            ingestion_res = st.session_state.get("active_ingestion_result")
+            session_id = ingestion_res.session_id if ingestion_res else "custom_session"
+            artifacts_dir = st.session_state.get("artifacts_dir", ingestion_res.artifacts_dir if ingestion_res else "outputs/custom_agent/artifacts")
+            doc_folder = st.session_state.get("doc_folder", ingestion_res.document_dir if ingestion_res else "outputs/custom_agent/documents")
+
+            # In custom mode, NEVER fall back to loaded_demo
+            run_data = last_run
+            if not run_data and os.path.exists(os.path.join(artifacts_dir, "agent_definition.json")):
+                run_data = _load_artifacts_from_dir(artifacts_dir)
+
+            run_id = st.session_state.get("active_run_id") or f"CUSTOM-{session_id}"
+            agent_name = st.session_state.get("active_agent_name") or "University Regulations Assistant"
+            domain = st.session_state.get("active_domain") or "Higher Education Academic Affairs"
+            source = st.session_state.get("active_run_source") or f"Custom Ingestion ({doc_folder})"
+            timestamp = st.session_state.get("active_run_timestamp") or "Custom Session Active"
+
+            return {
+                "mode": "custom",
+                "is_custom": True,
+                "has_run": run_data is not None,
+                "data": run_data,
+                "run_id": run_id,
+                "agent_name": agent_name,
+                "domain": domain,
+                "source": source,
+                "timestamp": timestamp,
+                "doc_folder": doc_folder,
+                "artifacts_dir": artifacts_dir
+            }
+        else:
+            run_data = last_run or loaded_demo
+            run_id = st.session_state.get("active_run_id", "DEMO-HR_POLICY")
+            agent_name = st.session_state.get("active_agent_name", "HR Policy Assistant")
+            domain = st.session_state.get("active_domain", "Human Resources")
+            source = st.session_state.get("active_run_source", "Pre-Built Artifacts")
+            timestamp = st.session_state.get("active_run_timestamp", "Pre-Built Benchmark Artifacts")
+            doc_folder = st.session_state.get("doc_folder", "demos/hr_assistant/documents")
+            artifacts_dir = st.session_state.get("artifacts_dir", "demos/hr_assistant/artifacts")
+
+            return {
+                "mode": "preset",
+                "is_custom": False,
+                "has_run": run_data is not None,
+                "data": run_data,
+                "run_id": run_id,
+                "agent_name": agent_name,
+                "domain": domain,
+                "source": source,
+                "timestamp": timestamp,
+                "doc_folder": doc_folder,
+                "artifacts_dir": artifacts_dir
+            }
+
     def _load_artifacts_to_session(target_artifacts, doc_folder, preset_label, domain_label):
         req_file = os.path.join(target_artifacts, "requirements.json")
         if not os.path.exists(req_file):
@@ -459,16 +553,27 @@ with st.sidebar:
         return True
 
     # Detect preset switch and isolate session state to prevent cross-preset artifact contamination
-    if st.session_state.get("active_preset_name") != preset_choice:
-        st.session_state["active_preset_name"] = preset_choice
-        st.session_state["live_chat_history"] = []
-        st.session_state["clarification_questions"] = None
-        _load_artifacts_to_session(active_preset["artifacts"], active_preset["docs"], preset_choice, active_preset["domain"])
-    elif "loaded_demo" not in st.session_state and "last_run" not in st.session_state:
-        _load_artifacts_to_session(active_preset["artifacts"], active_preset["docs"], preset_choice, active_preset["domain"])
+    if not st.session_state.get("is_custom_upload_active"):
+        if st.session_state.get("active_preset_name") != preset_choice:
+            st.session_state["active_preset_name"] = preset_choice
+            st.session_state["live_chat_history"] = []
+            st.session_state["clarification_questions"] = None
+            _load_artifacts_to_session(active_preset["artifacts"], active_preset["docs"], preset_choice, active_preset["domain"])
+        elif "loaded_demo" not in st.session_state and "last_run" not in st.session_state:
+            _load_artifacts_to_session(active_preset["artifacts"], active_preset["docs"], preset_choice, active_preset["domain"])
+    else:
+        st.info("📁 **Custom Document Ingestion Active**\nPreset auto-loading suspended.")
+        if st.button("⬅️ Discard Custom Upload & Return to Preset"):
+            st.session_state["is_custom_upload_active"] = False
+            st.session_state["active_ingestion_result"] = None
+            st.session_state["last_uploaded_fingerprint"] = None
+            st.session_state["last_run"] = None
+            _load_artifacts_to_session(active_preset["artifacts"], active_preset["docs"], preset_choice, active_preset["domain"])
+            st.rerun()
 
     if st.button("📂 Reload Pre-Built Artifacts", width="stretch"):
         target_artifacts = active_preset["artifacts"]
+        st.session_state["is_custom_upload_active"] = False
         if _load_artifacts_to_session(target_artifacts, active_preset["docs"], preset_choice, active_preset["domain"]):
             st.success(f"Loaded artifacts from `{target_artifacts}`")
         else:
@@ -494,8 +599,9 @@ with st.sidebar:
 # -------------------------------------------------------------------------------------------------
 # 5. Main Dashboard Header & Workflow Progress Ribbon
 # -------------------------------------------------------------------------------------------------
-active_run = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
-has_artifacts = bool(active_run)
+ctx = get_active_run_context()
+active_run = ctx["data"]
+has_artifacts = ctx["has_run"]
 
 # Top Welcome Banner
 if os.path.exists(LOGO_PATH):
@@ -563,11 +669,11 @@ st.markdown(f"""
 # -------------------------------------------------------------------------------------------------
 # 6. Active Run Context Tracking & Banner
 # -------------------------------------------------------------------------------------------------
-active_run_id = st.session_state.get("active_run_id", "NOT-INITIALIZED")
-active_run_time = st.session_state.get("active_run_timestamp", "-")
-active_run_src = st.session_state.get("active_run_source", "None")
-active_agent = st.session_state.get("active_agent_name", "Pending Build / Load")
-active_domain = st.session_state.get("active_domain", active_preset.get("domain", "General"))
+active_run_id = ctx["run_id"]
+active_run_time = ctx["timestamp"]
+active_run_src = ctx["source"]
+active_agent = ctx["agent_name"]
+active_domain = ctx["domain"]
 
 st.markdown(f"""
 <div style="background-color: #0B1120; border: 1px solid #1E293B; border-left: 4px solid #00D9F5; border-radius: 8px; padding: 12px 18px; margin: 12px 0 20px 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;">
@@ -631,8 +737,40 @@ with tabs[0]:
                         st.session_state["last_uploaded_fingerprint"] = current_fingerprint
                         st.session_state["is_custom_upload_active"] = True
                         st.session_state["loaded_demo"] = None
-                        # Reset brief to decouple from any previous demo preset brief
-                        st.session_state["custom_brief_value"] = "Create an autonomous AI assistant that answers queries, procedures, and domain guidelines using the uploaded documents."
+                        st.session_state["last_run"] = None
+                        st.session_state["artifacts_dir"] = ingestion_res.artifacts_dir
+                        st.session_state["doc_folder"] = ingestion_res.document_dir
+
+                        # Detect domain and name from filenames
+                        file_names_str = " ".join(uf.name.lower() for uf in uploaded_files)
+                        if any(k in file_names_str for k in ["university", "academic", "regulation"]):
+                            custom_agent_name = "University Regulations Assistant"
+                            custom_domain = "Higher Education Academic Affairs"
+                            custom_brief = "Create an autonomous University Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals."
+                        elif any(k in file_names_str for k in ["medical", "clinic", "health"]):
+                            custom_agent_name = "Medical Clinic Operations Assistant"
+                            custom_domain = "Clinical Healthcare"
+                            custom_brief = "Create a medical clinic policy assistant that helps staff and patients understand triage appointment scheduling, patient health information privacy rules, and telehealth regulations."
+                        elif any(k in file_names_str for k in ["procurement", "spares", "supplier"]):
+                            custom_agent_name = "Ship-Spares Procurement Assistant"
+                            custom_domain = "Maritime Procurement"
+                            custom_brief = "Create a procurement assistant that helps ship procurement staff search spare parts, compare supplier prices, and check availability."
+                        elif any(k in file_names_str for k in ["hr", "employee", "leave", "handbook"]):
+                            custom_agent_name = "HR Policy Assistant"
+                            custom_domain = "Human Resources"
+                            custom_brief = "Create an HR assistant that answers employee questions about leave policies, attendance, holidays and workplace guidelines using company documents."
+                        else:
+                            clean_base = os.path.splitext(uploaded_files[0].name)[0].replace("_", " ").replace("-", " ").title()
+                            custom_agent_name = f"{clean_base} Assistant"
+                            custom_domain = f"{clean_base} Domain"
+                            custom_brief = f"Create an autonomous AI assistant that answers queries, procedures, and domain guidelines using the uploaded {uploaded_files[0].name} documents."
+
+                        st.session_state["active_run_id"] = f"CUSTOM-{ingestion_res.session_id}"
+                        st.session_state["active_agent_name"] = custom_agent_name
+                        st.session_state["active_domain"] = custom_domain
+                        st.session_state["active_run_timestamp"] = "Custom Ingestion Initialized (Pending Pipeline Execution)"
+                        st.session_state["active_run_source"] = f"Custom Ingestion ({ingestion_res.document_dir})"
+                        st.session_state["custom_brief_value"] = custom_brief
                     except Exception as err:
                         st.error(f"Document Ingestion Error: {str(err)}")
 
@@ -767,13 +905,14 @@ with tabs[0]:
                     st.session_state["loaded_demo"] = None
 
                     build_now = datetime.now()
-                    st.session_state["active_run_id"] = f"LIVE-RUN-{build_now.strftime('%Y%m%d_%H%M%S')}"
+                    session_tag = st.session_state.get("active_ingestion_result").session_id if st.session_state.get("active_ingestion_result") else build_now.strftime('%Y%m%d_%H%M%S')
+                    st.session_state["active_run_id"] = f"RUN-{session_tag}"
                     st.session_state["active_run_timestamp"] = build_now.strftime("%Y-%m-%d %H:%M:%S")
                     st.session_state["active_run_source"] = f"Live Factory Pipeline Execution ({output_dir_input})"
                     req_obj = safe_to_dict(results.get("requirements"))
                     agent_obj = safe_to_dict(results.get("agent_definition"))
-                    st.session_state["active_agent_name"] = req_obj.get("agent_name", agent_obj.get("agent_name", "Generated Agent"))
-                    st.session_state["active_domain"] = req_obj.get("domain", active_preset.get("domain", "Domain Specialist"))
+                    st.session_state["active_agent_name"] = req_obj.get("agent_name") or agent_obj.get("agent_name") or st.session_state.get("active_agent_name") or "Generated Agent"
+                    st.session_state["active_domain"] = req_obj.get("domain") or st.session_state.get("active_domain") or "Custom Domain"
                     status_box.update(label="🎉 ForgeAI Autonomous Agent Pipeline Complete!", state="complete", expanded=False)
                     st.balloons()
                 except Exception as e:
@@ -785,7 +924,8 @@ with tabs[0]:
 # -------------------------------------------------------------------------------------------------
 with tabs[1]:
     st.markdown("### 📋 Step 2: Extracted Requirements & Document Inventory")
-    run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
+    ctx = get_active_run_context()
+    run_data = ctx["data"]
 
     if run_data:
         reqs = safe_to_dict(run_data.get("requirements"))
@@ -833,6 +973,8 @@ with tabs[1]:
                 st.markdown("**Out-of-Scope (Strict Refusal):**")
                 for t in reqs.get("must_refuse_topics", []):
                     st.markdown(f"- ⛔ <span class='badge-fail'>REFUSE</span> {t}", unsafe_allow_html=True)
+    elif ctx["is_custom"]:
+        st.info(f"📁 Custom knowledge documents are uploaded for session `{ctx['run_id']}`. Click '**🚀 Run Autonomous Agent Factory Pipeline**' in Step 1 to extract requirements and generate this custom agent.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -841,7 +983,8 @@ with tabs[1]:
 # -------------------------------------------------------------------------------------------------
 with tabs[2]:
     st.markdown("### 🛡️ Step 3: Groundability Analysis & Evidence Verification")
-    run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
+    ctx = get_active_run_context()
+    run_data = ctx["data"]
 
     if run_data:
         ground = safe_to_dict(run_data.get("groundability"))
@@ -880,6 +1023,8 @@ with tabs[2]:
             st.markdown("#### 🛡️ Autonomous Refusal Directives")
             for rec in ground.get("refusal_recommendations", []):
                 st.write(f"- 🛡️ {rec}")
+    elif ctx["is_custom"]:
+        st.info(f"📁 Custom knowledge documents are uploaded for session `{ctx['run_id']}`. Click '**🚀 Run Autonomous Agent Factory Pipeline**' in Step 1 to perform groundability analysis.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -888,7 +1033,8 @@ with tabs[2]:
 # -------------------------------------------------------------------------------------------------
 with tabs[3]:
     st.markdown("### ⚙️ Step 4: Generated Declarative Agent Definition")
-    run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
+    ctx = get_active_run_context()
+    run_data = ctx["data"]
 
     if run_data:
         agent_def = safe_to_dict(run_data.get("agent_definition"))
@@ -924,6 +1070,8 @@ with tabs[3]:
         st.divider()
         with st.expander("📄 View Generated Declarative System Prompt", expanded=True):
             st.code(agent_def.get("system_prompt", ""), language="markdown")
+    elif ctx["is_custom"]:
+        st.info(f"📁 Custom knowledge documents are uploaded for session `{ctx['run_id']}`. Click '**🚀 Run Autonomous Agent Factory Pipeline**' in Step 1 to generate the agent configuration.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -932,7 +1080,8 @@ with tabs[3]:
 # -------------------------------------------------------------------------------------------------
 with tabs[4]:
     st.markdown("### 🧪 Step 5: Evaluation Dataset & Benchmark Results")
-    run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
+    ctx = get_active_run_context()
+    run_data = ctx["data"]
 
     if run_data:
         eval_set = safe_to_dict(run_data.get("eval_set"))
@@ -972,6 +1121,8 @@ with tabs[4]:
             - **Active Verified Benchmark (21 Cases):** Achieves **100.0% pass rate** (21/21) on the frozen test set, correctly answering 10 in-scope questions with exact citations, strictly refusing 6 out-of-scope queries, and passing 5 boundary edge cases without regression.
             - **Audit Guarantee:** The evaluation dataset remains permanently frozen during optimization rounds to ensure zero data leakage or target drifting.
             """)
+    elif ctx["is_custom"]:
+        st.info(f"📁 Custom knowledge documents are uploaded for session `{ctx['run_id']}`. Click '**🚀 Run Autonomous Agent Factory Pipeline**' in Step 1 to synthesize and run the evaluation dataset.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -980,7 +1131,8 @@ with tabs[4]:
 # -------------------------------------------------------------------------------------------------
 with tabs[5]:
     st.markdown("### 🔄 Step 6: Critic–Optimizer Progression & Targeted Repairs")
-    run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
+    ctx = get_active_run_context()
+    run_data = ctx["data"]
 
     if run_data:
         raw_scorecards = run_data.get("scorecards", [])
@@ -1037,6 +1189,8 @@ with tabs[5]:
             <span class="badge-pass">🛡️ REGRESSION GUARD ACTIVE: Zero regressions accepted into configuration state.</span>
         </div>
         """, unsafe_allow_html=True)
+    elif ctx["is_custom"]:
+        st.info(f"📁 Custom knowledge documents are uploaded for session `{ctx['run_id']}`. Click '**🚀 Run Autonomous Agent Factory Pipeline**' in Step 1 to execute the Critic-Optimizer loop.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -1045,7 +1199,8 @@ with tabs[5]:
 # -------------------------------------------------------------------------------------------------
 with tabs[6]:
     st.markdown("### 📊 Step 7: Final Quality Report & Audit Transparency")
-    run_data = st.session_state.get("last_run") or st.session_state.get("loaded_demo")
+    ctx = get_active_run_context()
+    run_data = ctx["data"]
 
     if run_data:
         raw_scorecards = run_data.get("scorecards", [])
@@ -1118,6 +1273,8 @@ with tabs[6]:
         if os.path.exists(agent_def_file):
             with open(agent_def_file, "r", encoding="utf-8") as f:
                 dl_c3.download_button("🤖 Agent Definition (agent_definition.json)", f.read(), "agent_definition.json", "application/json")
+    elif ctx["is_custom"]:
+        st.info(f"📁 Custom knowledge documents are uploaded for session `{ctx['run_id']}`. Click '**🚀 Run Autonomous Agent Factory Pipeline**' in Step 1 to generate the final quality report.")
     else:
         st.info("Run an agent build in Step 1 or load a pre-built demo from the sidebar.")
 
@@ -1128,8 +1285,9 @@ with tabs[7]:
     st.markdown("### 💬 Step 8: Interactive Agent Playground")
     st.markdown("Test the generated agent in real-time with grounded context retrieval and authorized tool execution.")
 
-    current_artifacts_dir = st.session_state.get("artifacts_dir", active_preset["artifacts"])
-    current_doc_dir = st.session_state.get("doc_folder", active_preset["docs"])
+    ctx = get_active_run_context()
+    current_artifacts_dir = ctx["artifacts_dir"]
+    current_doc_dir = ctx["doc_folder"]
     default_def_path = os.path.join(current_artifacts_dir, "agent_definition.json")
     default_doc_path = current_doc_dir
 
@@ -1150,25 +1308,26 @@ with tabs[7]:
 
         # Suggested demo prompt chips
         st.markdown("#### 💡 Quick Demonstration Prompts")
-        if "hr" in active_preset["domain"].lower():
-            p_cols = st.columns(3)
-            p1 = p_cols[0].button("📅 Annual Leave Entitlement")
-            p2 = p_cols[1].button("⏱️ Core Working Hours")
-            p3 = p_cols[2].button("⛔ Refusal: CEO Salary Record")
-            suggested_prompt = "How many days of annual leave are full-time employees entitled to per calendar year?" if p1 else ("What are standard core working hours?" if p2 else ("Can you disclose the personal salary of executive directors?" if p3 else None))
-        elif "procurement" in active_preset["domain"].lower():
-            p_cols = st.columns(3)
-            p1 = p_cols[0].button("🔍 Part NV-PUMP-001 Price")
-            p2 = p_cols[1].button("💰 Chief Engineer Limit")
-            p3 = p_cols[2].button("⛔ Refusal: Wire Transfer")
-            suggested_prompt = "What is the unit price and stock of part NV-PUMP-001?" if p1 else ("What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?" if p2 else ("Please initiate an automated bank wire transfer to the supplier." if p3 else None))
-        elif "academic" in active_preset["domain"].lower() or "education" in active_preset["domain"].lower():
+        active_domain_lower = ctx["domain"].lower()
+        if "academic" in active_domain_lower or "education" in active_domain_lower or "university" in active_domain_lower:
             p_cols = st.columns(3)
             p1 = p_cols[0].button("🎓 Graduation Credit Requirement")
             p2 = p_cols[1].button("⏱️ Examination Arrival Rules")
             p3 = p_cols[2].button("⛔ Refusal: Consular Visa Extension")
             suggested_prompt = "How many academic credit hours and what minimum CGPA are required for undergraduate graduation?" if p1 else ("What are the rules regarding examination arrival times and late entry to the examination hall?" if p2 else ("Can you process my international student F-1 visa extension and book an embassy appointment?" if p3 else None))
-        elif "medical" in active_preset["domain"].lower() or "health" in active_preset["domain"].lower() or "clinical" in active_preset["domain"].lower():
+        elif "hr" in active_domain_lower:
+            p_cols = st.columns(3)
+            p1 = p_cols[0].button("📅 Annual Leave Entitlement")
+            p2 = p_cols[1].button("⏱️ Core Working Hours")
+            p3 = p_cols[2].button("⛔ Refusal: CEO Salary Record")
+            suggested_prompt = "How many days of annual leave are full-time employees entitled to per calendar year?" if p1 else ("What are standard core working hours?" if p2 else ("Can you disclose the personal salary of executive directors?" if p3 else None))
+        elif "procurement" in active_domain_lower:
+            p_cols = st.columns(3)
+            p1 = p_cols[0].button("🔍 Part NV-PUMP-001 Price")
+            p2 = p_cols[1].button("💰 Chief Engineer Limit")
+            p3 = p_cols[2].button("⛔ Refusal: Wire Transfer")
+            suggested_prompt = "What is the unit price and stock of part NV-PUMP-001?" if p1 else ("What is the financial approval threshold for a vessel Chief Engineer without superintendent sign-off?" if p2 else ("Please initiate an automated bank wire transfer to the supplier." if p3 else None))
+        elif "medical" in active_domain_lower or "health" in active_domain_lower or "clinical" in active_domain_lower:
             p_cols = st.columns(3)
             p1 = p_cols[0].button("🏥 Urgent Triage Policy")
             p2 = p_cols[1].button("📋 HIPAA Record Access")

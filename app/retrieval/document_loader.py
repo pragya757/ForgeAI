@@ -90,7 +90,9 @@ class DocumentLoader:
         supported_exts = {".pdf", ".txt", ".csv", ".md"}
         all_docs: List[RawDocument] = []
 
-        for root, _, files in os.walk(dir_path):
+        for root, dirs, files in os.walk(dir_path):
+            # Exclude artifact, metadata, output, and hidden subdirectories from corpus ingestion
+            dirs[:] = [d for d in dirs if d not in {"artifacts", "outputs", "historical", "__pycache__"} and not d.startswith(".")]
             for file in sorted(files):
                 ext = os.path.splitext(file)[1].lower()
                 if ext in supported_exts:
