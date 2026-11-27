@@ -1,0 +1,29 @@
+# MARITIME ENVIRONMENTAL COMPLIANCE MANUAL
+Vessel Operational Guidelines | MARPOL Compliance | Version 3.4 | Effective 1 January 2026
+
+1. Purpose and Scope
+This manual establishes environmental compliance standards for ocean-going vessels under international MARPOL protocols. It governs oily water filtering, sewage treatment, ballast water exchange, air emissions, and garbage management. It does not provide maritime insurance dispute advice, crew income tax consulting, cargo charterparty negotiations, or customs tariff determinations.
+
+2. Oily Water and Bilge Discharges
+Under MARPOL Annex I, machinery space oily bilge water may only be discharged overboard when the vessel is en route, the oily mixture is processed through an approved 15 ppm oil filtering equipment (oily water separator), and the automatic stopping device activates immediately if oil content exceeds 15 parts per million (15 ppm). Discharges without 15 ppm filtering are strictly prohibited.
+
+3. Sewage Discharge Protocols
+Under MARPOL Annex IV, comminuted and disinfected sewage using an approved system may be discharged at a distance of more than 3 nautical miles from the nearest land. Sewage that is not comminuted or disinfected must not be discharged at a distance of less than 12 nautical miles from the nearest land. All sewage discharges must occur while the vessel is en route proceeding at not less than 4 knots.
+
+4. Ballast Water Management
+Under the Ballast Water Management Convention, ballast water exchange must be conducted at an efficiency of at least 95% volumetric exchange using flow-through or sequential methods. Ballast water exchange must be carried out at least 200 nautical miles from the nearest land and in water at least 200 meters in depth. If impossible, exchange must occur at least 50 nautical miles from the nearest land in water at least 200 meters deep.
+
+5. Air Emissions and Fuel Sulfur Caps
+Under MARPOL Annex VI, the global fuel sulfur content limit is 0.50% m/m. Within designated Emission Control Areas (ECAs), the sulfur content of fuel oil used onboard must not exceed 0.10% m/m. Vessels using high-sulfur fuel must operate an approved Exhaust Gas Cleaning System (scrubber) with continuous emission monitoring logging.
+
+6. Garbage Management and Disposal
+Under MARPOL Annex V, the discharge of all plastics, including synthetic ropes, fishing gear, and plastic garbage bags, into the sea is strictly prohibited everywhere. Food wastes comminuted to pass through a 25 mm screen may be discharged while en route at a distance of not less than 3 nautical miles from the nearest land outside special areas. Uncomminuted food wastes require at least 12 nautical miles.
+
+7. Records and Documentation
+Bunker Delivery Notes (BDNs) must be accompanied by an MARPOL sample and retained onboard for inspection for at least three (3) years from the date of bunkering. The Oil Record Book Part I (Machinery Spaces) and Part II (Cargo/Ballast Operations) must be completed after each relevant operation without delay and retained for three (3) years following the final entry.
+
+8. Incident Reporting and Spill Notification
+In the event of an accidental discharge, fuel spill, or pollution incident, the Master must immediately notify the nearest Coastal State administration and maritime rescue center within one (1) hour. An internal incident investigation report must be submitted to the Designated Person Ashore (DPA) within 24 hours.
+
+9. Limitations and Out of Scope
+This manual does not address crew personal income tax, customs declaration tariffs, vessel charter contracts, freight rate hedging, or maritime piracy insurance settlements. Queries regarding these topics must be referred to designated shore management.

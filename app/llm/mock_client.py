@@ -1865,81 +1865,81 @@ class MockLLMClient(BaseLLMClient):
                 },
                 {
                     "test_id": "TC-002",
-                    "question": "What is the minimum operational overlap duration required during shift handover and what steps must occur?",
+                    "question": "By when must production supervisors publish the line plan, and who must approve changes affecting confirmed customer orders?",
                     "test_category": "answerable",
                     "subcategory": "direct_factual",
-                    "expected_answer": "Shift handover requires a minimum 15-minute operational overlap, including a joint walk-through and a signed handover checklist by outgoing and incoming shift leads.",
+                    "expected_answer": "Production supervisors must publish the next week's line plan by Thursday 16:00. Any change affecting a confirmed customer order must be approved by the Production Manager.",
                     "expected_sources": [mfg_src],
                     "source_locations": ["Page 1"],
                     "expected_action": "answer",
-                    "expected_facts": ["Minimum 15-minute operational overlap", "Joint walk-through", "Signed handover checklist"],
-                    "ground_truth_evidence": "Page 1, Section 2: Shift handover requires a minimum 15-minute operational overlap between outgoing and incoming shift leads, who must conduct a joint walk-through inspection and sign the handover checklist.",
-                    "evaluation_criteria": "Must specify 15-minute operational overlap, joint walk-through, and signed checklist."
+                    "expected_facts": ["Publish line plan by Thursday 16:00", "Approved by the Production Manager"],
+                    "ground_truth_evidence": "Page 1, Section 2: Production supervisors publish the next week's line plan by Thursday 16:00. Any change affecting a confirmed customer order must be approved by the Production Manager.",
+                    "evaluation_criteria": "Must specify Thursday 16:00 deadline and Production Manager approval."
                 },
                 {
                     "test_id": "TC-003",
                     "question": "When is the weekly maintenance window scheduled and what is the status of production?",
                     "test_category": "answerable",
                     "subcategory": "direct_factual",
-                    "expected_answer": "The weekly maintenance window is scheduled every Sunday from 06:00 to 10:00, during which regular production operations are suspended.",
+                    "expected_answer": "The weekly maintenance window is scheduled every Sunday from 06:00 to 10:00, during which production lines are stopped.",
                     "expected_sources": [mfg_src],
                     "source_locations": ["Page 1"],
                     "expected_action": "answer",
-                    "expected_facts": ["Sunday 06:00-10:00", "Regular production suspended"],
-                    "ground_truth_evidence": "Page 1, Section 2: The weekly maintenance window is scheduled every Sunday from 06:00 to 10:00. Regular production operations are suspended.",
-                    "evaluation_criteria": "Must specify Sunday 06:00-10:00 and production suspended."
+                    "expected_facts": ["Sunday 06:00-10:00", "Production lines stopped"],
+                    "ground_truth_evidence": "Page 1, Section 2: Weekly maintenance window: Sunday 06:00–10:00 (Production lines stopped).",
+                    "evaluation_criteria": "Must specify Sunday 06:00-10:00 and production lines stopped."
                 },
                 {
                     "test_id": "TC-004",
                     "question": "What is the minimum incoming inspection sample size per delivery lot for raw materials?",
                     "test_category": "answerable",
                     "subcategory": "direct_factual",
-                    "expected_answer": "Incoming raw materials and subcontracted components require a minimum sample size of 5 units per delivery lot.",
+                    "expected_answer": "Incoming material inspection samples five (5) units from each delivery lot. If one or more sampled units fail a specified check, the lot is placed on HOLD.",
                     "expected_sources": [mfg_src],
                     "source_locations": ["Page 1"],
                     "expected_action": "answer",
-                    "expected_facts": ["Minimum sample size of 5 units per delivery lot"],
-                    "ground_truth_evidence": "Page 1, Section 4: Incoming raw materials and subcontracted components are inspected according to sampling plans with a minimum sample size of 5 units per delivery lot.",
+                    "expected_facts": ["Samples five units from each delivery lot", "Placed on HOLD if one or more fail"],
+                    "ground_truth_evidence": "Page 1, Section 4: Incoming material inspection samples five units from each delivery lot. If one or more sampled units fail a specified check, the lot is placed on HOLD pending expanded inspection.",
                     "evaluation_criteria": "Must specify 5 units per delivery lot."
                 },
                 {
                     "test_id": "TC-005",
-                    "question": "What is the standard dimensional tolerance for critical components?",
+                    "question": "Who must approve the first-piece inspection after a changeover before normal batch production resumes, and is verbal approval accepted?",
                     "test_category": "answerable",
                     "subcategory": "direct_factual",
-                    "expected_answer": "Standard dimensional tolerance for critical components is +/- 0.05 mm unless the component drawing specifies a tighter limit.",
+                    "expected_answer": "First-piece approval must be recorded by a Quality Inspector before normal batch production resumes. A verbal approval is not sufficient.",
                     "expected_sources": [mfg_src],
                     "source_locations": ["Page 1"],
                     "expected_action": "answer",
-                    "expected_facts": ["+/- 0.05 mm tolerance"],
-                    "ground_truth_evidence": "Page 1, Section 4: Standard dimensional tolerance for critical components is +/- 0.05 mm unless the component drawing specifies a tighter limit.",
-                    "evaluation_criteria": "Must state +/- 0.05 mm."
+                    "expected_facts": ["Recorded by a Quality Inspector", "Verbal approval is not sufficient"],
+                    "ground_truth_evidence": "Page 1, Section 3: First-piece approval must be recorded by a Quality Inspector before normal batch production resumes. A verbal approval is not sufficient.",
+                    "evaluation_criteria": "Must state Quality Inspector recorded approval and verbal approval is not sufficient."
                 },
                 {
                     "test_id": "TC-006",
                     "question": "What is the in-process quality inspection frequency during production runs?",
                     "test_category": "answerable",
                     "subcategory": "direct_factual",
-                    "expected_answer": "In-process quality inspection is conducted on 1 unit every 50 units produced, plus the first 5 units after any tool or setup changeover.",
+                    "expected_answer": "During production, operators inspect the first five units after every changeover and then one unit every 50 units produced.",
                     "expected_sources": [mfg_src],
                     "source_locations": ["Page 1"],
                     "expected_action": "answer",
-                    "expected_facts": ["1 unit every 50 units produced", "First 5 units after tool or setup changeover"],
-                    "ground_truth_evidence": "Page 1, Section 4: In-process quality inspection is conducted on 1 unit every 50 units produced, plus the first 5 units after any tool change or setup changeover.",
-                    "evaluation_criteria": "Must specify 1 unit every 50 units and first 5 units after changeover."
+                    "expected_facts": ["First five units after every changeover", "One unit every 50 units produced"],
+                    "ground_truth_evidence": "Page 1, Section 4: During production, operators inspect the first five units after every changeover and then one unit every 50 units produced.",
+                    "evaluation_criteria": "Must specify first 5 units after changeover and 1 unit every 50 units produced."
                 },
                 {
                     "test_id": "TC-007",
-                    "question": "What defect rate triggers an immediate quality HOLD on a production line?",
+                    "question": "What pre-start checklist items must the operator complete before machine start-up?",
                     "test_category": "answerable",
                     "subcategory": "direct_factual",
-                    "expected_answer": "A defect rate exceeding 3% on any production line during a single shift triggers an immediate quality HOLD and notification to the Quality Inspector.",
+                    "expected_answer": "Before start-up, the operator completes the daily pre-start checklist: guards fitted, emergency stop tested, work area clear, correct job card loaded, and required personal protective equipment worn.",
                     "expected_sources": [mfg_src],
                     "source_locations": ["Page 1"],
                     "expected_action": "answer",
-                    "expected_facts": ["Defect rate exceeding 3%", "Line placed on HOLD", "Notify Quality Inspector"],
-                    "ground_truth_evidence": "Page 1, Section 4: If the defect rate on any production line exceeds 3% during a single shift, the line is immediately placed on quality HOLD and the Quality Inspector is notified.",
-                    "evaluation_criteria": "Must identify defect rate exceeding 3%."
+                    "expected_facts": ["Guards fitted", "Emergency stop tested", "Work area clear", "Correct job card loaded", "Required PPE worn"],
+                    "ground_truth_evidence": "Page 1, Section 3: Before start-up, the operator completes the daily pre-start checklist: guards fitted, emergency stop tested, work area clear, correct job card loaded and required personal protective equipment worn.",
+                    "evaluation_criteria": "Must list pre-start checklist checks."
                 },
                 {
                     "test_id": "TC-008",
@@ -2525,34 +2525,44 @@ class MockLLMClient(BaseLLMClient):
                     "Shift A operates from 06:00 to 14:00, Shift B operates from 14:00 to 22:00, and Shift C operates from 22:00 to 06:00.\n"
                     f"[Source: {mfg_tag}, Page: 1]"
                 )
-            elif "handover" in user_part or ("overlap" in user_part and "shift" in user_part) or ("15" in user_part and "minute" in user_part):
+            elif "line plan" in user_part or ("thursday" in user_part and "16:00" in user_part) or "confirmed customer order" in user_part:
                 return (
-                    "Shift handover requires a minimum 15-minute operational overlap between outgoing and incoming shift leads, who must conduct a joint walk-through inspection and sign the handover checklist.\n"
+                    "Production supervisors publish the next week's line plan by Thursday 16:00. Any change affecting a confirmed customer order must be approved by the Production Manager.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "first-piece" in user_part or "first piece" in user_part or ("verbal approval" in user_part and "quality" in user_part):
+                return (
+                    "First-piece approval must be recorded by a Quality Inspector before normal batch production resumes. A verbal approval is not sufficient.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "pre-start" in user_part or "pre start" in user_part or "checklist" in user_part:
+                return (
+                    "Before start-up, the operator completes the daily pre-start checklist: guards fitted, emergency stop tested, work area clear, correct job card loaded and required personal protective equipment worn.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "handover" in user_part or ("overlap" in user_part and "shift" in user_part):
+                return (
+                    "Operators must record actual start time, completed quantity, rejected quantity and downtime reason in the production log before the end of each shift.\n"
                     f"[Source: {mfg_tag}, Page: 1]"
                 )
             elif "weekly maintenance" in user_part or ("sunday" in user_part and "maintenance" in user_part):
                 return (
-                    "The weekly maintenance window is scheduled every Sunday from 06:00 to 10:00, during which regular production operations are suspended.\n"
+                    "The weekly maintenance window is scheduled every Sunday from 06:00 to 10:00, during which production lines are stopped.\n"
                     f"[Source: {mfg_tag}, Page: 1]"
                 )
             elif "incoming" in user_part and ("sample size" in user_part or "delivery lot" in user_part or "raw materials" in user_part):
                 return (
-                    "Incoming raw materials and subcontracted components are inspected according to sampling plans with a minimum sample size of 5 units per delivery lot.\n"
-                    f"[Source: {mfg_tag}, Page: 1]"
-                )
-            elif "tolerance" in user_part and ("0.05" in user_part or "critical component" in user_part):
-                return (
-                    "Standard dimensional tolerance for critical components is +/- 0.05 mm unless the component drawing specifies a tighter limit.\n"
+                    "Incoming material inspection samples five (5) units from each delivery lot. If one or more sampled units fail a specified check, the lot is placed on HOLD pending expanded inspection.\n"
                     f"[Source: {mfg_tag}, Page: 1]"
                 )
             elif "in-process" in user_part or ("50 units" in user_part and "inspection" in user_part) or ("first 5" in user_part and "changeover" in user_part):
                 return (
-                    "In-process quality inspection is conducted on 1 unit every 50 units produced, plus the first 5 units after any tool change or setup changeover.\n"
+                    "During production, operators inspect the first five units after every changeover and then one unit every 50 units produced.\n"
                     f"[Source: {mfg_tag}, Page: 1]"
                 )
-            elif "defect rate" in user_part or ("3%" in user_part and "hold" in user_part):
+            elif "rework" in user_part or "discard" in user_part or "nonconforming" in user_part:
                 return (
-                    "If the defect rate on any production line exceeds 3% during a single shift, the line is immediately placed on quality HOLD and the Quality Inspector is notified.\n"
+                    "Any unit outside the approved drawing tolerance must be tagged and moved to the red nonconforming-material area. Operators must not rework or discard nonconforming units without written disposition.\n"
                     f"[Source: {mfg_tag}, Page: 1]"
                 )
             elif "reorder trigger" in user_part or "150 units" in user_part or ("safety stock" in user_part and "120" in user_part):
@@ -2769,6 +2779,8 @@ class MockLLMClient(BaseLLMClient):
                         " Furthermore, ".join(matched_lines) if len(matched_lines) > 1 else matched_lines[0]
                     )
                     citations_str = " ".join(used_tags)
+                    if any(phrase in answer_text.lower() for phrase in ["does not address", "does not provide", "does not specify", "outside this manual", "outside scope", "must be referred to", "cannot answer"]):
+                        return f"I cannot answer this question as it is outside my verified documentation scope. {answer_text}\n{citations_str}"
                     return f"Based on verified documentation: {answer_text}\n{citations_str}"
 
             # Secondary fallback if raw_blocks regex misses
