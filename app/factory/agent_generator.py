@@ -425,6 +425,12 @@ class AgentGenerator:
         if "system_prompt" not in data or len(data.get("system_prompt", "")) < 100 or "STRICT REFUSAL" not in data.get("system_prompt", "") or ("Autonomous Operations Assistant" in data.get("system_prompt", "") and requirements.agent_name != "Autonomous Operations Assistant"):
             data["system_prompt"] = system_prompt
 
+        # Store verified corpus directory and indexed document filenames
+        data["corpus_directory"] = os.path.abspath(doc_folder)
+        data["indexed_documents"] = doc_refs
+        if not data.get("document_references"):
+            data["document_references"] = doc_refs
+
         # Build AgentDefinition
         agent_def = AgentDefinition(**data)
 

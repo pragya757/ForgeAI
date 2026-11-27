@@ -42,6 +42,8 @@ class AgentDefinition(BaseModel):
     unsupported_topics: List[str]
     must_refuse_topics: List[str]
     document_references: List[str]
+    corpus_directory: Optional[str] = None
+    indexed_documents: List[str] = Field(default_factory=list)
     chunk_size: int = 500
     chunk_overlap: int = 100
     embedding_model: str = "all-MiniLM-L6-v2"

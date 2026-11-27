@@ -64,6 +64,8 @@ class GenericChatRunner:
         # 2. Document Index Loading
         if doc_folder and os.path.exists(doc_folder):
             self.doc_folder = os.path.abspath(doc_folder)
+        elif getattr(self.definition, "corpus_directory", None) and os.path.exists(self.definition.corpus_directory):
+            self.doc_folder = os.path.abspath(self.definition.corpus_directory)
         elif self.definition_path and os.path.exists(self.definition_path):
             parent = os.path.dirname(os.path.abspath(self.definition_path))
             candidate = os.path.join(os.path.dirname(parent), "documents")

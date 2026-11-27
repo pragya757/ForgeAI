@@ -6,5 +6,6 @@ __pycache__
 .agents/
 .gemini/
 outputs/runs/
+outputs/sessions/
 outputs/test_*
 

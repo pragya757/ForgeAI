@@ -294,6 +294,16 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 Interactive Swagger API documentation is available at `http://localhost:8000/docs`.
 
+#### Universal Multipart Agent Build via REST API
+```bash
+curl -X POST "http://localhost:8000/api/factory/upload-and-build" \
+  -F "brief=Create a harbor logistics assistant that answers questions about dock specifications and container dwell times." \
+  -F "iterations=2" \
+  -F "files=@dock_policy.pdf" \
+  -F "files=@crane_schedule.csv"
+```
+See [DOCUMENT_INGESTION_ARCHITECTURE.md](DOCUMENT_INGESTION_ARCHITECTURE.md) for full ingestion, session isolation, and manifest specifications.
+
 ### 5. Run the Complete Automated Test Suite
 ```bash
 pytest -v

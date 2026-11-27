@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import uuid
 import streamlit as st
 import pandas as pd
 from typing import Any, Dict, List, Optional
@@ -11,6 +12,7 @@ from app.runtime.chat_runner import GenericChatRunner
 from app.llm import get_llm_client
 from app.tools.registry import registry
 from app.schemas.requirements import DocumentItem
+from app.retrieval.ingestion import IngestionManager, IngestionResult
 
 # -------------------------------------------------------------------------------------------------
 # 1. Serialization Helpers (Pydantic & Dict Interop)
@@ -609,54 +611,95 @@ with tabs[0]:
 
     with col_build1:
         with st.container(border=True):
-            st.markdown("#### 📝 User Brief Submission")
-            brief_input = st.text_area(
-                "Agent Mission & Persona Brief",
-                value=active_preset["brief"],
-                key=f"brief_input_{preset_choice}",
-                height=110,
-                help="Describe persona, operational boundaries, target audience, and expected knowledge domains."
-            )
-
-            st.markdown("#### 📚 Knowledge Document Source")
-            doc_folder_input = st.text_input(
-                "Corpus Directory Path",
-                value=active_preset["docs"],
-                key=f"doc_folder_input_{preset_choice}",
-                help="Directory containing PDF, TXT, or CSV knowledge sources."
-            )
+            st.markdown("#### 📚 Knowledge Document Ingestion")
 
             uploaded_files = st.file_uploader(
-                "Or Upload Documents Directly (PDF, TXT, CSV)",
+                "Upload Custom Knowledge Documents (PDF, TXT, CSV, MD)",
                 accept_multiple_files=True,
-                type=["pdf", "txt", "csv"]
+                type=["pdf", "txt", "csv", "md"],
+                key="universal_doc_uploader",
+                help="Upload one or more arbitrary domain documents. Generates an isolated session directory and SHA-256 manifest."
             )
+
+            current_fingerprint = [(uf.name, uf.size) for uf in uploaded_files] if uploaded_files else None
+
             if uploaded_files:
-                if "custom_session_id" not in st.session_state:
-                    st.session_state["custom_session_id"] = datetime.now().strftime("%Y%m%d_%H%M%S")
-                upload_dest = f"outputs/runs/{st.session_state['custom_session_id']}/documents"
-                upload_artifacts = f"outputs/runs/{st.session_state['custom_session_id']}/artifacts"
-                os.makedirs(upload_dest, exist_ok=True)
-                for uf in uploaded_files:
-                    with open(os.path.join(upload_dest, uf.name), "wb") as f:
-                        f.write(uf.getbuffer())
-                doc_folder_input = upload_dest
-                default_artifacts_dir = upload_artifacts
-                st.session_state["loaded_demo"] = None
-                st.success(f"Ingested {len(uploaded_files)} file(s) into isolated directory `{upload_dest}`")
+                if current_fingerprint != st.session_state.get("last_uploaded_fingerprint"):
+                    try:
+                        ingestion_res = IngestionManager.ingest_files(uploaded_files)
+                        st.session_state["active_ingestion_result"] = ingestion_res
+                        st.session_state["last_uploaded_fingerprint"] = current_fingerprint
+                        st.session_state["is_custom_upload_active"] = True
+                        st.session_state["loaded_demo"] = None
+                        # Reset brief to decouple from any previous demo preset brief
+                        st.session_state["custom_brief_value"] = "Create an autonomous AI assistant that answers queries, procedures, and domain guidelines using the uploaded documents."
+                    except Exception as err:
+                        st.error(f"Document Ingestion Error: {str(err)}")
+
+                ingestion_res = st.session_state.get("active_ingestion_result")
+                if ingestion_res:
+                    doc_folder_input = ingestion_res.document_dir
+                    default_artifacts_dir = ingestion_res.artifacts_dir
+
+                    st.success(f"✅ Ingested {ingestion_res.total_files} file(s) into isolated session `{ingestion_res.session_id}` ({ingestion_res.total_bytes / 1024:.1f} KB)")
+
+                    # Display uploaded files table
+                    file_rows = []
+                    for d in ingestion_res.documents:
+                        file_rows.append({
+                            "Filename": d.filename,
+                            "Format": d.format,
+                            "Size (KB)": f"{d.size_bytes / 1024:.1f}",
+                            "SHA-256 Checksum": f"{d.sha256[:12]}..."
+                        })
+                    st.dataframe(pd.DataFrame(file_rows), width="stretch", hide_index=True)
             else:
+                st.session_state["is_custom_upload_active"] = False
+                st.session_state["active_ingestion_result"] = None
+                st.session_state["last_uploaded_fingerprint"] = None
+                doc_folder_input = active_preset["docs"]
                 default_artifacts_dir = active_preset["artifacts"]
 
-            output_dir_input = st.text_input(
-                "Artifacts Destination Path",
-                value=default_artifacts_dir,
-                help="Target directory for generated agent definition, test sets, reports, and logs."
-            )
-
-            if uploaded_files:
-                st.info(f"📁 **Active Corpus:** Custom Upload ({len(uploaded_files)} files: {', '.join([uf.name for uf in uploaded_files])})")
+            st.markdown("#### 📝 User Brief Submission")
+            if st.session_state.get("is_custom_upload_active"):
+                active_session_tag = st.session_state.get("active_ingestion_result").session_id if st.session_state.get("active_ingestion_result") else "custom"
+                brief_default = st.session_state.get("custom_brief_value", "Create an autonomous AI assistant for the uploaded documents.")
+                brief_input = st.text_area(
+                    "Agent Mission & Persona Brief (Custom Domain)",
+                    value=brief_default,
+                    key=f"brief_input_custom_{active_session_tag}",
+                    height=100,
+                    help="Describe persona, operational boundaries, target audience, and expected knowledge domains for this custom agent."
+                )
             else:
-                st.caption(f"📁 **Active Corpus:** Preset ({doc_folder_input})")
+                brief_input = st.text_area(
+                    "Agent Mission & Persona Brief",
+                    value=active_preset["brief"],
+                    key=f"brief_input_{preset_choice}",
+                    height=100,
+                    help="Describe persona, operational boundaries, target audience, and expected knowledge domains."
+                )
+
+            c_dir1, c_dir2 = st.columns(2)
+            with c_dir1:
+                doc_folder_input = st.text_input(
+                    "Corpus Directory Path",
+                    value=doc_folder_input,
+                    key=f"doc_folder_input_{preset_choice}_{'custom' if st.session_state.get('is_custom_upload_active') else 'preset'}",
+                    help="Directory containing verified knowledge sources."
+                )
+            with c_dir2:
+                output_dir_input = st.text_input(
+                    "Artifacts Destination Path",
+                    value=default_artifacts_dir,
+                    key=f"artifacts_dir_input_{preset_choice}_{'custom' if st.session_state.get('is_custom_upload_active') else 'preset'}",
+                    help="Target directory for generated agent definition, test sets, reports, and logs."
+                )
+
+            if st.session_state.get("is_custom_upload_active"):
+                st.info(f"📁 **Active Mode:** Custom Upload Ingestion (Isolated Session)")
+            else:
+                st.caption(f"📁 **Active Mode:** Demonstration Preset ({doc_folder_input})")
 
     with col_build2:
         with st.container(border=True):
