@@ -755,6 +755,10 @@ with tabs[0]:
                             custom_agent_name = "University Regulations Assistant"
                             custom_domain = "Higher Education Academic Affairs"
                             custom_brief = "Create an autonomous University Regulations Assistant that answers student and faculty questions regarding graduation requirements, grading scales, examination guidelines, academic probation, and the student code of conduct using university policy manuals."
+                        elif any(k in file_names_str for k in ["manufacturing", "machining", "plant", "component"]):
+                            custom_agent_name = "Manufacturing Operations Assistant"
+                            custom_domain = "Industrial Precision Manufacturing"
+                            custom_brief = "Create an autonomous Manufacturing Operations Assistant for CNC milling, coolant concentrations, maintenance intervals, and LOTO safety protocols using plant operations manuals."
                         elif any(k in file_names_str for k in ["medical", "clinic", "health"]):
                             custom_agent_name = "Medical Clinic Operations Assistant"
                             custom_domain = "Clinical Healthcare"

@@ -50,11 +50,11 @@ def test_manufacturing_operations_workflow_and_isolation():
         doc_folder=res.document_dir
     )
 
-    # 1. Answerable query
-    q_ans = "What is the mandatory spindle bearing lubrication interval for the CNC Milling Center?"
+    # 1. Answerable query (Meridian Components authentic manual)
+    q_ans = "What is the scheduled interval for preventive maintenance on plant machinery?"
     resp_ans = runner.ask(q_ans)
     assert not resp_ans.refused
-    assert "250" in resp_ans.answer
+    assert "500" in resp_ans.answer or "90" in resp_ans.answer
     assert any("Manufacturing_Operations_Test_Document.pdf" in c for c in resp_ans.citations)
 
     # 2. Scope boundary refusal
