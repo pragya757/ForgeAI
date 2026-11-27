@@ -7,3 +7,10 @@ font = "sans serif"
 
 [client]
 toolbarMode = "minimal"
+
+[server]
+enableCORS = false
+enableXsrfProtection = false
+headless = true
+port = 8503
+

@@ -46,23 +46,70 @@ class IntakeInterviewer:
         b_lower = brief.lower()
         topics = doc_topics or []
 
-        if bool(re.search(r"\b(hr|human resources|leave policies|attendance policy|employee handbook)\b", b_lower)):
+        # 1. Primary: Extract explicit title from user brief if phrased like 'Create an [X] assistant/agent'
+        m = re.search(r"(?:create|build|generate|develop)\s+(?:an?|the)?\s*([A-Za-z0-9_\-\s]{3,40}?)(?:\s+(?:assistant|agent|advisor|specialist|bot|system))", brief, re.IGNORECASE)
+        if m:
+            raw_title = m.group(1).strip()
+            clean_name = " ".join(w.capitalize() for w in raw_title.split()) + " Assistant"
+            c_low = clean_name.lower()
+            if "manufacturing" in c_low:
+                return (
+                    "Manufacturing Operations Assistant",
+                    "Manufacturing Operations / Industrial Plant Operations",
+                    "Plant engineers, machine operators, and maintenance technicians"
+                )
+            elif "university" in c_low or "academic" in c_low or "regulation" in c_low:
+                return (
+                    "University Regulations Assistant" if "regulations" in c_low else "University Academic Regulations Assistant",
+                    "Higher Education Academic Affairs",
+                    "Students, faculty members, and academic advisors"
+                )
+            elif "hr" in c_low or "human resource" in c_low or ("policy" in c_low and "leave" in b_lower):
+                return (
+                    "HR Policy Assistant",
+                    "Corporate Human Resources",
+                    "Company employees, managers, and HR administrators"
+                )
+            elif "ship" in c_low or "vessel" in c_low or "marine" in c_low or ("procurement" in c_low and "maritime" in b_lower):
+                return (
+                    "Ship-Spares Procurement Assistant",
+                    "Maritime Procurement & Supply Chain",
+                    "Vessel superintendents, engineers, and procurement officers"
+                )
+            elif "clinic" in c_low or "medical" in c_low:
+                return (
+                    "Medical Clinic Policy Assistant",
+                    "Clinical Healthcare Administration",
+                    "Clinic staff, medical personnel, and patients"
+                )
+            base_name = clean_name.replace(' Assistant', '')
+            domain = base_name if base_name.endswith("Operations") or base_name.endswith("Management") else f"{base_name} Operations"
+            return clean_name, domain, "Authorized personnel and domain operators"
+
+        # 2. Heuristic fallback based on specific domain keywords
+        if bool(re.search(r"\b(manufacturing|plant operations|industrial|sop|lockout|machine maintenance)\b", b_lower)):
+            return (
+                "Manufacturing Operations Assistant",
+                "Manufacturing Operations / Industrial Plant Operations",
+                "Plant engineers, machine operators, and maintenance technicians"
+            )
+        elif bool(re.search(r"\b(hr|human resources|leave policies|attendance policy|employee handbook)\b", b_lower)):
             return (
                 "HR Policy Assistant",
                 "Corporate Human Resources",
                 "Company employees, managers, and HR administrators"
             )
-        elif bool(re.search(r"\b(procurement|spare parts|vessel spares|marine spares|purchase orders?)\b", b_lower)):
+        elif bool(re.search(r"\b(academic|university|grading scale|academic probation|examination guidelines)\b", b_lower)):
+            return (
+                "University Regulations Assistant" if "regulations" in b_lower else "University Academic Regulations Assistant",
+                "Higher Education Academic Affairs",
+                "Students, faculty members, and academic advisors"
+            )
+        elif bool(re.search(r"\b(vessel spares|marine spares|ship-spares|maritime procurement)\b", b_lower)):
             return (
                 "Ship-Spares Procurement Assistant",
                 "Maritime Procurement & Supply Chain",
                 "Vessel superintendents, engineers, and procurement officers"
-            )
-        elif bool(re.search(r"\b(academic|university|grading scale|academic probation|examination guidelines)\b", b_lower)):
-            return (
-                "University Academic Regulations Assistant",
-                "Higher Education Academic Affairs",
-                "Students, faculty members, and academic advisors"
             )
         elif bool(re.search(r"\b(clinic|medical|patient triage|telehealth|health information)\b", b_lower)):
             return (
@@ -70,14 +117,6 @@ class IntakeInterviewer:
                 "Clinical Healthcare Administration",
                 "Clinic staff, medical personnel, and patients"
             )
-
-        # Extract title from user brief if phrased like 'Create an [X] assistant/agent'
-        m = re.search(r"(?:create|build|generate|develop)\s+(?:an?|the)?\s*([A-Za-z0-9_\-\s]{3,40}?)(?:\s+(?:assistant|agent|advisor|specialist|bot|system))", brief, re.IGNORECASE)
-        if m:
-            clean_name = " ".join(w.capitalize() for w in m.group(1).strip().split()) + " Assistant"
-            base_name = clean_name.replace(' Assistant', '')
-            domain = base_name if base_name.endswith("Operations") or base_name.endswith("Management") else f"{base_name} Operations"
-            return clean_name, domain, "Authorized personnel and domain operators"
 
         if topics:
             primary_topic = topics[0].strip()

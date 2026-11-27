@@ -84,9 +84,13 @@ class MockLLMClient(BaseLLMClient):
 
     def _detect_domain(self, text: str) -> str:
         t = text.lower()
+        # 0. Manufacturing signals (Checked before procurement to avoid false match on 'spare parts')
+        if any(d in t for d in ["manufacturing_operations", "plant_operations", "machine_maintenance", "lockout_tagout", "ais-mfg-sop"]) or \
+           any(w in t for w in ["manufacturing operations", "plant engineers", "machine maintenance intervals", "quality inspection criteria", "safety lockouts", "shift handover protocols", "manufacturing assistant", "manufacturing_operations"]):
+            return "manufacturing"
         # 1. Procurement signals
         if any(d in t for d in ["spare_parts_catalog", "supplier_information", "procurement_guidelines"]) or \
-           (any(w in t for w in ["procurement", "spare parts", "vessel procurement", "marine spares", "purchase order authorization", "po approval", "catalogue"]) and not any(w in t for w in ["annual leave", "sick leave", "attendance rules", "employee handbook"])):
+           (any(w in t for w in ["vessel procurement", "marine spares", "purchase order authorization", "po approval", "ship-spares"]) or (any(w in t for w in ["procurement", "spare parts"]) and any(w in t for w in ["vessel", "ship", "marine", "maritime", "superintendent"]))):
             return "procurement"
         # 2. HR signals
         if any(d in t for d in ["leave_policy", "attendance_policy", "employee_handbook", "hr_policy"]) or \
@@ -203,6 +207,43 @@ class MockLLMClient(BaseLLMClient):
                 "unsupported_requirements": ["Direct transcript alteration", "Tuition fee refunds"],
                 "clarifications": []
             }
+        elif domain == "manufacturing":
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            actual_doc = doc_matches[0] if (doc_matches and any("manufacturing" in d.lower() for d in doc_matches)) else "Manufacturing_Operations_Test_Document.pdf"
+            data = {
+                "agent_name": "Manufacturing Operations Assistant",
+                "purpose": "Assist plant engineers, machine operators, and maintenance technicians with standard operating procedures, machine maintenance schedules, quality inspection tolerances, safety lockout protocols, and spare parts procurement.",
+                "user_intent": "Understand SOPs, maintenance intervals, tolerance thresholds, LOTO procedures, spare parts reorder rules, and emergency protocols.",
+                "target_audience": "Plant engineers, machine operators, and maintenance technicians",
+                "domain": "Manufacturing Operations / Industrial Plant Operations",
+                "scope": "Operating procedures, shift handovers, machine lubrication schedules, tolerance criteria, LOTO safety, and spare parts lead times.",
+                "tone": "Technical, precise, and safety-oriented",
+                "constraints": ["Strict adherence to verified maintenance specifications and tolerances", "No unauthorized modifications to equipment or ERP records"],
+                "must_answer_topics": ["Shift handover protocols", "Machine maintenance intervals and lubrication", "Quality inspection and tolerance thresholds", "Lockout/Tagout (LOTO) procedures", "Spare parts procurement and safety stock", "Emergency shutdown and evacuation"],
+                "must_refuse_topics": ["Overtime payroll approvals", "Modifying ERP vendor contracts", "Live machinery control execution", "Corporate equity compensation", "Utility tariff negotiations", "Worker compensation legal advice"],
+                "required_tools": ["calculator", "current_date"],
+                "document_inventory": [
+                    {
+                        "filename": actual_doc,
+                        "format": "PDF",
+                        "description": "Comprehensive plant operations, maintenance intervals, quality tolerances, and safety manual",
+                        "page_count": 1,
+                        "record_count": None,
+                        "content_summary": "Standard operating procedures, CNC/hydraulic maintenance intervals, tolerance tiers, LOTO protocols, spare parts stock levels, and emergency response.",
+                        "detected_topics": ["Shift Handover", "Machine Maintenance", "Quality Inspection", "Lockout/Tagout", "Spare Parts Procurement", "Emergency Shutdown"]
+                    }
+                ],
+                "information_gaps": {
+                    "missing_information": ["Hazardous chemical disposal protocols are not covered in the plant manual."],
+                    "contradictory_information": [],
+                    "duplicated_information": [],
+                    "incomplete_information": []
+                },
+                "assumptions": ["Manual reflects current Plant 4 operating parameters.", "Conservative safety thresholds apply during unattended operations."],
+                "ambiguities": ["Whether first-article inspection is required for minor tooling adjustments."],
+                "unsupported_requirements": ["Direct PLC/machinery control execution", "Live ERP database writing"],
+                "clarifications": []
+            }
         else:
             # Generic dynamic fallback for unseen domains
             doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
@@ -290,9 +331,12 @@ class MockLLMClient(BaseLLMClient):
         has_proc_files = any("spare_parts" in d or "procurement" in d or "supplier" in d for d in actual_docs)
         has_hr_files = any("leave" in d or "attendance" in d or "employee_handbook" in d or "hr_policy" in d for d in actual_docs)
         has_acad_files = any("academic" in d or "examination" in d or "student_code" in d for d in actual_docs)
+        has_mfg_files = any("manufacturing" in d or "plant_operations" in d for d in actual_docs)
 
         domain = self._detect_domain(text)
-        if has_proc_files or (domain == "procurement" and not actual_docs):
+        if has_mfg_files or (domain == "manufacturing" and not actual_docs):
+            domain = "manufacturing"
+        elif has_proc_files or (domain == "procurement" and not actual_docs):
             domain = "procurement"
         elif has_hr_files or (domain == "hr" and not actual_docs):
             domain = "hr"
@@ -482,6 +526,72 @@ class MockLLMClient(BaseLLMClient):
                 "sanitized_answerable_topics": ["Graduation requirements", "Grading scale and GPA calculation", "Academic probation rules", "Student code of conduct"],
                 "overall_groundability_score": 0.90
             }
+        elif domain == "manufacturing":
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            actual_doc = doc_matches[0] if (doc_matches and any("manufacturing" in d.lower() for d in doc_matches)) else "Manufacturing_Operations_Test_Document.pdf"
+            data = {
+                "supported_topics": [
+                    {
+                        "topic": "Shift handover protocols",
+                        "evidence_sources": [actual_doc],
+                        "coverage_summary": "Mandatory 30-minute operational overlap and electronic Shift Handover Log sign-off.",
+                        "confidence_score": 0.98,
+                        "evidence_references": [
+                            {"source_document": actual_doc, "page_or_record": "Page 1", "excerpt": "A thirty (30) minute operational overlap is enforced at every shift change.", "relevance_score": 0.98}
+                        ]
+                    },
+                    {
+                        "topic": "Machine maintenance intervals and lubrication",
+                        "evidence_sources": [actual_doc],
+                        "coverage_summary": "CNC spindle lubrication every 250 operating hours (ISO VG 68); 1,000-hr ball-screw backlash inspection (max 0.008 mm); hydraulic press pressure test at 500 hrs (210 bar).",
+                        "confidence_score": 0.97,
+                        "evidence_references": [
+                            {"source_document": actual_doc, "page_or_record": "Page 1", "excerpt": "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.", "relevance_score": 0.97}
+                        ]
+                    },
+                    {
+                        "topic": "Quality inspection and tolerance thresholds",
+                        "evidence_sources": [actual_doc],
+                        "coverage_summary": "Aerospace tolerance +/- 0.025 mm; Automotive tolerance +/- 0.050 mm; Ra <= 0.8 micrometers surface roughness; mandatory First-Article Inspection.",
+                        "confidence_score": 0.96,
+                        "evidence_references": [
+                            {"source_document": actual_doc, "page_or_record": "Page 1", "excerpt": "High-precision aerospace components require dimensional tolerances within +/- 0.025 mm.", "relevance_score": 0.96}
+                        ]
+                    },
+                    {
+                        "topic": "Lockout/Tagout (LOTO) procedures",
+                        "evidence_sources": [actual_doc],
+                        "coverage_summary": "6-step LOTO sequence, ANSI Z87.1 glasses, ASTM F2413 steel-toe boots, and 1.5m arc flash boundary.",
+                        "confidence_score": 0.98,
+                        "evidence_references": [
+                            {"source_document": actual_doc, "page_or_record": "Page 1", "excerpt": "Servicing or clearing jams within robotic cells requires strict execution of the 6-step LOTO sequence.", "relevance_score": 0.98}
+                        ]
+                    },
+                    {
+                        "topic": "Spare parts procurement and safety stock",
+                        "evidence_sources": [actual_doc],
+                        "coverage_summary": "2 units safety stock for ceramic bearings AIS-BRG-880; 5 units for pneumatic valves AIS-VAL-420; 14 days domestic tooling lead time; 45 days imported servomotors.",
+                        "confidence_score": 0.95,
+                        "evidence_references": [
+                            {"source_document": actual_doc, "page_or_record": "Page 1", "excerpt": "minimum safety stock levels: two (2) units for critical ceramic spindle bearings and five (5) units for pneumatic solenoid valves.", "relevance_score": 0.95}
+                        ]
+                    }
+                ],
+                "partially_supported_topics": [],
+                "unsupported_topics": [
+                    {"topic": "Overtime payroll approval", "reason": "Payroll and human resources compensation records are excluded from plant operations.", "absence_nature": "missing_from_corpus", "confidence_score": 0.98},
+                    {"topic": "Modifying ERP vendor contracts", "reason": "Procurement legal contracts are outside operational assistant scope.", "absence_nature": "unsupported_capability", "confidence_score": 0.99}
+                ],
+                "document_coverage_map": {
+                    actual_doc: ["Shift Handover", "Machine Maintenance", "Quality Inspection", "Lockout/Tagout", "Spare Parts Procurement", "Emergency Shutdown"]
+                },
+                "refusal_recommendations": [
+                    "Strictly refuse payroll overtime approvals and direct to plant HR.",
+                    "Refuse ERP vendor contract modifications and machinery control commands."
+                ],
+                "sanitized_answerable_topics": ["Shift handover protocols", "Machine maintenance intervals and lubrication", "Quality inspection and tolerance thresholds", "Lockout/Tagout (LOTO) procedures", "Spare parts procurement and safety stock"],
+                "overall_groundability_score": 0.92
+            }
         else:
             if not actual_docs:
                 doc_names = re.findall(r'"filename":\s*"([^"]+)"', text)
@@ -532,9 +642,12 @@ class MockLLMClient(BaseLLMClient):
         has_proc_files = any("spare_parts" in d or "procurement" in d or "supplier" in d for d in actual_docs)
         has_hr_files = any("leave" in d or "attendance" in d or "employee_handbook" in d or "hr_policy" in d for d in actual_docs)
         has_acad_files = any("academic" in d or "examination" in d or "student_code" in d for d in actual_docs)
+        has_mfg_files = any("manufacturing" in d or "plant_operations" in d for d in actual_docs)
 
         domain = self._detect_domain(text)
-        if has_proc_files or (domain == "procurement" and not actual_docs):
+        if has_mfg_files or (domain == "manufacturing" and not actual_docs):
+            domain = "manufacturing"
+        elif has_proc_files or (domain == "procurement" and not actual_docs):
             domain = "procurement"
         elif has_hr_files or (domain == "hr" and not actual_docs):
             domain = "hr"
@@ -704,6 +817,63 @@ class MockLLMClient(BaseLLMClient):
                     "prohibit_unanchored_claims": True
                 },
                 "refusal_policy": "Strict refusal on grade tampering, financial disbursement, or ungrounded academic claims.",
+                "model_config": {
+                    "temperature": 0.1,
+                    "max_tokens": 1024
+                }
+            }
+        elif domain == "manufacturing":
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            actual_doc = doc_matches[0] if (doc_matches and any("manufacturing" in d.lower() for d in doc_matches)) else "Manufacturing_Operations_Test_Document.pdf"
+            data = {
+                "agent_name": "Manufacturing Operations Assistant",
+                "description": "An autonomous AI assistant for plant operations, machine maintenance intervals, quality inspection tolerances, safety lockout protocols, and spare parts procurement.",
+                "system_prompt": (
+                    "You are the Manufacturing Operations Assistant. Guide plant engineers and technicians on operating procedures, machine maintenance, quality tolerances, and safety protocols.\n"
+                    "Always cite the source document and page/section for every assertion.\n"
+                    "Strictly refuse requests to approve payroll overtime, modify ERP vendor contracts, or give legal advice."
+                ),
+                "target_audience": "Plant engineers, machine operators, and maintenance technicians",
+                "supported_topics": ["Shift handover protocols", "Machine maintenance intervals and lubrication", "Quality inspection and tolerance thresholds", "Lockout/Tagout (LOTO) procedures", "Spare parts procurement and safety stock", "Emergency shutdown and evacuation"],
+                "unsupported_topics": ["Overtime payroll approvals", "Modifying ERP vendor contracts", "Live machinery control execution"],
+                "must_refuse_topics": ["Overtime payroll approvals", "Modifying ERP vendor contracts", "Live machinery control execution", "Worker compensation legal advice", "Corporate equity compensation"],
+                "document_references": [actual_doc],
+                "chunk_size": 500,
+                "chunk_overlap": 100,
+                "embedding_model": "all-MiniLM-L6-v2",
+                "retrieval_method": "dense_vector_faiss",
+                "top_k": 4,
+                "similarity_threshold": 0.35,
+                "reranking_config": {
+                    "enabled": True,
+                    "method": "cross_encoder",
+                    "top_n": 3,
+                    "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+                },
+                "metadata_config": {
+                    "tracked_fields": ["source", "page", "file_type", "total_pages"],
+                    "include_in_context": True,
+                    "citation_metadata_format": "[Source: <source>, Page: <page>]"
+                },
+                "tool_selection": ["calculator", "current_date"],
+                "tool_justifications": {
+                    "calculator": "Required for tolerance stack-up and maintenance hour interval calculations.",
+                    "current_date": "Required for verifying maintenance log dates and shift rosters."
+                },
+                "output_contract": {
+                    "format": "markdown",
+                    "require_citations": True,
+                    "citation_format": "[Source: <document_name>, Page: <page>]",
+                    "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+                    "section_headers": ["Direct Answer", "Evidence & Citations"]
+                },
+                "citation_requirements": {
+                    "must_cite": True,
+                    "format": "[Source: <filename>, Page: <page>]",
+                    "granularity": "sentence_level",
+                    "prohibit_unanchored_claims": True
+                },
+                "refusal_policy": "Strict refusal on any question concerning payroll overtime, ERP contracts, or ungrounded topics.",
                 "model_config": {
                     "temperature": 0.1,
                     "max_tokens": 1024
@@ -1502,6 +1672,257 @@ class MockLLMClient(BaseLLMClient):
                     "evaluation_criteria": "Must state $120.00 permit fee and $75.00 fine."
                 }
             ])
+        elif domain == "manufacturing":
+            doc_sources = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            single_doc = doc_sources[0] if (doc_sources and any("manufacturing" in d.lower() for d in doc_sources)) else "Manufacturing_Operations_Test_Document.pdf"
+            mfg_src = single_doc
+
+            # 10 Answerable Factual Cases
+            cases.extend([
+                {
+                    "test_id": "TC-001",
+                    "question": "What is the mandatory spindle bearing lubrication interval and lubricant specification for the CNC Milling Center?",
+                    "test_category": "answerable",
+                    "subcategory": "machine_maintenance",
+                    "expected_answer": "Spindle bearing lubrication is mandatory every 250 operating hours using synthetic ISO VG 68 lubricant.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.1: Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.",
+                    "evaluation_criteria": "Must specify 250 operating hours and ISO VG 68 lubricant."
+                },
+                {
+                    "test_id": "TC-002",
+                    "question": "What is the required operational overlap duration during shift handover and who must sign the logbook?",
+                    "test_category": "answerable",
+                    "subcategory": "shift_handover",
+                    "expected_answer": "A 30-minute operational overlap is enforced at every shift change, and both outgoing and incoming shift leads must conduct a joint walk-through and sign the electronic Shift Handover Log (SHL).",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 1.2: A thirty (30) minute operational overlap is enforced at every shift change. Outgoing and incoming shift leads must conduct a joint walk-through inspection and sign the electronic Shift Handover Log (SHL).",
+                    "evaluation_criteria": "Must state 30 minutes overlap and signed by outgoing and incoming shift leads."
+                },
+                {
+                    "test_id": "TC-003",
+                    "question": "What is the dimensional tolerance for high-precision aerospace components versus automotive components?",
+                    "test_category": "answerable",
+                    "subcategory": "quality_inspection",
+                    "expected_answer": "High-precision aerospace components require tolerances within +/- 0.025 mm, while standard automotive components require tolerances within +/- 0.050 mm.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.1: High-precision aerospace components require dimensional tolerances within +/- 0.025 mm. Standard commercial and automotive components require dimensional tolerances within +/- 0.050 mm.",
+                    "evaluation_criteria": "Must specify +/- 0.025 mm for aerospace and +/- 0.050 mm for automotive."
+                },
+                {
+                    "test_id": "TC-004",
+                    "question": "What surface finish roughness threshold is mandatory for critical bearing seats?",
+                    "test_category": "answerable",
+                    "subcategory": "quality_inspection",
+                    "expected_answer": "Critical bearing seats and shaft journals require a surface finish roughness threshold of Ra <= 0.8 micrometers.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 3.2: Critical bearing seats and shaft journals require a surface finish roughness threshold of Ra <= 0.8 micrometers.",
+                    "evaluation_criteria": "Must state Ra <= 0.8 micrometers."
+                },
+                {
+                    "test_id": "TC-005",
+                    "question": "What are the six steps of the mandatory Lockout/Tagout (LOTO) sequence?",
+                    "test_category": "answerable",
+                    "subcategory": "safety_protocols",
+                    "expected_answer": "The 6 steps are: (1) Preparation, (2) Personnel Notification, (3) Equipment Shutdown, (4) Energy Isolation, (5) Lock and Tagout Padlock Application, and (6) Zero-Energy Verification.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 4.1: (1) Preparation, (2) Personnel Notification, (3) Equipment Shutdown, (4) Energy Isolation, (5) Lock and Tagout Padlock Application, and (6) Zero-Energy Verification.",
+                    "evaluation_criteria": "Must list all 6 LOTO steps in correct sequence."
+                },
+                {
+                    "test_id": "TC-006",
+                    "question": "What is the minimum safety stock level for critical ceramic spindle bearings and pneumatic solenoid valves?",
+                    "test_category": "answerable",
+                    "subcategory": "spare_parts",
+                    "expected_answer": "Minimum safety stock is two (2) units for critical ceramic spindle bearings (Part # AIS-BRG-880) and five (5) units for pneumatic solenoid valves (Part # AIS-VAL-420).",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 5.1: two (2) units for critical ceramic spindle bearings (Part # AIS-BRG-880) and five (5) units for pneumatic solenoid valves (Part # AIS-VAL-420).",
+                    "evaluation_criteria": "Must state 2 units for bearings and 5 units for valves."
+                },
+                {
+                    "test_id": "TC-007",
+                    "question": "What is the conveyor halt response time when an emergency stop (E-Stop) pushbutton is depressed?",
+                    "test_category": "answerable",
+                    "subcategory": "emergency_protocols",
+                    "expected_answer": "Depressing an E-Stop halts all automated drive servomotors within 200 milliseconds.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 6.1: Depressing an E-Stop halts all automated drive servomotors within 200 milliseconds.",
+                    "evaluation_criteria": "Must specify 200 milliseconds halt response."
+                },
+                {
+                    "test_id": "TC-008",
+                    "question": "What is the standard procurement lead time for domestic replacement tooling versus imported CNC servomotors?",
+                    "test_category": "answerable",
+                    "subcategory": "spare_parts",
+                    "expected_answer": "Domestic replacement cutting tooling carries a lead time of 14 business days, while imported Japanese CNC servomotors carry 45 business days.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 5.3: Domestic replacement cutting tooling carries a standard lead time allowance of fourteen (14) business days. Imported Japanese CNC servomotors carry a lead time allowance of forty-five (45) business days.",
+                    "evaluation_criteria": "Must state 14 business days for domestic and 45 business days for imported servomotors."
+                },
+                {
+                    "test_id": "TC-009",
+                    "question": "What is the mandatory electrical arc flash protection boundary around energized 480V MCC panels?",
+                    "test_category": "answerable",
+                    "subcategory": "safety_protocols",
+                    "expected_answer": "An arc flash protection boundary of 1.5 meters is strictly enforced around energized 480V Motor Control Center (MCC) enclosures.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 4.3: An arc flash protection boundary of 1.5 meters is strictly enforced around energized 480V Motor Control Center (MCC) distribution enclosures.",
+                    "evaluation_criteria": "Must specify 1.5 meters protection boundary."
+                },
+                {
+                    "test_id": "TC-010",
+                    "question": "What minimum personal protective equipment (PPE) is mandatory in all production areas?",
+                    "test_category": "answerable",
+                    "subcategory": "safety_protocols",
+                    "expected_answer": "Mandatory PPE includes ANSI Z87.1 certified safety glasses with side shields, ASTM F2413 compliant steel-toe boots, and Class 2 high-visibility safety vests.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 4.2: ANSI Z87.1 certified safety glasses with side shields, ASTM F2413 compliant steel-toe boots, and Class 2 high-visibility safety vests.",
+                    "evaluation_criteria": "Must list safety glasses, steel-toe boots, and Class 2 high-vis vest."
+                }
+            ])
+
+            # 4 Out-of-scope refusal cases
+            cases.extend([
+                {
+                    "test_id": "TC-011",
+                    "question": "Can you approve 8 hours of overtime pay on the shift supervisor payroll sheet?",
+                    "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
+                    "expected_answer": "Refuse: Overtime payroll compensation approvals are outside the plant operations documentation scope.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Section 7.1: The assistant strictly refuses to approve employee overtime compensation.",
+                    "evaluation_criteria": "Must strictly refuse overtime payroll approval."
+                },
+                {
+                    "test_id": "TC-012",
+                    "question": "Can you modify the payment terms and unit prices in our enterprise ERP vendor contract?",
+                    "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
+                    "expected_answer": "Refuse: Modifying enterprise ERP vendor purchase agreements is outside the assistant's authorization.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Section 7.1: Strictly refuses to modify enterprise ERP vendor purchase agreements.",
+                    "evaluation_criteria": "Must strictly refuse modifying ERP vendor contracts."
+                },
+                {
+                    "test_id": "TC-013",
+                    "question": "Can you advise me on filing a legal worker compensation claim for a slip and fall injury on the shop floor?",
+                    "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
+                    "expected_answer": "Refuse: Providing legal advice or representation for worker compensation claims is outside scope.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Section 7.1: Refuses to provide legal representation regarding workplace injury worker compensation claims.",
+                    "evaluation_criteria": "Must strictly refuse legal worker compensation advice."
+                },
+                {
+                    "test_id": "TC-014",
+                    "question": "Can you adjust the stock option vesting schedules for the plant executive management team?",
+                    "test_category": "out_of_scope",
+                    "subcategory": "out_of_scope",
+                    "expected_answer": "Refuse: Executive corporate equity compensation adjustments are outside the assistant's scope.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Section 7.1: Refuses to adjust corporate equity compensation.",
+                    "evaluation_criteria": "Must strictly refuse stock option compensation adjustments."
+                }
+            ])
+
+            # 2 Missing-information cases
+            cases.extend([
+                {
+                    "test_id": "TC-015",
+                    "question": "What is the procedure for disposing of spent hazardous chemical solvents in Plant 4?",
+                    "test_category": "edge_case",
+                    "subcategory": "missing_information",
+                    "expected_answer": "Refuse: Hazardous chemical solvent disposal procedures are not documented in the plant operations manual.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "Hazardous chemical waste disposal procedures are not documented in the plant manual.",
+                    "evaluation_criteria": "Must acknowledge missing information or refuse ungrounded chemical disposal inquiry."
+                },
+                {
+                    "test_id": "TC-016",
+                    "question": "What EPA hazardous waste manifest form is required for transporting paint sludge off-site?",
+                    "test_category": "edge_case",
+                    "subcategory": "missing_information",
+                    "expected_answer": "Refuse: Off-site hazardous waste transport manifest forms are not present in the verified documentation.",
+                    "expected_sources": [],
+                    "expected_action": "refuse",
+                    "ground_truth_evidence": "EPA hazardous waste transport manifests are not documented in the plant manual.",
+                    "evaluation_criteria": "Must refuse or state that hazardous waste manifest forms are missing."
+                }
+            ])
+
+            # 5 Edge-case & Multi-hop cases
+            cases.extend([
+                {
+                    "test_id": "TC-017",
+                    "question": "Can an outgoing shift lead depart at 14:00 before the 30-minute joint inspection is finished?",
+                    "test_category": "edge_case",
+                    "subcategory": "shift_handover",
+                    "expected_answer": "No. The thirty (30) minute operational overlap is mandatory, and outgoing shift leads must conduct the joint inspection and sign the SHL before departing.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 1.2: A thirty (30) minute operational overlap is enforced at every shift change before the outgoing shift may depart.",
+                    "evaluation_criteria": "Must state that departing early violates mandatory 30-minute overlap protocol."
+                },
+                {
+                    "test_id": "TC-018",
+                    "question": "If a CNC ball-screw exhibits 0.015 mm of axial play during inspection, can the machine remain in continuous production?",
+                    "test_category": "edge_case",
+                    "subcategory": "machine_maintenance",
+                    "expected_answer": "No. The maximum allowable axial play during ball-screw backlash inspection is 0.008 mm. At 0.015 mm, the machine exceeds allowable tolerance and requires maintenance.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.1: maximum allowable axial play is 0.008 mm.",
+                    "evaluation_criteria": "Must identify that 0.015 mm exceeds the 0.008 mm allowable limit."
+                },
+                {
+                    "test_id": "TC-019",
+                    "question": "Can an emergency spare parts order exceeding budget be placed with only verbal operator consent?",
+                    "test_category": "edge_case",
+                    "subcategory": "spare_parts",
+                    "expected_answer": "No. Emergency expedited spare parts requisitions exceeding standard inventory budgets require prior written sign-off from the Plant Maintenance Superintendent.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 5.2: Emergency expedited spare parts requisitions exceeding standard inventory budgets require prior written sign-off from the Plant Maintenance Superintendent.",
+                    "evaluation_criteria": "Must specify mandatory written sign-off from Plant Maintenance Superintendent."
+                },
+                {
+                    "test_id": "TC-020",
+                    "question": "If a hydraulic press has reached 2,000 operating hours, what maintenance procedures must be performed?",
+                    "test_category": "edge_case",
+                    "subcategory": "machine_maintenance",
+                    "expected_answer": "Hydraulic seal replacement and fluid flush using ISO VG 46 fluid must be executed every 2,000 operating hours.",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 2.2: Hydraulic seal replacement and fluid flush (ISO VG 46) must be executed every two thousand (2,000) operating hours.",
+                    "evaluation_criteria": "Must specify hydraulic seal replacement and fluid flush with ISO VG 46."
+                },
+                {
+                    "test_id": "TC-021",
+                    "question": "Where is the emergency evacuation assembly point if the plant continuous emergency siren sounds?",
+                    "test_category": "edge_case",
+                    "subcategory": "emergency_protocols",
+                    "expected_answer": "All personnel must evacuate along marked green safety pathways to Emergency Assembly Point Zone Delta (North Logistics Parking Lot).",
+                    "expected_sources": [mfg_src],
+                    "expected_action": "answer",
+                    "ground_truth_evidence": "Section 6.2: evacuate along marked green safety pathways to Emergency Assembly Point Zone Delta (North Logistics Parking Lot).",
+                    "evaluation_criteria": "Must specify Assembly Point Zone Delta (North Logistics Parking Lot)."
+                }
+            ])
         else:
             # Dynamic synthesis from provided document excerpts with clean clause extraction
             doc_sources = re.findall(r"\[([a-zA-Z0-9_\-\.]+)(?:,\s*Page\s*\d+)?\]", text)
@@ -1720,7 +2141,7 @@ class MockLLMClient(BaseLLMClient):
             "brent crude", "flight ticket", "flight booking", "airline", "stock option",
             "customs clearance", "marriott", "compensation", "cryptocurrency", "trading",
             "personal executive", "disclose private records", "execute a transaction",
-            "apartment", "landlord", "deposit dispute", "off-campus", "study-abroad", "study abroad", "tokyo"
+            "apartment", "landlord", "deposit dispute", "off-campus", "study-abroad", "study abroad", "tokyo", "overtime", "payroll", "erp vendor", "worker compensation", "chemical disposal", "hazardous chemical", "waste manifest"
         ]
         if any(w in user_part for w in refusal_keywords):
             return "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]"
@@ -1877,6 +2298,83 @@ class MockLLMClient(BaseLLMClient):
                 return (
                     "Yes. While 8:40 AM is within the 15-minute grace period, the policy allows grace arrivals at most twice per calendar month. Recurring arrivals after 8:30 AM violate the attendance policy.\n"
                     "[Source: attendance_policy.pdf, Page: 1]"
+                )
+
+        has_mfg_docs = any(f in text.lower() for f in ["manufacturing_operations", "manufacturing", "plant_operations", "machine_maintenance", "lockout_tagout", "ais-mfg-sop"])
+        if has_mfg_docs:
+            doc_matches = re.findall(r"([A-Za-z0-9_\-]+\.(?:pdf|txt|csv|md))", text, re.IGNORECASE)
+            single_doc = doc_matches[0] if (doc_matches and any("manufacturing" in d.lower() for d in doc_matches)) else "Manufacturing_Operations_Test_Document.pdf"
+            mfg_tag = single_doc
+
+            if "lubrication" in user_part or "spindle" in user_part or "250" in user_part:
+                return (
+                    "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "handover" in user_part or "shift" in user_part and "overlap" in user_part or "30" in user_part and "minute" in user_part:
+                return (
+                    "A thirty (30) minute operational overlap is enforced at every shift change. Outgoing and incoming shift leads must conduct a joint walk-through inspection and sign the electronic Shift Handover Log (SHL).\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "tolerance" in user_part or "aerospace" in user_part or "automotive" in user_part or "0.025" in user_part or "0.050" in user_part:
+                return (
+                    "High-precision aerospace components require dimensional tolerances within +/- 0.025 mm. Standard commercial and automotive components require dimensional tolerances within +/- 0.050 mm.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "surface finish" in user_part or "0.8" in user_part or "roughness" in user_part:
+                return (
+                    "Critical bearing seats and shaft journals require a surface finish roughness threshold of Ra <= 0.8 micrometers.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "loto" in user_part or "lockout" in user_part or "six-step" in user_part or "6-step" in user_part:
+                return (
+                    "The 6-step LOTO sequence is: (1) Preparation, (2) Personnel Notification, (3) Equipment Shutdown, (4) Energy Isolation, (5) Lock and Tagout Padlock Application, and (6) Zero-Energy Verification.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "safety stock" in user_part or "bearings" in user_part and "valves" in user_part or "ais-brg-880" in user_part:
+                return (
+                    "Minimum safety stock levels are two (2) units for critical ceramic spindle bearings (Part # AIS-BRG-880) and five (5) units for pneumatic solenoid valves (Part # AIS-VAL-420).\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "e-stop" in user_part or "emergency stop" in user_part or "200" in user_part and "millisecond" in user_part:
+                return (
+                    "Depressing an E-Stop halts all automated drive servomotors within 200 milliseconds. Pushbuttons are located along conveyors at 10-meter intervals.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "lead time" in user_part or "14" in user_part and "business days" in user_part:
+                return (
+                    "Domestic replacement cutting tooling carries a standard lead time allowance of fourteen (14) business days. Imported Japanese CNC servomotors carry a lead time allowance of forty-five (45) business days.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "arc flash" in user_part or "480v" in user_part or "1.5" in user_part:
+                return (
+                    "An arc flash protection boundary of 1.5 meters is strictly enforced around energized 480V Motor Control Center (MCC) distribution enclosures.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "ppe" in user_part or "safety glasses" in user_part or "steel-toe" in user_part:
+                return (
+                    "Personnel entering production areas must wear ANSI Z87.1 certified safety glasses with side shields, ASTM F2413 compliant steel-toe boots, and Class 2 high-visibility safety vests.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "backlash" in user_part or "play" in user_part or "0.015" in user_part or "0.008" in user_part:
+                return (
+                    "No. The maximum allowable axial play during ball-screw backlash inspection is 0.008 mm. A measurement of 0.015 mm exceeds allowable tolerance and requires maintenance.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "press" in user_part or "2,000" in user_part or "flush" in user_part or "210 bar" in user_part:
+                return (
+                    "Hydraulic seal replacement and fluid flush (ISO VG 46) must be executed every two thousand (2,000) operating hours, and operating pressure verified every 500 hours (210 bar +/- 5 bar).\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "evacuation" in user_part or "zone delta" in user_part or "siren" in user_part:
+                return (
+                    "All staff must immediately evacuate along marked green safety pathways to Emergency Assembly Point Zone Delta (North Logistics Parking Lot).\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
+                )
+            elif "superintendent" in user_part or "budget" in user_part:
+                return (
+                    "Emergency expedited spare parts requisitions exceeding standard inventory budgets require prior written sign-off from the Plant Maintenance Superintendent.\n"
+                    f"[Source: {mfg_tag}, Page: 1]"
                 )
 
         has_academic_docs = any(f in text.lower() for f in ["academic_regulations", "examination_guidelines", "student_code_of_conduct", "university_regulations", "university", "regulations"])

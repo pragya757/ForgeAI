@@ -373,6 +373,7 @@ with st.sidebar:
             "Demo 2: Ship-Spares Procurement Assistant",
             "Demo 3: Academic Regulations (Unseen Domain)",
             "Demo 4: Medical Clinic Operations",
+            "Demo 5: Manufacturing Operations",
             "Custom Agent Build"
         ],
         index=0,
@@ -407,6 +408,13 @@ with st.sidebar:
             "artifacts": "generalization_test/artifacts",
             "iterations": 2,
             "domain": "Clinical Healthcare"
+        },
+        "Demo 5: Manufacturing Operations": {
+            "brief": "Create a Manufacturing Operations Assistant that helps plant engineers and technicians understand standard operating procedures, machine maintenance intervals, quality inspection criteria, safety lockouts, spare parts procurement, and shift handover protocols.",
+            "docs": "demos/manufacturing_operations/documents",
+            "artifacts": "demos/manufacturing_operations/artifacts",
+            "iterations": 2,
+            "domain": "Manufacturing Operations"
         },
         "Custom Agent Build": {
             "brief": "Create an enterprise customer support assistant that answers technical product queries, onboarding steps, and return policies.",

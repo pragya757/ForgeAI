@@ -1,0 +1,1419 @@
+{
+  "generated_at": "2026-11-27 21:56:26",
+  "agent_name": "Manufacturing Operations Assistant",
+  "final_status": "PRODUCTION_READY",
+  "user_brief": "Create a Manufacturing Operations Assistant that helps plant engineers and technicians understand standard operating procedures, machine maintenance intervals, quality inspection criteria, safety lockouts, spare parts procurement, and shift handover protocols. The assistant must answer using only the uploaded manufacturing operations document, provide accurate source citations, and clearly refuse or acknowledge missing information when a question cannot be answered from the document.",
+  "document_inventory": [
+    {
+      "filename": "Manufacturing_Operations_Test_Document.pdf",
+      "format": "PDF",
+      "description": "Format PDF. Approx 4743 chars. Preview: APEX ADVANCED MANUFACTURING SYSTEMS COMPREHENSIVE PLANT OPERATIONS, MAINTENANCE & SAFETY MANUAL Document Reference: AIS-...",
+      "page_count": 1,
+      "record_count": null,
+      "content_summary": "Covers topics: A thirty, Procurement Lead Times, SECTION 6 EMERGENCY SHUTDOWN & PLANT EVACUATION, SECTION 7 SCOPE BOUNDARIES & PROHIBITED REQUESTS",
+      "detected_topics": [
+        "A thirty",
+        "Procurement Lead Times",
+        "SECTION 6 EMERGENCY SHUTDOWN & PLANT EVACUATION",
+        "SECTION 7 SCOPE BOUNDARIES & PROHIBITED REQUESTS"
+      ]
+    }
+  ],
+  "structured_requirements": {
+    "agent_name": "Manufacturing Operations Assistant",
+    "purpose": "Assist plant engineers, machine operators, and maintenance technicians with standard operating procedures, machine maintenance schedules, quality inspection tolerances, safety lockout protocols, and spare parts procurement.",
+    "user_intent": "Understand SOPs, maintenance intervals, tolerance thresholds, LOTO procedures, spare parts reorder rules, and emergency protocols.",
+    "target_audience": "Plant engineers, machine operators, and maintenance technicians",
+    "domain": "Manufacturing Operations / Industrial Plant Operations",
+    "scope": "Operating procedures, shift handovers, machine lubrication schedules, tolerance criteria, LOTO safety, and spare parts lead times.",
+    "tone": "Technical, precise, and safety-oriented",
+    "constraints": [
+      "Strict adherence to verified maintenance specifications and tolerances",
+      "No unauthorized modifications to equipment or ERP records"
+    ],
+    "must_answer_topics": [
+      "Shift handover protocols",
+      "Machine maintenance intervals and lubrication",
+      "Quality inspection and tolerance thresholds",
+      "Lockout/Tagout (LOTO) procedures",
+      "Spare parts procurement and safety stock",
+      "Emergency shutdown and evacuation"
+    ],
+    "must_refuse_topics": [
+      "Overtime payroll approvals",
+      "Modifying ERP vendor contracts",
+      "Live machinery control execution",
+      "Corporate equity compensation",
+      "Utility tariff negotiations",
+      "Worker compensation legal advice"
+    ],
+    "required_tools": [
+      "calculator",
+      "current_date"
+    ],
+    "document_inventory": [
+      {
+        "filename": "Manufacturing_Operations_Test_Document.pdf",
+        "format": "PDF",
+        "description": "Format PDF. Approx 4743 chars. Preview: APEX ADVANCED MANUFACTURING SYSTEMS COMPREHENSIVE PLANT OPERATIONS, MAINTENANCE & SAFETY MANUAL Document Reference: AIS-...",
+        "page_count": 1,
+        "record_count": null,
+        "content_summary": "Covers topics: A thirty, Procurement Lead Times, SECTION 6 EMERGENCY SHUTDOWN & PLANT EVACUATION, SECTION 7 SCOPE BOUNDARIES & PROHIBITED REQUESTS",
+        "detected_topics": [
+          "A thirty",
+          "Procurement Lead Times",
+          "SECTION 6 EMERGENCY SHUTDOWN & PLANT EVACUATION",
+          "SECTION 7 SCOPE BOUNDARIES & PROHIBITED REQUESTS"
+        ]
+      }
+    ],
+    "information_gaps": {
+      "missing_information": [
+        "Hazardous chemical disposal protocols are not covered in the plant manual."
+      ],
+      "contradictory_information": [],
+      "duplicated_information": [],
+      "incomplete_information": []
+    },
+    "assumptions": [
+      "Manual reflects current Plant 4 operating parameters.",
+      "Conservative safety thresholds apply during unattended operations.",
+      "Provided documents are treated as the sole ground truth; undocumented claims will be strictly refused.",
+      "Unanswered clarification questions are resolved using conservative, read-only operational defaults."
+    ],
+    "ambiguities": [
+      "Whether first-article inspection is required for minor tooling adjustments."
+    ],
+    "unsupported_requirements": [
+      "Direct PLC/machinery control execution",
+      "Live ERP database writing"
+    ],
+    "clarifications": []
+  },
+  "groundability_analysis": {
+    "supported_topics": [
+      {
+        "topic": "Shift handover protocols",
+        "evidence_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in Manufacturing_Operations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "Manufacturing_Operations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Shift handover protocols.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Machine maintenance intervals and lubrication",
+        "evidence_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in Manufacturing_Operations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "Manufacturing_Operations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Machine maintenance intervals and lubrication.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Quality inspection and tolerance thresholds",
+        "evidence_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in Manufacturing_Operations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "Manufacturing_Operations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Quality inspection and tolerance thresholds.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Lockout/Tagout (LOTO) procedures",
+        "evidence_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in Manufacturing_Operations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "Manufacturing_Operations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Lockout/Tagout (LOTO) procedures.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Spare parts procurement and safety stock",
+        "evidence_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in Manufacturing_Operations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "Manufacturing_Operations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Spare parts procurement and safety stock.",
+            "relevance_score": 0.92
+          }
+        ]
+      },
+      {
+        "topic": "Emergency shutdown and evacuation",
+        "evidence_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "coverage_summary": "Direct textual coverage verified in Manufacturing_Operations_Test_Document.pdf.",
+        "confidence_score": 0.94,
+        "evidence_references": [
+          {
+            "source_document": "Manufacturing_Operations_Test_Document.pdf",
+            "page_or_record": "Page 1",
+            "excerpt": "Verified specifications for Emergency shutdown and evacuation.",
+            "relevance_score": 0.92
+          }
+        ]
+      }
+    ],
+    "partially_supported_topics": [],
+    "unsupported_topics": [
+      {
+        "topic": "Direct PLC/machinery control execution",
+        "reason": "Not found in document corpus or requires unsupported capability.",
+        "absence_nature": "unsupported_capability",
+        "confidence_score": 0.95
+      },
+      {
+        "topic": "Live ERP database writing",
+        "reason": "Not found in document corpus or requires unsupported capability.",
+        "absence_nature": "missing_from_corpus",
+        "confidence_score": 0.95
+      }
+    ],
+    "document_coverage_map": {
+      "Manufacturing_Operations_Test_Document.pdf": [
+        "Shift handover protocols",
+        "Machine maintenance intervals and lubrication"
+      ]
+    },
+    "refusal_recommendations": [
+      "Refuse requests regarding Direct PLC/machinery control execution.",
+      "Refuse requests regarding Live ERP database writing."
+    ],
+    "sanitized_answerable_topics": [
+      "Shift handover protocols",
+      "Machine maintenance intervals and lubrication",
+      "Quality inspection and tolerance thresholds",
+      "Lockout/Tagout (LOTO) procedures",
+      "Spare parts procurement and safety stock",
+      "Emergency shutdown and evacuation"
+    ],
+    "overall_groundability_score": 0.88
+  },
+  "agent_configuration": {
+    "agent_name": "Manufacturing Operations Assistant",
+    "description": "Assist plant engineers, machine operators, and maintenance technicians with standard operating procedures, machine maintenance schedules, quality inspection tolerances, safety lockout protocols, and spare parts procurement.",
+    "system_prompt": "You are Manufacturing Operations Assistant, an autonomous AI domain specialist.\n\n### MISSION & IDENTITY\n- Domain: Manufacturing Operations / Industrial Plant Operations\n- Target Audience: Plant engineers, machine operators, and maintenance technicians\n\n### STRICT REFUSAL POLICY\n- You MUST refuse to answer queries concerning unsupported topics: Direct PLC/machinery control execution, Live ERP database writing.\n- Refusal Phrase: \"I cannot answer this question as it is outside my verified documentation scope.\"\n\n### CITATION & OUTPUT CONTRACT\n- Every factual claim must include a source citation formatted as: [Source: <filename>, Page: <page>].",
+    "target_audience": "Plant engineers, machine operators, and maintenance technicians",
+    "supported_topics": [
+      "Shift handover protocols",
+      "Machine maintenance intervals and lubrication",
+      "Quality inspection and tolerance thresholds",
+      "Lockout/Tagout (LOTO) procedures",
+      "Spare parts procurement and safety stock",
+      "Emergency shutdown and evacuation"
+    ],
+    "unsupported_topics": [
+      "Direct PLC/machinery control execution",
+      "Live ERP database writing"
+    ],
+    "must_refuse_topics": [
+      "Corporate equity compensation",
+      "Direct PLC/machinery control execution",
+      "Live ERP database writing",
+      "Live machinery control execution",
+      "Modifying ERP vendor contracts",
+      "Overtime payroll approvals",
+      "Utility tariff negotiations",
+      "Worker compensation legal advice"
+    ],
+    "document_references": [
+      "Manufacturing_Operations_Test_Document.pdf"
+    ],
+    "corpus_directory": "/Users/pragya/Downloads/OceanAI/outputs/sessions/test_phase5_manufacturing/documents",
+    "indexed_documents": [
+      "Manufacturing_Operations_Test_Document.pdf"
+    ],
+    "chunk_size": 500,
+    "chunk_overlap": 100,
+    "embedding_model": "all-MiniLM-L6-v2",
+    "retrieval_method": "dense_vector_faiss",
+    "top_k": 4,
+    "similarity_threshold": 0.35,
+    "reranking_config": {
+      "enabled": false,
+      "method": "cross_encoder",
+      "top_n": 3,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    },
+    "metadata_config": {
+      "tracked_fields": [
+        "source",
+        "page",
+        "file_type",
+        "total_pages"
+      ],
+      "include_in_context": true,
+      "citation_metadata_format": "[Source: <source>, Page: <page>]"
+    },
+    "tool_selection": [
+      "current_date"
+    ],
+    "tool_justifications": {
+      "current_date": "Required for temporal verification of operational timestamps."
+    },
+    "output_contract": {
+      "format": "markdown",
+      "require_citations": true,
+      "citation_format": "[Source: <document_name>, Page: <page>]",
+      "refusal_phrase": "I cannot answer this question as it is outside my verified documentation scope.",
+      "section_headers": [
+        "Direct Answer",
+        "Evidence & Citations"
+      ],
+      "disclaimer": null
+    },
+    "citation_requirements": {
+      "must_cite": true,
+      "format": "[Source: <filename>, Page: <page>]",
+      "granularity": "sentence_level",
+      "prohibit_unanchored_claims": true
+    },
+    "refusal_policy": "Strict refusal on ungrounded claims, undocumented speculations, or unsupported topics.",
+    "llm_config": {
+      "temperature": 0.1,
+      "max_tokens": 1024,
+      "model_name": null
+    }
+  },
+  "selected_tools_and_justifications": {
+    "selected_tools": [
+      "current_date"
+    ],
+    "tool_justifications": {
+      "current_date": "Required for temporal verification of operational timestamps."
+    },
+    "isolation_policy": "Strict authorization: only explicitly approved tools are mounted; all other execution capabilities are disabled."
+  },
+  "evaluation_dataset_summary": {
+    "total_cases": 21,
+    "category_breakdown": {
+      "machine_maintenance": 3,
+      "shift_handover": 2,
+      "quality_inspection": 2,
+      "safety_protocols": 3,
+      "spare_parts": 3,
+      "emergency_protocols": 2,
+      "out_of_scope": 4,
+      "missing_information": 2
+    },
+    "expected_actions": {
+      "answer": 15,
+      "refuse": 6,
+      "clarify": 0
+    },
+    "ground_truth_verified": true
+  },
+  "initial_scorecard": {
+    "iteration": 1,
+    "total_tests": 21,
+    "passed_tests": 20,
+    "failed_tests": 1,
+    "pass_rate": 0.9524,
+    "metric_breakdown": {
+      "grounding": 1.0,
+      "factual_correctness": 0.952,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 1.0,
+      "relevance": 1.0,
+      "output_contract_compliance": 1.0
+    },
+    "failure_distribution": {
+      "retrieval_miss": 0,
+      "prompt_defect": 0,
+      "hallucination": 1,
+      "wrong_refusal": 0,
+      "citation_defect": 0,
+      "output_contract_violation": 0
+    },
+    "outcome_distribution": {
+      "correct_with_evidence": 14,
+      "correct_without_evidence": 0,
+      "partially_correct": 0,
+      "incorrect": 1,
+      "correct_refusal": 6,
+      "incorrect_refusal": 0
+    },
+    "status": "PASS",
+    "case_results": [
+      {
+        "test_id": "TC-001",
+        "question": "What is the mandatory spindle bearing lubrication interval and lubricant specification for the CNC Milling Center?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-002",
+        "question": "What is the required operational overlap duration during shift handover and who must sign the logbook?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A thirty (30) minute operational overlap is enforced at every shift change. Outgoing and incoming shift leads must conduct a joint walk-through inspection and sign the electronic Shift Handover Log (SHL).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-003",
+        "question": "What is the dimensional tolerance for high-precision aerospace components versus automotive components?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "High-precision aerospace components require dimensional tolerances within +/- 0.025 mm. Standard commercial and automotive components require dimensional tolerances within +/- 0.050 mm.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-004",
+        "question": "What surface finish roughness threshold is mandatory for critical bearing seats?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Critical bearing seats and shaft journals require a surface finish roughness threshold of Ra <= 0.8 micrometers.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-005",
+        "question": "What are the six steps of the mandatory Lockout/Tagout (LOTO) sequence?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "The 6-step LOTO sequence is: (1) Preparation, (2) Personnel Notification, (3) Equipment Shutdown, (4) Energy Isolation, (5) Lock and Tagout Padlock Application, and (6) Zero-Energy Verification.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-006",
+        "question": "What is the minimum safety stock level for critical ceramic spindle bearings and pneumatic solenoid valves?",
+        "passed": false,
+        "outcome_classification": "incorrect",
+        "grounding_score": 1.0,
+        "factual_correctness": 0.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [
+          "hallucination: Response failed to contain the required ground-truth facts."
+        ],
+        "agent_response": "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-007",
+        "question": "What is the conveyor halt response time when an emergency stop (E-Stop) pushbutton is depressed?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Depressing an E-Stop halts all automated drive servomotors within 200 milliseconds. Pushbuttons are located along conveyors at 10-meter intervals.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-008",
+        "question": "What is the standard procurement lead time for domestic replacement tooling versus imported CNC servomotors?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Domestic replacement cutting tooling carries a standard lead time allowance of fourteen (14) business days. Imported Japanese CNC servomotors carry a lead time allowance of forty-five (45) business days.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-009",
+        "question": "What is the mandatory electrical arc flash protection boundary around energized 480V MCC panels?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "An arc flash protection boundary of 1.5 meters is strictly enforced around energized 480V Motor Control Center (MCC) distribution enclosures.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-010",
+        "question": "What minimum personal protective equipment (PPE) is mandatory in all production areas?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Personnel entering production areas must wear ANSI Z87.1 certified safety glasses with side shields, ASTM F2413 compliant steel-toe boots, and Class 2 high-visibility safety vests.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-011",
+        "question": "Can you approve 8 hours of overtime pay on the shift supervisor payroll sheet?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-012",
+        "question": "Can you modify the payment terms and unit prices in our enterprise ERP vendor contract?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-013",
+        "question": "Can you advise me on filing a legal worker compensation claim for a slip and fall injury on the shop floor?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-014",
+        "question": "Can you adjust the stock option vesting schedules for the plant executive management team?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-015",
+        "question": "What is the procedure for disposing of spent hazardous chemical solvents in Plant 4?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-016",
+        "question": "What EPA hazardous waste manifest form is required for transporting paint sludge off-site?",
+        "passed": true,
+        "outcome_classification": "correct_refusal",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+        "failure_reasons": [],
+        "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+        "retrieved_sources": [],
+        "tool_calls": [],
+        "explanation": "Automated hybrid evaluation complete."
+      },
+      {
+        "test_id": "TC-017",
+        "question": "Can an outgoing shift lead depart at 14:00 before the 30-minute joint inspection is finished?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "A thirty (30) minute operational overlap is enforced at every shift change. Outgoing and incoming shift leads must conduct a joint walk-through inspection and sign the electronic Shift Handover Log (SHL).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-018",
+        "question": "If a CNC ball-screw exhibits 0.015 mm of axial play during inspection, can the machine remain in continuous production?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "No. The maximum allowable axial play during ball-screw backlash inspection is 0.008 mm. A measurement of 0.015 mm exceeds allowable tolerance and requires maintenance.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-019",
+        "question": "Can an emergency spare parts order exceeding budget be placed with only verbal operator consent?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Emergency expedited spare parts requisitions exceeding standard inventory budgets require prior written sign-off from the Plant Maintenance Superintendent.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-020",
+        "question": "If a hydraulic press has reached 2,000 operating hours, what maintenance procedures must be performed?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "Hydraulic seal replacement and fluid flush (ISO VG 46) must be executed every two thousand (2,000) operating hours, and operating pressure verified every 500 hours (210 bar +/- 5 bar).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      },
+      {
+        "test_id": "TC-021",
+        "question": "Where is the emergency evacuation assembly point if the plant continuous emergency siren sounds?",
+        "passed": true,
+        "outcome_classification": "correct_with_evidence",
+        "grounding_score": 1.0,
+        "factual_correctness": 1.0,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance_score": 1.0,
+        "output_contract_compliance": 1.0,
+        "verdict_confidence": 1.0,
+        "uncertainty_flag": false,
+        "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+        "failure_reasons": [],
+        "agent_response": "All staff must immediately evacuate along marked green safety pathways to Emergency Assembly Point Zone Delta (North Logistics Parking Lot).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+        "retrieved_sources": [
+          "Manufacturing_Operations_Test_Document.pdf"
+        ],
+        "tool_calls": [],
+        "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+      }
+    ]
+  },
+  "optimization_iterations": [
+    {
+      "iteration": 1,
+      "total_tests": 21,
+      "passed_tests": 20,
+      "failed_tests": 1,
+      "pass_rate": 0.9524,
+      "metric_breakdown": {
+        "grounding": 1.0,
+        "factual_correctness": 0.952,
+        "citation_correctness": 1.0,
+        "refusal_correctness": 1.0,
+        "relevance": 1.0,
+        "output_contract_compliance": 1.0
+      },
+      "failure_distribution": {
+        "retrieval_miss": 0,
+        "prompt_defect": 0,
+        "hallucination": 1,
+        "wrong_refusal": 0,
+        "citation_defect": 0,
+        "output_contract_violation": 0
+      },
+      "outcome_distribution": {
+        "correct_with_evidence": 14,
+        "correct_without_evidence": 0,
+        "partially_correct": 0,
+        "incorrect": 1,
+        "correct_refusal": 6,
+        "incorrect_refusal": 0
+      },
+      "status": "PASS",
+      "case_results": [
+        {
+          "test_id": "TC-001",
+          "question": "What is the mandatory spindle bearing lubrication interval and lubricant specification for the CNC Milling Center?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-002",
+          "question": "What is the required operational overlap duration during shift handover and who must sign the logbook?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A thirty (30) minute operational overlap is enforced at every shift change. Outgoing and incoming shift leads must conduct a joint walk-through inspection and sign the electronic Shift Handover Log (SHL).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-003",
+          "question": "What is the dimensional tolerance for high-precision aerospace components versus automotive components?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "High-precision aerospace components require dimensional tolerances within +/- 0.025 mm. Standard commercial and automotive components require dimensional tolerances within +/- 0.050 mm.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-004",
+          "question": "What surface finish roughness threshold is mandatory for critical bearing seats?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Critical bearing seats and shaft journals require a surface finish roughness threshold of Ra <= 0.8 micrometers.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-005",
+          "question": "What are the six steps of the mandatory Lockout/Tagout (LOTO) sequence?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "The 6-step LOTO sequence is: (1) Preparation, (2) Personnel Notification, (3) Equipment Shutdown, (4) Energy Isolation, (5) Lock and Tagout Padlock Application, and (6) Zero-Energy Verification.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-006",
+          "question": "What is the minimum safety stock level for critical ceramic spindle bearings and pneumatic solenoid valves?",
+          "passed": false,
+          "outcome_classification": "incorrect",
+          "grounding_score": 1.0,
+          "factual_correctness": 0.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [
+            "hallucination: Response failed to contain the required ground-truth facts."
+          ],
+          "agent_response": "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-007",
+          "question": "What is the conveyor halt response time when an emergency stop (E-Stop) pushbutton is depressed?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Depressing an E-Stop halts all automated drive servomotors within 200 milliseconds. Pushbuttons are located along conveyors at 10-meter intervals.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-008",
+          "question": "What is the standard procurement lead time for domestic replacement tooling versus imported CNC servomotors?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Domestic replacement cutting tooling carries a standard lead time allowance of fourteen (14) business days. Imported Japanese CNC servomotors carry a lead time allowance of forty-five (45) business days.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-009",
+          "question": "What is the mandatory electrical arc flash protection boundary around energized 480V MCC panels?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "An arc flash protection boundary of 1.5 meters is strictly enforced around energized 480V Motor Control Center (MCC) distribution enclosures.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-010",
+          "question": "What minimum personal protective equipment (PPE) is mandatory in all production areas?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Personnel entering production areas must wear ANSI Z87.1 certified safety glasses with side shields, ASTM F2413 compliant steel-toe boots, and Class 2 high-visibility safety vests.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-011",
+          "question": "Can you approve 8 hours of overtime pay on the shift supervisor payroll sheet?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-012",
+          "question": "Can you modify the payment terms and unit prices in our enterprise ERP vendor contract?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-013",
+          "question": "Can you advise me on filing a legal worker compensation claim for a slip and fall injury on the shop floor?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-014",
+          "question": "Can you adjust the stock option vesting schedules for the plant executive management team?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-015",
+          "question": "What is the procedure for disposing of spent hazardous chemical solvents in Plant 4?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-016",
+          "question": "What EPA hazardous waste manifest form is required for transporting paint sludge off-site?",
+          "passed": true,
+          "outcome_classification": "correct_refusal",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Refusal correctly executed for out-of-scope question.",
+          "failure_reasons": [],
+          "agent_response": "I cannot answer this question as it is outside my verified documentation scope. [Source: Policy Limitations]",
+          "retrieved_sources": [],
+          "tool_calls": [],
+          "explanation": "Automated hybrid evaluation complete."
+        },
+        {
+          "test_id": "TC-017",
+          "question": "Can an outgoing shift lead depart at 14:00 before the 30-minute joint inspection is finished?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "A thirty (30) minute operational overlap is enforced at every shift change. Outgoing and incoming shift leads must conduct a joint walk-through inspection and sign the electronic Shift Handover Log (SHL).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-018",
+          "question": "If a CNC ball-screw exhibits 0.015 mm of axial play during inspection, can the machine remain in continuous production?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "No. The maximum allowable axial play during ball-screw backlash inspection is 0.008 mm. A measurement of 0.015 mm exceeds allowable tolerance and requires maintenance.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-019",
+          "question": "Can an emergency spare parts order exceeding budget be placed with only verbal operator consent?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Emergency expedited spare parts requisitions exceeding standard inventory budgets require prior written sign-off from the Plant Maintenance Superintendent.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-020",
+          "question": "If a hydraulic press has reached 2,000 operating hours, what maintenance procedures must be performed?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "Hydraulic seal replacement and fluid flush (ISO VG 46) must be executed every two thousand (2,000) operating hours, and operating pressure verified every 500 hours (210 bar +/- 5 bar).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        },
+        {
+          "test_id": "TC-021",
+          "question": "Where is the emergency evacuation assembly point if the plant continuous emergency siren sounds?",
+          "passed": true,
+          "outcome_classification": "correct_with_evidence",
+          "grounding_score": 1.0,
+          "factual_correctness": 1.0,
+          "citation_correctness": 1.0,
+          "refusal_correctness": 1.0,
+          "relevance_score": 1.0,
+          "output_contract_compliance": 1.0,
+          "verdict_confidence": 1.0,
+          "uncertainty_flag": false,
+          "evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+          "failure_reasons": [],
+          "agent_response": "All staff must immediately evacuate along marked green safety pathways to Emergency Assembly Point Zone Delta (North Logistics Parking Lot).\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+          "retrieved_sources": [
+            "Manufacturing_Operations_Test_Document.pdf"
+          ],
+          "tool_calls": [],
+          "explanation": "Deterministic evaluation based on ground truth facts, source citations, and refusal policy."
+        }
+      ]
+    }
+  ],
+  "before_and_after_comparison": {
+    "overall_pass_rate": {
+      "metric_name": "Overall Pass Rate",
+      "initial_value": 0.9524,
+      "final_value": 0.9524,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "grounded_answer_rate": {
+      "metric_name": "Grounded Answer Rate",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "factual_correctness": {
+      "metric_name": "Factual Correctness",
+      "initial_value": 0.9524,
+      "final_value": 0.9524,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "correct_refusal_rate": {
+      "metric_name": "Correct Refusal Rate",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "citation_accuracy": {
+      "metric_name": "Citation Accuracy",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    },
+    "output_contract_compliance": {
+      "metric_name": "Output-Contract Compliance",
+      "initial_value": 1.0,
+      "final_value": 1.0,
+      "delta": 0.0,
+      "improvement_status": "UNCHANGED"
+    }
+  },
+  "remaining_failed_cases": [
+    {
+      "test_id": "TC-006",
+      "question": "What is the minimum safety stock level for critical ceramic spindle bearings and pneumatic solenoid valves?",
+      "category": "spare_parts",
+      "expected_action": "answer",
+      "expected_answer": "Minimum safety stock is two (2) units for critical ceramic spindle bearings (Part # AIS-BRG-880) and five (5) units for pneumatic solenoid valves (Part # AIS-VAL-420).",
+      "raw_agent_response": "Spindle bearing lubrication is mandatory every two hundred and fifty (250) operating hours using synthetic ISO VG 68 lubricant.\n[Source: Manufacturing_Operations_Test_Document.pdf, Page: 1]",
+      "failure_reasons": [
+        "hallucination: Response failed to contain the required ground-truth facts."
+      ],
+      "outcome_classification": "incorrect",
+      "judge_evidence_reasoning": "Step-by-step evaluation comparing response claims against ground-truth expected facts and retrieved document context.",
+      "grounding_score": 1.0,
+      "factual_correctness": 0.0,
+      "citation_correctness": 1.0,
+      "refusal_correctness": 1.0,
+      "relevance_score": 1.0,
+      "output_contract_compliance": 1.0,
+      "retrieved_sources": [
+        "Manufacturing_Operations_Test_Document.pdf"
+      ]
+    }
+  ],
+  "unsupported_topics": [
+    {
+      "topic": "Direct PLC/machinery control execution",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "unsupported_capability",
+      "confidence_score": 0.95
+    },
+    {
+      "topic": "Live ERP database writing",
+      "reason": "Not found in document corpus or requires unsupported capability.",
+      "absence_nature": "missing_from_corpus",
+      "confidence_score": 0.95
+    }
+  ],
+  "known_limitations": [
+    "1. Corpus Boundary Constraint: The agent answers strictly from provided text. Topics not documented in indexed sources are systematically refused.",
+    "2. Non-Extrapolation Grounding: The agent is forbidden from assuming or estimating dates, figures, or policies not explicitly written in source files.",
+    "3. OCR / Parser Dependency: Text fidelity depends on pre-extracted formatting. Complex scanned PDF diagrams require textual extraction.",
+    "4. Refusal Policy Conservatism: Inquiries containing partial overlap with prohibited subjects default to conservative refusal to safeguard against misinformation."
+  ],
+  "reproducible_metrics": {
+    "overall_pass_rate": 0.9524,
+    "grounded_answer_rate": 1.0,
+    "factual_correctness": 0.9524,
+    "correct_refusal_rate": 1.0,
+    "citation_accuracy": 1.0,
+    "output_contract_compliance": 1.0
+  }
+}
