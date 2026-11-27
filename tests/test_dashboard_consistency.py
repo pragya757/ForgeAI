@@ -66,9 +66,37 @@ def test_iteration_log_pydantic_and_dict_compatibility():
 
 
 def test_clarifying_questions_generic_stopwords_filtered():
-    """Verify that instruction and meta words like 'create', 'assistant', 'company', 'answers' are filtered."""
-    for word in ["create", "assistant", "company", "answers", "using", "policy", "guidelines", "documents"]:
-        assert word in GENERIC_STOPWORDS
+    """Verify that instruction, meta words, and constraint words are filtered out of gap detection."""
+    instruction_words = [
+        "create", "assistant", "company", "answers", "using", "policy", "guidelines", "documents",
+        "accurate", "acknowledge", "answered", "cannot", "clearly", "autonomous", "domain", "uploaded",
+        "citation", "citations", "refuse", "missing", "understand"
+    ]
+    for word in instruction_words:
+        assert word in GENERIC_STOPWORDS, f"'{word}' must be in GENERIC_STOPWORDS"
+
+
+def test_clarifying_questions_filters_meta_instructions_from_user_brief(tmp_path):
+    """Verify that user brief instructions do not trigger false positive gap questions."""
+    doc_dir = tmp_path / "univ_docs"
+    doc_dir.mkdir()
+    (doc_dir / "regulations.txt").write_text(
+        "ST. JUDE UNIVERSITY REGULATIONS\n"
+        "Graduation requires 120 credits and a CGPA of 2.00.\n"
+        "Attendance requires arriving 15 minutes before exams.\n"
+        "Grade appeals must be submitted within 10 days with a $50 fee.\n"
+    )
+
+    interviewer = IntakeInterviewer(llm_client=MockLLMClient())
+    brief = (
+        "Create a University Regulations Assistant that helps students and faculty understand academic regulations, "
+        "attendance, appeals and graduation. The assistant must answer using only the uploaded university regulations "
+        "document, provide accurate source citations, and clearly refuse or acknowledge missing information when a "
+        "question cannot be answered from the document."
+    )
+
+    questions = interviewer.generate_clarifying_questions(brief=brief, doc_folder=str(doc_dir))
+    assert len(questions) == 0, f"Expected 0 questions for clear brief with instruction words, got: {questions}"
 
 
 def test_clarifying_questions_clear_brief_returns_empty(tmp_path):

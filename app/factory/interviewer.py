@@ -13,28 +13,54 @@ from app.schemas.requirements import (
 from app.tools.registry import registry
 from app.retrieval.document_loader import DocumentLoader, RawDocument
 
-# Comprehensive set of generic instructions, prompt metadata, and stopwords to ignore during gap detection
+# Comprehensive set of generic instructions, prompt metadata, constraints, and stopwords to ignore during gap detection
 GENERIC_STOPWORDS: Set[str] = {
-    # Pronouns, prepositions, conjunctions, aux verbs
+    # Pronouns, prepositions, conjunctions, aux verbs, determiners
     "this", "that", "these", "those", "with", "have", "from", "user", "agent",
     "system", "please", "should", "could", "would", "must", "build", "will",
     "shall", "can", "may", "might", "into", "onto", "upon", "about", "above",
     "across", "after", "before", "behind", "below", "beside", "between", "both",
     "each", "either", "neither", "other", "some", "such", "than", "then", "there",
     "when", "where", "which", "while", "who", "whom", "whose", "why", "what",
-    # Prompting & meta-instruction words
-    "create", "make", "generate", "develop", "construct", "assistant", "bot",
-    "chatbot", "helper", "answer", "answers", "answering", "question", "questions",
-    "help", "helps", "helping", "provide", "provides", "providing", "using", "uses",
-    "used", "based", "according", "company", "organization", "enterprise", "business",
-    "document", "documents", "documentation", "file", "files", "corpus", "manual",
-    "handbook", "policy", "policies", "guideline", "guidelines", "rules", "rule",
+    "also", "well", "more", "most", "less", "least", "very", "much", "many",
+    # Prompting, agent role & meta-instruction words
+    "create", "make", "generate", "develop", "construct", "assistant", "assistants",
+    "bot", "chatbot", "helper", "advisor", "specialist", "system", "systems",
+    "answer", "answers", "answered", "answering", "unanswered",
+    "question", "questions", "query", "queries", "request", "requests",
+    "help", "helps", "helping", "provide", "provides", "providing", "provided",
+    "using", "uses", "used", "based", "according", "company", "organization", "enterprise", "business",
+    "document", "documents", "documentation", "file", "files", "corpus", "manual", "manuals",
+    "handbook", "handbooks", "policy", "policies", "guideline", "guidelines", "rules", "rule",
     "standard", "standards", "information", "info", "data", "detail", "details",
     "knowledge", "employee", "employees", "staff", "personnel", "internal", "external",
-    "queries", "query", "request", "requests", "support", "service", "services",
-    "verify", "verified", "verifying", "check", "checking", "search", "searching",
-    "developer", "developers", "operator", "operators", "engineer", "engineers",
-    "client", "clients", "member", "members", "admin", "admins", "audience"
+    "student", "students", "faculty", "faculties", "teacher", "teachers", "instructor", "instructors",
+    "manager", "managers", "supervisor", "supervisors", "technician", "technicians", "worker", "workers",
+    "support", "service", "services", "verify", "verified", "verifying", "check", "checking",
+    "search", "searching", "developer", "developers", "operator", "operators", "engineer", "engineers",
+    "client", "clients", "member", "members", "admin", "admins", "audience", "audiences",
+    # Domain generic and qualifying terms
+    "academic", "academics", "general",
+    # Behavioral, constraint, quality & negative condition instructions
+    "accurate", "accurately", "accuracy",
+    "acknowledge", "acknowledged", "acknowledging", "acknowledges", "acknowledgment",
+    "cannot", "cant", "couldnt", "shouldnt", "wouldnt", "wont",
+    "clearly", "clear", "clarity",
+    "autonomous", "autonomously",
+    "domain", "domains",
+    "uploaded", "upload", "uploads", "uploading",
+    "citation", "citations", "cite", "cites", "cited", "citing",
+    "refuse", "refuses", "refused", "refusing", "refusal", "refusals",
+    "missing", "present", "absent",
+    "source", "sources",
+    "understand", "understands", "understanding", "understood",
+    "only", "strict", "strictly", "direct", "directly",
+    "scope", "boundary", "boundaries", "limit", "limits", "limitation", "limitations",
+    "instruction", "instructions", "guidance", "behavior", "behaviour",
+    "constraint", "constraints", "requirement", "requirements",
+    "format", "formats", "formatted", "formatting",
+    "prompt", "prompts", "hallucination", "hallucinations", "grounded", "grounding", "groundability",
+    "fact", "facts", "factual", "factually", "model", "models"
 }
 
 class IntakeInterviewer:
@@ -296,10 +322,10 @@ class IntakeInterviewer:
         gaps.contradictory_information = contradictions[:5]
 
         # 4. Detect Missing Information (topics mentioned in user brief that have no document coverage)
-        # Extract candidate nouns / topic words from brief, filtering out generic instruction words
+        # Extract candidate nouns / topic words from brief, filtering out generic instruction words, adverbs, and constraints
         brief_words = [
             w for w in re.findall(r"\b[A-Za-z]{4,}\b", brief)
-            if w.lower() not in GENERIC_STOPWORDS and not w.isdigit()
+            if w.lower() not in GENERIC_STOPWORDS and not w.isdigit() and not w.lower().endswith("ly")
         ]
         all_corpus_text = " ".join([d.content for d in raw_docs]).lower()
         missing_topics: List[str] = []
@@ -315,8 +341,9 @@ class IntakeInterviewer:
                 missing_topics.append(word)
 
         if missing_topics:
+            topic_str = ", ".join(f"'{t}'" for t in sorted(missing_topics)[:4])
             gaps.missing_information.append(
-                f"Brief keywords not found anywhere in uploaded documents: {', '.join(sorted(missing_topics)[:6])}"
+                f"Domain topic(s) {topic_str} mentioned in brief but not covered in uploaded documents."
             )
 
         return gaps
@@ -379,7 +406,7 @@ class IntakeInterviewer:
                 )
             for m in gaps.missing_information[:2]:
                 deterministic_qs.append(
-                    f"The brief references terms not covered in the documents ({m}). Should the agent strictly refuse these out-of-scope requests?"
+                    f"{m} How should the assistant handle user inquiries regarding this (e.g., strictly refuse or refer to another office)?"
                 )
             for inc in gaps.incomplete_information[:1]:
                 deterministic_qs.append(
