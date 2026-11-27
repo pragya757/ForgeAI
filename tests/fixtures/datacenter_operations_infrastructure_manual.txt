@@ -1,0 +1,45 @@
+# MISSION CRITICAL DATA CENTER OPERATIONS & INFRASTRUCTURE SECURITY MANUAL
+Equinox HyperScale Data Center | Doc ID: DC-OPS-INFRA-2026-V2 | Effective 1 January 2026
+
+1. Purpose and Operational Scope
+This manual establishes operational, environmental, physical security, and critical facility maintenance procedures for Equinox Tier III mission-critical data center facilities. It governs power redundancy, thermal envelope management, fire suppression protocols, dual-factor biometric physical access, and emergency incident escalations. It does not provide guidance on customer software application programming, software license audits, server hardware procurement pricing, or corporate commercial lease taxation.
+
+2. Electrical Power Distribution and Backup Systems
+Tier III data center architecture mandates concurrently maintainable dual power distribution paths (2N redundancy):
+(a) Uninterruptible Power Supply (UPS) battery systems must sustain 100% full design IT load for a minimum duration of fifteen (15) minutes upon utility power failure.
+(b) On-site standby diesel generators must automatically start, achieve nominal voltage and frequency, and take over critical facility load via Automatic Transfer Switch (ATS) within ten (10) seconds of utility interruption.
+(c) Dedicated on-site diesel fuel storage must maintain a minimum seventy-two (72) hours of continuous generator operation at full load without external resupply. Fuel polishing and laboratory particulate testing must occur every ninety (90) calendar days.
+
+3. Environmental Controls and ASHRAE Thermal Envelope
+Server data hall environments must strictly adhere to ASHRAE Thermal Guidelines for Data Processing Environments (Class A1):
+(a) Ambient rack inlet air temperature must be maintained within the allowable range of 18.0°C to 27.0°C (recommended target: 22.0°C to 24.0°C).
+(b) Relative humidity must be maintained between 40% and 60% non-condensing, with maximum dew point not exceeding 15.0°C.
+(c) Hot aisle / cold aisle containment containment differential air pressure must maintain a positive cold aisle pressure between 5.0 and 10.0 Pascals relative to hot aisle plenum.
+
+4. Fire Detection, Suppression, and Gas Discharge Protocols
+Data hall fire protection utilizes dual-action early warning systems:
+(a) Very Early Warning Aspirating Smoke Detection (VESDA) provides continuous air sampling with primary alarm threshold set at 0.05% obscuration per meter.
+(b) Fire suppression utilizes double-interlock pre-action clean-agent gaseous systems (Novec 1230 / FM-200). Discharge requires two cross-zoned detector activations and a mandatory thirty (30) second visual and audible pre-discharge countdown.
+(c) Manual clean agent abort switches must be continuously held down to pause discharge countdown; releasing the abort switch resumes countdown immediately.
+
+5. Physical Security and Biometric Access Control
+Facility security operates under Defense-in-Depth zoning:
+(a) Access to critical data halls requires dual-factor authentication comprising RFID smart badge plus biometric fingerprint or iris scan.
+(b) Anti-passback (APB) control is strictly enforced on all perimeter mantrap portals; tailgating triggers an immediate audible alarm and security officer dispatch.
+(c) External contractors and unbadged visitors must wear high-visibility visitor badges and remain under continuous 100% line-of-sight escort by an authorized facility engineer.
+(d) Video surveillance (CCTV) footage covering all entry points, aisles, and perimeter fences must be retained for a minimum of ninety (90) calendar days.
+
+6. Change Management and Maintenance Windows
+All intrusive maintenance or configuration alterations on electrical, cooling, or network infrastructure require an approved Change Request (CR):
+(a) Emergency Change Requests require written authorization from the Data Center Facilities Director and Chief Technology Officer (CTO).
+(b) Standard maintenance activities must occur during the designated facility maintenance window between 01:00 UTC and 05:00 UTC on Tuesday and Thursday mornings.
+(c) Change Requests must be submitted through the change management portal at least forty-eight (48) hours prior to the scheduled maintenance window.
+
+7. Facility Incident Escalation and Reporting
+Any unexpected utility failure, thermal breach exceeding 29.0°C, or security breach must be reported immediately:
+(a) Critical facility anomalies must be escalated to the Facility Operations Center (FOC) within five (5) minutes of detection.
+(b) Primary client notification for service-affecting events must occur within fifteen (15) minutes of incident confirmation.
+(c) Root Cause Analysis (RCA) preliminary summary must be delivered to clients within twenty-four (24) hours, with final comprehensive engineering report delivered within five (5) business days.
+
+8. Limitations and Out-of-Scope Topics
+This manual does not establish customer application database replication configurations, operating system software patches, cloud pricing tier discounts, corporate tax depreciation schedules, or employee health benefits. Inquiries regarding customer software or server software licensing must be directed to customer IT service desks.

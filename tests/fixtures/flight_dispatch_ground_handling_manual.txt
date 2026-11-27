@@ -1,0 +1,50 @@
+# COMMERCIAL AVIATION FLIGHT DISPATCH & RAMP OPERATIONS MANUAL
+Skyline Air Operations Manual | Doc Ref: SOP-OPS-2026-V4 | Effective 1 January 2026
+
+1. Purpose and Operational Scope
+This manual establishes standard operating procedures for commercial flight dispatchers, ground operations personnel, and station ramp agents operating under Skyline Air flight authorizations. It governs flight release calculations, minimum fuel reserves, takeoff and landing weather minima, de-icing holdover guidelines, aircraft weight and balance limits, and dangerous goods ramp handling. It does not govern passenger ticketing refunds, loyalty mileage accrual, flight crew union wage bargaining, or airline corporate equity financing.
+
+2. Flight Dispatch Release and Minimum Fuel Requirements
+Under standard commercial dispatch rules, no flight may be dispatched without a signed Operational Flight Plan (OFP) approved by both the Captain and the Flight Dispatcher. Minimum dispatch fuel must include:
+(a) Trip Fuel: Calculated burn from departure runway to destination runway touchdown.
+(b) Contingency Fuel: Five percent (5%) of planned trip fuel or five (5) minutes holding at 1,500 feet above destination, whichever is greater.
+(c) Alternate Fuel: Fuel required to execute a missed approach at destination, climb, cruise, and land at the designated alternate airport.
+(d) Final Reserve Fuel: Forty-five (45) minutes of holding fuel at 1,500 feet above the alternate airport under standard temperature conditions for reciprocating/turboprop aircraft, or thirty (30) minutes for turbojet aircraft.
+Dispatch release becomes invalid if departure delay exceeds two (2) hours from scheduled pushback time.
+
+3. Alternate Airport Selection and Weather Minimums
+A takeoff alternate airport is mandatory whenever the departure aerodrome weather is below published landing minima. Takeoff alternate must be located within one (1) hour flight time at normal cruise speed in still air with one engine inoperative.
+Destination alternate airport is mandatory unless:
+(a) Flight duration is less than six (6) hours; and
+(b) For at least two (2) hours before to two (2) hours after estimated arrival time, ceiling is at least 2,000 feet and visibility is at least 3 statute miles (5,000 meters).
+When an alternate airport is required, the alternate weather forecast at arrival time must equal or exceed ceiling 600 feet and visibility 2 statute miles (3,200 meters) for precision approach facilities, or ceiling 800 feet and visibility 2 statute miles for non-precision approach facilities.
+
+4. Winter Operations and Aircraft De-Icing Holdover Times
+Whenever active frost, freezing fog, freezing rain, or snow exists, aircraft must undergo two-step de-icing and anti-icing prior to takeoff:
+Step 1: Heated Type I de-icing fluid applied at minimum 60°C to remove accumulated frozen contaminants.
+Step 2: Unheated Type IV anti-icing fluid applied symmetrically to prevent re-freezing during ground transit.
+Holdover Time (HOT) begins at the start of Step 2 application. Under light snow conditions at -3°C, the maximum allowable Type IV holdover time is thirty-five (35) minutes. If holdover time expires before takeoff roll commences, a pre-takeoff contamination check must be conducted from inside the cabin, or the aircraft must return to the de-icing pad for complete re-treatment.
+
+5. Aircraft Weight, Balance, and Ramp Cargo Loading
+Maximum Takeoff Weight (MTOW) and center-of-gravity (CG) limits specified in the Aircraft Flight Manual must strictly never be exceeded:
+(a) Standard passenger mass assumptions are 84 kg per adult passenger in summer and 88 kg in winter, inclusive of 6 kg carry-on baggage.
+(b) Checked baggage is calculated at standard weight of 15 kg per domestic bag and 20 kg per international bag unless actual scale weight is required.
+(c) Cargo loading supervisor must deliver the signed Final Load Sheet to the flight deck before main cabin door closure. Any last-minute change (LMC) exceeding 100 kg total payload requires an amended trim sheet calculation.
+
+6. Dangerous Goods and Hazardous Materials Handling
+Transport of Dangerous Goods must strictly comply with IATA Dangerous Goods Regulations (DGR):
+(a) Lithium-ion battery cargo (UN 3480) is strictly prohibited as cargo on passenger aircraft.
+(b) Biological substance category B (UN 3373) must use triple-packaging comprising primary leak-proof receptacle, secondary leak-proof packaging, and rigid outer packaging capable of passing a 1.2-meter drop test.
+(c) Dry ice (UN 1845) cargo is capped at a maximum of 200 kg per cargo compartment to prevent carbon dioxide suffocation hazards in the forward hold.
+
+7. Ramp Safety, Marshalling, and Ground Equipment Operation
+Ground support equipment (GSE) must maintain strict standoff distances:
+(a) No GSE vehicle may approach within 0.5 meters of the aircraft fuselage, engine cowlings, or flight control surfaces.
+(b) Ramp speed limit is 25 km/h on open apron roadways and 5 km/h inside the marked aircraft safety diamond zone.
+(c) Aircraft pushback tractor must not disconnect until the flight crew confirms the parking brake is set and gives visual hand signals.
+
+8. Incident Reporting and Emergency Notification
+Any ground collision, fuel spill exceeding 10 liters, or ramp injury must be reported immediately to the Station Duty Manager within thirty (30) minutes. A formal Air Safety Report (ASR) must be submitted into the flight safety portal within twelve (12) hours of the event.
+
+9. Limitations and Out-of-Scope Topics
+This manual does not provide guidance on passenger flight ticket cancellation fees, frequent flyer club tier points, lost baggage compensation monetary limits under the Montreal Convention, crew industrial strike guidelines, or airline corporate securities trading. Such queries must be directed to commercial airline customer service or airline personnel management.
